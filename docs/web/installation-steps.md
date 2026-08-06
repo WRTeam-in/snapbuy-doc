@@ -31,7 +31,7 @@ The project is built on **Next.js 16** and **React 19**. Node 20 is the minimum 
 
 - The storefront source code.
 - A running **Admin Panel** URL that is reachable from the internet.
-- A **VPS** (or any host that can run a Node process). See the [Deployment Guide](/docs/web/deployment) — shared hosting cannot run the SEO build.
+- A **VPS**, or any host that can run a long-lived Node process. Shared hosting cannot — and the static export is not a workaround (see [Step 7](#step-7--production-build)). Details in the [Deployment Guide](/docs/web/deployment).
 
 ## Step 1 — Extract and open the project
 
@@ -125,9 +125,11 @@ This one variable decides how the whole project builds:
 | Value | Build output | Hosting required |
 | --- | --- | --- |
 | `true` (or unset) | Server build — SSR, live `sitemap.xml`, per-page meta tags | VPS / Node host |
-| `false` | Static export to `out/` | Any static host (shared hosting, S3, …) |
+| `false` | Static export to `out/` — **not supported** | — |
 
-Setting it to `false` switches `next.config.mjs` to `output: "export"`, which turns off server rendering. **Search engines then receive an empty shell for dynamic pages**, so keep it `true` for any store that needs to rank. The rest of this guide assumes `true`.
+Setting it to `false` switches `next.config.mjs` to `output: "export"`, which turns off server rendering *and* middleware. Zone URLs, language URLs, per-page SEO, and `sitemap.xml` all stop working — see [Overview](/docs/web/overview#two-decisions-that-shape-everything).
+
+Keep it `true`. The rest of this guide assumes it.
 
 ## Step 4 — Configure Firebase (push notifications)
 
@@ -196,9 +198,11 @@ npm start
 
 The `start` script pins `NODE_ENV=production` and `NODE_PORT=8004` and boots the custom `server.js`. Continue with the [Deployment Guide](/docs/web/deployment) to put it behind a real domain.
 
-:::note
+:::warning Do not use the static export
 
-For a **static** build instead, set `NEXT_PUBLIC_SEO=false` and run `npm run export`. That script regenerates config, builds to `out/`, and copies `.htaccess` alongside it. Remember the SEO trade-off described in Step 3.
+`npm run export` (with `NEXT_PUBLIC_SEO=false`) still builds, but the export drops `src/middleware.js` entirely — so zone URLs (`/bhuj-quick/...`) and language URLs (`/ur/...`) all 404, on top of losing per-page meta and `sitemap.xml`.
+
+The build succeeds silently, which makes the breakage easy to miss. Keep `NEXT_PUBLIC_SEO=true` and deploy the Node server — see [Overview](/docs/web/overview#two-decisions-that-shape-everything).
 
 :::
 

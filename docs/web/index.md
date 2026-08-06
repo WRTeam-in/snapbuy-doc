@@ -27,7 +27,7 @@ The storefront is a **Next.js 16 Pages Router** app backed by an Admin Panel API
 Two consequences worth internalising before changing anything:
 
 1. **Never hardcode** a brand colour, image host, or store name. Read colours from CSS variables and derive image hosts from `NEXT_PUBLIC_API_URL`.
-2. **`NEXT_PUBLIC_SEO` decides the whole build.** `true` produces a server build that needs a Node host; `false` produces a static export that any host can serve but that hands crawlers an empty shell for dynamic pages.
+2. **`NEXT_PUBLIC_SEO` must be `true`.** It produces the server build, which needs a Node host. The `false` static export is not supported — middleware does not run in it, so zone and language URLs 404. See [Overview](/docs/web/overview#two-decisions-that-shape-everything).
 
 ## Quick start
 

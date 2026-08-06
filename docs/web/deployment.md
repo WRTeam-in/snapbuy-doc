@@ -11,9 +11,9 @@ This guide deploys the storefront to a VPS with **SEO enabled** — a real Node 
 
 :::info Why a VPS
 
-With `NEXT_PUBLIC_SEO=true` the app server-renders every page, generates `sitemap.xml` on request, and emits per-page meta tags. That needs a running Node process. Shared hosting cannot do this.
+With `NEXT_PUBLIC_SEO=true` the app server-renders every page, generates `sitemap.xml` on request, emits per-page meta tags, and runs `src/middleware.js` — which is what makes zone URLs (`/bhuj-quick/...`) and language URLs (`/ur/...`) resolve at all. All of that needs a running Node process, which shared hosting cannot provide.
 
-If you only have shared hosting, you must set `NEXT_PUBLIC_SEO=false` and accept that crawlers receive an empty shell for dynamic pages.
+**A VPS is required.** Setting `NEXT_PUBLIC_SEO=false` to fit shared hosting is not a supported fallback: the static export silently drops middleware, so every zone- and language-prefixed URL 404s. See [Overview](/docs/web/overview#two-decisions-that-shape-everything).
 
 :::
 
@@ -117,7 +117,7 @@ npm install
 npm run build
 ```
 
-`npm run build` writes the server build to `.next/`. Do **not** run `npm run export` — that produces the static, non-SEO output.
+`npm run build` writes the server build to `.next/`. Do **not** run `npm run export` — that produces the static output, which loses both SEO and zone/language routing.
 
 ## Step 7 — Start with PM2
 

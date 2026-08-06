@@ -223,7 +223,7 @@ On a shared zone link the client re-resolves the slug to coordinates (`getZones`
 
 | Setting | Where | Effect |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SEO` | `.env` | `true` = server build with SSR; `false` = static export |
+| `NEXT_PUBLIC_SEO` | `.env` | **Must be `true`.** Server build with SSR. `false` switches to a static export that silently drops middleware — zone and language URLs 404. |
 | `NEXT_PUBLIC_BASE_URL` | `.env` | Canonical URLs and `sitemap.xml` |
 | `NEXT_PUBLIC_META_TITLE` / `_DESCRIPTION` / `_KEYWORDS` | `.env` | Defaults when the API supplies none |
 
