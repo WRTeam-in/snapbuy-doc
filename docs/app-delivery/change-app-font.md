@@ -6,46 +6,24 @@ sidebar_position: 13
 
 # Change App Font
 
-Swap the default font for one of your choice across the entire app.
+Swap the default font for one of your choice across the entire app. The app uses the [`google_fonts`](https://pub.dev/packages/google_fonts) package, so no font files need to be added manually.
 
-## Step 1 — Drop the Font File
+## Step 1 — Update the Font in `app_config.dart`
 
-Place your font files (`.ttf` or `.otf`) inside the `assets/fonts/` directory of the project.
-
-## Step 2 — Register the Font in `pubspec.yaml`
-
-Open `pubspec.yaml` and update the `fonts:` block under the `flutter:` section to point to your file:
-
-```yaml
-flutter:
-  fonts:
-    - family: CustomFont
-      fonts:
-        - asset: assets/fonts/MyCustomFont.ttf
-```
-
-- `family` — name you'll reference from Dart code (case-sensitive).
-- `asset` — path to the file you added in Step 1.
-
-For multi-weight fonts, list each file with its `weight` (e.g. `400` for regular, `700` for bold).
-
-## Step 3 — Apply the Font in the App Theme
-
-Open the theme file at `lib/core/theme/app_text_styles.dart` and change the new font in  `primaryFont`:
+Open `lib/core/configs/app_config.dart` and change the `fontFamily` value to the [Google Font](https://fonts.google.com/) of your choice:
 
 ```dart
-class AppTextStyles {
-
-  static const String primaryFont = 'CustomFont';
-
-}
+// App-wide font family
+static final String? fontFamily = GoogleFonts.instrumentSans().fontFamily;
 ```
 
-The string must match the `family:` value from `pubspec.yaml` exactly.
+Replace `instrumentSans()` with any font method available in the `google_fonts` package, for example:
 
-![Change Font](./images/changeFont.png)
+```dart
+static final String? fontFamily = GoogleFonts.poppins().fontFamily;
+```
 
-## Step 4 — Rebuild
+## Step 2 — Rebuild
 
 ```bash
 flutter pub get
@@ -55,5 +33,5 @@ flutter clean && flutter run
 The new font should now be applied across all screens.
 
 :::tip
-Register every weight your UI uses (regular, medium, bold, etc.) in the `pubspec.yaml` fonts block. Otherwise Flutter synthesizes missing weights, which can look thin or jagged on some devices.
+Browse [fonts.google.com](https://fonts.google.com/) to preview fonts, then use the matching method name from the `google_fonts` package (e.g. `Poppins` → `GoogleFonts.poppins()`).
 :::

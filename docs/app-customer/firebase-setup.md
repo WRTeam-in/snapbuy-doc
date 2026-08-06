@@ -34,6 +34,21 @@ The following authentication methods should be enabled in the Firebase console a
 - Configuring **iOS URL schemes** and `GoogleService-Info.plist`
 
 
+## Register the App via Firebase CLI
+
+If you prefer the CLI over the console UI, activate the FlutterFire CLI and run configure to register the app:
+
+```bash
+dart pub global activate flutterfire_cli
+flutterfire configure --project=<your-firebase-project-id>
+```
+
+`flutterfire configure` lets you pick (or create) the Android and iOS apps, registers them under the Firebase project, and auto-generates `lib/firebase_options.dart` plus downloads `google-services.json` / `GoogleService-Info.plist` into the correct folders.
+
+:::note
+Change your **package name** in the app code first, then run the above command. Running it before changing the package name will register the app under the old/default package name.
+:::
+
 ## Download Config Files & Place in Project
 
 Even if you used the FlutterFire CLI, you must verify that the Firebase config files are present in the correct locations. If they are missing or you prefer to add them manually, follow the steps below.

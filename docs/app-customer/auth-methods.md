@@ -11,7 +11,7 @@ Both the **allowed login methods** and the **default country** shown in the coun
 ## How to Access
 
 1. Log in to the your **Admin Panel**.
-2. Navigate to **Settings → System Configure**.
+2. Navigate to **Settings → General -> Login Setting**.
 
 ![System Configure Page](./images/appConfig.png)
 

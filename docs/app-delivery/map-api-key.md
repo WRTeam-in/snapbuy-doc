@@ -49,14 +49,14 @@ Before releasing to production, restrict each key so it only works from your app
 **Android key restrictions:**
 1. Open the Android key in **Credentials**.
 2. Under **Application restrictions**, select **Android apps**.
-3. Click **Add an item** and enter your app's **package name** (e.g. `com.yourcompany.estay`) and its **SHA-1 certificate fingerprint** (get it via `keytool -list -v -keystore your.keystore` or from Play Console → App signing).
+3. Click **Add an item** and enter your app's **package name** (e.g. `app.snapbuy.deliveryboy`) and its **SHA-1 certificate fingerprint** (get it via `keytool -list -v -keystore your.keystore` or from Play Console → App signing).
 4. Under **API restrictions**, select **Restrict key** and check only **Maps SDK for Android**.
 5. Save.
 
 **iOS key restrictions:**
 1. Open the iOS key in **Credentials**.
 2. Under **Application restrictions**, select **iOS apps**.
-3. Click **Add an item** and enter your app's **bundle identifier** (e.g. `com.yourcompany.estay`, found in Xcode → Runner target → General).
+3. Click **Add an item** and enter your app's **bundle identifier** (e.g. `app.snapbuy.deliveryboy`, found in Xcode → Runner target → General).
 4. Under **API restrictions**, select **Restrict key** and check only **Maps SDK for iOS**.
 5. Save.
 

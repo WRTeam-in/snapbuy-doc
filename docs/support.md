@@ -8,7 +8,7 @@ sidebar: null
 
 # Support & Help Center
 
-We're committed to helping you get the most out of your estay platform. Whether you're setting up your first project or need help with advanced features, our support team is here to assist you.
+We're committed to helping you get the most out of your Snapbuy platform. Whether you're setting up your first project or need help with advanced features, our support team is here to assist you.
 
 ## How to Get Help
 

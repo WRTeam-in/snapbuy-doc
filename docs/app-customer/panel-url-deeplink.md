@@ -19,23 +19,29 @@ Most clients won't need multiple environments — they push directly to a single
 
 ## Config Keys
 
-Each `env/<name>.json` file contains three keys:
+Each `env/<name>.json` file contains the following keys:
 
 | Key | Meaning |
 |-----|---------|
 | `BASE_URL` | Backend API root for all network calls |
-| `DEEPLINK_SCHEME` | Custom URL scheme (e.g. `estay` → `estay://booking/123`) |
-| `DEEPLINK_HOST` | Universal / App Link host — must match the web app host (e.g. `estay-demo.vercel.app`) |
+| `WEB_URL` | Web app URL |
+| `SOCKET_BASE_URL` | Socket server URL used for real-time connections |
+| `DEEPLINK_SCHEME` | Custom URL scheme (e.g. `snapbuy` → `snapbuy://product/123`) |
+| `DEEPLINK_HOST` | Universal / App Link host — must match the web app host (e.g. `snapbuy.wrteam.me`) |
 
 **Example** — `env/demo.json`:
 
 ```json
 {
-  "BASE_URL": "https://demo-estay.thewrteam.in",
-  "DEEPLINK_SCHEME": "estay",
-  "DEEPLINK_HOST": "estay-demo.vercel.app"
+  "BASE_URL": "https://admin-snapbuy.wrteam.me/customer/",
+  "WEB_URL": "https://snapbuy.wrteam.me",
+  "SOCKET_BASE_URL": "wss://admin-snapbuy.wrteam.me:8080/app/w73uw1egonunwexdhebg",
+  "DEEPLINK_SCHEME": "snapbuy",
+  "DEEPLINK_HOST": "snapbuy.wrteam.me"
 }
 ```
+
+![Deeplink Scheme](./images/deeplink.png)
 
 ## How to Change Values
 
@@ -92,7 +98,7 @@ flutter clean && flutter run
 - **Never edit the constants in `app_config.dart` by hand** — the sync script overwrites them. Edit the JSON instead.
 - `DEEPLINK_HOST` **must match the web app domain** for iOS Universal Links and Android App Links to work. 
 - `DEEPLINK_SCHEME` is the scheme value used for deeplinking. and it must be same in app settings and in web app. (dont change unless you want)
-- `webUrl` is auto-derived as `https://<DEEPLINK_HOST>`.
+- `WEB_URL` **must match the `DEEPLINK_HOST`** domain (e.g. `https://<DEEPLINK_HOST>`).
 
 :::
 

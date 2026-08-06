@@ -11,7 +11,7 @@ Temporarily lock the app while you perform server updates, database migrations, 
 ## How to Enable
 
 1. Open your **Admin Panel**.
-2. Navigate to **Settings → System Configure → Maintenance Mode** tab.
+2. Navigate to **Settings → Website & Apps → Maintenance Mode** tab.
 3. Toggle **Maintenance Mode** ON.
 5. Click **Save**.
 

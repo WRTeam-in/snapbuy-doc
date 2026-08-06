@@ -6,18 +6,15 @@ sidebar_position: 9
 
 # Contact Us Page
 
-Control the social media icons and links shown on the app's **Contact Us** screen.
+Control the content shown on the app's **Contact Us** screen.
 
-## Add Social Media Links
+## Edit Contact Us Content
 
 1. Log in to the your **Admin Panel**.
-2. Navigate to **Settings → Social Media Links**.
-3. For each social platform you want to show:
-   - **Upload an icon** (PNG / SVG recommended).
-   - **Enter the link** (full URL, including `https://`).
+2. Navigate to **Settings → Website & Apps → Contact us**.
+3. Enter or update the content using the **HTML editor**.
 4. Click **Save**.
 
-The app fetches this list at runtime and renders the icons on the Contact Us page. Each icon opens its corresponding link in the device browser when tapped.
+The app fetches this content at runtime and renders it on the Contact Us screen.
 
-![Social Media Links](./images/contactus.png)
-
+![Contact Us](./images/contactus.png)

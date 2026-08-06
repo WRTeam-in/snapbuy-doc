@@ -122,7 +122,6 @@ function HomepageHeader() {
     <header className={styles.heroBanner}>
       <div className={styles.heroGlow} aria-hidden="true" />
       <div className={clsx("container", styles.heroContent)}>
-        <p className={styles.heroEyebrow}>⚡ Fast Delivery &amp; Shopping Platform</p>
         <h1 className={styles.heroTitle}>{siteConfig.title}</h1>
         <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
         <div className={styles.heroButtons}>

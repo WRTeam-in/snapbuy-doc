@@ -10,20 +10,6 @@ The app uses Firebase for push notifications, authentication, and other Google s
 
 Please visit our [Firebase Setup Documentation](https://wrteam-in.github.io/common_app_doc/GeneralSettings/firebase/) and follow **every step in the order shown**.
 
-## Authentication Methods
-
-The following authentication methods should be enabled in the Firebase console as per your app requirements:
-
-| Method | Where to configure |
-|--------|-------------------|
-| Phone | Firebase console → Authentication → Sign-in method |
-| Google | Firebase console → Authentication → Sign-in method |
-| Apple | Firebase console → Authentication → Sign-in method |
-
-:::note
-**Email/Password** authentication is handled by the backend — no Firebase configuration needed for it.
-:::
-
 ## What the Guide Covers
 
 - Installing the Firebase CLI
@@ -33,6 +19,21 @@ The following authentication methods should be enabled in the Firebase console a
 - Generating and adding **Android SHA-1 / SHA-256** keys (debug, release, and Play App Signing)
 - Configuring **iOS URL schemes** and `GoogleService-Info.plist`
 
+
+## Register the App via Firebase CLI
+
+If you prefer the CLI over the console UI, activate the FlutterFire CLI and run configure to register the app:
+
+```bash
+dart pub global activate flutterfire_cli
+flutterfire configure --project=<your-firebase-project-id>
+```
+
+`flutterfire configure` lets you pick (or create) the Android and iOS apps, registers them under the Firebase project, and auto-generates `lib/firebase_options.dart` plus downloads `google-services.json` / `GoogleService-Info.plist` into the correct folders.
+
+:::note
+Change your **package name** in the app code first, then run the above command. Running it before changing the package name will register the app under the old/default package name.
+:::
 
 ## Download Config Files & Place in Project
 
