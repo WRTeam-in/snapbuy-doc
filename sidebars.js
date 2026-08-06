@@ -69,8 +69,17 @@ const sidebars = {
     {
       type: "category",
       label: "Web Portal",
+      link: {
+        type: "doc",
+        id: "web/index",
+      },
       items: [
         "web/overview",
+        "web/installation-steps",
+        "web/firebase-setup",
+        "web/file-structure",
+        "web/configuration",
+        "web/deployment",
       ],
     },
     "changelog",

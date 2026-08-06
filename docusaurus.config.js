@@ -177,7 +177,7 @@ const config = {
             position: "left",
           },
           {
-            to: "/docs/web/overview",
+            to: "/docs/web/",
             label: "Web Portal",
             position: "left",
           },

@@ -1,10 +1,11 @@
 ---
 id: overview
-title: Web Portal Overview
+title: Overview
 sidebar_position: 1
+description: What the Snapbuy Web Portal includes, its tech stack, and where to start.
 ---
 
-# Web Portal Overview
+# Overview
 
 The Snapbuy Web Portal is the customer-facing web application that allows users to browse products, place orders, and track deliveries — all from a browser.
 
@@ -30,11 +31,19 @@ The Snapbuy Web Portal is built with **Next.js** and provides:
 
 ## Getting Started
 
-:::info Coming Soon
-Detailed Web Portal setup documentation is being prepared. Please check back soon or contact our support team for assistance.
+1. [Installation Steps](/docs/web/installation-steps) — Install dependencies and configure `.env`, Firebase, and Maps
+2. [Firebase Setup](/docs/web/firebase-setup) — Set up push notifications with FCM
+3. [File Structure](/docs/web/file-structure) — Learn where everything lives before you customise
+4. [Configuration & Theming](/docs/web/configuration) — Colours, home page blocks, channels, zones, and languages
+5. [Deployment Guide](/docs/web/deployment) — Deploy to a production VPS with Apache, PM2, and HTTPS
+
+:::info
+
+The Web Portal runs in SSR mode and needs a long-lived Node.js process — **shared hosting is not supported**. See the [Deployment Guide](/docs/web/deployment) for the full VPS setup.
+
 :::
 
-If you need help setting up the Web Portal right away, reach out to our support team:
+If you need help setting up the Web Portal, reach out to our support team:
 
 - 📧 **Email**: support@snapbuy.in
 - 🌐 **Website**: [snapbuy.in](https://www.snapbuy.in/)
