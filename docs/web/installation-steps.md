@@ -105,15 +105,6 @@ NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
 Use `wss://` on any HTTPS domain; `ws://` only works for local, non-HTTPS setups.
 
-### Demo credentials (optional)
-
-```env
-NEXT_PUBLIC_DEMO_LOGIN_NO=
-NEXT_PUBLIC_DEMO_OTP=
-```
-
-Prefills the login form for demo builds. **Leave both empty in production.**
-
 ### SEO mode
 
 ```env
@@ -249,7 +240,7 @@ npm install
 - Confirm `public/firebase-messaging-sw.js` matches `.env`.
 - In DevTools → **Application → Service Workers**, check that `firebase-messaging-sw.js` is registered and active.
 - Grant notification permission in the browser, then send a test message from **Firebase Console → Cloud Messaging**.
-- Full diagnosis steps: [Firebase Setup — Troubleshooting](/docs/web/firebase-setup#troubleshooting).
+- Full setup steps: [Firebase Setup](/docs/web/firebase-setup).
 
 ## Next steps
 

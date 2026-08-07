@@ -40,7 +40,7 @@ If you need additional help, our dedicated support team is available through mul
 
 #### Web Application Support
 
-- **Contact**: Jensi Bhudia
+- **Contact**: Jensi Bhudiya
 - **Platform**: [Microsoft Teams](https://teams.live.com/l/invite/FEAznhtEONWkyZcHgM?v=g1)
 - **Scope**: Web application setup, and issues
 
