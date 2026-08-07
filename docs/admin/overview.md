@@ -6,58 +6,68 @@ sidebar_position: 1
 
 # Admin Panel Overview
 
-Welcome to your platform's **admin panel** — the control center for your entire hotel booking business. From here you manage properties and rooms, handle bookings and customers, process payments and refunds, run marketing campaigns, publish content, and configure how the whole platform behaves.
+The **Snapbuy Admin Panel** is the control centre for your entire store. Everything the Customer App, the Delivery Boy App and the Web Portal display is driven from here — products, stores, delivery zones, orders, payments, notifications and every configuration switch.
 
-## What's Included
+This section takes you from an empty server to a fully configured, live store.
 
-The Snapbuy Admin Panel provides:
+## What the Admin Panel manages
 
-- 🏨 **Property & Room Management** — Properties, room types, amenities, and custom onboarding fields
-- 📅 **Bookings** — Reservations, check-ins/check-outs, availability
-- 👥 **Customers** — Accounts, activity, insights, and manual refunds
-- 📢 **Marketing** — Promo codes, referral program, and notifications
-- 🎟️ **Event Management** — Event types and customer inquiries
-- 🌍 **Location & Policies** — Countries, cities, currencies, taxes, and policies
-- 💳 **Payments** — Gateway configuration and transaction ledger
-- 🔐 **Staff & Access** — Staff accounts, roles, and permissions
-- 🧩 **Content** — Homepage, banners, blogs, FAQs
-- ⚙️ **Settings** — Branding, integrations, languages, and more
+| Area | What you control |
+| --- | --- |
+| **Catalogue** | Categories, products, brands, attributes, taxes, stock, bulk import/update |
+| **Selling area** | Countries, delivery zones, delivery cities & areas, stores |
+| **Orders** | Order lifecycle, delivery boy assignment, return requests, invoices |
+| **Customers** | Accounts, carts, wishlists, wallet, transactions, withdrawal requests |
+| **Delivery boys** | Accounts, cash collection, salary, settlements, their own web portal |
+| **Storefront** | Home Builder layouts, banners, offers, blogs, FAQs, SEO |
+| **Marketing** | Promo codes, push notifications, emails, popup offers, cart reminders |
+| **Configuration** | Firebase, maps, SMTP, SMS, payment gateways, chat, languages, deeplinks |
+| **System** | Roles & permissions, staff users, activity logs, cron jobs, system updater |
 
-## The Most Important Concept: Country & Property Context
+## How Snapbuy is put together
 
-At the top of the admin panel you'll find **country** and **property** switchers in the topbar. **Most of what you see is scoped to your currently selected country (and property).**
+Snapbuy's admin panel is a **Laravel 12** application with a **Vue 3** single-page front end. Knowing this helps when you are choosing hosting:
 
-- Switch the **country** to view that country's bookings, customers, properties, promo codes, payments, and so on.
-- Switch the **property** to narrow further to a single property where relevant.
+- **PHP 8.2 or newer** is required — a hard floor, not a recommendation.
+- **MySQL / MariaDB** is the only supported database.
+- The panel needs a **server cron job** for scheduled work (cart reminders, maintenance windows, scheduled home layouts, queued jobs).
+- Live chat and real-time order updates run over **Laravel Reverb** or **Pusher**.
+- Push notifications run through **Firebase Cloud Messaging**.
 
-Some pages are **global** and ignore these switchers — for example Events, Languages, Notification (Firebase) Settings, and most items under Settings.
-
-:::info Keep this in mind
-If a customer, booking, or transaction "isn't showing up," the first thing to check is the **country/property selected in the topbar** — you may simply be looking at a different region.
+:::info Version
+This documentation covers **Snapbuy v3.0.0**.
 :::
 
-## The Dashboard
+## The recommended path
 
-When you log in, you land on the **Dashboard** — an at-a-glance overview of your business with key stats and analytics for your selected country.
+Follow these pages in order. Each one assumes the previous is done.
 
-## Access & Permissions
+1. **[Server Requirements](/docs/admin/server-requirements)** — confirm your hosting can run Snapbuy.
+2. **[Create a Subdomain](/docs/admin/create-subdomain)** — where the panel will live.
+3. **[PHP INI Settings](/docs/admin/php-ini-settings)** — limits that must be raised before installing.
+4. **[Localhost Setup](/docs/admin/localhost-setup)** — for testing on your own machine.
+5. **[Server Setup](/docs/admin/server-setup)** — the live installation wizard.
+6. **[Cron Job Setup](/docs/admin/cron-jobs)** — without this, several features silently stop working.
+7. **[Setup Guide](/docs/admin/setup-guide)** — the nine in-panel steps that make the store usable.
 
-What you can see and do in the admin panel depends on your **role**. The main administrator has full access; staff members only see the sections their assigned role allows.
+After that, work through **Settings** and then the individual modules.
 
-## Getting Started
+## The Setup Guide widget
 
-:::info Coming Soon
-Detailed Admin Panel setup documentation is being prepared. Please check back soon or contact our support team for assistance.
-:::
+After installation the panel shows a **Setup Guide** in the sidebar with a completion ring. It tracks nine steps and hides itself once all nine are done:
 
-If you need help setting up the Admin Panel right away, reach out to our support team:
+Country → Zone → Store → Home Builder → SMTP → Firebase → Map → Chat → Cron
+
+If a store ever reports "the app shows nothing" or "no notifications arrive", the Setup Guide is the first place to look — an incomplete step is almost always the cause.
+
+![Setup Guide widget in the admin sidebar](/images/panel/setup-guide-widget.png)
+
+## Access and permissions
+
+Snapbuy uses **role-based access control**. The account created during installation is the **Super Admin** and holds every permission. Staff accounts you create later see only the menus their role allows.
+
+## Need help?
 
 - 📧 **Email**: support@snapbuy.in
 - 🌐 **Website**: [snapbuy.in](https://www.snapbuy.in/)
-
-## Quick Links
-
-- [Web Portal](/docs/web/overview) — Customer-facing web app
-- [Customer App Setup](/docs/app-customer/prerequisites) — Configure the mobile app
-- [Delivery Boy App Setup](/docs/app-delivery/prerequisites) — Configure delivery app
-- [Support](/docs/support) — Get help from our team
+- 📄 **[Support](/docs/support)**
