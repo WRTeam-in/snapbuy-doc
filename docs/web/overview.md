@@ -71,7 +71,7 @@ This means a long-lived Node process, so **shared hosting is not supported**. Se
 
 **2. Nothing brand-specific is hardcoded.**
 
-Colours come from CSS variables set at runtime; image hosts are derived from `NEXT_PUBLIC_API_URL`. Hardcoding either breaks the next client's build. See [Configuration & Theming](/docs/web/configuration).
+Colours come from CSS variables set at runtime; image hosts are derived from `NEXT_PUBLIC_API_URL`. Hardcoding either breaks the next client's build. For what this looks like from the Admin Panel side, see [Configuration & Theming](/docs/web/configuration).
 
 ## Getting started
 

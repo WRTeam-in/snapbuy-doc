@@ -2,248 +2,203 @@
 id: configuration
 title: Configuration & Theming
 sidebar_position: 5
-description: Change colours, home page blocks, channels, zones, and languages — nearly everything visual comes from the Admin Panel at runtime.
+description: Change colours, home page sections, channels, zones, and languages for the Web Portal — all from the Admin Panel, with no code changes.
 ---
 
 # Configuration & Theming
 
-The Snapbuy Web Portal is a **white-label template**. Nearly everything visual — colours, header artwork, home page composition, channels, languages — comes from the Admin Panel at runtime, not from the code. This guide explains what is configurable and where each setting lands.
+The Snapbuy Web Portal is a **white-label storefront**. Almost everything a visitor sees — brand colours, header artwork, the home page layout, delivery zones, channels, and languages — is controlled from the Admin Panel, not built into the site.
 
-The golden rule: **never hardcode a brand colour, image host, or store name.** The same codebase runs for every client.
+That means you can rebrand the storefront, reorder the home page, or launch a new zone without a developer and without redeploying.
 
-## Configuration sources
+:::info What needs a developer
 
-| Source | Set by | Changes require |
-| --- | --- | --- |
-| `.env` | Developer, at deploy time | Rebuild + restart |
-| `web_settings` API | Admin Panel | Reload |
-| `home_layout` API | Admin Panel | Reload |
-| Translations API | Admin Panel | Reload |
+Only the values in the site's `.env` file (the API address, the SEO flag, Firebase and Maps keys) are set at deploy time. Changing one of those requires a rebuild — see [Installation Steps](/docs/web/installation-steps). Everything on this page is a live setting: save it in the Admin Panel and reload the storefront.
 
-Only `.env` needs a rebuild — everything else is live.
+:::
+
+## Where each setting lives
+
+| What you want to change | Admin panel path | Takes effect |
+|---|---|---|
+| Brand colours, logo, store name | Settings → **Web Settings** | On reload |
+| Home page layout and sections | **Home Builder** | On publish |
+| Header background and text colour | **Home Builder** → Header Settings | On publish |
+| Delivery zones | **Zones** | On reload |
+| Languages and translations | **Languages** | On reload |
+| Payment gateways | Settings → **Payment Gateway** | On reload |
 
 ## Theming
 
-### How colours reach the page
+The storefront reads its entire colour scheme from the Admin Panel. There is no brand colour written into the site itself, which is why the same build can serve any store.
 
-The Admin Panel supplies colours; `Header.jsx` writes them onto `document.documentElement` as CSS custom properties; components consume them via utility classes in `src/styles/globals.css`.
+Set colours under **Settings → Web Settings**:
 
-Defaults live in `:root` in `globals.css` and are overridden at runtime:
+| Setting | Controls |
+|---|---|
+| Primary colour | Buttons, links, prices, active states |
+| Light primary colour | Tinted backgrounds and highlighted surfaces |
+| Text colour | Default body text |
+| Secondary / sub text colour | Muted captions and helper text |
+| Page background | The page backdrop |
+| Card background | Product and category card surfaces |
+| Border colour | Dividers and hairlines |
 
-| Variable | Meaning |
-| --- | --- |
-| `--primary-color` | Brand colour — buttons, links, active states |
-| `--light-primary-color` | Tinted surfaces |
-| `--font-color` | Default text |
-| `--secondary-text-color`, `--sub-text-color` | Muted text |
-| `--body-background-color` | Page background |
-| `--container-bg`, `--category-card-bg` | Card surfaces |
-| `--border-color` | Hairlines |
-| `--layout-header-bg` | Header fill |
-| `--layout-header-gradient` | Header image or gradient |
-| `--layout-header-text` | Header text/icons |
+**Dark mode is automatic.** Each colour has a dark-mode counterpart, so you do not configure a separate dark theme — set your colours once and both modes follow.
 
-Use the class, not the raw value:
+Illustrations (empty carts, 404 pages, loading animations) are also recoloured to your primary colour automatically. You do not need to supply branded artwork for these.
 
-```jsx
-<button className="primaryBackColor text-white">Add</button>
-<span className="primaryColor">₹499</span>
-```
+### Header appearance
 
-Dark mode re-declares the same variables under `.dark`, so a component styled with these classes needs no dark-mode branch.
+The header is configured per home layout, under **Home Builder → Header Settings**:
 
-### Header theming
+- **Background** — either a solid **colour** or an **image**.
+- **Text colour** — the header title, address, and icons.
+- **Category icon** — shown on the home category tab (Category Wise layouts only).
 
-`shopModeSlice.layoutTheme` carries the header appearance from `home_layout`:
+:::note
 
-```js
-{
-  background_theme: "image" | "color",
-  background_image_url: "https://…",
-  background_color: "#8CC63F",
-  text_color: "#ffffff",
-  header_icon_url: "https://…"
-}
-```
+When you pick a solid colour, the storefront expands it into a soft vertical gradient automatically, so a single brand colour still looks finished.
 
-- **`background_theme: "color"`** — the single colour is expanded into a vertical gradient (dark → base → light) via `color-mix`, so any brand colour stays on-brand.
-- **`background_theme: "image"`** — the header and the category strip below it are separate DOM subtrees, so each paints a *slice* of the same image: both are sized to the combined height, the header shows the top slice and the strip the bottom one. This is what makes the artwork read as one continuous image.
+When you pick an image, the header and the category strip beneath it together display one continuous picture — so choose artwork that reads well across the full height, not just the top band.
 
-### SVG and Lottie recolouring
+:::
 
-Baked-in brand colours are swapped at runtime:
-
-- `ThemedSvg` (`src/components/notfound/ThemedSvg.jsx`) fetches an SVG, replaces known accent hexes with `var(--primary-color)`, and inlines it. Use it for empty-state and 404 artwork instead of `next/image`.
-- `src/utils/lottieColor.js` walks Lottie JSON and rewrites fill colours.
+See [Configure Home Screen](/docs/app-customer/home-screen-settings) for the full Home Builder walkthrough — the same layouts drive both the app and the Web Portal.
 
 ## Home page composition
 
-The home page is assembled from `home_layout`. Each block has a `type`, a `layout`, and a `config`, and `HomeLayout.jsx` routes it to a section component.
+The home page is assembled from the sections you add in **Home Builder**. Nothing on it is fixed; you control what appears and in what order.
 
-### Block types
+Available section types:
 
-| `type` | Component | Renders |
-| --- | --- | --- |
-| `product_slider` | `ProductSliderSection` | Products as carousel / grid / list |
-| `category_section` | `CategorySection` | Category chips |
-| `brand_section` | `BrandSection` | Brand chips |
-| `banner_slider` | `BannerSliderSection` | Banner carousel |
-| `grid_banner` | `GridBannerSection` | Banner grid |
-| `title_image` | `TitleImageSection` | Title + artwork |
-| `text` | `TextSection` | Rich text |
+| Section type | Shows |
+|---|---|
+| Banner Slider | Horizontal promotional banner carousel |
+| Category Section | Grid or row of categories |
+| Product Slider | Horizontal scrollable product list |
+| Top Brands | Brand logos row |
+| Grid Banner | Grid of promotional banner tiles |
+| Title Image | Single banner image with a title |
+| Heading / Text | Plain heading or text block |
 
-### Section wrapper keys
+Drag sections to reorder them, toggle one off without deleting it, or use **Use Template** to add a pre-built set.
 
-Set on the outer section object:
+### Section appearance
 
-| Key | Effect |
-| --- | --- |
-| `margin_top`, `margin_bottom` | Vertical spacing |
-| `border_radius` | Corner radius of the section panel |
+Each section can be plain or given its own backdrop. Pick a **variant**:
 
-### The `variant` contract
+| Variant | Shows a title | Shows a background |
+|---|---|---|
+| Default | No | No |
+| With title | Yes | No |
+| With background | Yes | Your chosen image |
+| With colour | Yes | Your chosen colour |
 
-Every section that can paint a backdrop honours the same four variants:
+:::warning Settings apply per variant
 
-| `variant` | Title | Background | Colours |
-| --- | --- | --- | --- |
-| `default` (or unset) | ✗ | ✗ | ✗ |
-| `with_title` | ✓ | ✗ | ✗ |
-| `with_background` | ✓ | `background_image_url` | `text_color` |
-| `with_color` | ✓ | `background_color` | `text_color` |
-
-Fields are ignored **by variant, not by emptiness** — the Admin Panel may leave values populated from a previously selected variant, so `default` shows nothing even when a colour and title are present in the payload.
-
-### Backdrop keys
-
-| Key | Notes |
-| --- | --- |
-| `background_image_url` | Empty string means "no image" |
-| `background_color` | `with_color` only |
-| `text_color` | Section **heading** colour |
-| `item_text_color` | Chip **caption** colour (categories/brands) |
-| `bg_image_aspect` | Ratio of the backdrop, e.g. `"3:1"`, `"3:4"` |
-
-`text_color` and `item_text_color` are separate because the heading sits on the backdrop while the captions sit under the chips — one colour cannot serve both without making one of them unreadable.
-
-`bg_image_aspect` sets a **minimum** height, not a fixed one. The panel resolves to `max(ratio height, content height)`, so the chips are never cropped on a narrow viewport. It is implemented as a zero-width floated spacer with a percentage `padding-top`, because percentage padding resolves against *width* (an `aspect-ratio` on a zero-width box would compute to zero height).
-
-### Layout keys per section
-
-**Product slider** — `layout`: `horizontal` | `list` | `grid` / `grid_<n>`
-
-| Key | Effect |
-| --- | --- |
-| `grid_columns` | Column count |
-| `product_grid_gap` | Gap in px |
-| `product_card_radius` | Card corner radius (`0` = square) |
-| `block_padding` | Padding inside the block |
-| `section_title` | Heading |
-
-**Category / brand section** — `layout`: `horizontal` | `circular` | `grid`
-
-| Key | Effect |
-| --- | --- |
-| `grid_columns` | Column count |
-| `category_gap` / `brand_gap` | Gap in px |
-| `category_radius` / `brand_radius` | Chip radius (ignored when `circular`) |
-| `show_name` | Brand section only — hide captions |
-
-### "See All" / data sources
-
-A product block declares how it was sourced, and the Web Portal forwards that to the listing page:
-
-| `data_source` | Id field on the block |
-| --- | --- |
-| `category` | `category_id` |
-| `brand` | `brand_id` |
-| `manual` | `config.manual_product_ids` (CSV) |
-| `most_favorite`, … | none |
-
-The "View More" button only renders when the API sends `viewMorePreviewImages` — an empty array means the block has nothing more to show.
-
-## Channels (quick vs all-shop)
-
-The store can run two channels — fast local delivery and a wider catalogue.
-
-```js
-mode: "quick" | "allShop"
-```
-
-:::warning
-
-The Redux value for the second channel is `"allShop"`, but the **API string is `"ecommerce"`**. Do not use them interchangeably.
+If you set a background colour and later switch the section back to **Default**, the colour stays saved but stops showing. This is expected — the storefront applies only the fields belonging to the variant you selected. To make a saved colour appear again, switch the variant back to **With colour**.
 
 :::
 
-Driven by `home_layout`:
+When a section has a backdrop, you can set two text colours separately:
 
-| Field | Meaning |
-| --- | --- |
-| `available_modes` | `both` shows the channel toggle; anything else hides it |
-| `layout_mode` | Which channel is the default (or the only one) |
-| `channel_label_quick` / `channel_label_ecommerce` | Toggle labels |
-| `time_to_deliver` | ETA label, e.g. `"22 mins"` |
-| `store_closed` | `1` keeps the catalogue browsable but disables the buy path |
+- **Heading colour** — the section title, which sits *on* the backdrop.
+- **Caption colour** — the labels under category or brand chips, which sit *below* it.
 
-Carts are **per channel**: switching channels loads that channel's cart, and currency is re-read from the cart response (settings do not carry it).
+They are separate because one colour rarely stays readable in both places.
 
-## Zones and URLs
+You can also set a **background aspect ratio** (for example 3:1). This is a *minimum* height — if the section's contents need more room, the panel grows rather than cropping them, so chips are never cut off on narrow phone screens.
 
-A zone is a delivery area with its own catalogue and pricing. Zone slugs prefix the URL:
+### Layout options
+
+**Product Slider** — display as a carousel, a list, or a grid. You can set the number of columns, the gap between products, the card corner rounding, and the section heading.
+
+**Category and Brand sections** — display as a horizontal row, circular chips, or a grid. You can set the column count, spacing, and corner rounding. Brand sections can additionally hide their captions.
+
+### "View More"
+
+Product sections can be sourced from a category, a brand, a manually chosen list of products, or an automatic list such as most-favourited.
+
+The **View More** button appears only when there are more products than the section displays. If a section shows everything it has, no button is shown — this is expected, not a fault.
+
+## Channels
+
+The store can run two channels side by side:
+
+- **Quick** — fast local delivery from nearby stock.
+- **Ecommerce** — a wider catalogue with standard delivery.
+
+Configure them in **Home Builder**:
+
+| Setting | Effect |
+|---|---|
+| Available modes | Show both channels with a toggle, or run only one |
+| Default mode | Which channel customers land on |
+| Channel labels | The names shown on the toggle |
+| Delivery time | The ETA label, e.g. "22 mins" |
+| Store closed | Keeps the catalogue browsable but disables ordering |
+
+:::note
+
+Each channel has its own **separate cart**. A customer switching between Quick and Ecommerce sees a different basket — items do not merge. Currency is also read per channel.
+
+:::
+
+## Zones
+
+A zone is a delivery area with its own catalogue, pricing, and home layout. Each zone gets its own web address:
 
 ```
-/bhuj-quick              → zone home
-/bhuj-quick/products     → zone listing
-/ur/bhuj-quick/products  → localised zone listing
+yourstore.com/bhuj-quick              → that zone's home page
+yourstore.com/bhuj-quick/products     → that zone's product listing
+yourstore.com/ur/bhuj-quick/products  → the same, in Urdu
 ```
 
-`src/middleware.js` rewrites these onto the underlying route, so the zone slug survives only in `router.asPath`. Build links with `useZoneHref()` — it preserves both the zone and the language:
+These are real, shareable links. A customer who opens a zone link lands directly in that zone with the right catalogue and pricing — no need to select a location first.
 
-```jsx
-const zoneHref = useZoneHref();
-<Link href={zoneHref("/products")}>Shop</Link>
-```
+:::warning Zone URLs need the server build
 
-On a shared zone link the client re-resolves the slug to coordinates (`getZones` → polygon centre → `setCity`), otherwise the header would sit on "Loading…" forever.
+Zone and language web addresses only work when the storefront runs as a server build (`NEXT_PUBLIC_SEO=true`). On a static export every zone link returns a 404. See [Overview](/docs/web/overview#two-decisions-that-shape-everything).
+
+:::
 
 ## Languages
 
-- Available languages come from the API; the selection persists in Redux.
-- `t("key")` reads server-supplied translations, falling back to bundled `src/utils/en.json`. The local `ur.json` is **not** used at runtime.
-- RTL is handled by `useIsRtl()` / `useDir()`, which set `dir` on containers.
+Add languages and edit translations under **Languages** in the Admin Panel. The storefront picks them up on reload — translations are not built into the site.
 
-:::caution Hydration caution
+Right-to-left languages such as Arabic and Urdu are supported; the layout mirrors automatically when an RTL language is selected.
 
-`t()` reads the persisted store, so the server renders English while the client may render another locale. For text that appears before mount, render a static string rather than `t()`, or gate on `useIsHydrated()`.
-
-:::
+Each language also gets its own URL prefix (`/ur/...`), so localised pages can be shared and indexed by search engines.
 
 ## SEO
 
-| Setting | Where | Effect |
-| --- | --- | --- |
-| `NEXT_PUBLIC_SEO` | `.env` | **Must be `true`.** Server build with SSR. `false` switches to a static export that silently drops middleware — zone and language URLs 404. |
-| `NEXT_PUBLIC_BASE_URL` | `.env` | Canonical URLs and `sitemap.xml` |
-| `NEXT_PUBLIC_META_TITLE` / `_DESCRIPTION` / `_KEYWORDS` | `.env` | Defaults when the API supplies none |
+Per-page titles, descriptions, and share images come from the Admin Panel, so you can tune how each category or product appears in search results and on social media.
 
-Per-page metadata comes from the API via `src/utils/selectSeoRow.js`; `canonicalUrl.js` builds canonical tags. Blog canonicals deliberately drop the zone prefix to avoid duplicate-content across zones.
+Where the Admin Panel supplies nothing, the storefront falls back to the default title, description, and keywords set in its `.env` file at deploy time.
 
-See the [Deployment Guide](/docs/web/deployment) for verifying SEO output on a live server.
+Two settings are fixed at deploy time and need a developer:
+
+| Setting | Why it matters |
+|---|---|
+| SEO mode | Must be enabled, or search engines see an empty page and zone URLs break |
+| Site address | Generates every link in the sitemap and all canonical tags |
+
+See the [Deployment Guide](/docs/web/deployment) for confirming SEO works on a live site.
 
 ## Payments
 
-Enabled gateways come from the API and are read through `src/utils/paymentSettings.js`. Supported integrations include Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery. No gateway keys live in the Web Portal — the Admin Panel holds them.
+Enable and configure gateways under **Settings → Payment Gateway**. Supported: Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery.
 
-## Adding a new configurable section
+:::info
 
-1. Create the component in `src/components/homelayout/sections/`.
-2. Register its `type` in the switch in `HomeLayout.jsx`, passing `borderRadius={sectionRadius}` if it paints a backdrop.
-3. Reuse the `variant` contract above rather than inventing new keys.
-4. Read colours from CSS variables so the section follows the brand automatically.
+All gateway keys are stored in the Admin Panel, never in the storefront. Enabling or switching a gateway is a live change — no redeploy needed.
+
+:::
 
 ## Related pages
 
-- [File Structure](/docs/web/file-structure) — where each of these files lives
-- [Installation Steps](/docs/web/installation-steps) — the `.env` variables in full
-- [Deployment Guide](/docs/web/deployment) — verifying SEO on a live server
+- [Configure Home Screen](/docs/app-customer/home-screen-settings) — the full Home Builder guide
+- [Overview](/docs/web/overview) — what the Web Portal includes
+- [Installation Steps](/docs/web/installation-steps) — the deploy-time settings
+- [Deployment Guide](/docs/web/deployment) — putting the storefront live
