@@ -3,106 +3,84 @@ id: support
 title: Support
 sidebar_position: 1
 sidebar: null
+description: Get help with Snapbuy — dedicated contacts for the Admin Panel, mobile apps, and Web Portal, plus email support on working days.
 ---
-
 
 # Support & Help Center
 
-We're committed to helping you get the most out of your Snapbuy platform. Whether you're setting up your first project or need help with advanced features, our support team is here to assist you.
+We're committed to helping you get the most out of your Snapbuy platform. Whether you're setting up your first project or need help with an advanced feature, our team is here to assist you.
 
-## How to Get Help
+:::tip Fastest route to an answer
 
-### 1. Documentation
+Most setup questions are already answered in the docs. Try the **search bar** at the top (or press <kbd>Ctrl</kbd> + <kbd>K</kbd>) before opening a ticket — you'll usually have your answer in seconds.
 
-Before contacting support, please check our comprehensive documentation. You can find detailed guides on:
+:::
 
-- Installation and setup
-- Feature usage
-- Configuration
-- Troubleshooting
-- Best practices
+## Talk to the right person
 
-### 2. Contact Support
+Each part of the platform has a dedicated specialist. Reaching out to the right one gets you a faster, more precise answer.
 
-If you need additional help, our dedicated support team is available through multiple channels:
+| Area | Contact | Channel | Best for |
+|---|---|---|---|
+| 🖥️ **Admin Panel** | Vipul Vaghjiyani | [Microsoft Teams](https://teams.live.com/l/invite/FEApP6xzBUkr4WtbgE) | Panel setup, configuration, and management |
+| 📱 **Mobile Apps** | Hency Pithadiya | [Microsoft Teams](https://teams.live.com/l/invite/FEAeLee40NMWJyoigE) | Customer & Delivery app setup, builds, publishing |
+| 🌐 **Web Portal** | Jensi Bhudiya | [Microsoft Teams](https://teams.live.com/l/invite/FEAznhtEONWkyZcHgM?v=g1) | Web Portal setup, deployment, and issues |
+| ✉️ **General** | Support Team | [support@wrteam.in](mailto:support@wrteam.in) | Anything else — replies within 1 working day |
 
-#### Admin Panel Support
+## Support hours
 
-- **Contact**: Vipul Vaghjiyani
-- **Platform**: [Microsoft Teams](https://teams.live.com/l/invite/FEApP6xzBUkr4WtbgE)
-- **Scope**: Admin panel setup, configuration, and management
+- **Days** — Monday through Friday
+- **Hours** — 9:00 AM to 6:00 PM IST (GMT +5:30)
+- **Region** — 🇮🇳 India (Asia)
 
-#### Mobile App Support
+Messages sent outside these hours are answered on the next working day.
 
-- **Contact**: Hency Pithadiya
-- **Platform**: [Microsoft Teams](https://teams.live.com/l/invite/FEAeLee40NMWJyoigE)
-- **Scope**: Mobile app setup, features, and troubleshooting
+## Before you reach out
 
-#### Web Application Support
+Sending these three things up front usually turns a multi-day back-and-forth into a single reply.
 
-- **Contact**: Jensi Bhudiya
-- **Platform**: [Microsoft Teams](https://teams.live.com/l/invite/FEAznhtEONWkyZcHgM?v=g1)
-- **Scope**: Web application setup, and issues
+### 1. Purchase information
 
-#### Email Support
+- Your **purchase code** — [where to find it](https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code)
+- Product **version**
+- **Platform** — Web, Android, or iOS
 
-- **Email**: support@wrteam.in
-- **Response Time**: Within 24 hours
-- **Scope**: General inquiries and non-urgent issues
+### 2. Issue details
 
-## Support Hours
+- A clear description of the problem
+- **Steps to reproduce** it
+- What you **expected** versus what actually **happened**
 
-Our support team is available:
+### 3. Supporting material
 
-- **Days**: Monday through Friday
-- **Hours**: 9:00 AM to 6:00 PM IST (GMT +5:30)
-- **Location**: 🇮🇳 India (Asia)
+- Screenshots or a short screen recording
+- The exact **error message** (copy the text rather than describing it)
+- Relevant log files, if you have them
 
-## For Effective Support
+:::info Sharing credentials
 
-To help us assist you more effectively, please include:
+Never post passwords, API keys, or purchase codes in a public channel. Share them only in a direct message with your assigned specialist.
 
-1. **Purchase Information**
+:::
 
-   - Your purchase code (find your purchase code from this [guide](https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code) )
-   - Product version
-   - Platform (Web/Mobile)
+## Where to look first
 
-2. **Issue Details**
+| Question | Start here |
+|---|---|
+| Setting up the backend | [Admin Panel](/docs/admin/overview) |
+| Building the customer app | [Customer App](/docs/app-customer/prerequisites) |
+| Building the delivery app | [Delivery Boy App](/docs/app-delivery/prerequisites) |
+| Deploying the website | [Web Portal](/docs/web/) |
+| Something isn't working | [FAQs](/docs/faqs) |
 
-   - Clear description of the problem
-   - Steps to reproduce
-   - Expected vs. actual behavior
+## Enjoying Snapbuy?
 
-3. **Supporting Materials**
-   - Screenshots
-   - Error messages
-   - Video recordings (if applicable)
-   - Log files (if available)
+Thank you for choosing our product 🙏
 
-If you can't find what you're looking for, our support team is just a message away. We typically respond to all inquiries within 24 hours through your preferred contact method.
+If Snapbuy is working well for you, a **5-star rating** genuinely helps us keep improving it — and helps other buyers find it.
 
+**How to rate:** go to **CodeCanyon → Menu → Downloads** and leave your review.
 
-## Your Feedback
+[⭐ Rate Snapbuy on CodeCanyon](https://codecanyon.net/downloads)
 
-**Dear Valued Customer,**  
-Thank you for choosing our product! 🙏  
-We strive to provide top-notch services and would love to hear your feedback.  
-
-**Help us improve!** Click [**here**](https://codecanyon.net/downloads) to rate us. ⭐⭐⭐⭐⭐  
-
-Your honest feedback helps us build a **stronger, more reliable product.**  
-Thank you for your support!  
-
-
-
-## Rating  
-
-If you like our app, we would **highly appreciate** a **5-star rating**!  
-
- **How to Rate Us?**  
-Go to **CodeCanyon > Menu > Download Page** and leave your review.  
-
-
-
-🎉 **Thank you for your support!** 🚀
+Have a suggestion instead? We read every piece of feedback — send it to [support@wrteam.in](mailto:support@wrteam.in) or share it through [Feedback](/docs/feedback).
