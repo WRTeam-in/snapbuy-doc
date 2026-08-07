@@ -7,7 +7,7 @@ description: What the Snapbuy Web Portal includes, its tech stack, how it fits t
 
 # Overview
 
-The Web Portal is the customer-facing storefront — customers browse products, place orders, and track deliveries from any browser.
+The Snapbuy Web Portal is the customer-facing storefront — customers browse products, place orders, and track deliveries from any browser.
 
 It is a **white-label template**: one codebase, configured per client. Branding, home page composition, delivery zones, channels, and languages all arrive from the Admin Panel API at runtime, so launching a new store means changing configuration, not code.
 
@@ -57,7 +57,7 @@ The project uses the **Pages Router** (`src/pages/**`). There is no `app/` direc
 
 It selects the build mode: `true` produces a server build (SSR, live `sitemap.xml`, per-page meta); `false` makes `next.config.mjs` switch to `output: "export"` and emit a static site into `out/`.
 
-**Only the server build is supported.** The static export drops three things this storefront depends on:
+**Only the server build is supported.** The static export drops three things the Web Portal depends on:
 
 | Feature | Why it breaks under `false` |
 | --- | --- |
@@ -65,7 +65,7 @@ It selects the build mode: `true` produces a server build (SSR, live `sitemap.xm
 | Language URLs (`/ur/...`) | Same middleware, same outcome. |
 | Per-page SEO + `sitemap.xml` | The ~16 pages with `getServerSideProps` guard it behind this flag (`if (process.env.NEXT_PUBLIC_SEO == "true")`) so the export can build at all. With it off they export `null`, meta/JSON-LD fall back to the env defaults, and `sitemap.xml` is never generated. |
 
-A static build still *compiles* and the storefront still loads — the failure is silent, which is what makes it dangerous. Zone routing is core to this app, so `false` is effectively a legacy path from before zones existed.
+A static build still *compiles* and the Web Portal still loads — the failure is silent, which is what makes it dangerous. Zone routing is core to this app, so `false` is effectively a legacy path from before zones existed.
 
 This means a long-lived Node process, so **shared hosting is not supported**. See the [Deployment Guide](/docs/web/deployment).
 
@@ -85,7 +85,7 @@ Work through these in order:
 
 :::warning Set up the Admin Panel first
 
-The storefront needs a reachable API URL before it will render anything. See the [Admin Panel](/docs/admin/overview) documentation.
+The Web Portal needs a reachable API URL before it will render anything. See the [Admin Panel](/docs/admin/overview) documentation.
 
 :::
 

@@ -7,7 +7,7 @@ description: This guide will walk you through the process of installing and conf
 
 # Installation Steps
 
-This guide walks through installing and configuring the Snapbuy Web Portal storefront for a production deployment.
+This guide walks through installing and configuring the Snapbuy Web Portal for a production deployment.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ The project is built on **Next.js 16** and **React 19**. Node 20 is the minimum 
 
 ### Required access
 
-- The storefront source code.
+- The Web Portal source code.
 - A running **Admin Panel** URL that is reachable from the internet.
 - A **VPS**, or any host that can run a long-lived Node process. Shared hosting cannot — and the static export is not a workaround (see [Step 7](#step-7--production-build)). Details in the [Deployment Guide](/docs/web/deployment).
 
@@ -65,7 +65,7 @@ NEXT_PUBLIC_BASE_URL=https://your-storefront-domain.com
 
 - `NEXT_PUBLIC_API_URL` — the Admin Panel origin. **No** trailing slash, and do not append the API path here.
 - `NEXT_PUBLIC_API_SUBURL` — the API path segment, appended to the URL above. The two are concatenated, so the example resolves to `https://your-admin-panel-domain.com/customer`.
-- `NEXT_PUBLIC_BASE_URL` — your own public storefront URL. Used to build canonical tags, `sitemap.xml`, and share links, so it must be the real production domain for SEO to be correct.
+- `NEXT_PUBLIC_BASE_URL` — your own public Web Portal URL. Used to build canonical tags, `sitemap.xml`, and share links, so it must be the real production domain for SEO to be correct.
 
 `NEXT_PUBLIC_API_URL` also drives the allowed image hosts in `next.config.mjs` — the config derives them from that domain's apex, so product images served from sibling subdomains load without any extra configuration. **Never hardcode an image host**; change the API URL and the hosts follow.
 
@@ -240,7 +240,7 @@ npm install
 ### "Network Error" / failed API calls
 
 - Check `NEXT_PUBLIC_API_URL` + `NEXT_PUBLIC_API_SUBURL` resolve to a real endpoint. Open the concatenated URL in a browser — it should return JSON.
-- Confirm the Admin Panel allows CORS from your storefront domain.
+- Confirm the Admin Panel allows CORS from your Web Portal domain.
 - Verify the SSL certificate if you are on HTTPS.
 
 ### Push notifications never arrive

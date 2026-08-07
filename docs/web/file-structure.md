@@ -7,7 +7,7 @@ description: Understanding the Snapbuy Web Portal project structure helps you fi
 
 # File Structure
 
-How the storefront is organised, and where to look when you need to change something.
+How the Snapbuy Web Portal is organised, and where to look when you need to change something.
 
 ## Technology stack
 
@@ -32,7 +32,7 @@ This project uses the **Pages Router** (`src/pages/**`), so routing lives in `sr
 ## Top level
 
 ```
-eCommerce/
+snapbuy-web/
 ├── public/                   # Served as-is
 │   └── firebase-messaging-sw.js   # Background push handler
 ├── scripts/

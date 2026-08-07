@@ -7,7 +7,7 @@ description: The Snapbuy Web Portal uses Firebase Cloud Messaging (FCM) to deliv
 
 # Firebase Setup
 
-The storefront uses **Firebase Cloud Messaging (FCM)** to deliver push notifications — order updates, offers, and delivery status — to customers' browsers.
+The Snapbuy Web Portal uses **Firebase Cloud Messaging (FCM)** to deliver push notifications — order updates, offers, and delivery status — to customers' browsers.
 
 This guide covers creating the Firebase project, wiring the credentials into the app, and verifying that notifications actually arrive.
 

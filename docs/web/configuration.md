@@ -7,7 +7,7 @@ description: Change colours, home page blocks, channels, zones, and languages �
 
 # Configuration & Theming
 
-The storefront is a **white-label template**. Nearly everything visual — colours, header artwork, home page composition, channels, languages — comes from the Admin Panel at runtime, not from the code. This guide explains what is configurable and where each setting lands.
+The Snapbuy Web Portal is a **white-label template**. Nearly everything visual — colours, header artwork, home page composition, channels, languages — comes from the Admin Panel at runtime, not from the code. This guide explains what is configurable and where each setting lands.
 
 The golden rule: **never hardcode a brand colour, image host, or store name.** The same codebase runs for every client.
 
@@ -151,7 +151,7 @@ Fields are ignored **by variant, not by emptiness** — the Admin Panel may leav
 
 ### "See All" / data sources
 
-A product block declares how it was sourced, and the storefront forwards that to the listing page:
+A product block declares how it was sourced, and the Web Portal forwards that to the listing page:
 
 | `data_source` | Id field on the block |
 | --- | --- |
@@ -233,7 +233,7 @@ See the [Deployment Guide](/docs/web/deployment) for verifying SEO output on a l
 
 ## Payments
 
-Enabled gateways come from the API and are read through `src/utils/paymentSettings.js`. Supported integrations include Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery. No gateway keys live in the storefront — the Admin Panel holds them.
+Enabled gateways come from the API and are read through `src/utils/paymentSettings.js`. Supported integrations include Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery. No gateway keys live in the Web Portal — the Admin Panel holds them.
 
 ## Adding a new configurable section
 
