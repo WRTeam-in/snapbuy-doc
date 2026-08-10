@@ -40,8 +40,14 @@ Google needs **two separate keys**. This trips people up constantly.
 
 | Snapbuy field | Google API | Used for |
 | --- | --- | --- |
-| **Map API Key** | Maps JavaScript API, Distance Matrix API | Rendering maps, measuring distance |
-| **Place API Key** | Places API, Geocoding API | Address search and autocomplete |
+| **Map API Key** | Maps JavaScript API | Rendering the map tiles you see when drawing zones and pinning stores |
+| **Place API Key** | Places API, Places API (New), Geocoding API, Distance Matrix API | Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge |
+
+:::danger Distance Matrix belongs to the Place key, not the Map key
+Snapbuy sends the Distance Matrix request using the **Place API Key**. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
+
+The symptom is "unable to fetch distance" at checkout on a panel where the maps clearly render fine.
+:::
 
 :::danger Both keys are required
 The Setup Guide marks the Map step complete only when **both** the Map key and the Place key are filled. Entering one leaves the step red — and address autocomplete or distance calculation will be broken depending on which is missing.
@@ -55,12 +61,14 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
 4. Go to **APIs & Services → Library** and enable:
    - Maps JavaScript API
    - Places API
+   - Places API (New)
    - Geocoding API
    - Distance Matrix API
    - Directions API
 5. Go to **APIs & Services → Credentials → Create credentials → API key**.
 6. Create **two** keys and name them clearly.
 
+Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. Snapbuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.
 
 :::danger Billing must be enabled
 Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.
@@ -77,11 +85,12 @@ https://admin.yourstore.com/*
 https://yourstore.com/*
 ```
 
-**Place API Key** — restrict by **API**, limited to Places and Geocoding.
-
+**Place API Key** — restrict by **API**, limited to Places, Places (New), Geocoding and Distance Matrix.
 
 :::warning Restrict, but test afterwards
-Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws. Restriction changes can take a few minutes to take effect.
+Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the store** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.
+
+Restriction changes can take a few minutes to take effect.
 :::
 
 ### Set a budget alert
@@ -121,16 +130,18 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 | Setup Guide Map step stays red | Provider is Google but only one key filled | Fill both Map and Place keys |
 | Grey map with a watermark | Billing not enabled on the Google project | Enable billing |
 | "This page can't load Google Maps correctly" | Required API not enabled, or key restricted too tightly | Enable the APIs; check referrer restrictions |
-| Map loads, address search does nothing | Places API not enabled, or Place key missing | Enable Places; fill the Place key |
-| "Unable to fetch distance" at checkout | Distance Matrix not enabled, or OSRM rate-limited | Enable the API, or move off the public OSRM server |
+| Map loads, address search does nothing | Places API (New) not enabled, Places API not enabled, or Place key missing | Enable both Places services; fill the Place key |
+| "Unable to fetch distance" at checkout, but maps render fine | Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only | Enable Distance Matrix and allow it on the Place API Key |
+| "Unable to fetch distance" on OpenStreetMap | Public OSRM routing service rate-limited | Switch to Google Maps, or host your own OSRM |
 | Delivery charges wrong after switching provider | Cached config | Visit `/clear` and retest |
 | Unexpected Google bill | Unrestricted key in use elsewhere | Restrict by referrer and regenerate the key |
 
 ## Checklist
 
 - [ ] Provider chosen
-- [ ] If Google: billing enabled, all five APIs enabled
+- [ ] If Google: billing enabled, all six APIs enabled (including Places API (New))
 - [ ] If Google: **both** Map and Place keys entered
+- [ ] Distance Matrix enabled and allowed on the Place API Key
 - [ ] Keys restricted by referrer/API
 - [ ] Budget alert configured
 - [ ] Zone map draws correctly
