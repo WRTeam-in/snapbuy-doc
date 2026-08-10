@@ -41,8 +41,6 @@ This guide covers creating the Firebase project, wiring the credentials into the
 
 4. Firebase then shows a `firebaseConfig` object. **Keep this open** — you need all seven values twice, in two different files.
 
-![Firebase SDK configuration values](./web-firebase-image/step5.png)
-
 ```js
 // what Firebase shows you
 const firebaseConfig = {
@@ -56,11 +54,13 @@ const firebaseConfig = {
 };
 ```
 
-:::note Finding these values again
+If you close the wizard, the same values are always available under **Project Settings → General → Your apps**, with the **Config** option selected:
 
-If you close the wizard, the same config is always available under **Project Settings → General → Your apps**, with the **Config** option selected.
+![Firebase SDK config values under Project Settings](./web-firebase-image/step6.png)
 
-![Config values under Project Settings](./web-firebase-image/step6.png)
+:::note
+
+The values are blanked out in the screenshots above. Use the ones shown in **your own** Firebase console.
 
 :::
 
