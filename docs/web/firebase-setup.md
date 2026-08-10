@@ -19,15 +19,29 @@ This guide covers creating the Firebase project, wiring the credentials into the
 ## 1. Create a Firebase project
 
 1. Open the [Firebase Console](https://console.firebase.google.com/).
-2. Click **Add project**, name it (e.g. "MyStore Web"), and follow the wizard.
-3. Google Analytics is optional — it is not required for push notifications.
+2. Click **Add project** and enter a project name, then click **Continue**.
+
+![Name your Firebase project](./web-firebase-image/step1.png)
+
+3. The wizard offers **Gemini in Firebase** (AI assistance). This is optional and not required for push notifications — leave it on or switch it off, then click **Continue**.
+
+![Enable Gemini in Firebase — optional](./web-firebase-image/step2.png)
+
+4. Google Analytics is also optional. Pick an account (or skip it), then click **Create project**.
+
+![Configure Google Analytics — optional](./web-firebase-image/step3.png)
 
 ## 2. Register a Web app
 
 1. In the project dashboard, click the **Web** icon (`</>`).
-2. Give it a nickname (e.g. "Storefront").
+2. Give it a nickname (e.g. "Storefront"). **Firebase Hosting is not required** — the Web Portal runs on your own VPS, so you can leave that box unticked.
 3. Click **Register app**.
-4. Firebase shows a `firebaseConfig` object. **Keep this open** — you need all seven values twice, in two different files.
+
+![Register your web app](./web-firebase-image/step4.png)
+
+4. Firebase then shows a `firebaseConfig` object. **Keep this open** — you need all seven values twice, in two different files.
+
+![Firebase SDK configuration values](./web-firebase-image/step5.png)
 
 ```js
 // what Firebase shows you
@@ -42,6 +56,14 @@ const firebaseConfig = {
 };
 ```
 
+:::note Finding these values again
+
+If you close the wizard, the same config is always available under **Project Settings → General → Your apps**, with the **Config** option selected.
+
+![Config values under Project Settings](./web-firebase-image/step6.png)
+
+:::
+
 ## 3. Enable Cloud Messaging and get the VAPID key
 
 1. Go to **Project Settings** (gear icon) → **Cloud Messaging**.
@@ -49,7 +71,15 @@ const firebaseConfig = {
 3. Scroll to **Web configuration → Web Push certificates**.
 4. Click **Generate key pair**. The resulting string is your **VAPID key** — copy it.
 
+![Cloud Messaging settings and Web Push certificates](./web-firebase-image/step7.png)
+
 Without the VAPID key the browser cannot mint an FCM token, and no device is ever registered.
+
+:::note
+
+**Cloud Messaging API (Legacy)** shows as *Disabled* on this screen — that is correct. The legacy HTTP API was deprecated in 2023; the Web Portal uses the **V1** API, which must show **Enabled**.
+
+:::
 
 ## 4. Add credentials to `.env`
 
