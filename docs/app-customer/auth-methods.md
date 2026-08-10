@@ -13,7 +13,7 @@ Both the **allowed login methods** and the **default country** shown in the coun
 1. Log in to the your **Admin Panel**.
 2. Navigate to **Settings → General -> Login Setting**.
 
-![System Configure Page](./images/appConfig.png)
+![System Configure Page](/images/app/customer/appConfig.png)
 
 ## Allowed Authentication Methods
 
@@ -44,7 +44,7 @@ As a safety net, a default country code is hardcoded in the app's config file. T
 1. Open `lib/core/configs/app_config.dart`.
 2. Update the `defaultCountry` constant to the country code you want as fallback.
 
-![Default country in AppConfig](./images/defaultinApp.png)
+![Default country in AppConfig](/images/app/customer/defaultinApp.png)
 
 :::info
 The admin-panel default (above) is the **primary** source of truth. The `app_config.dart` value is only a fallback for offline / API-failure scenarios.

@@ -20,4 +20,4 @@ Policy content is set **per country**, so update it for each country you operate
 
 The app fetches this content at runtime and renders it on the Policy screen.
 
-![Policy](./images/polices.png)
+![Policy](/images/app/customer/polices.png)

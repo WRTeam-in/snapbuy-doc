@@ -17,4 +17,4 @@ Control the content shown on the app's **Contact Us** screen.
 
 The app fetches this content at runtime and renders it on the Contact Us screen.
 
-![Contact Us](./images/contactus.png)
+![Contact Us](/images/app/customer/contactus.png)

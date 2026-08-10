@@ -145,11 +145,20 @@ const config = {
         ],
       }),
     ],
+    "docusaurus-plugin-image-zoom",
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: "images/logo.png",
+      zoom: {
+        selector: ".markdown img",
+        background: {
+          light: "rgb(255, 255, 255)",
+          dark: "rgb(30, 30, 30)",
+        },
+        config: {},
+      },
       colorMode: {
         defaultMode: "dark",
         disableSwitch: false,
@@ -196,7 +205,7 @@ const config = {
             position: "right",
           },
           {
-            href: "https://www.snapbuy.in/",
+            href: "https://www.marketplace.wrteam.in/products/snapbuy-hyperlocal-quick-commerce-ecommerce-platform",
             label: "Snapbuy",
             position: "right",
           },

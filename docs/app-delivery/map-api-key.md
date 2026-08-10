@@ -14,8 +14,8 @@ The app uses Google Maps for showing nearby locations of property. You need a Go
 2. Click **Console** (top-right) to open the Google Cloud Console.
 3. Create a new project, or select an existing one from the project picker.
 
-![Google Cloud project selector](./images/mapAPI1.png)
-![Projetc selector](./images/mapAPI2.png)
+![Google Cloud project selector](/images/app/delivery/mapAPI1.png)
+![Projetc selector](/images/app/delivery/mapAPI2.png)
 
 ## Step 2 — Enable Required APIs
 
@@ -27,8 +27,8 @@ In the left sidebar, go to **APIs & Services → Library**, then search for and 
 For each one, click the API → **Enable**.
 
 
-![Enable Maps SDK for iOS](./images/mapAPI3.png)
-![Enable API](./images/mapAPI4.png)
+![Enable Maps SDK for iOS](/images/app/delivery/mapAPI3.png)
+![Enable API](/images/app/delivery/mapAPI4.png)
 
 ## Step 3 — Create an API Key
 
@@ -40,7 +40,7 @@ Google recommends creating **two separate keys** — one for Android, one for iO
 4. Repeat steps 2–3 to create a second key named `iOS Maps Key`, this time adding the **Maps SDK for iOS** API.
 5. Copy both generated keys — you will paste them into the app code in Step 4.
 
-![Copy generated API key](./images/mapAPI5.png)
+![Copy generated API key](/images/app/delivery/mapAPI5.png)
 
 ## Step 3.1 — Restrict Each Key for Production
 
