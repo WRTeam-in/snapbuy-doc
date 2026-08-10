@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.10.1">
 <title data-rh="true">Add Map API Key for Address | Snapbuy Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://snapbuy.github.io/snapbuy-doc/images/logo.png"><meta data-rh="true" name="twitter:image" content="https://snapbuy.github.io/snapbuy-doc/images/logo.png"><meta data-rh="true" property="og:url" content="https://snapbuy.github.io/snapbuy-doc/docs/app-delivery/map-api-key/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Add Map API Key for Address | Snapbuy Documentation"><meta data-rh="true" name="description" content="The app uses Google Maps for showing nearby locations of property. You need a Google Cloud API key with the Maps SDK for Android and Maps SDK for iOS enabled."><meta data-rh="true" property="og:description" content="The app uses Google Maps for showing nearby locations of property. You need a Google Cloud API key with the Maps SDK for Android and Maps SDK for iOS enabled."><link data-rh="true" rel="icon" href="/snapbuy-doc/images/favicon.png"><link data-rh="true" rel="canonical" href="https://snapbuy.github.io/snapbuy-doc/docs/app-delivery/map-api-key/"><link data-rh="true" rel="alternate" href="https://snapbuy.github.io/snapbuy-doc/docs/app-delivery/map-api-key/" hreflang="en"><link data-rh="true" rel="alternate" href="https://snapbuy.github.io/snapbuy-doc/docs/app-delivery/map-api-key/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Add Map API Key for Address","item":"https://snapbuy.github.io/snapbuy-doc/docs/app-delivery/map-api-key"}]}</script><link rel="stylesheet" href="/snapbuy-doc/assets/css/styles.3aaaebbd.css">
-<script src="/snapbuy-doc/assets/js/runtime~main.20f4ec51.js" defer="defer"></script>
+<script src="/snapbuy-doc/assets/js/runtime~main.accae03c.js" defer="defer"></script>
 <script src="/snapbuy-doc/assets/js/main.8c2fa94e.js" defer="defer"></script>
 </head>
 <body>
@@ -19,8 +19,8 @@
 <li class="">Click <strong>Console</strong> (top-right) to open the Google Cloud Console.</li>
 <li class="">Create a new project, or select an existing one from the project picker.</li>
 </ol>
-<p><img decoding="async" loading="lazy" alt="Google Cloud project selector" src="/snapbuy-doc/assets/images/mapAPI1-95688f004527af4962f6cb1ee751302e.png" width="1847" height="744" class="img_ev3q">
-<img decoding="async" loading="lazy" alt="Projetc selector" src="/snapbuy-doc/assets/images/mapAPI2-fd88febac7749d9212b80a8733cf818b.png" width="1843" height="929" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="./images/mapAPI1.png" alt="Google Cloud project selector" class="img_ev3q">
+<img decoding="async" loading="lazy" src="./images/mapAPI2.png" alt="Projetc selector" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2--enable-required-apis">Step 2 — Enable Required APIs<a href="#step-2--enable-required-apis" class="hash-link" aria-label="Direct link to Step 2 — Enable Required APIs" title="Direct link to Step 2 — Enable Required APIs" translate="no">​</a></h2>
 <p>In the left sidebar, go to <strong>APIs &amp; Services → Library</strong>, then search for and enable the following APIs:</p>
 <ul>
@@ -28,8 +28,8 @@
 <li class=""><strong>Maps SDK for iOS</strong></li>
 </ul>
 <p>For each one, click the API → <strong>Enable</strong>.</p>
-<p><img decoding="async" loading="lazy" alt="Enable Maps SDK for iOS" src="/snapbuy-doc/assets/images/mapAPI3-9c1b1eeb9bea46a16974a2aea894c721.png" width="1833" height="980" class="img_ev3q">
-<img decoding="async" loading="lazy" alt="Enable API" src="/snapbuy-doc/assets/images/mapAPI4-177bd090c47af7153b528eada322d903.png" width="1837" height="357" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="./images/mapAPI3.png" alt="Enable Maps SDK for iOS" class="img_ev3q">
+<img decoding="async" loading="lazy" src="./images/mapAPI4.png" alt="Enable API" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3--create-an-api-key">Step 3 — Create an API Key<a href="#step-3--create-an-api-key" class="hash-link" aria-label="Direct link to Step 3 — Create an API Key" title="Direct link to Step 3 — Create an API Key" translate="no">​</a></h2>
 <p>Google recommends creating <strong>two separate keys</strong> — one for Android, one for iOS — instead of one shared key. Each platform uses a different restriction type (package name + SHA-1 for Android, bundle ID for iOS), and a single key cannot carry both restrictions at once. Separate keys also let you revoke or rotate one platform&#x27;s key without breaking the other.</p>
 <ol>
@@ -39,7 +39,7 @@
 <li class="">Repeat steps 2–3 to create a second key named <code>iOS Maps Key</code>, this time adding the <strong>Maps SDK for iOS</strong> API.</li>
 <li class="">Copy both generated keys — you will paste them into the app code in Step 4.</li>
 </ol>
-<p><img decoding="async" loading="lazy" alt="Copy generated API key" src="/snapbuy-doc/assets/images/mapAPI5-0752365cf9229aa4f28938af30b7ca1f.png" width="2256" height="970" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="./images/mapAPI5.png" alt="Copy generated API key" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-31--restrict-each-key-for-production">Step 3.1 — Restrict Each Key for Production<a href="#step-31--restrict-each-key-for-production" class="hash-link" aria-label="Direct link to Step 3.1 — Restrict Each Key for Production" title="Direct link to Step 3.1 — Restrict Each Key for Production" translate="no">​</a></h2>
 <p>Before releasing to production, restrict each key so it only works from your app. An unrestricted key can be copied from your app package and used by anyone.</p>
 <p><strong>Android key restrictions:</strong></p>
