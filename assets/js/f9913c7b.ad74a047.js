@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunksnapbuy_documentation=globalThis.webpackChunksnapbuy_documentation||[]).push([[9147],{3131(a){a.exports=JSON.parse('{"metadata":{"permalink":"/snapbuy-doc/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":0,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

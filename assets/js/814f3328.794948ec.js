@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunksnapbuy_documentation=globalThis.webpackChunksnapbuy_documentation||[]).push([[7472],{5513(s){s.exports=JSON.parse('{"title":"Recent posts","items":[]}')}}]);
