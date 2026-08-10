@@ -46,7 +46,6 @@ Verify identity and right to work before approving. Check **Registered Delivery 
 | **Notification Panel** | Their notifications |
 | **Profile / Account Settings** | Their own details |
 
-![Delivery boy portal dashboard](/images/panel/delivery-boy-portal.png)
 
 ## What riders cannot do
 

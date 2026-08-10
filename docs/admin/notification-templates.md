@@ -39,7 +39,6 @@ Templates contain placeholders in curly braces, replaced at send time with real 
 | `{created_at}` | Timestamp |
 | `{otp}` | One-time password (SMS) |
 
-![Editing a template with placeholders](/images/panel/templates-edit.png)
 
 :::danger Placeholders must match exactly
 `{customer_name}` works. `{Customer_Name}`, `{customer name}` and `{ customer_name }` do not — they are printed to the customer literally, braces and all.

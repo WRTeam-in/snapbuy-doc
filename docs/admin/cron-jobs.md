@@ -42,7 +42,6 @@ The page gives the same command in three formats, because hosting panels ask for
 4. Paste the **Command only** version from **Settings → Cron Jobs** into the **Command** box.
 5. Click **Add New Cron Job**.
 
-![Adding the cron job in cPanel](/images/panel/cron-cpanel-add.png)
 
 :::warning Use the full path to PHP
 `php artisan schedule:run` often fails on shared hosting because the default `php` is an older version. Use the absolute binary path shown on the Cron Jobs page — for example `/usr/local/bin/ea-php82`. If the cron runs but nothing happens, this is usually why.

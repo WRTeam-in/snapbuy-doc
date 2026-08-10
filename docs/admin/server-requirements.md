@@ -43,7 +43,6 @@ All seventeen of these must be **enabled**. The installer shows them as a grid a
 | `xml` | Excel / XML import and export |
 | `zip` | Bulk upload, backups, system updater |
 
-![Installer requirements check showing PHP extensions](/images/panel/requirements-extensions.png)
 
 :::tip How to enable an extension
 On **cPanel**: *Select PHP Version → Extensions*, tick the missing one, save.
@@ -76,7 +75,6 @@ These four paths must be writable by the web server user. The installer verifies
 | `storage/logs/` | `755` |
 | `bootstrap/cache/` | `755` |
 
-![Installer permissions check](/images/panel/requirements-permissions.png)
 
 On a VPS, the usual fix is:
 

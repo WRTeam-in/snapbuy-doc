@@ -27,7 +27,6 @@ Each key page carries its own entry — home, category listings, product pages, 
 | **Meta Keywords** | Largely ignored by modern search engines |
 | **OG Image** | Preview image when the link is shared |
 
-![Editing a page's SEO entry](/images/panel/seo-edit-page.png)
 
 ## Writing meta titles
 

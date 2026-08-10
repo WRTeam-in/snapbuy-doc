@@ -74,7 +74,6 @@ Assign a rider from the order. On assignment:
 - The customer is notified (`assign_order_customer`)
 - The order appears in that rider's [portal](/docs/admin/delivery-boy-portal)
 
-![Assigning a delivery boy to an order](/images/panel/orders-assign-rider.png)
 
 :::warning Riders only see a restricted set of statuses
 In their own portal, a rider can move a **quick** order through *Ready for Pickup → Picked Up → Out For Delivery → Delivered*, and an **eCommerce** order only between *Out For Delivery* and *Delivered*.

@@ -28,7 +28,6 @@ The panel URL is written into the Customer App, the Delivery Boy App and the Web
 5. cPanel fills **Document Root** automatically as `public_html/admin`. Note this path — you will upload Snapbuy here.
 6. Click **Create**.
 
-![cPanel subdomain creation form](/images/panel/subdomain-cpanel-create.png)
 
 The subdomain becomes reachable within a few minutes, though DNS propagation can take up to a few hours.
 
@@ -67,7 +66,6 @@ After installing with Option B, open `https://admin.yourstore.com/.env` in a bro
 ```
 :::
 
-![Setting the subdomain document root to the public folder](/images/panel/subdomain-document-root.png)
 
 ## Nginx (VPS) server block
 

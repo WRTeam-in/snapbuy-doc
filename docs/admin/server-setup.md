@@ -34,7 +34,6 @@ cd /home/username/snapbuy
 unzip snapbuy-admin.zip
 ```
 
-![Extracted Snapbuy files on the server](/images/panel/server-upload-files.png)
 
 :::tip Extract on the server, not locally
 Uploading thousands of individual files over FTP is slow and often leaves files missing. Always upload the single archive and extract it on the server.
@@ -50,7 +49,6 @@ In cPanel, open **MySQL® Databases**:
 
 Write down the exact database name, username and password. cPanel prefixes both with your account name.
 
-![Creating the database and user in cPanel](/images/panel/server-create-database.png)
 
 :::warning Password characters
 Use a password made of capitals, lowercase letters, numbers and `@` or `_`. Some other symbols break the `.env` parser and cause a "could not connect" error even when the credentials are correct. If a connection fails and you are certain the details are right, regenerate the password without exotic symbols.
@@ -91,7 +89,6 @@ https://admin.yourstore.com
 
 You are redirected to the installation wizard.
 
-![Installation wizard welcome step](/images/panel/server-installer-welcome.png)
 
 :::tip Always use `https://`
 The installer saves whatever address you visit it on as `APP_URL`. Installing over `http://` bakes the wrong scheme into your configuration and causes mixed-content and callback failures later.
@@ -101,7 +98,6 @@ The installer saves whatever address you visit it on as `APP_URL`. Installing ov
 
 The wizard verifies your PHP version, all seventeen extensions, and the four writable paths.
 
-![Installer requirements step with all checks passing](/images/panel/server-installer-requirements.png)
 
 Every item must be green. If something fails:
 
@@ -116,7 +112,6 @@ Fix the issue, then click **Try again** — you do not need to restart the wizar
 
 ## Step 7 — Database and admin account
 
-![Installer database step](/images/panel/server-installer-database.png)
 
 | Field | What to enter |
 | --- | --- |
@@ -147,7 +142,6 @@ Migrations and seeders run inside a single request. On a slow shared host this c
 
 Enter the Envato purchase code for your Snapbuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
 
-![Installer purchase code step](/images/panel/server-installer-purchase-code.png)
 
 :::warning "Invalid code supplied!"
 This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:
@@ -161,7 +155,6 @@ curl -I https://api.envato.com
 
 The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 7.
 
-![Snapbuy admin login screen](/images/panel/server-installer-finish.png)
 
 ## Immediately after installing
 

@@ -41,7 +41,6 @@ Customers reporting "the app is in Hindi but the website is in English" are seei
 | **Default** | The language used when the customer has not chosen one |
 | **Status** | Inactive languages disappear from the switcher |
 
-![Adding a language](/images/panel/languages-add.png)
 
 :::warning The supported-language list is seeded
 If the dropdown is empty, the seeder did not run. Visit `/supported_language` once to populate it.
@@ -51,7 +50,6 @@ If the dropdown is empty, the seeder did not run. Visit `/supported_language` on
 
 Each language has a JSON file of key/value pairs — the labels, buttons and messages of that surface. Edit them in the panel's JSON editor.
 
-![Editing language strings](/images/panel/languages-json-edit.png)
 
 :::danger Change values, never keys
 The key on the left is what the code looks up. Translate the **value** on the right only.

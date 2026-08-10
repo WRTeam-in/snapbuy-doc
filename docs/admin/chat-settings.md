@@ -106,7 +106,6 @@ Nothing to run or keep alive.
 2. Create an app, choosing the cluster closest to your customers.
 3. Open **App Keys**.
 
-![Pusher app keys](/images/panel/chat-pusher-keys.png)
 
 | Snapbuy field | Pusher value |
 | --- | --- |

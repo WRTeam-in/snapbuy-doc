@@ -33,7 +33,6 @@ The keys alone let the apps talk to Firebase. The service account is what lets *
 2. Click **Add project**, name it, and finish the wizard.
 3. Google Analytics is optional.
 
-![Creating a Firebase project](/images/panel/firebase-create-project.png)
 
 ## Get the web config keys
 
@@ -54,7 +53,6 @@ const firebaseConfig = {
 };
 ```
 
-![Firebase web app config values](/images/panel/firebase-web-config.png)
 
 Copy these into the Snapbuy form:
 
@@ -76,7 +74,6 @@ Web push in browsers needs a separate key pair.
 2. Under **Web configuration → Web Push certificates**, click **Generate key pair**.
 3. Copy the key string into **VAPID Key**.
 
-![Generating the VAPID key pair](/images/panel/firebase-vapid-key.png)
 
 :::info Only needed for web push
 If you are not sending notifications to browsers, you can leave this blank. Mobile push does not use it.
@@ -91,7 +88,6 @@ This is the half that gets missed.
 3. A `.json` file downloads.
 4. In Snapbuy, use the **Firebase JSON File** upload field to attach it, and save.
 
-![Generating the service account private key](/images/panel/firebase-service-account.png)
 
 Snapbuy stores it at `config/firebase.json` on your server.
 
@@ -113,7 +109,6 @@ For OTP login:
 2. Enable **Phone**.
 3. Add your panel domain under **Authentication → Settings → Authorized domains**.
 
-![Enabling phone sign-in in Firebase](/images/panel/firebase-phone-auth.png)
 
 :::warning Firebase phone auth is billed beyond the free tier
 Phone OTP verification has a monthly free allowance; past it, Google charges per verification and requires the **Blaze** plan. A store with heavy signup traffic will hit this.

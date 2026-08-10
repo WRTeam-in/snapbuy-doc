@@ -51,7 +51,6 @@ Uploading an update package through **Settings → System Updater** can push a f
 4. Edit each directive from the table above.
 5. Save. cPanel applies changes immediately.
 
-![cPanel MultiPHP INI Editor showing the PHP limits](/images/panel/php-ini-cpanel.png)
 
 ### VPS / dedicated server
 
@@ -123,7 +122,6 @@ Open `https://yourdomain.com/info.php` and search for each directive. The **Loca
 `phpinfo()` exposes your full server configuration. Remove the file as soon as you have checked.
 :::
 
-![phpinfo output showing the updated limits](/images/panel/php-ini-phpinfo.png)
 
 ## Functions that must stay enabled
 

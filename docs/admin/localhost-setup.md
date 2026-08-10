@@ -55,7 +55,6 @@ Extract the Snapbuy admin panel package into your web root:
 C:\xampp\htdocs\snapbuy\
 ```
 
-![Snapbuy files extracted into the htdocs folder](/images/panel/localhost-extract-files.png)
 
 ## Step 3 — Install PHP dependencies
 
@@ -77,7 +76,6 @@ If your package already ships a `vendor/` folder, you can skip this. If Composer
 
 Leave it empty — the installer builds every table.
 
-![Creating an empty database in phpMyAdmin](/images/panel/localhost-create-database.png)
 
 ## Step 5 — Prepare the `.env` file
 
@@ -123,7 +121,6 @@ You are redirected to the installation wizard. It has five steps:
 
 **Welcome → Requirements → Database → Purchase Code → Finish**
 
-![Snapbuy installation wizard welcome screen](/images/panel/localhost-installer-welcome.png)
 
 ### Requirements
 
@@ -143,7 +140,6 @@ Enter the same details you put in `.env`, plus the admin account you want to cre
 | Admin Email | your email |
 | Admin Password | minimum 6 characters |
 
-![Installer database step](/images/panel/localhost-installer-database.png)
 
 :::warning This step wipes the database
 Snapbuy runs `migrate:fresh`, which drops every existing table in the database it connects to. Never point it at a database that holds other data.

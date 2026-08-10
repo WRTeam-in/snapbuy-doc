@@ -33,7 +33,6 @@ Because edits land in the draft, you can rebuild a layout over several days with
 
 Instead of publishing immediately, set a **scheduled publish time**. The layout goes live automatically at that moment — useful for sale launches and festival campaigns going live at midnight.
 
-![Scheduling a layout to publish](/images/panel/home-builder-schedule.png)
 
 :::danger Scheduled publishing needs the cron job
 The scheduled publish is performed by `home-layout:publish-scheduled`, run by the scheduler every minute. **If the [cron job](/docs/admin/cron-jobs) is not set up, scheduled layouts never go live** — and nothing warns you.
@@ -136,7 +135,6 @@ Every banner and grid tile can carry a **redirect** — where the customer lands
 - An external URL
 - Nothing (decorative)
 
-![Setting a banner redirect](/images/panel/home-builder-redirect.png)
 
 :::warning Check redirects after catalogue changes
 A banner pointing at a deleted or deactivated product leaves customers tapping into an error. After removing products or categories, review banners that referenced them.

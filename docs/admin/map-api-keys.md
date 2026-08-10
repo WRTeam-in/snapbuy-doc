@@ -61,7 +61,6 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
 5. Go to **APIs & Services → Credentials → Create credentials → API key**.
 6. Create **two** keys and name them clearly.
 
-![Enabling Google Maps APIs](/images/panel/map-google-enable-apis.png)
 
 :::danger Billing must be enabled
 Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.
@@ -80,7 +79,6 @@ https://yourstore.com/*
 
 **Place API Key** — restrict by **API**, limited to Places and Geocoding.
 
-![Restricting an API key](/images/panel/map-key-restrictions.png)
 
 :::warning Restrict, but test afterwards
 Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws. Restriction changes can take a few minutes to take effect.

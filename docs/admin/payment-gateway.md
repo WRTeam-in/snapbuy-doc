@@ -74,7 +74,6 @@ Several gateways confirm payment by calling **your server** rather than the cust
 
 Register these in each provider's dashboard.
 
-![Registering a webhook URL](/images/panel/payment-webhook-setup.png)
 
 :::danger Payments taken but orders stuck unpaid
 This is the classic missing-webhook symptom: money leaves the customer's account, the gateway shows it as captured, and the order sits unpaid in your panel.
