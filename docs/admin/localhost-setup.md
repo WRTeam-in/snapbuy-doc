@@ -12,7 +12,7 @@ Use this page to run Snapbuy on your own computer for testing and customisation.
 
 | Tool | Version | Purpose |
 | --- | --- | --- |
-| **XAMPP** | with PHP **8.2+** | Apache + PHP + MySQL in one package |
+| **XAMPP** | with PHP **8.3+** | Apache + PHP + MySQL in one package |
 | **Composer** | 2.x | Installs PHP dependencies |
 | **Node.js** | 18+ | Only if you want to rebuild the panel's front-end assets |
 
@@ -20,7 +20,7 @@ Use this page to run Snapbuy on your own computer for testing and customisation.
 - Composer — [getcomposer.org/download](https://getcomposer.org/download/)
 
 :::warning Check the PHP version XAMPP ships with
-Older XAMPP builds ship PHP 8.0 or 8.1, which **cannot** run Snapbuy. Download a build with PHP 8.2 or newer, or use [Laragon](https://laragon.org/) which lets you switch PHP versions freely.
+Older XAMPP builds ship PHP 8.0 or 8.1, which **cannot** run Snapbuy. Download a build with PHP 8.3 or newer, or use [Laragon](https://laragon.org/) which lets you switch PHP versions freely.
 
 Verify with:
 

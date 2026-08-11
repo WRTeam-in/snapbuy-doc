@@ -103,7 +103,7 @@ Every item must be green. If something fails:
 
 | Failure | Fix |
 | --- | --- |
-| PHP version | Switch to 8.2+ in **Select PHP Version** |
+| PHP version | Switch to 8.3+ in **Select PHP Version** |
 | A red extension | Enable it in **Select PHP Version → Extensions** |
 | `.env` not writable | `chmod 644 .env` and check ownership |
 | `storage/` or `bootstrap/cache/` | `chmod -R 755` and check ownership |
