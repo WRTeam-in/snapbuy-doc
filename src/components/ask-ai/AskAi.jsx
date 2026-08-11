@@ -65,7 +65,7 @@ export default function AskAi() {
         className={styles.fab}
         onClick={() => setOpen(true)}
         aria-label="Ask AI"
-        title="Ask the Snapbuy AI assistant"
+        title="Ask the SnapBuy AI assistant"
       >
         <span className={styles.fabIcon}>✨</span>
         <span className={styles.fabText}>Ask AI</span>
@@ -77,12 +77,12 @@ export default function AskAi() {
             className={styles.panel}
             onClick={(e) => e.stopPropagation()}
             role="dialog"
-            aria-label="Snapbuy AI assistant"
+            aria-label="SnapBuy AI assistant"
           >
             <div className={styles.header}>
               <div className={styles.headerTitle}>
                 <span className={styles.headerIcon}>✨</span>
-                Snapbuy AI Assistant
+                SnapBuy AI Assistant
               </div>
               <button
                 className={styles.close}
@@ -105,7 +105,7 @@ export default function AskAi() {
                 className={styles.input}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ask anything about Snapbuy docs…"
+                placeholder="Ask anything about SnapBuy docs…"
                 maxLength={1000}
               />
               <button

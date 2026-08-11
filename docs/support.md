@@ -3,12 +3,12 @@ id: support
 title: Support
 sidebar_position: 1
 sidebar: null
-description: Get help with Snapbuy — dedicated contacts for the Admin Panel, mobile apps, and Web Portal, plus email support on working days.
+description: Get help with SnapBuy — dedicated contacts for the Admin Panel, mobile apps, and Web Portal, plus email support on working days.
 ---
 
 # Support & Help Center
 
-We're committed to helping you get the most out of your Snapbuy platform. Whether you're setting up your first project or need help with an advanced feature, our team is here to assist you.
+We're committed to helping you get the most out of your SnapBuy platform. Whether you're setting up your first project or need help with an advanced feature, our team is here to assist you.
 
 :::tip Fastest route to an answer
 
@@ -73,14 +73,14 @@ Never post passwords, API keys, or purchase codes in a public channel. Share the
 | Deploying the website | [Web Portal](/docs/web/) |
 | Something isn't working | [FAQs](/docs/faqs) |
 
-## Enjoying Snapbuy?
+## Enjoying SnapBuy?
 
 Thank you for choosing our product 🙏
 
-If Snapbuy is working well for you, a **5-star rating** genuinely helps us keep improving it — and helps other buyers find it.
+If SnapBuy is working well for you, a **5-star rating** genuinely helps us keep improving it — and helps other buyers find it.
 
 **How to rate:** go to **CodeCanyon → Menu → Downloads** and leave your review.
 
-[⭐ Rate Snapbuy on CodeCanyon](https://codecanyon.net/downloads)
+[⭐ Rate SnapBuy on CodeCanyon](https://codecanyon.net/downloads)
 
 Have a suggestion instead? We read every piece of feedback — send it to [support@wrteam.in](mailto:support@wrteam.in) or share it through [Feedback](/docs/feedback).

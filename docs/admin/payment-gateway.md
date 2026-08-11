@@ -82,12 +82,12 @@ Check that the webhook URL is registered, reachable over HTTPS, and that your ho
 :::
 
 :::info Webhook endpoints are exempt from CSRF by design
-These URLs are server-to-server POSTs with no session, so Snapbuy exempts them from CSRF checks. That is expected — do not attempt to "secure" them by removing the exemption, or payments will stop confirming.
+These URLs are server-to-server POSTs with no session, so SnapBuy exempts them from CSRF checks. That is expected — do not attempt to "secure" them by removing the exemption, or payments will stop confirming.
 :::
 
 ### Stripe webhook secret
 
-Stripe additionally needs a **Webhook Secret** (`whsec_…`), issued when you create the endpoint in the Stripe dashboard. Without it, Snapbuy cannot verify the request is genuinely from Stripe and rejects it.
+Stripe additionally needs a **Webhook Secret** (`whsec_…`), issued when you create the endpoint in the Stripe dashboard. Without it, SnapBuy cannot verify the request is genuinely from Stripe and rejects it.
 
 ## Currency must match
 

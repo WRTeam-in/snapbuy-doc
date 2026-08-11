@@ -33,8 +33,8 @@ Each key page carries its own entry — home, category listings, product pages, 
 :::tip Keep titles to about 60 characters
 Google truncates longer titles mid-word. Put the distinguishing part first — the brand name belongs at the end, not the beginning.
 
-Good: `Fresh Organic Vegetables — Same Day Delivery | Snapbuy`
-Weak: `Snapbuy — Welcome to our online store, shop now for the best deals`
+Good: `Fresh Organic Vegetables — Same Day Delivery | SnapBuy`
+Weak: `SnapBuy — Welcome to our online store, shop now for the best deals`
 :::
 
 :::warning Every page needs a different title

@@ -2,8 +2,8 @@
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Snapbuy Documentation",
-  tagline: "Complete guide for the Snapbuy delivery & shopping platform",
+  title: "SnapBuy Documentation",
+  tagline: "Complete guide for the SnapBuy delivery & shopping platform",
   favicon: "images/favicon.png",
 
   url: "https://snapbuy.github.io",
@@ -166,7 +166,7 @@ const config = {
       },
       navbar: {
         logo: {
-          alt: "Snapbuy Logo",
+          alt: "SnapBuy Logo",
           src: "images/favicon.png",
         },
         items: [
@@ -206,14 +206,14 @@ const config = {
           },
           {
             href: "https://www.marketplace.wrteam.in/products/snapbuy-hyperlocal-quick-commerce-ecommerce-platform",
-            label: "Snapbuy",
+            label: "SnapBuy",
             position: "right",
           },
         ],
       },
       footer: {
         style: "dark",
-        copyright: `Copyright © ${new Date().getFullYear()} Snapbuy Documentation`,
+        copyright: `Copyright © ${new Date().getFullYear()} SnapBuy Documentation`,
       },
       prism: {
         theme: require("prism-react-renderer").themes.github,

@@ -6,7 +6,7 @@ sidebar_position: 4
 
 # PHP INI Settings
 
-Default PHP limits on most shared hosts are too low for Snapbuy. Raise them **before** you run the installer — several failures (blank screens, "413" errors, half-finished imports) are caused purely by these values.
+Default PHP limits on most shared hosts are too low for SnapBuy. Raise them **before** you run the installer — several failures (blank screens, "413" errors, half-finished imports) are caused purely by these values.
 
 ## Recommended values
 
@@ -24,9 +24,9 @@ Default PHP limits on most shared hosts are too low for Snapbuy. Raise them **be
 If `post_max_size` is smaller, PHP silently discards the whole request and the panel shows an empty error. Always keep it higher.
 :::
 
-## Limits enforced by Snapbuy itself
+## Limits enforced by SnapBuy itself
 
-Even with generous PHP limits, Snapbuy applies its own caps:
+Even with generous PHP limits, SnapBuy applies its own caps:
 
 | Upload | Cap | Allowed types |
 | --- | --- | --- |

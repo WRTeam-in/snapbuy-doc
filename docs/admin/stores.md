@@ -11,7 +11,7 @@ sidebar_position: 11
 A **store** is a physical outlet that fulfils orders — your shop, warehouse or dark store. It holds the location orders are dispatched from, the hours it operates, and its own stock and prices.
 
 :::info Stores are your outlets, not third-party sellers
-Snapbuy stores are fulfilment locations that you own and operate. There is no vendor account, commission split or seller login attached to a store. Adding a second store means opening a second branch, not onboarding a marketplace seller.
+SnapBuy stores are fulfilment locations that you own and operate. There is no vendor account, commission split or seller login attached to a store. Adding a second store means opening a second branch, not onboarding a marketplace seller.
 :::
 
 ![Stores list](/images/panel/stores-list.png)
@@ -47,7 +47,7 @@ Go to **Stores → Add Store**.
 | **Status** | Inactive stores stop receiving orders |
 
 :::danger Fulfillment type must match the zone's sales channel
-A store set to **Quick** cannot be attached to a zone whose sales channel is **eCommerce** only. Snapbuy rejects it with *"Selected zone does not support this fulfillment type."*
+A store set to **Quick** cannot be attached to a zone whose sales channel is **eCommerce** only. SnapBuy rejects it with *"Selected zone does not support this fulfillment type."*
 
 The zone declares which channels it serves; the store must be a subset of that. A store set to **Both** requires a zone set to **Both**.
 :::
@@ -89,7 +89,7 @@ Operating hours are evaluated against the timezone set on the store's zone's [co
 Store **name**, **provider** and **address** are translatable.
 
 :::info Create in the default language first
-Snapbuy rejects creating a store in a secondary language with *"Please create store in default language first."* Create the record in your default language, then switch language and add translations. See [Manage Languages](/docs/admin/languages).
+SnapBuy rejects creating a store in a secondary language with *"Please create store in default language first."* Create the record in your default language, then switch language and add translations. See [Manage Languages](/docs/admin/languages).
 :::
 
 ## Per-store stock and pricing

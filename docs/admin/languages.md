@@ -8,7 +8,7 @@ sidebar_position: 28
 
 Menu path: **Languages**
 
-Snapbuy is fully multi-lingual. Every interface string, and most of your content, can be translated.
+SnapBuy is fully multi-lingual. Every interface string, and most of your content, can be translated.
 
 ![Languages list](/images/panel/languages-list.png)
 

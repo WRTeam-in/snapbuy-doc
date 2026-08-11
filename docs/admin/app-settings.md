@@ -105,7 +105,7 @@ Bonus amounts flow into delivery boy earnings and show up in settlement history 
 
 ## OTP generation
 
-**Generate OTP** controls whether Snapbuy issues a delivery-confirmation OTP that the customer reads out to the rider on handover.
+**Generate OTP** controls whether SnapBuy issues a delivery-confirmation OTP that the customer reads out to the rider on handover.
 
 :::tip Worth enabling for cash and high-value orders
 It is the simplest proof-of-delivery you have, and it settles most "I never received it" disputes without an investigation.

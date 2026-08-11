@@ -7,14 +7,14 @@ sidebar_position: 7
 # Cron Job Setup
 
 :::danger Do not skip this page
-Snapbuy needs **one** server cron job. Without it the panel still loads and looks healthy, but abandoned-cart reminders never send, scheduled maintenance windows never start or end, scheduled home layouts never publish, and every queued job — order emails, push notifications, bulk imports, referral bonuses, cashback — sits unprocessed forever.
+SnapBuy needs **one** server cron job. Without it the panel still loads and looks healthy, but abandoned-cart reminders never send, scheduled maintenance windows never start or end, scheduled home layouts never publish, and every queued job — order emails, push notifications, bulk imports, referral bonuses, cashback — sits unprocessed forever.
 
 Nothing on the dashboard warns you. This is the single most common cause of "notifications are not working" support tickets.
 :::
 
 ## The one line you need
 
-Snapbuy uses Laravel's scheduler. You register **one** cron entry that runs every minute; Snapbuy decides internally what is due.
+SnapBuy uses Laravel's scheduler. You register **one** cron entry that runs every minute; SnapBuy decides internally what is due.
 
 ```
 * * * * * cd /home/username/snapbuy && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
@@ -61,7 +61,7 @@ crontab -l
 
 ## Verifying it works
 
-Snapbuy writes a **heartbeat** into the cache every minute from inside the scheduler. The Cron Jobs page reads it back, so you get a real answer rather than a guess.
+SnapBuy writes a **heartbeat** into the cache every minute from inside the scheduler. The Cron Jobs page reads it back, so you get a real answer rather than a guess.
 
 1. Add the cron job.
 2. Wait two minutes.
@@ -117,7 +117,7 @@ The Cron Jobs page also reports queue status:
 ![Queue health panel](/images/panel/cron-queue-health.png)
 
 :::info Why `--stop-when-empty --max-time=55`
-A permanent queue worker is not possible on most shared hosting. Instead, Snapbuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.
+A permanent queue worker is not possible on most shared hosting. Instead, SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.
 :::
 
 ## Optional — a permanent worker on a VPS

@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Server Requirements
 
-Check every item on this page **before** you upload Snapbuy. The installation wizard runs the same checks and will refuse to continue if any of them fail.
+Check every item on this page **before** you upload SnapBuy. The installation wizard runs the same checks and will refuse to continue if any of them fail.
 
 ## PHP version
 
@@ -16,7 +16,7 @@ Check every item on this page **before** you upload Snapbuy. The installation wi
 | Recommended | 8.3 |
 
 :::danger PHP 8.1 and below will not work
-Snapbuy runs on Laravel 12, which itself requires PHP 8.2 or newer. There is no fallback build for older PHP.
+SnapBuy runs on Laravel 12, which itself requires PHP 8.2 or newer. There is no fallback build for older PHP.
 :::
 
 ## Required PHP extensions
@@ -59,10 +59,10 @@ On **XAMPP**: open `php.ini`, remove the `;` in front of `extension=<name>`, res
 | Privileges needed | `CREATE`, `ALTER`, `DROP`, `INDEX`, `SELECT`, `INSERT`, `UPDATE`, `DELETE` |
 
 :::warning PostgreSQL and SQLite are not supported
-The installer connects with the `mysql` driver only. Do not attempt to point Snapbuy at another engine.
+The installer connects with the `mysql` driver only. Do not attempt to point SnapBuy at another engine.
 :::
 
-The installer runs `migrate:fresh`, which **drops every table in the database it connects to**. Always create a fresh, empty database for Snapbuy.
+The installer runs `migrate:fresh`, which **drops every table in the database it connects to**. Always create a fresh, empty database for SnapBuy.
 
 ## Folder and file permissions
 
@@ -87,7 +87,7 @@ Replace `www-data` with `apache` on CentOS/AlmaLinux, or with your cPanel userna
 
 ## Server functions that must not be disabled
 
-Shared hosts often disable PHP functions for "security". Snapbuy needs these:
+Shared hosts often disable PHP functions for "security". SnapBuy needs these:
 
 | Function | Why |
 | --- | --- |

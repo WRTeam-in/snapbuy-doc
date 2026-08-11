@@ -2,12 +2,12 @@
 id: deployment
 title: Deployment Guide
 sidebar_position: 6
-description: This guide covers deploying the Snapbuy Web Portal to production on a VPS with SEO enabled, using Node, PM2, and Apache or Nginx.
+description: This guide covers deploying the SnapBuy Web Portal to production on a VPS with SEO enabled, using Node, PM2, and Apache or Nginx.
 ---
 
 # Deployment Guide (VPS)
 
-This guide deploys the Snapbuy Web Portal to a VPS with **SEO enabled** — a real Node server behind Apache, not a static export.
+This guide deploys the SnapBuy Web Portal to a VPS with **SEO enabled** — a real Node server behind Apache, not a static export.
 
 :::info Why a VPS
 

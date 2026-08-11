@@ -1,5 +1,5 @@
 /**
- * Snapbuy Documentation — Global CSS
+ * SnapBuy Documentation — Global CSS
  * Brand color: Green #0E9623
  * Font: Plus Jakarta Sans
  */
@@ -186,7 +186,7 @@ html {
   transform: rotate(12deg);
 }
 
-/* External link (Snapbuy site) reads as a button, not a nav item */
+/* External link (SnapBuy site) reads as a button, not a nav item */
 .navbar__items--right .navbar__link[href^="http"] {
   border: 1px solid var(--sb-border-strong);
   padding: .42rem .85rem;

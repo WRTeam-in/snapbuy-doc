@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # App Prerequisites
 
-Before setting up the Snapbuy mobile app, install the required software and tools listed below.
+Before setting up the SnapBuy mobile app, install the required software and tools listed below.
 
 ## Flutter Setup
 

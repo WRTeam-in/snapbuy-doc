@@ -8,7 +8,7 @@ sidebar_position: 14
 
 **Setup Guide step 6 of 9.** Menu path: **Settings → Firebase Settings**
 
-Firebase powers three things in Snapbuy:
+Firebase powers three things in SnapBuy:
 
 | Feature | What Firebase does |
 | --- | --- |
@@ -54,9 +54,9 @@ const firebaseConfig = {
 ```
 
 
-Copy these into the Snapbuy form:
+Copy these into the SnapBuy form:
 
-| Snapbuy field | Firebase value | Required |
+| SnapBuy field | Firebase value | Required |
 | --- | --- | --- |
 | **API Key** | `apiKey` | Yes |
 | **Project ID** | `projectId` | Yes |
@@ -86,10 +86,10 @@ This is the half that gets missed.
 1. **Project settings → Service accounts**.
 2. Click **Generate new private key**, then confirm.
 3. A `.json` file downloads.
-4. In Snapbuy, use the **Firebase JSON File** upload field to attach it, and save.
+4. In SnapBuy, use the **Firebase JSON File** upload field to attach it, and save.
 
 
-Snapbuy stores it at `config/firebase.json` on your server.
+SnapBuy stores it at `config/firebase.json` on your server.
 
 :::danger Treat this file as a password
 The service account JSON grants full administrative access to your Firebase project. Never commit it to source control, never email it, and never place it inside a publicly reachable folder. If it leaks, revoke the key in the Firebase console immediately and generate a new one.
@@ -113,7 +113,7 @@ For OTP login:
 :::warning Firebase phone auth is billed beyond the free tier
 Phone OTP verification has a monthly free allowance; past it, Google charges per verification and requires the **Blaze** plan. A store with heavy signup traffic will hit this.
 
-The alternative is OTP over your own SMS gateway — see [SMS Settings](/docs/admin/sms-settings). Snapbuy requires **one** of the two when phone login is enabled: if you turn off Firebase Authentication, you must enable a custom SMS gateway, or saving fails with a validation error.
+The alternative is OTP over your own SMS gateway — see [SMS Settings](/docs/admin/sms-settings). SnapBuy requires **one** of the two when phone login is enabled: if you turn off Firebase Authentication, you must enable a custom SMS gateway, or saving fails with a validation error.
 :::
 
 ## Mobile apps need their own files
@@ -131,7 +131,7 @@ The panel, the customer app and the delivery app must point at **one** Firebase 
 
 ## Web push service worker
 
-Snapbuy serves the messaging service worker from `/firebase-messaging-sw.js`, generated from the settings you save — you do not create this file yourself.
+SnapBuy serves the messaging service worker from `/firebase-messaging-sw.js`, generated from the settings you save — you do not create this file yourself.
 
 :::warning Web push requires HTTPS
 Browsers refuse to register a service worker over plain HTTP. Web push will not work until SSL is installed. See [Create a Subdomain](/docs/admin/create-subdomain#install-an-ssl-certificate).

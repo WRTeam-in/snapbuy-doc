@@ -86,7 +86,7 @@ const SECTIONS = [
   {
     title: "Web Portal",
     description:
-      "Set up and deploy the Snapbuy web portal for customers to browse and shop online seamlessly.",
+      "Set up and deploy the SnapBuy web portal for customers to browse and shop online seamlessly.",
     to: "/docs/web/",
     icon: IconGlobe,
     accent: "#0E9623",
@@ -230,7 +230,7 @@ export default function Home() {
   return (
     <Layout
       title={siteConfig.title}
-      description="Complete documentation for the Snapbuy delivery & shopping platform ecosystem"
+      description="Complete documentation for the SnapBuy delivery & shopping platform ecosystem"
     >
       <HomepageHeader />
       <main>
@@ -239,7 +239,7 @@ export default function Home() {
             <p className={styles.sectionEyebrow}>Documentation</p>
             <h2 className={styles.sectionTitle}>Everything in one place</h2>
             <p className={styles.sectionDesc}>
-              Step-by-step guides for every part of the Snapbuy ecosystem — from
+              Step-by-step guides for every part of the SnapBuy ecosystem — from
               server setup to store publishing.
             </p>
             <div className={clsx("row", styles.cardsRow)}>
@@ -263,7 +263,7 @@ export default function Home() {
                     Everything you need, documented.
                   </h2>
                   <p className={styles.ctaText}>
-                    The introduction walks you through the full Snapbuy
+                    The introduction walks you through the full SnapBuy
                     ecosystem and the recommended setup order — start there.
                   </p>
                   <div className={styles.ctaActions}>
@@ -284,7 +284,7 @@ export default function Home() {
                     </Link>
                     <Link
                       className={styles.ctaBtnGhost}
-                      href="https://api.whatsapp.com/send?phone=918200323468&text=Hello%20Jignesh%2C%20I%20want%20to%20know%20more%20about%20the%20installation%20service%20for%20Snapbuy."
+                      href="https://api.whatsapp.com/send?phone=918200323468&text=Hello%20Jignesh%2C%20I%20want%20to%20know%20more%20about%20the%20installation%20service%20for%20SnapBuy."
                       target="_blank"
                       rel="noopener noreferrer"
                     >

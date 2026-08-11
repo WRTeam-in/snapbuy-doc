@@ -19,7 +19,7 @@ Markdown format:
 
 ## Not obtainable from the admin panel
 
-These live outside Snapbuy — they need a screen recording from the relevant
+These live outside SnapBuy — they need a screen recording from the relevant
 third-party account or a pre-installation environment.
 
 | Filename | Page | Alt text | Source |
@@ -28,10 +28,10 @@ third-party account or a pre-installation environment.
 | `php-ini-phpinfo` | php-ini-settings.md | phpinfo output showing the updated limits | phpinfo page |
 | `subdomain-cpanel-create` | create-subdomain.md | cPanel subdomain creation form | cPanel |
 | `subdomain-document-root` | create-subdomain.md | Setting the subdomain document root to the public folder | cPanel |
-| `server-upload-files` | server-setup.md | Extracted Snapbuy files on the server | cPanel File Manager |
+| `server-upload-files` | server-setup.md | Extracted SnapBuy files on the server | cPanel File Manager |
 | `server-create-database` | server-setup.md | Creating the database and user in cPanel | cPanel |
 | `cron-cpanel-add` | cron-jobs.md | Adding the cron job in cPanel | cPanel |
-| `localhost-extract-files` | localhost-setup.md | Snapbuy files extracted into the htdocs folder | Local machine |
+| `localhost-extract-files` | localhost-setup.md | SnapBuy files extracted into the htdocs folder | Local machine |
 | `localhost-create-database` | localhost-setup.md | Creating an empty database in phpMyAdmin | phpMyAdmin |
 | `firebase-create-project` | firebase-settings.md | Creating a Firebase project | Firebase console |
 | `firebase-web-config` | firebase-settings.md | Firebase web app config values | Firebase console |
@@ -56,8 +56,8 @@ on a fresh installation (or one pointed at a throwaway database).
 | `server-installer-requirements` | server-setup.md | Installer requirements step with all checks passing |
 | `server-installer-database` | server-setup.md | Installer database step |
 | `server-installer-purchase-code` | server-setup.md | Installer purchase code step |
-| `server-installer-finish` | server-setup.md | Snapbuy admin login screen |
-| `localhost-installer-welcome` | localhost-setup.md | Snapbuy installation wizard welcome screen |
+| `server-installer-finish` | server-setup.md | SnapBuy admin login screen |
+| `localhost-installer-welcome` | localhost-setup.md | SnapBuy installation wizard welcome screen |
 | `localhost-installer-database` | localhost-setup.md | Installer database step |
 
 ## Blocked by panel state

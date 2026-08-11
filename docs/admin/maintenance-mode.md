@@ -40,7 +40,7 @@ Each surface's remark is the message customers read. Write something specific.
 
 ## Scheduled maintenance windows
 
-Rather than toggling by hand, set a **start** and **end** time. Snapbuy switches maintenance on at the start and off again at the end.
+Rather than toggling by hand, set a **start** and **end** time. SnapBuy switches maintenance on at the start and off again at the end.
 
 ![Scheduling a maintenance window](/images/panel/maintenance-schedule.png)
 

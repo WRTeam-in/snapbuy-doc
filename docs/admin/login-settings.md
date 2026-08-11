@@ -26,7 +26,7 @@ A wrong combination here locks out your entire customer base at once, with no er
 | **Email Login** | Email address and password |
 
 :::warning At least one of Phone or Google must stay enabled
-Snapbuy refuses to save with both disabled: *"At least one of phone login or google login must be enabled."* Email and Apple alone are not accepted as the only routes in.
+SnapBuy refuses to save with both disabled: *"At least one of phone login or google login must be enabled."* Email and Apple alone are not accepted as the only routes in.
 :::
 
 :::info Apple sign-in is mandatory for the iOS App Store

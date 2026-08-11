@@ -2,12 +2,12 @@
 id: installation-steps
 title: Installation Steps
 sidebar_position: 2
-description: This guide will walk you through the process of installing and configuring the Snapbuy Web Portal for a production deployment.
+description: This guide will walk you through the process of installing and configuring the SnapBuy Web Portal for a production deployment.
 ---
 
 # Installation Steps
 
-This guide walks through installing and configuring the Snapbuy Web Portal for a production deployment.
+This guide walks through installing and configuring the SnapBuy Web Portal for a production deployment.
 
 ## Prerequisites
 

@@ -8,7 +8,7 @@ sidebar_position: 32
 
 Menu path: **Settings → System Updater**
 
-Applies a Snapbuy update from a `.zip` package you upload, without touching FTP or SSH.
+Applies a SnapBuy update from a `.zip` package you upload, without touching FTP or SSH.
 
 ![System updater page](/images/panel/system-updater-page.png)
 
@@ -34,7 +34,7 @@ Do this every time, including for updates you expect to be small.
 7. Caches are cleared.
 
 :::info No remote update server is contacted
-Snapbuy never downloads updates by itself. You control exactly which package is applied and when.
+SnapBuy never downloads updates by itself. You control exactly which package is applied and when.
 :::
 
 ## Requirements

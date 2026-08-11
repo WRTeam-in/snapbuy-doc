@@ -8,7 +8,7 @@ sidebar_position: 37
 
 Menu paths: **Wallet Transactions**, **Withdrawal Requests**, **Transactions**
 
-Money inside Snapbuy moves through wallets. Customers hold a wallet balance; delivery boys hold one too. Both can request that balance out as a real payout.
+Money inside SnapBuy moves through wallets. Customers hold a wallet balance; delivery boys hold one too. Both can request that balance out as a real payout.
 
 :::danger Restrict these screens by role
 Everything on this page moves money. Grant `customer` and `withdrawal_request` permissions only to people who should be approving payouts. See [Roles & Permissions](/docs/admin/roles-permissions).
@@ -85,7 +85,7 @@ Both customers and delivery boys can request a payout of their balance. Requests
 ### Approving requires a receipt
 
 :::danger Approval will not save without a receipt image
-Snapbuy enforces this: *"The receipt image is required when the status is approved."* Upload proof of the bank transfer or UPI payment before marking a request approved.
+SnapBuy enforces this: *"The receipt image is required when the status is approved."* Upload proof of the bank transfer or UPI payment before marking a request approved.
 
 This exists to protect you. A payout marked approved with no evidence is indistinguishable from one that never happened, and you will be the one asked to prove it.
 :::

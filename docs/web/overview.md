@@ -2,12 +2,12 @@
 id: overview
 title: Overview
 sidebar_position: 1
-description: What the Snapbuy Web Portal includes, its tech stack, how it fits together, and where to start.
+description: What the SnapBuy Web Portal includes, its tech stack, how it fits together, and where to start.
 ---
 
 # Overview
 
-The Snapbuy Web Portal is the customer-facing storefront — customers browse products, place orders, and track deliveries from any browser.
+The SnapBuy Web Portal is the customer-facing storefront — customers browse products, place orders, and track deliveries from any browser.
 
 It is a **white-label template**: one codebase, configured per client. Branding, home page composition, delivery zones, channels, and languages all arrive from the Admin Panel API at runtime, so launching a new store means changing configuration, not code.
 

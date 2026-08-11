@@ -76,7 +76,7 @@ Sender IDs are approved by the provider and the telecom regulator, and must be e
 Message wording lives under **Settings → SMS Templates** — see [Notification, Email & SMS Templates](/docs/admin/notification-templates). Templates support placeholders such as `{otp}`, `{app_name}` and `{customer_name}`, and can be translated per language.
 
 :::danger Registered templates must match exactly
-Where the regulator requires pre-registered templates (India's DLT regime, for example), the text you send must match the registered text **character for character**. Editing a template in Snapbuy without updating the registration causes silent delivery failure.
+Where the regulator requires pre-registered templates (India's DLT regime, for example), the text you send must match the registered text **character for character**. Editing a template in SnapBuy without updating the registration causes silent delivery failure.
 :::
 
 ## Cost control

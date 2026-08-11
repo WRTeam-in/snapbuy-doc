@@ -7,7 +7,7 @@ description: Change colours, home page sections, channels, zones, and languages 
 
 # Configuration & Theming
 
-The Snapbuy Web Portal is a **white-label storefront**. Almost everything a visitor sees — brand colours, header artwork, the home page layout, delivery zones, channels, and languages — is controlled from the Admin Panel, not built into the site.
+The SnapBuy Web Portal is a **white-label storefront**. Almost everything a visitor sees — brand colours, header artwork, the home page layout, delivery zones, channels, and languages — is controlled from the Admin Panel, not built into the site.
 
 That means you can rebrand the storefront, reorder the home page, or launch a new zone without a developer and without redeploying.
 

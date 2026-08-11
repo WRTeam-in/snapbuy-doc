@@ -6,21 +6,21 @@ title: FAQs
 # Frequently Asked Questions
 
 <details>
-<summary>What platforms does Snapbuy support?</summary>
+<summary>What platforms does SnapBuy support?</summary>
 
-Snapbuy supports Android, iOS, and Web platforms.
-
-</details>
-
-<details>
-<summary>What backend technology does Snapbuy use?</summary>
-
-Snapbuy uses Laravel (PHP) for the backend API and admin panel.
+SnapBuy supports Android, iOS, and Web platforms.
 
 </details>
 
 <details>
-<summary>Can I white-label Snapbuy?</summary>
+<summary>What backend technology does SnapBuy use?</summary>
+
+SnapBuy uses Laravel (PHP) for the backend API and admin panel.
+
+</details>
+
+<details>
+<summary>Can I white-label SnapBuy?</summary>
 
 Yes. You can customize the app name, logo, colors, and package name as described in the App Setup section.
 

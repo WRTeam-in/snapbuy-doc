@@ -8,7 +8,7 @@ sidebar_position: 9
 
 **Setup Guide step 1 of 9.** Menu path: **Countries**
 
-A country in Snapbuy is far more than a name in a dropdown. It is the container for your **currency**, **phone number rules**, **timezone**, **date formats**, **which payment gateways are offered**, your **referral programme**, and every **legal policy** the apps display.
+A country in SnapBuy is far more than a name in a dropdown. It is the container for your **currency**, **phone number rules**, **timezone**, **date formats**, **which payment gateways are offered**, your **referral programme**, and every **legal policy** the apps display.
 
 Get this right before anything else — zones, stores and prices all hang off it.
 

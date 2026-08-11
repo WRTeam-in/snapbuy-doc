@@ -10,7 +10,7 @@ sidebar_position: 16
 
 Chat lets customers, delivery boys and admins message each other in real time — a customer asking the rider to wait, or support resolving an order problem without a phone call.
 
-Real-time messaging needs a **WebSocket server**. Snapbuy supports two:
+Real-time messaging needs a **WebSocket server**. SnapBuy supports two:
 
 | Driver | Cost | Runs where | Best for |
 | --- | --- | --- | --- |
@@ -25,7 +25,7 @@ Real-time messaging needs a **WebSocket server**. Snapbuy supports two:
 
 ## Option A — Reverb (self-hosted)
 
-Reverb ships with Snapbuy. Installation **generates credentials automatically** if they were empty, so the fields are usually already filled in.
+Reverb ships with SnapBuy. Installation **generates credentials automatically** if they were empty, so the fields are usually already filled in.
 
 | Field | Notes |
 | --- | --- |
@@ -107,7 +107,7 @@ Nothing to run or keep alive.
 3. Open **App Keys**.
 
 
-| Snapbuy field | Pusher value |
+| SnapBuy field | Pusher value |
 | --- | --- |
 | **App ID** | `app_id` |
 | **App Key** | `key` |

@@ -6,7 +6,7 @@ sidebar_position: 8
 
 # Setup Guide — the first nine steps
 
-A freshly installed Snapbuy panel is empty. The apps and the web portal will load, but they will show nothing, because there is no country, no delivery zone, no store and no home layout yet.
+A freshly installed SnapBuy panel is empty. The apps and the web portal will load, but they will show nothing, because there is no country, no delivery zone, no store and no home layout yet.
 
 The panel guides you through this with a **Setup Guide** widget in the sidebar. It tracks nine steps, shows a completion ring, and hides itself once all nine are done.
 
