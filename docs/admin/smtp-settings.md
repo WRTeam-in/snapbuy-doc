@@ -8,7 +8,7 @@ sidebar_position: 13
 
 **Setup Guide step 5 of 9.** Menu path: **Settings → SMTP Settings**
 
-SMTP is how Snapbuy sends email. Until it is configured, **no email leaves the system** — no order confirmations, no password resets, no email OTP, no promotional campaigns.
+SMTP is how SnapBuy sends email. Until it is configured, **no email leaves the system** — no order confirmations, no password resets, no email OTP, no promotional campaigns.
 
 ![SMTP settings page](/images/panel/smtp-settings-page.png)
 
@@ -44,7 +44,7 @@ Password reset relies on SMTP. If an admin forgets their password and SMTP is no
 :::
 
 :::info Use HTML content type
-Snapbuy's built-in [email templates](/docs/admin/notification-templates) are HTML. Setting the content type to `Text` delivers raw markup to customers.
+SnapBuy's built-in [email templates](/docs/admin/notification-templates) are HTML. Setting the content type to `Text` delivers raw markup to customers.
 :::
 
 ## Common provider settings

@@ -4,9 +4,9 @@ title: Introduction
 sidebar_position: 1
 ---
 
-# Welcome to Snapbuy Documentation
+# Welcome to SnapBuy Documentation
 
-Snapbuy is a complete delivery & shopping platform that includes an Admin Panel, Customer App, Delivery Boy App, and Web Portal.
+SnapBuy is a complete delivery & shopping platform that includes an Admin Panel, Customer App, Delivery Boy App, and Web Portal.
 
 ## What's Included
 

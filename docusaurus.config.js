@@ -2,8 +2,8 @@
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Snapbuy Documentation",
-  tagline: "Complete guide for the Snapbuy delivery & shopping platform",
+  title: "SnapBuy Documentation",
+  tagline: "Complete guide for the SnapBuy delivery & shopping platform",
   favicon: "images/favicon.png",
 
   url: "https://snapbuy.github.io",
@@ -145,11 +145,20 @@ const config = {
         ],
       }),
     ],
+    "docusaurus-plugin-image-zoom",
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: "images/logo.png",
+      zoom: {
+        selector: ".markdown img",
+        background: {
+          light: "rgb(255, 255, 255)",
+          dark: "rgb(30, 30, 30)",
+        },
+        config: {},
+      },
       colorMode: {
         defaultMode: "dark",
         disableSwitch: false,
@@ -157,7 +166,7 @@ const config = {
       },
       navbar: {
         logo: {
-          alt: "Snapbuy Logo",
+          alt: "SnapBuy Logo",
           src: "images/favicon.png",
         },
         items: [
@@ -196,15 +205,15 @@ const config = {
             position: "right",
           },
           {
-            href: "https://www.snapbuy.in/",
-            label: "Snapbuy",
+            href: "https://www.marketplace.wrteam.in/products/snapbuy-hyperlocal-quick-commerce-ecommerce-platform",
+            label: "SnapBuy",
             position: "right",
           },
         ],
       },
       footer: {
         style: "dark",
-        copyright: `Copyright © ${new Date().getFullYear()} Snapbuy Documentation`,
+        copyright: `Copyright © ${new Date().getFullYear()} SnapBuy Documentation`,
       },
       prism: {
         theme: require("prism-react-renderer").themes.github,

@@ -38,7 +38,7 @@ https://wa.me/919876543210
 ```
 
 :::info Not the same as in-app chat
-This opens WhatsApp on the customer's device. It is unrelated to Snapbuy's built-in [chat](/docs/admin/chat-settings), which is real-time messaging inside the app tied to orders.
+This opens WhatsApp on the customer's device. It is unrelated to SnapBuy's built-in [chat](/docs/admin/chat-settings), which is real-time messaging inside the app tied to orders.
 :::
 
 ## Ordering

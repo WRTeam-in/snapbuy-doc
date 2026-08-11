@@ -8,7 +8,7 @@ sidebar_position: 13
 
 Configure the Play Store / App Store URLs used by **Share** and **Rate App** features, and set the minimum supported app version for **Force Update**.
 
-![App settings](./images/appSettings.png)
+![App settings](/images/app/customer/appSettings.png)
 
 ## 1. App Store Links
 

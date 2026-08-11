@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Create a Subdomain
 
-Snapbuy's admin panel is usually installed on its own subdomain, separate from the customer-facing website. A typical layout:
+SnapBuy's admin panel is usually installed on its own subdomain, separate from the customer-facing website. A typical layout:
 
 | Address | What runs there |
 | --- | --- |
@@ -25,7 +25,7 @@ The panel URL is written into the Customer App, the Delivery Boy App and the Web
 2. Under **Domains**, open **Subdomains** (on newer cPanel versions: **Domains → Create A New Domain**).
 3. In **Subdomain**, type `admin`.
 4. Choose your main domain from the dropdown.
-5. cPanel fills **Document Root** automatically as `public_html/admin`. Note this path — you will upload Snapbuy here.
+5. cPanel fills **Document Root** automatically as `public_html/admin`. Note this path — you will upload SnapBuy here.
 6. Click **Create**.
 
 
@@ -35,13 +35,13 @@ The subdomain becomes reachable within a few minutes, though DNS propagation can
 
 This is the step most installations get wrong.
 
-Snapbuy is a Laravel application. Everything above the `public/` folder — including your `.env` file with database passwords — **must not be reachable from a browser**.
+SnapBuy is a Laravel application. Everything above the `public/` folder — including your `.env` file with database passwords — **must not be reachable from a browser**.
 
 You have two safe options.
 
 ### Option A — document root points directly at `public/` (recommended)
 
-Upload Snapbuy so that the structure is:
+Upload SnapBuy so that the structure is:
 
 ```
 /home/username/snapbuy/          ← application files (.env, app/, storage/ …)
@@ -54,7 +54,7 @@ This is the most secure layout and needs no extra configuration.
 
 ### Option B — upload everything into the subdomain folder
 
-If your host will not let you move the document root, upload all Snapbuy files into `public_html/admin/` and rely on the bundled `.htaccess` in the project root, which forwards requests into `public/`.
+If your host will not let you move the document root, upload all SnapBuy files into `public_html/admin/` and rely on the bundled `.htaccess` in the project root, which forwards requests into `public/`.
 
 :::danger Verify your `.env` is not public
 After installing with Option B, open `https://admin.yourstore.com/.env` in a browser. You must see a **403** or **404**. If the file contents appear, stop immediately — your database credentials and API keys are exposed. Switch to Option A or add this to the `.htaccess` in the project root:
@@ -127,7 +127,7 @@ Visit the installer at `https://…` from the very first screen. If you install 
 ## Checklist
 
 - [ ] Subdomain created and resolving
-- [ ] Document root points at Snapbuy's `public/` folder
+- [ ] Document root points at SnapBuy's `public/` folder
 - [ ] `https://admin.yourstore.com/.env` returns 403/404
 - [ ] SSL certificate installed and the padlock shows
 

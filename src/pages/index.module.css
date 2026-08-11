@@ -8,11 +8,23 @@
 
 .heroBanner {
   position: relative;
-  padding: 6rem 0 5.5rem;
+  padding: 4.5rem 0 4rem;
   text-align: center;
   background: var(--primary-gradient);
   color: #fff;
   overflow: hidden;
+}
+
+/* Subtle dot grid keeps the hero from reading as a flat slab */
+.heroBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, .13) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%);
+  pointer-events: none;
 }
 
 /* Soft radial glow for depth */
@@ -118,32 +130,45 @@
   height: 64px;
 }
 
+/* --ifm-background-color resolves to transparent in the light theme, which makes
+   the wave vanish. Paint the real page background explicitly in each theme. */
 .wavePath {
-  fill: var(--ifm-background-color);
+  fill: #fff;
+}
+
+:global([data-theme="dark"]) .wavePath {
+  fill: var(--ifm-background-color, #1b1b1d);
 }
 
 /* ─── Features section ──────────────────────────────────────────────────────── */
 
 .features {
-  padding: 5rem 0 3rem;
+  padding: 4.5rem 0 3rem;
 }
 
 .sectionEyebrow {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: .7rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--ifm-color-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: .6rem;
 }
 
 .sectionTitle {
   text-align: center;
-  font-size: 1.9rem;
+  font-size: 2.15rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.6rem;
+  letter-spacing: -.032em;
+  margin-bottom: .7rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
 }
 
 .sectionDesc {
@@ -170,7 +195,8 @@
 }
 
 .docCard {
-  padding: 0.75rem;
+  padding: 0;
+  max-width: none;
   animation: fadeInUp 0.45s ease both;
 }
 
@@ -194,51 +220,92 @@
 .card {
   position: relative;
   height: 100%;
-  padding: 1.75rem 1.5rem 1.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  background: #fff;
+  padding: 1.6rem 1.5rem 1.35rem;
+  border-radius: 18px;
+  border: 1px solid var(--sb-border, rgba(0, 0, 0, .07));
+  background: var(--sb-surface, #fff);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  isolation: isolate;
+  transition: box-shadow .3s var(--sb-ease, ease), transform .3s var(--sb-ease, ease),
+              border-color .3s var(--sb-ease, ease);
+}
+
+/* Tinted wash that fades in behind the content on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%,
+    color-mix(in srgb, var(--primary-color) 7%, transparent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity .3s var(--sb-ease, ease);
 }
 
 .card::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   height: 3px;
   background: var(--primary-gradient);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.28s ease;
+  transition: transform .32s var(--sb-ease, ease);
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 45px rgba(14, 150, 35, 0.14);
-  border-color: rgba(14, 150, 35, 0.15);
+  box-shadow: 0 22px 48px rgba(14, 150, 35, .16);
+  border-color: color-mix(in srgb, var(--primary-color) 32%, transparent);
 }
 
 .card:hover::after {
   transform: scaleX(1);
 }
 
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: 1.15rem;
+}
+
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--sb-border, rgba(0, 0, 0, .07));
+}
+
+.cardMeta {
+  font-size: .74rem;
+  font-weight: 600;
+  opacity: .5;
+  white-space: nowrap;
+}
+
 .cardIconWrap {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
   border: 1.5px solid;
-  background: transparent;
+  background: color-mix(in srgb, var(--primary-color) 6%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.1rem;
   flex-shrink: 0;
-  transition: background-color 0.2s ease;
+  transition: background-color .22s ease, border-color .22s ease, transform .22s ease;
 }
 
 .cardIconWrap svg {
@@ -247,7 +314,9 @@
 }
 
 .card:hover .cardIconWrap {
-  background-color: currentColor;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: scale(1.06) rotate(-4deg);
 }
 
 .card:hover .cardIconWrap svg {
@@ -255,18 +324,23 @@
 }
 
 .cardTitle {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 700;
-  margin: 0 0 0.5rem;
-  letter-spacing: -0.01em;
+  margin: 0 0 .45rem;
+  letter-spacing: -.015em;
+  transition: color .25s ease;
+}
+
+.card:hover .cardTitle {
+  color: var(--ifm-color-primary);
 }
 
 .cardDesc {
-  font-size: 0.875rem;
-  line-height: 1.65;
-  opacity: 0.65;
+  font-size: .875rem;
+  line-height: 1.68;
+  opacity: .62;
   flex: 1;
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.3rem;
 }
 
 .cardArrow {
@@ -284,72 +358,271 @@
   gap: 9px;
 }
 
+/* ─── Quick start steps ─────────────────────────────────────────────────────── */
+
+.steps {
+  padding: 3rem 0 1rem;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  display: block;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--sb-border, rgba(0, 0, 0, .07));
+  background: var(--sb-surface, #fff);
+  text-decoration: none !important;
+  color: inherit;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* Connector line between steps on desktop */
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 2.55rem;
+  right: -1.5rem;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--sb-border-strong, rgba(0, 0, 0, .14));
+}
+
+.step:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--primary-color) 35%, transparent);
+  box-shadow: 0 16px 36px rgba(14, 150, 35, .12);
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary-color) 11%, transparent);
+  color: var(--ifm-color-primary);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  margin-bottom: 1rem;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+.step:hover .stepNum {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.stepTitle {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 0 0 .45rem;
+  letter-spacing: -.01em;
+}
+
+.stepText {
+  font-size: .875rem;
+  line-height: 1.65;
+  opacity: .65;
+  margin: 0;
+}
+
+@media (max-width: 996px) {
+  .stepsGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .step::after {
+    display: none;
+  }
+}
+
 /* ─── CTA band ──────────────────────────────────────────────────────────────── */
 
 .ctaBand {
-  padding: 3rem 0 4.5rem;
+  padding: 3.5rem 0 5rem;
 }
 
 .ctaBox {
-  background: var(--primary-gradient);
-  border-radius: 20px;
-  padding: 3.5rem 2rem;
-  text-align: center;
-  color: #fff;
   position: relative;
+  border-radius: 24px;
+  padding: 3.25rem 3rem;
+  color: #fff;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 120% at 12% 0%, #14a82a 0%, transparent 62%),
+    linear-gradient(135deg, #0f8f22 0%, #0a6b1a 55%, #064d13 100%);
+  box-shadow: 0 24px 60px rgba(6, 77, 19, .3);
 }
 
+/* Fine dot texture, masked so it fades toward the right */
 .ctaBox::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 50% 70% at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 50% at 90% 80%, rgba(255,200,100,0.1) 0%, transparent 55%);
+  background-image: radial-gradient(rgba(255, 255, 255, .14) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(105deg, #000 0%, transparent 62%);
+  -webkit-mask-image: linear-gradient(105deg, #000 0%, transparent 62%);
   pointer-events: none;
 }
 
-.ctaIcon {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 1rem;
+/* Soft light bloom in the lower right */
+.ctaGlow {
+  position: absolute;
+  right: -12%;
+  bottom: -55%;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 255, 145, .2) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.ctaInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr);
+  gap: 2.75rem;
+  align-items: center;
+}
+
+.ctaEyebrow {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: .32rem .85rem;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .26);
+  margin-bottom: 1.1rem;
 }
 
 .ctaTitle {
-  font-size: 1.7rem;
+  font-size: 2rem;
   font-weight: 800;
-  margin: 0 0 0.6rem;
+  margin: 0 0 .7rem;
   color: #fff;
-  letter-spacing: -0.02em;
-  position: relative;
+  letter-spacing: -.028em;
+  line-height: 1.18;
 }
 
 .ctaText {
-  margin: 0 auto 2rem;
-  opacity: 0.85;
-  font-size: 0.95rem;
-  max-width: 440px;
+  margin: 0 0 1.9rem;
+  opacity: .82;
+  font-size: .97rem;
+  max-width: 34rem;
   line-height: 1.7;
-  position: relative;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
 }
 
 .ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
   background: #fff;
   color: var(--primary-color) !important;
   border: none;
   font-weight: 700;
-  border-radius: 10px;
-  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
-  position: relative;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  font-size: .93rem;
+  padding: .8rem 1.5rem;
+  border-radius: 12px;
+  text-decoration: none !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+  transition: transform .2s ease, box-shadow .2s ease, gap .2s ease;
 }
 
 .ctaBtn:hover {
-  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  text-decoration: none;
+  gap: .75rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .24);
+}
+
+.ctaBtnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: .93rem;
+  color: #fff !important;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .3);
+  text-decoration: none !important;
+  backdrop-filter: blur(6px);
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.ctaBtnGhost:hover {
+  background: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .55);
+  transform: translateY(-2px);
+}
+
+/* Support card on the right */
+.ctaAsideCard {
+  display: flex;
+  gap: 1rem;
+  padding: 1.4rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(10px);
+}
+
+.ctaAsideCard svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  stroke: #fff;
+  opacity: .9;
+}
+
+.ctaAsideTitle {
+  font-size: .97rem;
+  font-weight: 700;
+  margin: 0 0 .3rem;
+  color: #fff;
+}
+
+.ctaAsideText {
+  font-size: .84rem;
+  line-height: 1.6;
+  opacity: .8;
+  margin: 0;
+}
+
+@media (max-width: 996px) {
+  .ctaBox {
+    padding: 2.5rem 1.75rem;
+  }
+
+  .ctaInner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.6rem;
+  }
 }
 
 /* ─── Dark mode ─────────────────────────────────────────────────────────────── */
@@ -384,23 +657,29 @@
   }
 }
 
-/* ─── 5-card layout: 3+2 on desktop ────────────────────────────────────────── */
+/* ─── 5-card layout: 3 + 2, centred ─────────────────────────────────────────── */
 .cardsRow {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0;
+  gap: 1.5rem;
+  margin: 0;
 }
 
+/* Three per row, accounting for the two gaps between them */
 .cardsRow > .docCard {
-  flex: 0 0 20%;
-  max-width: 20%;
+  flex: 0 0 calc((100% - 3rem) / 3);
+  max-width: calc((100% - 3rem) / 3);
 }
 
 @media screen and (max-width: 996px) {
+  .cardsRow {
+    gap: 1.15rem;
+  }
+
   .cardsRow > .docCard {
-    flex: 0 0 50%;
-    max-width: 50%;
+    flex: 0 0 calc((100% - 1.15rem) / 2);
+    max-width: calc((100% - 1.15rem) / 2);
   }
 }
 

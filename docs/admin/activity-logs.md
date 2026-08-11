@@ -14,7 +14,7 @@ An audit trail of what changed in the panel, who changed it, and when.
 
 ## What is recorded
 
-Snapbuy logs create, update and delete actions on the records that matter — products, orders, stores, zones, countries, home layouts, promo codes, staff users and settings.
+SnapBuy logs create, update and delete actions on the records that matter — products, orders, stores, zones, countries, home layouts, promo codes, staff users and settings.
 
 Each entry shows:
 

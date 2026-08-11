@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Admin Panel Overview
 
-The **Snapbuy Admin Panel** is the control centre for your entire store. Everything the Customer App, the Delivery Boy App and the Web Portal display is driven from here — products, stores, delivery zones, orders, payments, notifications and every configuration switch.
+The **SnapBuy Admin Panel** is the control centre for your entire store. Everything the Customer App, the Delivery Boy App and the Web Portal display is driven from here — products, stores, delivery zones, orders, payments, notifications and every configuration switch.
 
 This section takes you from an empty server to a fully configured, live store.
 
@@ -24,9 +24,9 @@ This section takes you from an empty server to a fully configured, live store.
 | **Configuration** | Firebase, maps, SMTP, SMS, payment gateways, chat, languages, deeplinks |
 | **System** | Roles & permissions, staff users, activity logs, cron jobs, system updater |
 
-## How Snapbuy is put together
+## How SnapBuy is put together
 
-Snapbuy's admin panel is a **Laravel 12** application with a **Vue 3** single-page front end. Knowing this helps when you are choosing hosting:
+SnapBuy's admin panel is a **Laravel 12** application with a **Vue 3** single-page front end. Knowing this helps when you are choosing hosting:
 
 - **PHP 8.2 or newer** is required — a hard floor, not a recommendation.
 - **MySQL / MariaDB** is the only supported database.
@@ -35,14 +35,14 @@ Snapbuy's admin panel is a **Laravel 12** application with a **Vue 3** single-pa
 - Push notifications run through **Firebase Cloud Messaging**.
 
 :::info Version
-This documentation covers **Snapbuy v3.0.0**.
+This documentation covers **SnapBuy v3.0.0**.
 :::
 
 ## The recommended path
 
 Follow these pages in order. Each one assumes the previous is done.
 
-1. **[Server Requirements](/docs/admin/server-requirements)** — confirm your hosting can run Snapbuy.
+1. **[Server Requirements](/docs/admin/server-requirements)** — confirm your hosting can run SnapBuy.
 2. **[Create a Subdomain](/docs/admin/create-subdomain)** — where the panel will live.
 3. **[PHP INI Settings](/docs/admin/php-ini-settings)** — limits that must be raised before installing.
 4. **[Localhost Setup](/docs/admin/localhost-setup)** — for testing on your own machine.
@@ -64,7 +64,7 @@ If a store ever reports "the app shows nothing" or "no notifications arrive", th
 
 ## Access and permissions
 
-Snapbuy uses **role-based access control**. The account created during installation is the **Super Admin** and holds every permission. Staff accounts you create later see only the menus their role allows.
+SnapBuy uses **role-based access control**. The account created during installation is the **Super Admin** and holds every permission. Staff accounts you create later see only the menus their role allows.
 
 ## Need help?
 

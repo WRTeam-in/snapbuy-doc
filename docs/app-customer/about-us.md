@@ -17,4 +17,4 @@ Control the content shown on the app's **About Us** screen.
 
 The app fetches this content at runtime and renders it on the About Us screen.
 
-![About Us](./images/aboutus.png)
+![About Us](/images/app/customer/aboutus.png)

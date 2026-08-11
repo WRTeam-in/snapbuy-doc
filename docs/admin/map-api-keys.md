@@ -8,7 +8,7 @@ sidebar_position: 15
 
 **Setup Guide step 7 of 9.** Menu path: **Settings → API Credentials**
 
-Maps do real work in Snapbuy, not decoration:
+Maps do real work in SnapBuy, not decoration:
 
 - Customers pick their delivery address on a map
 - You draw [zone](/docs/admin/zones) polygons on a map
@@ -24,7 +24,7 @@ Maps do real work in Snapbuy, not decoration:
 | **OpenStreetMap** | Free | Basic | None — works immediately |
 | **Google Maps** | Paid, with a monthly free credit | Excellent | Two API keys, billing enabled |
 
-Snapbuy defaults to **OpenStreetMap**, and distance is measured with the public OSRM routing service.
+SnapBuy defaults to **OpenStreetMap**, and distance is measured with the public OSRM routing service.
 
 :::tip Start on OpenStreetMap
 It needs no keys, no billing and no Google account, and the Setup Guide's Map step completes the moment you select it. Switch to Google later if address search quality becomes a problem.
@@ -38,13 +38,13 @@ Distance lookups go to the public OSRM demo server. It is free and unauthenticat
 
 Google needs **two separate keys**. This trips people up constantly.
 
-| Snapbuy field | Google API | Used for |
+| SnapBuy field | Google API | Used for |
 | --- | --- | --- |
 | **Map API Key** | Maps JavaScript API | Rendering the map tiles you see when drawing zones and pinning stores |
 | **Place API Key** | Places API, Places API (New), Geocoding API, Distance Matrix API | Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge |
 
 :::danger Distance Matrix belongs to the Place key, not the Map key
-Snapbuy sends the Distance Matrix request using the **Place API Key**. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
+SnapBuy sends the Distance Matrix request using the **Place API Key**. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
 
 The symptom is "unable to fetch distance" at checkout on a panel where the maps clearly render fine.
 :::
@@ -68,7 +68,7 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
 5. Go to **APIs & Services → Credentials → Create credentials → API key**.
 6. Create **two** keys and name them clearly.
 
-Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. Snapbuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.
+Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. SnapBuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.
 
 :::danger Billing must be enabled
 Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.

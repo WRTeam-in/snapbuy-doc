@@ -15,7 +15,7 @@ Update the app's primary (theme) color from the admin panel — no code changes 
 3. Set the new color in the **Primary Color** field.
 4. Click **Save**.
 
-![Change Theme Color](./images/changeThemeColor.png)
+![Change Theme Color](/images/app/customer/changeThemeColor.png)
 
 :::warning
 Enter the color as a **hex code only** (e.g. `#0E9623`). Other formats (RGB, named colors) are not supported and will be rejected.

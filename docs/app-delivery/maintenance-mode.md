@@ -15,7 +15,7 @@ Temporarily lock the app while you perform server updates, database migrations, 
 3. Toggle **Maintenance Mode** ON.
 5. Click **Save**.
 
-![Maintenance Mode](./images/maintenanceMode.png)
+![Maintenance Mode](/images/app/delivery/maintenanceMode.png)
 
 ## How It Works
 

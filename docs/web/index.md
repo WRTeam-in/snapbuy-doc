@@ -2,12 +2,12 @@
 id: index
 title: Installation & Deployment
 sidebar_position: 0
-description: Setup, deployment, and configuration guides for the Snapbuy Web Portal storefront.
+description: Setup, deployment, and configuration guides for the SnapBuy Web Portal.
 ---
 
 # Installation & Deployment
 
-Setup, deployment, and configuration guides for the Snapbuy Web Portal storefront.
+Setup, deployment, and configuration guides for the SnapBuy Web Portal.
 
 ## Start here
 
@@ -22,7 +22,7 @@ Setup, deployment, and configuration guides for the Snapbuy Web Portal storefron
 
 ## The short version
 
-The storefront is a **Next.js 16 Pages Router** app backed by an Admin Panel API. It is a **white-label template**: colours, header artwork, home page composition, channels, and languages all arrive from the API at runtime.
+The SnapBuy Web Portal is a **Next.js 16 Pages Router** app backed by an Admin Panel API. It is a **white-label template**: colours, header artwork, home page composition, channels, and languages all arrive from the API at runtime.
 
 Two consequences worth internalising before changing anything:
 

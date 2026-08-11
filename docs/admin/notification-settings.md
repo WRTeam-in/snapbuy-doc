@@ -8,7 +8,7 @@ sidebar_position: 24
 
 Menu path: **Settings → Notification Settings**
 
-A switchboard for every automatic notification Snapbuy sends. Each **event** can be turned on or off independently, per **audience**.
+A switchboard for every automatic notification SnapBuy sends. Each **event** can be turned on or off independently, per **audience**.
 
 ![Notification settings page](/images/panel/notification-settings-page.png)
 

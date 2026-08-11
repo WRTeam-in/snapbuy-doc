@@ -13,12 +13,12 @@ This is the live installation. Before starting, confirm you have completed:
 - [PHP INI Settings](/docs/admin/php-ini-settings)
 
 :::danger Read this before you begin
-The installer runs `migrate:fresh`, which **drops every table** in the database it connects to. Create a brand-new, empty database for Snapbuy. Never point the installer at a database that already holds data.
+The installer runs `migrate:fresh`, which **drops every table** in the database it connects to. Create a brand-new, empty database for SnapBuy. Never point the installer at a database that already holds data.
 :::
 
 ## Step 1 — Upload the files
 
-Upload the Snapbuy admin panel package to your server and extract it into the folder your subdomain points at.
+Upload the SnapBuy admin panel package to your server and extract it into the folder your subdomain points at.
 
 **Via cPanel File Manager**
 
@@ -76,7 +76,7 @@ INSTALL_MODE=server
 ```
 
 :::danger This line is mandatory on a live server
-Snapbuy only runs the migrations, seeders, Passport key generation and the storage symlink when `INSTALL_MODE=server`. Without it, the wizard reports success but leaves you with an empty database and a broken panel.
+SnapBuy only runs the migrations, seeders, Passport key generation and the storage symlink when `INSTALL_MODE=server`. Without it, the wizard reports success but leaves you with an empty database and a broken panel.
 :::
 
 ## Step 5 — Open the installer
@@ -123,7 +123,7 @@ Fix the issue, then click **Try again** — you do not need to restart the wizar
 | **Admin Email** | The Super Admin login email |
 | **Admin Password** | Minimum 6 characters — use a strong one |
 
-When you continue, Snapbuy:
+When you continue, SnapBuy:
 
 1. Tests the database connection.
 2. Writes `DB_*`, `APP_URL` and `APP_ENV=production` into `.env`.
@@ -140,7 +140,7 @@ Migrations and seeders run inside a single request. On a slow shared host this c
 
 ## Step 8 — Purchase code
 
-Enter the Envato purchase code for your Snapbuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
+Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
 
 
 :::warning "Invalid code supplied!"
@@ -166,7 +166,7 @@ Three things must be done before the store is usable:
 
 ### Secure the maintenance routes
 
-Snapbuy exposes several helper URLs that are **not behind a login**:
+SnapBuy exposes several helper URLs that are **not behind a login**:
 
 | URL | What it does |
 | --- | --- |

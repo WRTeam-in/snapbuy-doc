@@ -35,7 +35,7 @@ const DocBanner = () => {
                 </svg>
             </div>
             <div className={styles.bannerContent}>
-                <p className={styles.bannerTitle}>Need help with Snapbuy?</p>
+                <p className={styles.bannerTitle}>Need help with SnapBuy?</p>
                 <p className={styles.bannerDescription}>
                     Our support team is ready to assist you with any questions or issues.
                     Reach out and get the help you need to run your delivery & shopping platform smoothly.

@@ -10,7 +10,7 @@ sidebar_position: 10
 
 A **zone** is the area you deliver to, drawn as a polygon on a map. It also decides **what delivery costs** inside that area.
 
-Zones are the heart of Snapbuy's delivery logic. Everything else depends on them:
+Zones are the heart of SnapBuy's delivery logic. Everything else depends on them:
 
 - A customer's address must fall inside a zone polygon, or they cannot order at all.
 - Every store belongs to exactly one zone.
@@ -33,7 +33,7 @@ You choose this with the zone's **Sales Channel** field.
 :::info Why a zone can hold two boundaries
 Quick delivery usually covers a few kilometres; eCommerce shipping can cover a whole state. Rather than forcing two separate zones, a zone set to **Both** stores **two polygons** — one per channel — and applies the matching price rules to each.
 
-If you draw only one of the two, Snapbuy falls back to the boundary that *has* been drawn, so a half-configured zone still resolves rather than silently rejecting every address.
+If you draw only one of the two, SnapBuy falls back to the boundary that *has* been drawn, so a half-configured zone still resolves rather than silently rejecting every address.
 :::
 
 ## Creating a zone
@@ -73,7 +73,7 @@ An address that falls a few metres outside the polygon is rejected outright with
 
 ## Quick channel pricing
 
-Distance-based. Snapbuy measures the **road distance** from the store to the customer using your map provider, then:
+Distance-based. SnapBuy measures the **road distance** from the store to the customer using your map provider, then:
 
 ```
 charge = base_delivery_charge
@@ -136,7 +136,7 @@ Charge varies by order value. Add rows of `min` – `max` – `charge`.
 Leave the **max** of the final row **blank** to mean "and above".
 
 :::warning Leave no gaps between slabs
-If an order value matches no slab, Snapbuy falls back to the **Default Delivery Charge**. A gap between `499` and `500.01` means orders at `500.00` silently get the fallback price. Make ranges continuous.
+If an order value matches no slab, SnapBuy falls back to the **Default Delivery Charge**. A gap between `499` and `500.01` means orders at `500.00` silently get the fallback price. Make ranges continuous.
 :::
 
 ### City

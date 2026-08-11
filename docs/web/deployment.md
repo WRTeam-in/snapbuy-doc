@@ -2,12 +2,12 @@
 id: deployment
 title: Deployment Guide
 sidebar_position: 6
-description: This guide covers deploying the Snapbuy Web Portal to production on a VPS with SEO enabled, using Node, PM2, and Apache or Nginx.
+description: This guide covers deploying the SnapBuy Web Portal to production on a VPS with SEO enabled, using Node, PM2, and Apache or Nginx.
 ---
 
 # Deployment Guide (VPS)
 
-This guide deploys the storefront to a VPS with **SEO enabled** — a real Node server behind Apache, not a static export.
+This guide deploys the SnapBuy Web Portal to a VPS with **SEO enabled** — a real Node server behind Apache, not a static export.
 
 :::info Why a VPS
 
@@ -35,7 +35,7 @@ Exclude `node_modules/` and `.next/` — both are rebuilt on the server.
 ```bash
 # from your machine
 rsync -av --exclude node_modules --exclude .next \
-  ./ user@your-server:/var/www/storefront/
+  ./ user@your-server:/var/www/snapbuy-web/
 ```
 
 ## Step 2 — Install Node.js 20 via NVM
@@ -112,7 +112,7 @@ NEXT_PUBLIC_BASE_URL=https://your-storefront-domain.com
 ## Step 6 — Install and build
 
 ```bash
-cd /var/www/storefront
+cd /var/www/snapbuy-web
 npm install
 npm run build
 ```
@@ -122,14 +122,14 @@ npm run build
 ## Step 7 — Start with PM2
 
 ```bash
-pm2 start "npm start" -n "storefront"
+pm2 start "npm start" -n "snapbuy-web"
 pm2 ls
 ```
 
 `pm2 ls` shows either:
 
 - **online** — good, continue.
-- **errored** / restart loop — run `pm2 logs storefront` and read the error before going further.
+- **errored** / restart loop — run `pm2 logs snapbuy-web` and read the error before going further.
 
 Make PM2 survive a reboot:
 
@@ -141,10 +141,10 @@ pm2 save
 Useful commands:
 
 ```bash
-pm2 logs storefront      # tail logs
-pm2 restart storefront   # restart after a rebuild
-pm2 stop storefront
-pm2 delete storefront
+pm2 logs snapbuy-web      # tail logs
+pm2 restart snapbuy-web   # restart after a rebuild
+pm2 stop snapbuy-web
+pm2 delete snapbuy-web
 ```
 
 ## Step 8 — Proxy the web server to Node
@@ -247,11 +247,11 @@ Then check in a browser:
 ## Updating a deployed site
 
 ```bash
-cd /var/www/storefront
+cd /var/www/snapbuy-web
 git pull                  # or upload the new files
 npm install               # only if dependencies changed
 npm run build
-pm2 restart storefront
+pm2 restart snapbuy-web
 ```
 
 Always rebuild before restarting — PM2 serves whatever is in `.next/`.
@@ -264,7 +264,7 @@ Node is not running or is on a different port.
 
 ```bash
 pm2 ls
-pm2 logs storefront
+pm2 logs snapbuy-web
 sudo lsof -i -P -n | grep 8004
 ```
 
@@ -275,11 +275,11 @@ Confirm the port in `.htaccess`/Nginx matches `NODE_PORT` in `package.json`.
 Open DevTools → Console. Common causes:
 
 - `NEXT_PUBLIC_API_URL` unreachable from the server.
-- CORS not configured on the Admin Panel for your storefront domain.
+- CORS not configured on the Admin Panel for your Web Portal domain.
 - A stale `.next/` from a previous export build — delete it and rebuild:
 
   ```bash
-  rm -rf .next && npm run build && pm2 restart storefront
+  rm -rf .next && npm run build && pm2 restart snapbuy-web
   ```
 
 ### Pages render but client navigation 404s
@@ -291,7 +291,7 @@ A `_next` rewrite is mapping to the filesystem. Remove it — see the warning in
 `.env` is read at build time. Rebuild and restart:
 
 ```bash
-npm run build && pm2 restart storefront
+npm run build && pm2 restart snapbuy-web
 ```
 
 ### PM2 does not come back after reboot

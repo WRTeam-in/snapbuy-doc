@@ -6,7 +6,7 @@ sidebar_position: 5
 
 # Localhost Setup
 
-Use this page to run Snapbuy on your own computer for testing and customisation. For a live store, follow [Server Setup](/docs/admin/server-setup) instead.
+Use this page to run SnapBuy on your own computer for testing and customisation. For a live store, follow [Server Setup](/docs/admin/server-setup) instead.
 
 ## What you need
 
@@ -20,7 +20,7 @@ Use this page to run Snapbuy on your own computer for testing and customisation.
 - Composer — [getcomposer.org/download](https://getcomposer.org/download/)
 
 :::warning Check the PHP version XAMPP ships with
-Older XAMPP builds ship PHP 8.0 or 8.1, which **cannot** run Snapbuy. Download a build with PHP 8.3 or newer, or use [Laragon](https://laragon.org/) which lets you switch PHP versions freely.
+Older XAMPP builds ship PHP 8.0 or 8.1, which **cannot** run SnapBuy. Download a build with PHP 8.3 or newer, or use [Laragon](https://laragon.org/) which lets you switch PHP versions freely.
 
 Verify with:
 
@@ -49,7 +49,7 @@ Also raise the limits described in [PHP INI Settings](/docs/admin/php-ini-settin
 
 ## Step 2 — Extract the project
 
-Extract the Snapbuy admin panel package into your web root:
+Extract the SnapBuy admin panel package into your web root:
 
 ```
 C:\xampp\htdocs\snapbuy\
@@ -98,7 +98,7 @@ INSTALL_MODE=server
 ```
 
 :::danger `INSTALL_MODE=server` is required
-Snapbuy only runs migrations, seeders, Passport setup and the storage symlink when `INSTALL_MODE` is set to `server`. Without this line the installer writes your settings but leaves the database empty, and the panel will error immediately after "installation".
+SnapBuy only runs migrations, seeders, Passport setup and the storage symlink when `INSTALL_MODE` is set to `server`. Without this line the installer writes your settings but leaves the database empty, and the panel will error immediately after "installation".
 
 Add the line before you open the installer.
 :::
@@ -142,14 +142,14 @@ Enter the same details you put in `.env`, plus the admin account you want to cre
 
 
 :::warning This step wipes the database
-Snapbuy runs `migrate:fresh`, which drops every existing table in the database it connects to. Never point it at a database that holds other data.
+SnapBuy runs `migrate:fresh`, which drops every existing table in the database it connects to. Never point it at a database that holds other data.
 :::
 
 The installer also generates **Reverb** credentials automatically if they are empty, so live chat works without extra setup.
 
 ### Purchase Code
 
-Enter the Envato purchase code for your Snapbuy licence. This step needs an internet connection even on localhost, because the code is validated against the licence server.
+Enter the Envato purchase code for your SnapBuy licence. This step needs an internet connection even on localhost, because the code is validated against the licence server.
 
 ### Finish
 
@@ -192,7 +192,7 @@ npm run dev        # dev server with hot reload
 | Installer finishes but panel is broken | `INSTALL_MODE=server` was missing | Add it, empty the database, run the installer again |
 
 :::tip Clearing the cache
-Snapbuy exposes `http://localhost/snapbuy/public/clear`, which clears the config, route, view and application caches in one request. Use it after any manual `.env` change.
+SnapBuy exposes `http://localhost/snapbuy/public/clear`, which clears the config, route, view and application caches in one request. Use it after any manual `.env` change.
 :::
 
 ---

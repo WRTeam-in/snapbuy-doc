@@ -2,12 +2,12 @@
 id: file-structure
 title: File Structure
 sidebar_position: 4
-description: Understanding the Snapbuy Web Portal project structure helps you find where everything lives and what to change.
+description: Understanding the SnapBuy Web Portal project structure helps you find where everything lives and what to change.
 ---
 
 # File Structure
 
-How the storefront is organised, and where to look when you need to change something.
+How the SnapBuy Web Portal is organised, and where to look when you need to change something.
 
 ## Technology stack
 
@@ -32,7 +32,7 @@ This project uses the **Pages Router** (`src/pages/**`), so routing lives in `sr
 ## Top level
 
 ```
-eCommerce/
+snapbuy-web/
 ├── public/                   # Served as-is
 │   └── firebase-messaging-sw.js   # Background push handler
 ├── scripts/

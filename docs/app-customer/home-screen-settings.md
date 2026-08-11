@@ -25,7 +25,7 @@ The Home Builder list shows every layout created so far.
 
 Two `Default Home Layout` entries always exist (one for **Ecommerce**, one for **Quick**) — these are used when a zone has no dedicated layout of its own. Click **+ New Home Layout** to create a zone-specific layout, or use the row actions (edit / duplicate / delete) to manage existing ones.
 
-![Manage Home Builder](./images/home1.png)
+![Manage Home Builder](/images/app/customer/home1.png)
 
 ## 2. Home Type — Category Wise vs Single
 
@@ -43,9 +43,9 @@ Controls the header shown at the top of the Home screen (behind the delivery-tim
 - **Category icon** *(Category Wise only)* — icon shown on the Home category tab. If not set, the category's own logo is used.
 - **Copy layout from** *(Category Wise only)* — copy an existing category's header settings into the one you're editing, instead of setting it up from scratch.
 
-![Category Wise Header Settings](./images/home2.png)
+![Category Wise Header Settings](/images/app/customer/home2.png)
 
-![Single Header Settings](./images/home3.png)
+![Single Header Settings](/images/app/customer/home3.png)
 
 ## 4. Sections
 
@@ -68,7 +68,7 @@ Below Header Settings, the **Sections** list controls what appears on the Home s
 
 You can also click **Use Template** to add a pre-built set of sections instead of adding them one by one.
 
-![Add Section](./images/home4.png)
+![Add Section](/images/app/customer/home4.png)
 
 For **Category Wise** layouts, this section list is repeated per category tab (e.g. All, Grocery, Beauty, …) — use **Add Category** to add a new category tab to the layout.
 

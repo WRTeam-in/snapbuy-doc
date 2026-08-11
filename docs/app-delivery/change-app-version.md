@@ -64,7 +64,7 @@ FLUTTER_BUILD_NAME=1.1.0
 FLUTTER_BUILD_NUMBER=2
 ```
 
-![Generated file in Xcode](images/appVersion1.png)
+![Generated file in Xcode](/images/app/delivery/appVersion1.png)
 
 ### Step 2 — Update Build Settings
 
@@ -74,7 +74,7 @@ FLUTTER_BUILD_NUMBER=2
 4. Scroll down to the **User-Defined** section.
 5. Update `FLUTTER_BUILD_NAME` and `FLUTTER_BUILD_NUMBER` to match your new version.
 
-![Build Settings in Xcode](images/appVersion2.png)
+![Build Settings in Xcode](/images/app/delivery/appVersion2.png)
 
 After both steps are done, build the iOS release:
 

@@ -41,7 +41,7 @@ Each `env/<name>.json` file contains the following keys:
 }
 ```
 
-![Deeplink Scheme](./images/deeplink.png)
+![Deeplink Scheme](/images/app/customer/deeplink.png)
 
 ## How to Change Values
 

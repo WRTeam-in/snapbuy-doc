@@ -8,7 +8,7 @@ sidebar_position: 34
 
 Menu paths: **Role** and **System Users**
 
-Snapbuy uses role-based access control. A **role** is a bundle of permissions; a **staff user** is assigned one role and sees only what it allows.
+SnapBuy uses role-based access control. A **role** is a bundle of permissions; a **staff user** is assigned one role and sees only what it allows.
 
 ![Roles list](/images/panel/roles-list.png)
 
