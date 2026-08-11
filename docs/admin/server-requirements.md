@@ -12,7 +12,7 @@ Check every item on this page **before** you upload SnapBuy. The installation wi
 
 | Requirement | Value |
 | --- | --- |
-| **Minimum PHP version** | **8.2.0** |
+| **Minimum PHP version** | **8.3.0** |
 | Recommended | 8.3 |
 
 :::danger PHP 8.1 and below will not work
@@ -120,7 +120,7 @@ Full walkthrough: **[Localhost Setup](/docs/admin/localhost-setup)**.
 
 ## Quick pre-flight checklist
 
-- [ ] PHP 8.2 or newer
+- [ ] PHP 8.3 or newer
 - [ ] All 17 extensions enabled
 - [ ] Empty MySQL database created, with a user that has full privileges on it
 - [ ] `.env`, `storage/`, `bootstrap/cache/` writable

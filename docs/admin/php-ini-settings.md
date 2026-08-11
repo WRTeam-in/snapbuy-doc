@@ -63,7 +63,7 @@ php --ini
 Edit it:
 
 ```bash
-sudo nano /etc/php/8.2/apache2/php.ini
+sudo nano /etc/php/8.3/apache2/php.ini
 ```
 
 Set the values, then restart:
@@ -73,7 +73,7 @@ Set the values, then restart:
 sudo systemctl restart apache2
 
 # Nginx + PHP-FPM
-sudo systemctl restart php8.2-fpm
+sudo systemctl restart php8.3-fpm
 sudo systemctl restart nginx
 ```
 
