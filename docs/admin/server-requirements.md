@@ -12,11 +12,11 @@ Check every item on this page **before** you upload SnapBuy. The installation wi
 
 | Requirement | Value |
 | --- | --- |
-| **Minimum PHP version** | **8.2.0** |
+| **Minimum PHP version** | **8.3.0** |
 | Recommended | 8.3 |
 
-:::danger PHP 8.1 and below will not work
-SnapBuy runs on Laravel 12, which itself requires PHP 8.2 or newer. There is no fallback build for older PHP.
+:::danger PHP 8.2 and below will not work
+SnapBuy runs on Laravel 12, which itself requires PHP 8.3 or newer. There is no fallback build for older PHP.
 :::
 
 ## Required PHP extensions
