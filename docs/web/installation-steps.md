@@ -53,7 +53,11 @@ If Node is missing or too old, install Node 20 LTS from the link above, then reo
 
 All configuration lives in a `.env` file in the project root. Every variable read by the browser **must** start with `NEXT_PUBLIC_`.
 
-Create `.env` if it does not exist and fill in the sections below.
+Copy `.env.example` to `.env` and fill in the sections below:
+
+```bash
+cp .env.example .env
+```
 
 ### Admin panel connection
 

@@ -435,7 +435,6 @@ kbd {
   font-weight: 700;
   font-size: .8rem;
   letter-spacing: .045em;
-  text-transform: uppercase;
   color: var(--ifm-heading-color);
   border: none;
   border-bottom: 1px solid var(--sb-border-strong);
@@ -691,10 +690,12 @@ article .card p {
 
 .theme-doc-markdown details > summary::before {
   content: "";
+  position: static;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   border-left: 5px solid var(--ifm-color-primary);
   display: inline-block;
+  vertical-align: middle;
   margin-right: .6rem;
   transition: transform .22s var(--sb-ease);
 }
