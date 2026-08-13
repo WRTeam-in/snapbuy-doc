@@ -124,7 +124,3 @@ This page controls **whether** a message is sent. **What it says** comes from [N
 | Customers complain of too many messages | Marketing events all on | Disable the promotional ones |
 | Message arrives in the wrong language | Template not translated | Add translations |
 | Admin misses withdrawal requests | `withdrawal_request_admin` disabled | Enable it |
-
----
-
-**Previous:** [← SMS Settings](/docs/admin/sms-settings) · **Next:** [Notification Templates →](/docs/admin/notification-templates)

@@ -159,7 +159,3 @@ Deleting a store is a soft delete, but it frees the zone so another store can cl
 - [ ] Name, provider and address translated into every active language
 - [ ] Products listed and priced at this store
 - [ ] Status Active
-
----
-
-**Previous:** [← Delivery Zones](/docs/admin/zones) · **Next:** [Home Builder →](/docs/admin/home-builder)

@@ -128,7 +128,3 @@ Changing the prefix later does not renumber existing invoices. Set it during ini
 | Customer not notified of status changes | `order_item_status_customer` disabled | Enable it in [Notification Settings](/docs/admin/notification-settings) |
 | Stock wrong after cancellations | Reserved stock released | Verify at the store's variant record |
 | Cannot mark delivered | Delivery OTP required and not entered | Get the code from the customer, or disable OTP |
-
----
-
-**Previous:** [← Roles & Permissions](/docs/admin/roles-permissions) · **Next:** [Return Requests →](/docs/admin/return-requests)

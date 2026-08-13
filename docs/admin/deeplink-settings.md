@@ -92,7 +92,3 @@ A deeplink that does nothing when the app is absent is expected behaviour for a 
 | Works on Android, not iOS | URL Types missing from `Info.plist` | Add it and rebuild |
 | Customers stranded after paying | Deeplink not configured | Set the schema; verify the gateway return URL |
 | Notification tap opens the home screen | Payload has no deeplink target | Check the notification template |
-
----
-
-**Previous:** [← Maintenance Mode](/docs/admin/maintenance-mode) · **Next:** [Contact & About Pages →](/docs/admin/contact-about)

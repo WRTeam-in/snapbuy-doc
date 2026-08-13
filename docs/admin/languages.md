@@ -130,7 +130,3 @@ They fall back to the default language on their next launch. If you support a la
 - [ ] Product, category, policy and template content translated
 - [ ] RTL layouts checked on a device
 - [ ] Language switcher tested end to end
-
----
-
-**Previous:** [← Social Media](/docs/admin/social-media) · **Next:** [Maintenance Mode →](/docs/admin/maintenance-mode)

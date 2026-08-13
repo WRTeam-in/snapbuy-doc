@@ -246,7 +246,3 @@ If your eCommerce zones use flat or slab pricing, you can skip cities and areas 
 - [ ] Default Delivery Charge set to a sensible fallback
 - [ ] Surge labels and additional charge names translated
 - [ ] Zone status Active
-
----
-
-**Previous:** [← Countries & Currency](/docs/admin/countries) · **Next:** [Stores →](/docs/admin/stores)

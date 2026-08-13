@@ -86,7 +86,3 @@ The Laravel log viewer sits outside the panel login and can reveal file paths an
 | Log empty | No qualifying activity yet, or filters too narrow | Clear the filters |
 | Page slow to load | Very large table | Filter by date; archive old entries |
 | Staff can see logs they should not | Role permission too broad | Tighten the [role](/docs/admin/roles-permissions) |
-
----
-
-**Previous:** [← System Updater](/docs/admin/system-updater) · **Next:** [Roles & Permissions →](/docs/admin/roles-permissions)

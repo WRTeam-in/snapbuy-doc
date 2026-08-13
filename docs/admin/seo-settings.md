@@ -105,7 +105,3 @@ After changing an OG image, use the sharing debugger to force a re-scrape. Other
 | Changes not in the page source | Storefront needs rebuilding | Rebuild and redeploy the web portal |
 | Pages not indexed | Sitemap not submitted, or site is new | Submit in Search Console and wait |
 | Canonical points at the wrong domain | Website URL misconfigured | Fix it in [Website Settings](/docs/admin/website-settings) |
-
----
-
-**Previous:** [← Notification Templates](/docs/admin/notification-templates) · **Next:** [Social Media →](/docs/admin/social-media)

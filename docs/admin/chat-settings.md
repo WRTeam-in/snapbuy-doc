@@ -158,7 +158,3 @@ The message was stored but not broadcast — the WebSocket connection is down. F
 - [ ] Reverb: port open, or proxied through Nginx over `wss://`
 - [ ] Pusher: cluster matches the dashboard
 - [ ] Live message tested end to end without refreshing
-
----
-
-**Previous:** [← Map & API Keys](/docs/admin/map-api-keys) · **Next:** [Cron Job Setup](/docs/admin/cron-jobs)

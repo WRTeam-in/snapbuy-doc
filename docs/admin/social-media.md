@@ -53,7 +53,3 @@ Links display in the order listed. Put the platforms you are most active on firs
 | Link not visible | Status inactive | Activate it |
 | Icon missing | Icon not selected | Choose one |
 | Change not visible on the website | Storefront cache or rebuild needed | Hard-refresh; rebuild if statically generated |
-
----
-
-**Previous:** [← SEO Settings](/docs/admin/seo-settings) · **Next:** [Manage Languages →](/docs/admin/languages)

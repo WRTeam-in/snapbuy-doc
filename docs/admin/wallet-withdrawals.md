@@ -135,7 +135,3 @@ If your panel and your gateway disagree on what was collected, the gateway is th
 | Rider balance looks wrong | Cash collection not settled | Reconcile in Settlement History |
 | Wallet refund not received | Refund not actually issued | Check the wallet transaction record |
 | Panel and gateway totals disagree | Missing webhook | Register the webhook URL |
-
----
-
-**Previous:** [← Return Requests](/docs/admin/return-requests) · **Next:** [Delivery Boy Portal →](/docs/admin/delivery-boy-portal)

@@ -113,7 +113,3 @@ A quick order that went wrong is normally resolved by cancelling the item and re
 | Customer says no refund arrived | Marked complete without issuing it | Verify in the gateway dashboard |
 | Stock wrong after returns | Returned items added back automatically | Check condition before restocking |
 | Customer not told anything | Return notifications disabled | Enable them |
-
----
-
-**Previous:** [← Orders Workflow](/docs/admin/orders) · **Next:** [Wallet, Withdrawals & Settlements →](/docs/admin/wallet-withdrawals)

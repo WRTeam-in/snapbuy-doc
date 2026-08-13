@@ -119,7 +119,3 @@ Delivery can succeed on one carrier and fail on another. Try at least two.
 - [ ] Templates match any registered text exactly
 - [ ] Spending cap and alerts configured
 - [ ] Real OTP received on two different carriers
-
----
-
-**Previous:** [← Cart Settings](/docs/admin/cart-settings) · **Next:** [Notification Settings →](/docs/admin/notification-settings)

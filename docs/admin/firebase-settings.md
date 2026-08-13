@@ -169,7 +169,3 @@ Notifications are dispatched as queued jobs. Without the [cron job](/docs/admin/
 - [ ] Phone sign-in enabled and domain authorised
 - [ ] Android and iOS apps registered in the **same** project
 - [ ] Test notification received on a real device
-
----
-
-**Previous:** [← SMTP Settings](/docs/admin/smtp-settings) · **Next:** [Map & API Keys →](/docs/admin/map-api-keys)

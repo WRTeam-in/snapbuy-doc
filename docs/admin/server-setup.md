@@ -202,7 +202,3 @@ Replace the address with your own IP.
 | `500` on first login | Caches hold stale config | Visit `https://admin.yourstore.com/clear` |
 | Redirect loop at login | `APP_URL` scheme or host is wrong | Fix `APP_URL` in `.env`, then visit `/clear` |
 | Installer reappears after installing | `storage/installed` missing or storage not writable | `chmod -R 755 storage` and re-run the installer |
-
----
-
-**Previous:** [← Localhost Setup](/docs/admin/localhost-setup) · **Next:** [Cron Job Setup →](/docs/admin/cron-jobs)

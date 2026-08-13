@@ -150,7 +150,3 @@ Anyone with access to this screen can read your live gateway credentials.
 - [ ] Stripe webhook secret entered
 - [ ] One real live payment completed **and refunded**
 - [ ] Access to payment settings restricted by role
-
----
-
-**Previous:** [← Login Settings](/docs/admin/login-settings) · **Next:** [Cart Settings →](/docs/admin/cart-settings)

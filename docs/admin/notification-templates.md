@@ -118,7 +118,3 @@ There is no per-template undo. Paste the original into a note first.
 | SMS not delivered in India | Text differs from the DLT registration | Match it exactly |
 | Push cut off mid-sentence | Too long | Shorten; front-load the meaning |
 | Nothing sends at all | Event disabled, or cron/Firebase missing | See [Notification Settings](/docs/admin/notification-settings) |
-
----
-
-**Previous:** [← Notification Settings](/docs/admin/notification-settings) · **Next:** [SEO Settings →](/docs/admin/seo-settings)

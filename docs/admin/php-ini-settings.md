@@ -132,7 +132,3 @@ symlink, exec, proc_open, shell_exec, putenv
 ```
 
 `symlink` is the critical one — see [Server Requirements](/docs/admin/server-requirements#server-functions-that-must-not-be-disabled).
-
----
-
-**Previous:** [← Create a Subdomain](/docs/admin/create-subdomain) · **Next:** [Localhost Setup →](/docs/admin/localhost-setup)

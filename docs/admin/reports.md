@@ -115,7 +115,3 @@ Once downloaded, a file containing customer details and revenue can be forwarded
 | Inventory looks wrong | Reading totals across stores | Filter by store |
 | Export times out | Range too large | Export in smaller periods |
 | Staff cannot open reports | `report` permission not granted | Grant `list` in that category |
-
----
-
-**Previous:** [← Bulk Upload & Update](/docs/admin/bulk-upload) · **Next:** [Send Notifications & Emails →](/docs/admin/send-notifications)

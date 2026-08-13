@@ -133,7 +133,3 @@ Enabling a toggle here does not configure the provider — it only exposes the b
 - [ ] Country mobile length range correct
 - [ ] Password policy achievable
 - [ ] Signed in successfully with every enabled method on a real device
-
----
-
-**Previous:** [← Website Settings](/docs/admin/website-settings) · **Next:** [Payment Gateways →](/docs/admin/payment-gateway)

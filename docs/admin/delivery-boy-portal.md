@@ -118,7 +118,3 @@ The portal and the app show the same data — the portal is useful when a phone 
 | Cash figures disputed | Not settled recently | Reconcile in Settlement History |
 | Orders stuck after deactivating a rider | Not reassigned | Reassign to an active rider |
 | Payout request unnoticed | Admin notification disabled | Enable `withdrawal_request_admin` |
-
----
-
-**Previous:** [← Wallet & Withdrawals](/docs/admin/wallet-withdrawals) · **Next:** [Bulk Upload & Update →](/docs/admin/bulk-upload)

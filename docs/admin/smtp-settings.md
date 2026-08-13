@@ -145,7 +145,3 @@ Transactional email — order confirmations, password resets — is also queued.
 | Emails land in spam | Missing SPF/DKIM, or From on a domain you do not control | Add DNS records; send from your own domain |
 | Emails show raw HTML tags | Content type set to `Text` | Set it to `HTML` |
 | Nothing sends after changing settings | Cached config | Visit `/clear` once |
-
----
-
-**Previous:** [← Home Builder](/docs/admin/home-builder) · **Next:** [Firebase Settings →](/docs/admin/firebase-settings)

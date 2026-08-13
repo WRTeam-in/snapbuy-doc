@@ -194,7 +194,3 @@ npm run dev        # dev server with hot reload
 :::tip Clearing the cache
 SnapBuy exposes `http://localhost/snapbuy/public/clear`, which clears the config, route, view and application caches in one request. Use it after any manual `.env` change.
 :::
-
----
-
-**Previous:** [← PHP INI Settings](/docs/admin/php-ini-settings) · **Next:** [Server Setup →](/docs/admin/server-setup)

@@ -105,7 +105,3 @@ App stores ask for a publicly reachable privacy policy URL. These endpoints are 
 | Images not displaying | Storage symlink missing | Visit `/linkstorage` |
 | App store rejection over contact details | Placeholder text still present | Enter real details |
 | Wrong language shown | Translation missing | Add it under [Languages](/docs/admin/languages) |
-
----
-
-**Previous:** [← Deeplink Settings](/docs/admin/deeplink-settings) · **Next:** [Activity Logs →](/docs/admin/activity-logs)

@@ -97,7 +97,3 @@ Maintenance applies to the customer-facing surfaces only. You can always sign in
 | Customers still see the store | Cached pages or app state | Wait for the app to refresh; clear the storefront cache |
 | Riders cannot complete deliveries | Delivery Boy App in maintenance | Turn that surface back on |
 | No message shown, just an error | Remark left blank | Write a remark |
-
----
-
-**Previous:** [← Manage Languages](/docs/admin/languages) · **Next:** [Deeplink Settings →](/docs/admin/deeplink-settings)

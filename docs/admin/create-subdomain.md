@@ -130,7 +130,3 @@ Visit the installer at `https://…` from the very first screen. If you install 
 - [ ] Document root points at SnapBuy's `public/` folder
 - [ ] `https://admin.yourstore.com/.env` returns 403/404
 - [ ] SSL certificate installed and the padlock shows
-
----
-
-**Previous:** [← Server Requirements](/docs/admin/server-requirements) · **Next:** [PHP INI Settings →](/docs/admin/php-ini-settings)

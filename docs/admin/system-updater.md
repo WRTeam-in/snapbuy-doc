@@ -124,7 +124,3 @@ Updates are disabled when the installation is running in demo mode, with *"This 
 | Images gone after updating | Symlink lost | Visit `/linkstorage` |
 | Customisations disappeared | Overwritten by the package | Restore from your file backup |
 | Update hung part-way | Execution timeout | Restore from backup and retry with higher limits |
-
----
-
-**Previous:** [← Contact & About](/docs/admin/contact-about) · **Next:** [Activity Logs →](/docs/admin/activity-logs)

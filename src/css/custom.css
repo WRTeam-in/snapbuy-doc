@@ -158,10 +158,10 @@ html {
   height: 2.25rem;
   border-radius: 9px;
   border: 1px solid var(--sb-border);
-  background: var(--sb-surface-2);
+  background-color: var(--sb-surface-2);
   font-size: .88rem;
   transition: border-color .2s var(--sb-ease), box-shadow .2s var(--sb-ease),
-              background .2s var(--sb-ease);
+              background-color .2s var(--sb-ease);
 }
 
 .navbar .navbar__search-input:hover {
@@ -170,7 +170,7 @@ html {
 
 .navbar .navbar__search-input:focus {
   border-color: var(--ifm-color-primary);
-  background: var(--sb-surface);
+  background-color: var(--sb-surface);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ifm-color-primary) 16%, transparent);
   outline: none;
 }
@@ -184,6 +184,23 @@ html {
 .navbar .clean-btn:hover {
   background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
   transform: rotate(12deg);
+}
+
+/* Back-to-top button */
+.theme-back-to-top-button {
+  background-color: var(--ifm-color-primary);
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: var(--sb-shadow-md);
+  opacity: .92;
+  transition: opacity .2s var(--sb-ease), transform .2s var(--sb-ease),
+              background-color .2s var(--sb-ease);
+}
+
+.theme-back-to-top-button:hover {
+  background-color: var(--ifm-color-primary-dark);
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 /* External link (SnapBuy site) reads as a button, not a nav item */
@@ -305,6 +322,24 @@ html {
 .markdown h3 {
   letter-spacing: -.012em;
   margin-top: 2rem;
+}
+
+/* Step-by-step guides: accent dot in front of "Step N — ..." h2s.
+   Matched by id prefix, not counted — a counter would mislabel headings
+   like "Step 3.1" (its own number, not the Nth heading on the page). */
+.markdown h2[id^="step-"]:not([id="step-by-step"]) {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+}
+
+.markdown h2[id^="step-"]:not([id="step-by-step"])::before {
+  content: "";
+  flex: none;
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: var(--ifm-color-primary);
 }
 
 .markdown > p,
@@ -467,12 +502,20 @@ kbd {
 }
 
 /* Wide tables scroll inside their own container on small screens,
-   without collapsing the table's full width on desktop. */
+   without collapsing the table's full width on desktop.
+   min-width: 0 on the ancestors is required — flex/grid items default to
+   min-width: auto, which lets a wide table blow out the column instead of
+   scrolling inside it. */
+.theme-doc-markdown,
+.markdown {
+  min-width: 0;
+}
+
 @media (max-width: 768px) {
   .markdown table {
     display: block;
     width: max-content;
-    min-width: 100%;
+    max-width: 100%;
     overflow-x: auto;
   }
 }
@@ -593,6 +636,12 @@ article .card p {
   background: var(--sb-surface);
   transition: transform .2s var(--sb-ease), box-shadow .2s var(--sb-ease),
               border-color .2s var(--sb-ease);
+}
+
+.pagination-nav__sublabel,
+.pagination-nav__label {
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .pagination-nav__link:hover {
@@ -832,5 +881,39 @@ article .card p {
 
   .theme-doc-markdown img {
     margin: 1.25rem auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__brand {
+    margin-right: .5rem;
+  }
+
+  .navbar__logo {
+    height: 1.6rem;
+  }
+
+  .navbar__items--right .navbar__link[href^="http"] {
+    padding: .32rem .55rem;
+    font-size: .82rem;
+  }
+
+  .menu {
+    padding: .75rem .5rem !important;
+    font-size: .86rem;
+  }
+
+  .menu__link {
+    padding: .42rem .55rem;
+  }
+
+  .markdown table th,
+  .markdown table td {
+    padding: .55rem .7rem;
+    font-size: .82rem;
+  }
+
+  .table-of-contents {
+    padding-left: .6rem;
   }
 }

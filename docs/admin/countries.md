@@ -150,7 +150,3 @@ Every zone carries a `country_id`. Create the country first, then draw zones ins
 - [ ] All seven policies rewritten, placeholders removed
 - [ ] Referral values set, or zeroed to disable
 - [ ] One country marked as default
-
----
-
-**Previous:** [← Setup Guide](/docs/admin/setup-guide) · **Next:** [Delivery Zones →](/docs/admin/zones)

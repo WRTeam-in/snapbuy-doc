@@ -146,7 +146,3 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 - [ ] Budget alert configured
 - [ ] Zone map draws correctly
 - [ ] Test address returns a sensible delivery charge
-
----
-
-**Previous:** [← Firebase Settings](/docs/admin/firebase-settings) · **Next:** [Chat Settings →](/docs/admin/chat-settings)

@@ -154,7 +154,3 @@ The import is processed by the queue. Without the [cron job](/docs/admin/cron-jo
 - [ ] Images uploaded first
 - [ ] Five-row test import verified
 - [ ] Cron heartbeat green
-
----
-
-**Previous:** [← Delivery Boy Portal](/docs/admin/delivery-boy-portal) · **Next:** [Reports →](/docs/admin/reports)

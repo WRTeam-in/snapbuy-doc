@@ -163,7 +163,3 @@ Keep the `schedule:run` cron job as well — the scheduler still drives cart rem
 :::tip Test without waiting
 Instead of waiting on the schedule, open **Settings → Cron Jobs** and press **Run now** on a task. The panel shows the exit code and output immediately, which tells you whether the task itself works — separating a broken task from a broken cron.
 :::
-
----
-
-**Previous:** [← Server Setup](/docs/admin/server-setup) · **Next:** [Setup Guide →](/docs/admin/setup-guide)

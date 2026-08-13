@@ -121,7 +121,3 @@ It is the simplest proof-of-delivery you have, and it settles most "I never rece
 | Theme colour unchanged in the app | App reads it at launch | Fully close and reopen the app |
 | Bonus not paid | Master switch off, or the order missed the minimum | Check the switch and the min amount |
 | Bonus payout far too high | Percentage type with no maximum | Set **Bonus Max Amount** |
-
----
-
-**Previous:** [← General Settings](/docs/admin/general-settings) · **Next:** [Website Settings →](/docs/admin/website-settings)

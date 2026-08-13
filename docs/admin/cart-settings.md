@@ -92,7 +92,3 @@ Mention the actual product, or note that stock is limited. "You left something b
 | Reminders never stop | Stop time unset or too high | Set a realistic limit |
 | Sent after the customer ordered | Timings extremely short, race with checkout | Raise the initial delay |
 | Wrong language | Template not translated | Add translations |
-
----
-
-**Previous:** [← Payment Gateways](/docs/admin/payment-gateway) · **Next:** [SMS Settings →](/docs/admin/sms-settings)

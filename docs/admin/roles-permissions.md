@@ -132,7 +132,3 @@ It changes what riders see in their own app, and can expose customer or financia
 - [ ] One account per person
 - [ ] SMTP working, so password reset is possible
 - [ ] Leavers deactivated and secrets rotated
-
----
-
-**Previous:** [← Activity Logs](/docs/admin/activity-logs) · **Next:** [Orders Workflow →](/docs/admin/orders)

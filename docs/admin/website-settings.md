@@ -89,7 +89,3 @@ The rest of the storefront is configured elsewhere:
 | Download banner leads to a dead page | App not published, or wrong URL | Disable the banner or correct the URL |
 | Colour change not visible | Browser cache | Hard-refresh; visit `/clear` |
 | Consent banner missing | Setting disabled | Enable cookie consent |
-
----
-
-**Previous:** [← App Settings](/docs/admin/app-settings) · **Next:** [Login Settings →](/docs/admin/login-settings)

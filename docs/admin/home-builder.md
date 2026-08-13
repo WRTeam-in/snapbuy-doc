@@ -190,7 +190,3 @@ The editor previews the layout as the apps will render it. Use it before publish
 - [ ] Text translated into every active language
 - [ ] Previewed before publishing
 - [ ] Cron verified if using scheduled publishing
-
----
-
-**Previous:** [← Stores](/docs/admin/stores) · **Next:** [SMTP / Email Settings →](/docs/admin/smtp-settings)
