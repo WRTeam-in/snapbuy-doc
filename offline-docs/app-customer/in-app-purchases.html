@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>In-App Purchases — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>In-App Purchases</h1>
+
+    <p>In-App Purchases (IAP) let the Customer App sell digital products directly through Google Play and the Apple App Store — for example a premium membership tier or an ad-free unlock.</p>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Customer App only</p>
+      <p>This feature applies to the <strong>Customer App</strong>. The Delivery App does not use in-app purchases.</p>
+    </div>
+
+    <h2 id="iap-types">1. IAP Types</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Type</th><th>Description</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Consumable</strong></td><td>Can be purchased repeatedly; used up after purchase</td><td>In-app currency, one-time promo boosts</td></tr>
+        <tr><td><strong>Non-Consumable</strong></td><td>Purchased once and permanently unlocked</td><td>Premium membership, remove-ads unlock, theme packs</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="app-store-setup">2. App Store Connect Setup (iOS)</h2>
+
+    <p>Before creating any IAP product on iOS, complete these account-level steps once:</p>
+    <ul>
+      <li>Sign the <strong>Paid Applications Agreement</strong> in App Store Connect.</li>
+      <li>Set up your <strong>banking and tax information</strong> under Agreements, Tax, and Banking.</li>
+      <li>Accept the latest <strong>Apple Developer Program License Agreement</strong>.</li>
+    </ul>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Approval takes time</p>
+      <p>Apple can take a few days to approve these agreements. Until approved, your IAP products will not display in the app even if the code is implemented correctly — plan this step well before your launch date.</p>
+    </div>
+
+    <p>To create a product:</p>
+    <ol>
+      <li>In App Store Connect, open your app and go to <strong>Features → In-App Purchases</strong>.</li>
+      <li>Click <strong>+</strong> and choose <strong>Consumable</strong> or <strong>Non-Consumable</strong>.</li>
+      <li>Enter a <strong>Reference Name</strong> and a unique <strong>Product ID</strong> (e.g. <code>com.yourcompany.snapbuy.premium_monthly</code>).</li>
+      <li>Fill in <strong>Availability</strong>, <strong>Price Schedule</strong>, <strong>Localization</strong> (display name and description), and <strong>Review Information</strong> (including a screenshot).</li>
+      <li>Save, then attach the IAP to your app's next submission under <strong>In-App Purchases</strong> in the version you submit for review.</li>
+    </ol>
+
+    <h2 id="play-console-setup">3. Google Play Console Setup (Android)</h2>
+    <ol>
+      <li>Confirm your Play Console account's country supports merchant registration.</li>
+      <li>Set up a <strong>payments profile</strong> under Setup → Payments profile if you haven't already.</li>
+      <li>Go to <strong>Monetize → Products → In-app products</strong> and create a product with a <strong>Product ID</strong>, <strong>Title</strong>, <strong>Description</strong>, and <strong>Price</strong>.</li>
+      <li>Enable <strong>Multi-quantity</strong> if the product is consumable and can be purchased in bulk.</li>
+      <li>Set the product status to <strong>Active</strong>.</li>
+      <li>Publish your app to at least an internal testing or production track — draft products won't load in an unpublished app.</li>
+    </ol>
+
+    <h2 id="testing">4. Testing</h2>
+    <p>Google Play requires <strong>license testers</strong>: add tester Gmail accounts under <strong>Setup → License testing</strong> in Play Console so you can complete test purchases without being charged.</p>
+
+    <h2 id="troubleshooting">5. Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Likely Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>IAP products don't appear in the app</td><td>Agreements not yet approved, or product not Active</td><td>Wait for Apple/Google approval; confirm product status is Active/live</td></tr>
+        <tr><td>Sandbox purchases fail on iOS</td><td>Testing with a real Apple ID instead of a Sandbox tester</td><td>Sign out of the App Store on the test device and sign in with a Sandbox Apple ID</td></tr>
+        <tr><td>Products load on Android in testing but not production</td><td>App not published to a track, or product still in Draft</td><td>Publish the app and set the product to Active</td></tr>
+        <tr><td>Purchase succeeds but content doesn't unlock</td><td>Backend not verifying/recording the purchase receipt</td><td>Confirm the receipt-verification call to your Admin Panel backend completes and updates the user's entitlement</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>Keep Product IDs identical in intent between Android and iOS (e.g. both named <code>premium_monthly</code>) even though the platforms manage them in separate consoles — it keeps your backend entitlement logic simple.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/in-app-purchases.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

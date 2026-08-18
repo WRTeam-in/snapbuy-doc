@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Assets Management — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Assets Management</h1>
+
+    <p>Assets are the images, animations, and other bundled resource files used inside the app — onboarding artwork, empty-state illustrations, icons, and Lottie/Rive animations. Managing them correctly keeps the UI looking sharp without breaking any code references.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Applies to both apps</p>
+      <p>Apply these steps to both the Customer App and Delivery App.</p>
+    </div>
+
+    <h2 id="images">1. Images (SVG, PNG, JPG)</h2>
+    <ul>
+      <li>Replace an image using the <strong>exact same filename and extension</strong> as the original — this way no Dart code needs to change.</li>
+      <li>Keep the new image's dimensions and aspect ratio close to the original to avoid stretched or cropped UI.</li>
+      <li>If you rename the file or change its format (e.g. PNG → SVG), update every reference to it in the Dart code — search the <code>lib/</code> folder for the old filename.</li>
+      <li>Some PNGs ship in multiple density variants for sharper rendering on high-DPI screens:
+        <pre><code>assets/images/banner.png       (1x)
+assets/images/2.0x/banner.png  (2x)
+assets/images/3.0x/banner.png  (3x)</code></pre>
+        Either replace all variants with matching-resolution artwork, or delete the <code>2.0x</code> / <code>3.0x</code> folders and let Flutter fall back to the single 1x file.
+      </li>
+    </ul>
+
+    <h2 id="animations">2. Animations (Lottie, Rive)</h2>
+    <ul>
+      <li>Flutter supports <strong>Lottie</strong> (<code>.json</code>) and <strong>Rive</strong> (<code>.riv</code>) animation files, typically found under <code>assets/animations/</code>.</li>
+      <li>Replace an animation file using the same filename to avoid touching any widget code.</li>
+      <li>To use a different filename, locate the widget that loads it (search for <code>Lottie.asset(</code> or <code>RiveAnimation.asset(</code> in <code>lib/</code>) and update the path there.</li>
+      <li>Edit or create new animations with:
+        <ul>
+          <li><a href="https://lottiefiles.com/editor">LottieFiles Editor</a> — for <code>.json</code> Lottie animations</li>
+          <li><a href="https://rive.app/">Rive Editor</a> — for <code>.riv</code> animations</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2 id="registering-new-assets">3. Registering New Assets</h2>
+    <p>If you add a brand-new file (rather than replacing an existing one), declare it in <code>pubspec.yaml</code> under the <code>flutter: assets:</code> section, then run:</p>
+    <pre><code class="language-bash">flutter pub get</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Final Check</p>
+      <p>Always verify that new or updated assets have correct references in the code — a mismatched filename or an undeclared path in <code>pubspec.yaml</code> causes a missing-asset error at runtime, not at build time.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/assets-management.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

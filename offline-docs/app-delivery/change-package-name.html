@@ -24,17 +24,45 @@
   <main class="content">
     <h1>Change Package Name</h1>
 
-    <p>Update the default package name to your own unique identifier before publishing the app to the Play Store / App Store.</p>
+    <p>Update the default package name to your own unique identifier (Application ID on Android, Bundle Identifier on iOS) before publishing the app to the Play Store / App Store.</p>
 
-    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/packagename">Change Package Name Documentation</a> for detailed instructions on changing the package name.</p>
+    <p>Package names identify your app uniquely on app stores — reusing the default risks publishing errors and installation conflicts. Use reverse-domain notation, e.g. <code>com.yourcompany.appname</code>, lowercase letters and dots only, and keep it consistent across Android, iOS, and Firebase.</p>
 
-    <p>After changing the package name, you need to rerun the below commands to update the package references.</p>
-    <pre><code>flutter clean
+    <h2 id="automated-method">1. Automated CLI Method (Recommended)</h2>
+    <p>Add <code>change_app_package_name</code> to your <code>pubspec.yaml</code>:</p>
+    <pre><code class="language-yaml">dev_dependencies:
+  change_app_package_name: ^1.1.0</code></pre>
+
+    <p>Run the package command with your new domain-reversed package name:</p>
+    <pre><code class="language-bash">dart run change_app_package_name:main com.yourcompany.appname</code></pre>
+
+    <h2 id="manual-method">2. Manual Method</h2>
+    <p>If you prefer changing values manually, update the package string in the following files:</p>
+    <ul>
+      <li><code>android/app/build.gradle</code> &gt; <code>applicationId "com.yourcompany.appname"</code> and <code>namespace "com.yourcompany.appname"</code></li>
+      <li><code>android/app/src/main/AndroidManifest.xml</code> &gt; <code>package="com.yourcompany.appname"</code></li>
+      <li><code>ios/Runner/Info.plist</code> &gt; <code>CFBundleIdentifier</code></li>
+      <li><code>ios/Runner.xcodeproj/project.pbxproj</code> &gt; <code>PRODUCT_BUNDLE_IDENTIFIER</code></li>
+      <li>Refactor package directory tree under <code>android/app/src/main/kotlin/com/yourcompany/appname/</code></li>
+    </ul>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>If your reversed domain contains a Kotlin reserved keyword (e.g. <code>in</code>), wrap that segment in backticks: <code>package `in`.co.mydomain.myapp</code>.</p>
+    </div>
+
+    <h2 id="clean-rebuild">3. Clean &amp; Rebuild</h2>
+    <pre><code class="language-bash">flutter clean
 flutter pub get</code></pre>
 
     <div class="admonition admonition--warning">
-      <p class="admonition__title">UPDATE FIREBASE AFTER CHANGING THE PACKAGE NAME</p>
+      <p class="admonition__title">Update Firebase after changing the package name</p>
       <p>If Firebase is already configured, changing the package name/bundle ID invalidates the existing <code>google-services.json</code> / <code>GoogleService-Info.plist</code>. Re-register the app (or re-run <code>flutterfire configure</code>) under the new identifier — see <a href="firebase-setup.html">Firebase Setup</a>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>Double-check every file listed above after either method — a stale package name in even one file causes signing mismatches or install conflicts when publishing.</p>
     </div>
   </main>
 </div>

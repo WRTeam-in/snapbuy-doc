@@ -132,6 +132,27 @@
       <p class="admonition__title">Tip</p>
       <p>You can switch environments at any time: change the <code>environment</code> constant → rerun the sync script → rebuild the app.</p>
     </div>
+
+    <h2 id="panel-side-deeplink">Panel-Side Deeplink Setting</h2>
+
+    <p>The scheme configured above must also be set in the Admin Panel, and the Play Store / App Store URLs must be added so external links redirect correctly:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>Menu path</th></tr></thead>
+      <tbody>
+        <tr><td>Deeplink Schema</td><td>System Setting → General Setting → Deep Link Settings</td></tr>
+        <tr><td>Play Store &amp; App Store URLs</td><td>System Setting → App Setting → App URL</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Full details, testing commands, and a troubleshooting table are on the <a href="../admin/deeplink-settings.html">Admin Panel — Deeplink Settings</a> page.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Keep the scheme identical everywhere</p>
+      <p>The <code>DEEPLINK_SCHEME</code> value in <code>env/demo.json</code>, the Admin Panel's Deeplink Schema field, and the compiled Android/iOS apps must all match exactly. A mismatch breaks deeplinks silently — taps simply do nothing.</p>
+    </div>
   </main>
 </div>
 

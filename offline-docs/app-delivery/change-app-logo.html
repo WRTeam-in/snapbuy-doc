@@ -26,9 +26,12 @@
 
     <p>Replace the default app icon with your own branded logo for both Android and iOS builds.</p>
 
-    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/appicon">Change App Logo Documentation</a> and follow <strong>every step in the order shown</strong>.</p>
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Full steps</p>
+      <p>The complete step-by-step guide — automated <code>flutter_launcher_icons</code> method, manual file replacement, and platform paths — lives on the <a href="app-icon.html">App Icon</a> page.</p>
+    </div>
 
-    <h2 id="what-the-guide-covers">What the Guide Covers</h2>
+    <h2 id="what-it-covers">What It Covers</h2>
     <ul>
       <li>Adding the <code>flutter_launcher_icons</code> package to <code>pubspec.yaml</code></li>
       <li>Configuring the icon source path, Android / iOS flags, and alpha-channel handling</li>
@@ -37,7 +40,7 @@
     </ul>
 
     <div class="admonition admonition--warning">
-      <p class="admonition__title">WARNING</p>
+      <p class="admonition__title">Warning</p>
       <p>For iOS App Store submission, the icon <strong>must not contain an alpha channel</strong> (no transparency). Use <code>remove_alpha_ios: true</code> in the package config, or flatten the image before manual replacement.</p>
     </div>
   </main>

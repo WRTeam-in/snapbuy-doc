@@ -23,19 +23,86 @@
 
   <main class="content">
     <h1>Firebase Billing Setup</h1>
-    
-    <p>To enable certain Firebase services (Phone OTP verification, Places search, Maps APIs beyond the free tier), you must upgrade your Firebase project to the <strong>Blaze (pay-as-you-go) plan</strong> and attach a billing account.</p>
-    
-    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/firebase-billing/">Firebase Billing Setup Guide</a> and follow <strong>every step in the order shown</strong>.</p>
-    
-    <h2 id="what-the-guide-covers">What the Guide Covers</h2>
-    
+
+    <p>Firebase provides a range of services, some of which require billing to be enabled — especially <strong>OTP login</strong>, <strong>Google Maps</strong>, and the <strong>Places API</strong>. Follow these steps to ensure proper billing setup.</p>
+
+    <h2 id="upgrade-to-blaze-plan">1. Upgrade from Spark to the Blaze Plan</h2>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>If you already set up the Blaze plan earlier (for Firebase OTP, for example), you don't need to repeat these steps — just confirm your billing account is still linked to the project.</p>
+    </div>
+
+    <ol>
+      <li>Log in to the <strong>Firebase Console</strong> (<code>console.firebase.google.com</code>) and open your project.</li>
+      <li>In the bottom-left corner, your project shows the <strong>Spark plan</strong>. Click <strong>Upgrade</strong>.</li>
+      <li>Select the <strong>Blaze plan</strong>.</li>
+      <li>Select a billing account, then click <strong>Continue</strong> and <strong>Purchase</strong>. Your project is now on the Blaze plan.</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip — creating a billing account</p>
+      <p>If you don't have a Google Cloud billing account yet: select your actual country (not a placeholder like India), choose an existing payment profile or create a new one, then add your payment details and select or add a payment method. See <a href="https://cloud.google.com/billing/docs/how-to/manage-billing-account">Google's billing account guide</a> for the full walkthrough.</p>
+    </div>
+
+    <h2 id="setup-billing-maps-places">2. Set Up Billing for Map &amp; Place API Keys</h2>
+
+    <h3 id="link-billing">Step 1 — Link a Billing Account</h3>
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>If billing is already linked from the OTP setup above, skip this step.</p>
+    </div>
+    <ol>
+      <li>Go to the Firebase Console and select your project.</li>
+      <li>In the left-hand menu, click <strong>Project Settings</strong>.</li>
+      <li>Under the <strong>Billing</strong> section, click <strong>Go to Billing Account</strong>.</li>
+      <li>If you don't have a billing account, click <strong>Create Billing Account</strong> and follow the prompts to add a payment method.</li>
+      <li>Link the billing account to your project.</li>
+    </ol>
+
+    <h3 id="enable-apis">Step 2 — Enable Required APIs</h3>
+    <ol>
+      <li>In the Firebase Console, go to <strong>Project Settings → Cloud Messaging → Manage Service Accounts</strong>.</li>
+      <li>Click through to <strong>Google Cloud Console</strong> and select the same project.</li>
+      <li>In Cloud Console, navigate to <strong>APIs &amp; Services → Library</strong>.</li>
+      <li>Enable each of the following APIs:
+        <ul>
+          <li><strong>Maps SDK for Android</strong> — displays maps on Android devices</li>
+          <li><strong>Maps SDK for iOS</strong> — displays maps on iOS devices</li>
+          <li><strong>Geocoding API</strong> — converts addresses into coordinates (optional)</li>
+          <li><strong>Places API</strong> — location search and autocomplete</li>
+          <li><strong>Routes API</strong> — calculates distance between locations</li>
+          <li><strong>Maps JavaScript API</strong> — displays maps on the web portal</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>The <strong>Distance Matrix API</strong> is deprecated — enable the <strong>Routes API</strong> instead for distance/ETA calculations.</p>
+    </div>
+
+    <h3 id="setup-api-keys">Step 3 — Set Up API Keys</h3>
+    <ol>
+      <li>In Cloud Console, navigate to <strong>APIs &amp; Services → Credentials</strong>.</li>
+      <li>Click <strong>Create Credentials</strong> and select <strong>API Key</strong>.</li>
+      <li>For each newly created key (Android, iOS, and Place Search), open its settings and <strong>remove any restrictions</strong> — skip this if the key is already unrestricted.</li>
+    </ol>
+
+    <h3 id="add-key-to-app">Step 4 — Add the API Key to Your App</h3>
+
+    <p><strong>Android</strong> — insert into <code>android/app/src/main/AndroidManifest.xml</code>:</p>
+    <pre><code class="language-xml">&lt;meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_ANDROID_MAP_API_KEY" /&gt;</code></pre>
+
+    <p><strong>iOS</strong> — insert into <code>ios/Runner/AppDelegate.swift</code>:</p>
+    <pre><code class="language-swift">GMSServices.provideAPIKey("YOUR_IOS_MAP_API_KEY")</code></pre>
+
+    <h3 id="verify-billing-setup">Step 5 — Verify Billing Setup</h3>
     <ul>
-    <li>Upgrading the Firebase project from Spark to Blaze</li>
-    <li>Linking or creating a Google Cloud billing account</li>
-    <li>Enabling required Google Cloud APIs (Maps SDKs, Places, etc.)</li>
-    <li>Creating and configuring API keys</li>
-    <li>Verifying that billing is correctly linked</li>
+      <li>In Cloud Console, go to <strong>Billing</strong> and confirm the project is linked to your billing account.</li>
+      <li>Test OTP, Map, and Place features in your running app to confirm each one works.</li>
     </ul>
   </main>
 </div>

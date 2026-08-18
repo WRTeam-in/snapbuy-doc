@@ -24,9 +24,102 @@
   <main class="content">
     <h1>Deployment</h1>
 
-    <p>Once your app is fully developed and tested, follow the steps below to deploy it to the Play Store and App Store.</p>
+    <p>Once the app is fully configured and tested, follow the steps below to publish it to Google Play Store and Apple App Store.</p>
 
-    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/deployment">Deployment Guide</a> for detailed instructions on publishing to the Play Store and App Store.</p>
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Applies to both apps</p>
+      <p>These steps apply to both the Customer App and Delivery App — repeat the whole process for each app, using each app's own package name, icon, and store listing.</p>
+    </div>
+
+    <h2 id="google-play-store">1. Google Play Store</h2>
+
+    <h3 id="play-prerequisites">Prerequisites</h3>
+    <ul>
+      <li>A <strong>Google Play Developer Account</strong> (one-time $25 registration fee).</li>
+      <li>Store listing assets: app icon (512×512 px), feature graphic (1024×500 px), and at least 2 phone screenshots (minimum 1920×1080 px, 16:9 ratio).</li>
+      <li>A <strong>Privacy Policy URL</strong> — see <a href="policy.html">Privacy Policy / Terms</a>.</li>
+      <li>Basic comfort with the command line/terminal.</li>
+    </ul>
+
+    <h3 id="play-versioning">Version the Release</h3>
+    <p>In <code>pubspec.yaml</code>, the version is written as <code>version_name+version_code</code>, for example:</p>
+    <pre><code class="language-yaml">version: 1.0.0+1</code></pre>
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>For every new release, you <strong>must</strong> increment <code>version_code</code> (the number after <code>+</code>) by at least 1. Play Console rejects an upload whose version code isn't higher than the last one, even if <code>version_name</code> changed.</p>
+    </div>
+
+    <h3 id="play-signing">Sign the App</h3>
+    <p>Generate an upload keystore (skip if you already have one):</p>
+    <pre><code class="language-bash">keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload</code></pre>
+
+    <p>Create <code>android/key.properties</code> (never commit this file):</p>
+    <pre><code class="language-properties">storePassword=&lt;your-store-password&gt;
+keyPassword=&lt;your-key-password&gt;
+keyAlias=upload
+storeFile=&lt;path-to-upload-keystore.jks&gt;</code></pre>
+
+    <p>Build the release App Bundle:</p>
+    <pre><code class="language-bash">flutter build appbundle --release</code></pre>
+
+    <p>The signed bundle is written to:</p>
+    <pre><code>build/app/outputs/bundle/release/app.aab</code></pre>
+
+    <h3 id="play-listing">Store Listing</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Asset</th><th>Requirement</th></tr></thead>
+      <tbody>
+        <tr><td>App icon</td><td>512×512 px PNG, max 1MB</td></tr>
+        <tr><td>Feature graphic</td><td>1024×500 px, max 15MB</td></tr>
+        <tr><td>Phone screenshots</td><td>Min 1920×1080 px, 16:9 ratio, at least 2 required</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="play-testing">Testing &amp; Release Track</h3>
+    <p>Upload the <code>.aab</code> under <strong>Testing → Internal testing</strong> first, then progress through <strong>Closed testing → Open testing → Production</strong>.</p>
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>Personal developer accounts created after <strong>November 13, 2023</strong> must run a closed test with a minimum of <strong>12 testers</strong> for <strong>14 consecutive days</strong> before Google allows a production release.</p>
+    </div>
+
+    <h2 id="apple-app-store">2. Apple App Store</h2>
+
+    <h3 id="ios-prerequisites">Prerequisites</h3>
+    <ul>
+      <li>An <strong>Apple Developer Program</strong> account ($99/year).</li>
+      <li>A <strong>Mac</strong> with Xcode installed.</li>
+      <li>App icon at <strong>1024×1024 px</strong>, plus required screenshots for each supported device size.</li>
+      <li>A <strong>Privacy Policy URL</strong> and an <strong>App Store Connect</strong> app record already created.</li>
+    </ul>
+
+    <h3 id="ios-versioning">Version the Release</h3>
+    <p>Same <code>version_name+version_code</code> format in <code>pubspec.yaml</code> as Android. For every new release, increment the build number (the value after <code>+</code>) by at least 1.</p>
+
+    <h3 id="ios-build">Build the IPA</h3>
+    <pre><code class="language-bash">flutter build ipa --release</code></pre>
+    <p>Add <code>--obfuscate --split-debug-info=&lt;dir&gt;</code> to the command if you want the release build obfuscated. The resulting archive is written to:</p>
+    <pre><code>build/ios/ipa/YourApp.ipa</code></pre>
+
+    <h3 id="ios-connect">App Store Connect Setup</h3>
+    <ol>
+      <li>Create the app record using your <strong>Bundle ID</strong> (format <code>com.companyname.appname</code> — see <a href="change-package-name.html">Package Name</a>).</li>
+      <li>Fill in app information: category, pricing, screenshots, description, keywords, and privacy details.</li>
+    </ol>
+
+    <h3 id="ios-submit">Sign, Archive &amp; Submit</h3>
+    <ol>
+      <li>Open the project in Xcode and confirm your signing team and provisioning profile under <strong>Signing &amp; Capabilities</strong>.</li>
+      <li>Archive the build: <strong>Product → Archive</strong>.</li>
+      <li>Use the Organizer window to <strong>upload</strong> the archive to App Store Connect.</li>
+      <li>In App Store Connect, attach the uploaded build to your release and <strong>submit for review</strong>.</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>Safeguard your signing certificates and provisioning profiles — losing them means regenerating and re-registering test devices. Thoroughly test the release build before submitting, and monitor the review status in App Store Connect.</p>
+    </div>
   </main>
 </div>
 

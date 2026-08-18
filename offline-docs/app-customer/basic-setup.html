@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Basic Setup Guide — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Basic Setup Guide</h1>
+
+    <p>This guide walks you through the step-by-step installation of Flutter SDK, Java JDK, and IDE tools required to build and run the SnapBuy mobile app.</p>
+
+    <h2>1. Install Flutter SDK</h2>
+    <p>Download the latest stable release of Flutter SDK (from official release channels).</p>
+    <ul>
+      <li>Extract the ZIP archive into your development folder (e.g., <code>C:\flutter</code> on Windows or <code>~/flutter</code> on macOS/Linux).</li>
+      <li>Add Flutter executable to your system environment PATH:
+        <ul>
+          <li><strong>Windows:</strong> Environment Variables &gt; System Variables &gt; Path &gt; Add <code>C:\flutter\bin</code>.</li>
+          <li><strong>macOS / Linux:</strong> Open <code>~/.zshrc</code> or <code>~/.bashrc</code> and add:
+            <pre><code class="language-bash">export PATH="$HOME/flutter/bin:$PATH"</code></pre>
+          </li>
+        </ul>
+      </li>
+      <li>Verify the installation:
+        <pre><code class="language-bash">flutter doctor -v</code></pre>
+      </li>
+    </ul>
+
+    <h2>2. Install Java JDK</h2>
+    <p>Download and install <strong>Java Development Kit (JDK 21 LTS)</strong> from Oracle or OpenJDK.</p>
+    <ul>
+      <li>Set up the <code>JAVA_HOME</code> environment variable pointing to your JDK installation directory.</li>
+      <li>Add <code>%JAVA_HOME%\bin</code> (Windows) or <code>$JAVA_HOME/bin</code> (macOS/Linux) to your PATH.</li>
+      <li>Verify Java version in terminal:
+        <pre><code class="language-bash">java -version</code></pre>
+      </li>
+    </ul>
+
+    <h2>3. Setup IDE &amp; Android Tools</h2>
+    <ul>
+      <li><strong>Android Studio:</strong> Install Android Studio, open SDK Manager, and install Android SDK Platform 34+ and Command-line Tools.</li>
+      <li><strong>VS Code:</strong> Install the official Flutter and Dart extensions from Marketplace.</li>
+    </ul>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Back to Prerequisites</p>
+      <p>Return to <a href="prerequisites.html">App Prerequisites</a> for minimum version requirements table.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/basic-setup.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

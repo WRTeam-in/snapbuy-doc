@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App Icon — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>App Icon</h1>
+
+    <p>Replace the default SnapBuy launcher icon with your own brand icon on both Android and iOS.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Applies to both apps</p>
+      <p>Apply these steps to both the Customer App and Delivery App. Use a different icon for each so users can tell them apart on the home screen.</p>
+    </div>
+
+    <h2 id="prepare-your-icon">1. Prepare Your Icon</h2>
+    <ul>
+      <li>Create a square PNG, <strong>512×512 px or larger</strong> (1024×1024 recommended).</li>
+      <li>Use a transparent or solid background — solid is safer for iOS, which does not support transparency in the App Store icon.</li>
+      <li>Keep the main artwork inside the center ~80% of the canvas so it isn't clipped by adaptive-icon masks on Android.</li>
+    </ul>
+
+    <h2 id="automated-method">2. Automated Method (Recommended)</h2>
+
+    <p>Add the <code>flutter_launcher_icons</code> package to <code>pubspec.yaml</code>:</p>
+
+    <pre><code class="language-yaml">dev_dependencies:
+  flutter_launcher_icons: any
+
+flutter_launcher_icons:
+  image_path: "assets/icon/app_icon.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"</code></pre>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>image_path</code></td><td>Path to your 512×512 (or larger) source icon, used for both platforms</td></tr>
+        <tr><td><code>ios</code></td><td>Set <code>true</code> to generate the full iOS <code>AppIcon.appiconset</code></td></tr>
+        <tr><td><code>remove_alpha_ios</code></td><td>Strips transparency for App Store compliance — iOS icons must be fully opaque</td></tr>
+        <tr><td><code>adaptive_icon_background</code></td><td>Background color/image behind the Android adaptive icon</td></tr>
+        <tr><td><code>adaptive_icon_foreground</code></td><td>Foreground artwork for the Android adaptive icon (optional)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Place your source image at <code>assets/icon/app_icon.png</code>, then run:</p>
+
+    <pre><code class="language-bash">flutter pub get
+dart run flutter_launcher_icons</code></pre>
+
+    <p>Rebuild the app to see the new icon:</p>
+
+    <pre><code class="language-bash">flutter clean
+flutter pub get
+flutter run</code></pre>
+
+    <h2 id="manual-method">3. Manual Method</h2>
+
+    <p>If you prefer not to use the package, replace the platform icon files directly.</p>
+
+    <p><strong>Android</strong> — replace every density folder under:</p>
+    <pre><code>android/app/src/main/res/mipmap-mdpi/
+android/app/src/main/res/mipmap-hdpi/
+android/app/src/main/res/mipmap-xhdpi/
+android/app/src/main/res/mipmap-xxhdpi/
+android/app/src/main/res/mipmap-xxxhdpi/</code></pre>
+    <p>Each folder contains <code>ic_launcher.png</code> at a different resolution — keep the filenames and only swap the image content.</p>
+
+    <p><strong>iOS</strong> — replace the icon set at:</p>
+    <pre><code>ios/Runner/Assets.xcassets/AppIcon.appiconset/</code></pre>
+    <p>Open this folder in Xcode's asset catalog editor and drag your icon into each required slot, or generate the full set with an online icon-set generator and copy the files in.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>Always run <code>flutter clean</code> after changing icons — Android and iOS build caches frequently keep the old icon otherwise.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/app-icon.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
