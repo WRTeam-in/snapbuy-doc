@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Firebase Billing Setup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Firebase Billing Setup</h1>
+
+    <p>To enable certain Firebase services (Phone OTP verification, Places search, Maps APIs beyond the free tier), you must upgrade your Firebase project to the <strong>Blaze (pay-as-you-go) plan</strong> and attach a billing account.</p>
+
+    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/firebase-billing/">Firebase Billing Setup Guide</a> and follow <strong>every step in the order shown</strong>.</p>
+
+    <h2>What the Guide Covers</h2>
+    <ul>
+      <li>Upgrading the Firebase project from Spark to Blaze</li>
+      <li>Linking or creating a Google Cloud billing account</li>
+      <li>Enabling required Google Cloud APIs (Maps SDKs, Places, etc.)</li>
+      <li>Creating and configuring API keys</li>
+      <li>Verifying that billing is correctly linked</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/firebase-billing.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

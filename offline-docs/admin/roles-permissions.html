@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Roles &amp; Permissions — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Roles &amp; Permissions</h1>
+
+    <p>Menu paths: <strong>Role</strong> and <strong>System Users</strong></p>
+
+    <p>SnapBuy uses role-based access control. A <strong>role</strong> is a bundle of permissions; a <strong>staff user</strong> is assigned one role and sees only what it allows.</p>
+
+    <img src="../images/panel/roles-list.png" alt="Roles list">
+
+    <h2>The seeded roles</h2>
+
+    <p>Installation creates three:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Super Admin</strong></td><td>Every permission. Created by the installer as your account.</td></tr>
+          <tr><td><strong>Admin</strong></td><td>Broad management access</td></tr>
+          <tr><td><strong>Delivery Boy</strong></td><td>The rider's own portal — not a panel administrator</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Protect the Super Admin account</p>
+      <p>It can read your live payment gateway secrets, change prices, and delete records. Use a strong unique password, and never share the login between people — the <a href="../admin/activity-logs.html">activity log</a> can only tell you <em>which account</em> acted, so a shared account destroys accountability.</p>
+    </div>
+
+    <h2>Permission categories</h2>
+
+    <p>Permissions are grouped by area, and most areas offer four actions — <strong>list</strong>, <strong>create</strong>, <strong>update</strong>, <strong>delete</strong>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Covers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>dashboard</code></td><td>The dashboard itself</td></tr>
+          <tr><td><code>order</code></td><td>Orders</td></tr>
+          <tr><td><code>product</code></td><td>Products, brands, attributes, stock</td></tr>
+          <tr><td><code>category</code></td><td>Categories</td></tr>
+          <tr><td><code>store</code></td><td><a href="../admin/stores.html">Stores</a></td></tr>
+          <tr><td><code>location</code></td><td><a href="../admin/zones.html">Zones</a>, delivery cities and areas</td></tr>
+          <tr><td><code>countries</code></td><td><a href="../admin/countries.html">Countries</a> and their policies and gateways</td></tr>
+          <tr><td><code>customer</code></td><td>Customer accounts, wallet, transactions</td></tr>
+          <tr><td><code>delivery_boy</code></td><td>Riders, cash collection, salary, settlements</td></tr>
+          <tr><td><code>withdrawal_request</code></td><td>Payout approvals</td></tr>
+          <tr><td><code>return_request</code></td><td>Returns</td></tr>
+          <tr><td><code>promo_code</code></td><td>Promo codes</td></tr>
+          <tr><td><code>home_builder</code></td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
+          <tr><td><code>blogs</code> / <code>faq</code> / <code>popup_offer</code></td><td>Content</td></tr>
+          <tr><td><code>send_notification</code></td><td>Push and email campaigns</td></tr>
+          <tr><td><code>email_template</code></td><td>Templates</td></tr>
+          <tr><td><code>languages</code></td><td><a href="../admin/languages.html">Languages</a></td></tr>
+          <tr><td><code>report</code></td><td><a href="../admin/reports.html">Reports</a></td></tr>
+          <tr><td><code>chat</code></td><td>Live chat</td></tr>
+          <tr><td><code>settings</code></td><td><strong>Everything under Settings</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Creating a role</h2>
+
+    <p><strong>Role → Add Role</strong>, name it, then tick the permissions.</p>
+
+    <img src="../images/panel/roles-permissions-edit.png" alt="Editing role permissions">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title"><code>settings</code> is the permission to guard hardest</p>
+      <p>The settings category covers payment gateway credentials, SMTP passwords, Firebase keys and SMS gateway tokens — all readable in plain form by anyone who has it.</p>
+      <p>Grant it only to people you would trust with your bank login. A warehouse supervisor who needs stock access does not need settings.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title"><code>list</code> without <code>update</code> is genuinely useful</p>
+      <p>For read-only oversight — an accountant who needs to see orders and reports but must not change them — grant only the <code>list</code> permissions in those categories. This is the safest way to widen visibility.</p>
+    </div>
+
+    <h2>Suggested role designs</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Grant</th><th>Withhold</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Store Manager</strong></td><td>order, product, category, store, return_request, chat, report (list)</td><td>settings, countries, delivery_boy payouts</td></tr>
+          <tr><td><strong>Catalogue Staff</strong></td><td>product, category (list/create/update)</td><td>delete, order, settings, customer</td></tr>
+          <tr><td><strong>Support Agent</strong></td><td>order (list/update), customer (list), chat, return_request</td><td>settings, product, report</td></tr>
+          <tr><td><strong>Accountant</strong></td><td>report, order (list), customer (list), withdrawal_request (list)</td><td>everything create/update/delete</td></tr>
+          <tr><td><strong>Marketing</strong></td><td>promo_code, home_builder, send_notification, blogs, popup_offer</td><td>settings, order, customer, product</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Start narrow and widen on request</p>
+      <p>It is far easier to add a permission when someone asks than to discover months later that a role could delete products all along. Build the minimum, then respond to real needs.</p>
+    </div>
+
+    <h2>Creating staff users</h2>
+
+    <p><strong>System Users → Add User</strong>: username, email, password, and the role.</p>
+
+    <img src="../images/panel/system-users-add.png" alt="Adding a system user">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Every staff member gets their own account</p>
+      <p>Sharing one login makes the activity log useless and means you cannot revoke one person's access without changing everyone's password.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Password reset needs working SMTP</p>
+      <p>Staff who forget their password recover by email. If <a href="../admin/smtp-settings.html">SMTP</a> is not configured, there is no in-panel recovery path — it takes direct database access. Configure SMTP before you create staff accounts.</p>
+    </div>
+
+    <h2>When someone leaves</h2>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Deactivate the account the same day</p>
+      <p>Revoke access immediately, and rotate any shared credentials that person could read — particularly payment gateway keys and SMTP passwords if they had <code>settings</code>. Their knowledge of those secrets does not expire with their account.</p>
+    </div>
+
+    <p>Deactivate rather than delete, so their history in the <a href="../admin/activity-logs.html">activity log</a> stays attributable.</p>
+
+    <h2>The Delivery Boy role is different</h2>
+
+    <p>The <code>Delivery Boy</code> role is not a panel administrator. Riders sign in at <code>/delivery_boy/login</code> and get their own portal — orders, cash collection, settlements, chat. See <a href="../admin/delivery-boy-portal.html">Delivery Boy Portal</a>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not grant admin permissions to the delivery boy role</p>
+      <p>It changes what riders see in their own app, and can expose customer or financial data on a device that is frequently lost or shared.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Menu item missing for a staff member</td><td>Role lacks that <code>list</code> permission</td><td>Grant it</td></tr>
+          <tr><td>"Unauthorized" on save</td><td>Has <code>list</code> but not <code>update</code></td><td>Grant <code>update</code></td></tr>
+          <tr><td>Permission changes not taking effect</td><td>Cached permissions</td><td>Visit <code>/clear</code>; have the user sign out and back in</td></tr>
+          <tr><td>Staff can see payment credentials</td><td>Role has <code>settings</code></td><td>Remove it</td></tr>
+          <tr><td>Cannot tell who made a change</td><td>Shared account</td><td>Give each person their own</td></tr>
+          <tr><td>Permission list looks incomplete</td><td>Seeder not fully run</td><td>Re-run the permission seeders after a backup</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Super Admin password strong and not shared</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>settings</code> granted to as few roles as possible</li>
+      <li class="task-item"><input type="checkbox" disabled> Read-only roles built from <code>list</code> permissions</li>
+      <li class="task-item"><input type="checkbox" disabled> One account per person</li>
+      <li class="task-item"><input type="checkbox" disabled> SMTP working, so password reset is possible</li>
+      <li class="task-item"><input type="checkbox" disabled> Leavers deactivated and secrets rotated</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/roles-permissions.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

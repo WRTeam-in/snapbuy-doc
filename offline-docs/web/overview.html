@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Overview — SnapBuy Documentation</title>
+<meta name="description" content="What the SnapBuy Web Portal includes, its tech stack, how it fits together, and where to start." />
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Overview</h1>
+
+    <p>The SnapBuy Web Portal is the customer-facing storefront — customers browse products, place orders, and track deliveries from any browser.</p>
+
+    <p>It is a <strong>white-label template</strong>: one codebase, configured per client. Branding, home page composition, delivery zones, channels, and languages all arrive from the Admin Panel API at runtime, so launching a new store means changing configuration, not code.</p>
+
+    <h2>What's included</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>Feature</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🛍️</td><td><strong>Product browsing</strong></td><td>Categories, brands, sellers, search, filters, variants</td></tr>
+          <tr><td>🛒</td><td><strong>Cart &amp; checkout</strong></td><td>Guest and logged-in carts, coupons, multiple payment gateways</td></tr>
+          <tr><td>📦</td><td><strong>Order tracking</strong></td><td>Live order and delivery status, order history, returns</td></tr>
+          <tr><td>👤</td><td><strong>Customer accounts</strong></td><td>OTP login, profile, addresses, wishlist, wallet</td></tr>
+          <tr><td>📍</td><td><strong>Delivery zones</strong></td><td>Zone-aware catalogues, pricing, and serviceability</td></tr>
+          <tr><td>⚡</td><td><strong>Dual channels</strong></td><td>Quick local delivery and a wider all-shop catalogue</td></tr>
+          <tr><td>🔔</td><td><strong>Push notifications</strong></td><td>Firebase Cloud Messaging, foreground and background</td></tr>
+          <tr><td>💬</td><td><strong>Chat</strong></td><td>Customer support and delivery-agent chat</td></tr>
+          <tr><td>🌍</td><td><strong>Multi-language</strong></td><td>Server-driven translations with full RTL support</td></tr>
+          <tr><td>🔎</td><td><strong>SEO</strong></td><td>Server-side rendering, dynamic sitemap, per-page metadata</td></tr>
+          <tr><td>📱</td><td><strong>PWA</strong></td><td>Installable via <code>public/manifest.json</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Also supported: prescription uploads, refer-and-earn, shop-by-country, maintenance windows, and store-closed handling.</p>
+
+    <h2>Tech stack</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Technology</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Framework</td><td>Next.js 16 — <strong>Pages Router</strong></td></tr>
+          <tr><td>UI</td><td>React 19</td></tr>
+          <tr><td>Styling</td><td>Tailwind CSS + CSS custom properties</td></tr>
+          <tr><td>Global state</td><td>Redux Toolkit + redux-persist</td></tr>
+          <tr><td>Server state</td><td>TanStack Query</td></tr>
+          <tr><td>HTTP</td><td>Axios</td></tr>
+          <tr><td>Components</td><td>shadcn/ui (Radix)</td></tr>
+          <tr><td>Auth</td><td>Firebase phone auth (OTP) + backend JWT</td></tr>
+          <tr><td>Push</td><td>Firebase Cloud Messaging</td></tr>
+          <tr><td>Maps</td><td>Google Maps, with OpenStreetMap fallback</td></tr>
+          <tr><td>Payments</td><td>Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, COD</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>The project uses the <strong>Pages Router</strong> (<code>src/pages/**</code>). There is no <code>app/</code> directory — App Router conventions do not apply here.</p>
+    </div>
+
+    <h2 id="two-decisions-that-shape-everything">Two decisions that shape everything</h2>
+
+    <p><strong>1. <code>NEXT_PUBLIC_SEO</code> must be <code>true</code>.</strong></p>
+
+    <p>It selects the build mode: <code>true</code> produces a server build (SSR, live <code>sitemap.xml</code>, per-page meta); <code>false</code> makes <code>next.config.mjs</code> switch to <code>output: "export"</code> and emit a static site into <code>out/</code>.</p>
+
+    <p><strong>Only the server build is supported.</strong> The static export drops three things the Web Portal depends on:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Why it breaks under <code>false</code></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Zone URLs (<code>/bhuj-quick/...</code>)</td><td><code>src/middleware.js</code> rewrites them onto the real routes. <strong>Middleware does not run in a static export</strong> — Next.js ignores it, so every zone-prefixed URL 404s.</td></tr>
+          <tr><td>Language URLs (<code>/ur/...</code>)</td><td>Same middleware, same outcome.</td></tr>
+          <tr><td>Per-page SEO + <code>sitemap.xml</code></td><td>The ~16 pages with <code>getServerSideProps</code> guard it behind this flag (<code>if (process.env.NEXT_PUBLIC_SEO == "true")</code>) so the export can build at all. With it off they export <code>null</code>, meta/JSON-LD fall back to the env defaults, and <code>sitemap.xml</code> is never generated.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A static build still <em>compiles</em> and the Web Portal still loads — the failure is silent, which is what makes it dangerous. Zone routing is core to this app, so <code>false</code> is effectively a legacy path from before zones existed.</p>
+
+    <p>This means a long-lived Node process, so <strong>shared hosting is not supported</strong>. See the <a href="deployment.html">Deployment Guide</a>.</p>
+
+    <p><strong>2. Nothing brand-specific is hardcoded.</strong></p>
+
+    <p>Colours come from CSS variables set at runtime; image hosts are derived from <code>NEXT_PUBLIC_API_URL</code>. Hardcoding either breaks the next client's build. For what this looks like from the Admin Panel side, see <a href="configuration.html">Configuration &amp; Theming</a>.</p>
+
+    <h2>Getting started</h2>
+
+    <p>Work through these in order:</p>
+
+    <ol>
+      <li><strong><a href="installation-steps.html">Installation Steps</a></strong> — prerequisites, <code>.env</code>, first build</li>
+      <li><strong><a href="firebase-setup.html">Firebase Setup</a></strong> — push notifications and the VAPID key</li>
+      <li><strong><a href="file-structure.html">File Structure</a></strong> — where everything lives</li>
+      <li><strong><a href="configuration.html">Configuration &amp; Theming</a></strong> — colours, home blocks, zones, languages</li>
+      <li><strong><a href="deployment.html">Deployment Guide (VPS)</a></strong> — Node 20, PM2, Apache/Nginx, HTTPS</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Set up the Admin Panel first</p>
+      <p>The Web Portal needs a reachable API URL before it will render anything. See the <a href="../admin/overview.html">Admin Panel</a> documentation.</p>
+    </div>
+
+    <h2>Quick start</h2>
+
+    <pre><code>npm install
+# create .env in the project root — see Installation Steps for every variable
+npm run dev             # http://localhost:3000</code></pre>
+
+    <p>Production:</p>
+
+    <pre><code>npm run build
+npm start               # NODE_ENV=production, port 8004, via server.js</code></pre>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "web/overview.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

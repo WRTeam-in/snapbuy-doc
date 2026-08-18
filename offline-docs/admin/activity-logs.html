@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Activity Logs — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Activity Logs</h1>
+
+    <p>Menu path: <strong>Settings → Activity Logs</strong></p>
+
+    <p>An audit trail of what changed in the panel, who changed it, and when.</p>
+
+    <img src="../images/panel/activity-logs-page.png" alt="Activity logs page">
+
+    <h2>What is recorded</h2>
+
+    <p>SnapBuy logs create, update and delete actions on the records that matter — products, orders, stores, zones, countries, home layouts, promo codes, staff users and settings.</p>
+
+    <p>Each entry shows:</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+    <tbody>
+    <tr><td><strong>User</strong></td><td>Which admin or staff account acted</td></tr>
+    <tr><td><strong>Action</strong></td><td>Created, updated or deleted</td></tr>
+    <tr><td><strong>Record</strong></td><td>What was affected</td></tr>
+    <tr><td><strong>Changes</strong></td><td>Which fields changed, and their old and new values</td></tr>
+    <tr><td><strong>Timestamp</strong></td><td>When</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <h2>What it is for</h2>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">The three questions activity logs answer</p>
+      <ul>
+        <li><em>"Who changed this price?"</em> — before an argument becomes a guess</li>
+        <li><em>"When did this stop working?"</em> — line the timestamp up against a settings change</li>
+        <li><em>"Did that staff member do what they say they did?"</em> — for genuine disputes</li>
+      </ul>
+      <p>Most operational mysteries in a busy store are answered here faster than anywhere else.</p>
+    </div>
+
+    <p>A worked example: customers report wrong delivery charges starting Tuesday afternoon. Filter the log to zone changes, find the edit at 2:15 PM Tuesday, see exactly which field moved and who moved it, and revert it.</p>
+
+    <h2>Filtering</h2>
+
+    <p>Narrow by user, action type, record type and date range. Use it before scrolling — a busy store generates a lot of entries.</p>
+
+    <h2>Limits worth knowing</h2>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Not everything is logged</p>
+      <p>The log covers admin panel activity. It is not a record of customer actions, API traffic, or changes made directly in the database. If someone edits a value with phpMyAdmin, nothing appears here.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Deleting the record does not delete its history</p>
+      <p>Log entries survive the deletion of what they describe, which is the point — but it also means the log holds values from records that no longer exist.</p>
+    </div>
+
+    <h2>Growth and retention</h2>
+
+    <p>Activity logs grow continuously and are one of the larger tables in a mature installation.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Watch the table size on shared hosting</p>
+      <p>If your database is approaching its hosting quota, activity logs are usually a large share of it. Archive old entries to a separate table or export and prune them, rather than letting the database hit its limit — which fails writes across the whole application, not just logging.</p>
+    </div>
+
+    <h2>Access control</h2>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Restrict activity log access</p>
+      <p>The log shows what changed and who changed it, including edits to settings and pricing. Grant it only to roles that genuinely need oversight, and never to a role that could be tempted to use it to cover its own tracks. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
+    </div>
+
+    <h2>Related diagnostics</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Tool</th><th>Shows</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Activity Logs</strong></td><td>Business changes made by people</td></tr>
+    <tr><td><strong><code>/logs</code></strong> (Laravel log viewer)</td><td>Application errors and stack traces</td></tr>
+    <tr><td><strong><a href="../admin/cron-jobs.html">Cron Jobs</a></strong></td><td>Whether scheduled work is running, and queue health</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title"><code>/logs</code> is unauthenticated</p>
+      <p>The Laravel log viewer sits outside the panel login and can reveal file paths and error detail. Restrict it by IP — see <a href="../admin/server-setup.html#secure-the-maintenance-routes">Server Setup</a>.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>A change is not in the log</td><td>Made directly in the database, or on an untracked model</td><td>Nothing to recover — check database backups</td></tr>
+    <tr><td>Log empty</td><td>No qualifying activity yet, or filters too narrow</td><td>Clear the filters</td></tr>
+    <tr><td>Page slow to load</td><td>Very large table</td><td>Filter by date; archive old entries</td></tr>
+    <tr><td>Staff can see logs they should not</td><td>Role permission too broad</td><td>Tighten the <a href="../admin/roles-permissions.html">role</a></td></tr>
+    </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/activity-logs.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Installation &amp; Deployment — SnapBuy Documentation</title>
+<meta name="description" content="Setup, deployment, and configuration guides for the SnapBuy Web Portal." />
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Installation &amp; Deployment</h1>
+
+    <p>Setup, deployment, and configuration guides for the SnapBuy Web Portal.</p>
+
+    <h2>Start here</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Guide</th><th>Read it when</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="overview.html">Overview</a></td><td>Getting oriented — what the Web Portal includes and its tech stack</td></tr>
+          <tr><td><a href="installation-steps.html">Installation Steps</a></td><td>Setting the project up for the first time — prerequisites, <code>.env</code>, Firebase, first build</td></tr>
+          <tr><td><a href="firebase-setup.html">Firebase Setup</a></td><td>Wiring up push notifications — FCM project, VAPID key, service worker</td></tr>
+          <tr><td><a href="file-structure.html">File Structure</a></td><td>Finding your way around the codebase</td></tr>
+          <tr><td><a href="configuration.html">Configuration &amp; Theming</a></td><td>Changing colours, home page blocks, channels, zones, languages</td></tr>
+          <tr><td><a href="deployment.html">Deployment Guide (VPS)</a></td><td>Putting it live with SEO enabled — Node 20, PM2, Apache/Nginx proxy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>The short version</h2>
+
+    <p>The SnapBuy Web Portal is a <strong>Next.js 16 Pages Router</strong> app backed by an Admin Panel API. It is a <strong>white-label template</strong>: colours, header artwork, home page composition, channels, and languages all arrive from the API at runtime.</p>
+
+    <p>Two consequences worth internalising before changing anything:</p>
+
+    <ol>
+      <li><strong>Never hardcode</strong> a brand colour, image host, or store name. Read colours from CSS variables and derive image hosts from <code>NEXT_PUBLIC_API_URL</code>.</li>
+      <li><strong><code>NEXT_PUBLIC_SEO</code> must be <code>true</code>.</strong> It produces the server build, which needs a Node host. The <code>false</code> static export is not supported — middleware does not run in it, so zone and language URLs 404. See <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</li>
+    </ol>
+
+    <h2>Quick start</h2>
+
+    <pre><code>npm install
+# create .env in the project root — see Installation Steps for every variable
+npm run dev             # http://localhost:3000</code></pre>
+
+    <p>Production:</p>
+
+    <pre><code>npm run build
+npm start               # NODE_ENV=production, port 8004, via server.js</code></pre>
+
+    <h2>All guides</h2>
+
+    <div class="doc-card-grid">
+      <a class="doc-card" href="overview.html">
+        <span class="doc-card__title">Overview</span>
+        <span class="doc-card__desc">Getting oriented — what the Web Portal includes and its tech stack</span>
+      </a>
+      <a class="doc-card" href="installation-steps.html">
+        <span class="doc-card__title">Installation Steps</span>
+        <span class="doc-card__desc">Setting the project up for the first time — prerequisites, .env, Firebase, first build</span>
+      </a>
+      <a class="doc-card" href="firebase-setup.html">
+        <span class="doc-card__title">Firebase Setup</span>
+        <span class="doc-card__desc">Wiring up push notifications — FCM project, VAPID key, service worker</span>
+      </a>
+      <a class="doc-card" href="file-structure.html">
+        <span class="doc-card__title">File Structure</span>
+        <span class="doc-card__desc">Finding your way around the codebase</span>
+      </a>
+      <a class="doc-card" href="configuration.html">
+        <span class="doc-card__title">Configuration &amp; Theming</span>
+        <span class="doc-card__desc">Changing colours, home page blocks, channels, zones, languages</span>
+      </a>
+      <a class="doc-card" href="deployment.html">
+        <span class="doc-card__title">Deployment Guide (VPS)</span>
+        <span class="doc-card__desc">Putting it live with SEO enabled — Node 20, PM2, Apache/Nginx proxy</span>
+      </a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "web/index.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

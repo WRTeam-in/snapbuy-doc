@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Orders Workflow — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Orders Workflow</h1>
+
+    <p>Menu path: <strong>Orders</strong></p>
+
+    <p>Orders move through a fixed sequence of statuses. <strong>The sequence differs by sales channel</strong> — quick commerce and eCommerce are not the same flow.</p>
+
+    <img src="../images/panel/orders-list.png" alt="Orders list">
+
+    <h2>Two flows, one order list</h2>
+
+    <h3>Quick commerce</h3>
+
+    <pre><code>Payment Pending → Received → Preparing → Ready for Pickup
+    → Picked Up → Out For Delivery → Delivered</code></pre>
+
+    <p>Plus <strong>Cancelled</strong> at any point before delivery.</p>
+
+    <h3>eCommerce</h3>
+
+    <pre><code>Payment Pending → Received → Processed → Shipped
+    → Out For Delivery → Delivered</code></pre>
+
+    <p>Plus <strong>Cancelled</strong>, and <strong>Returned</strong> after delivery.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Status</th><th>Quick</th><th>eCommerce</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Payment Pending</td><td>✓</td><td>✓</td><td>Awaiting payment confirmation</td></tr>
+        <tr><td>Received</td><td>✓</td><td>✓</td><td>Accepted by the store</td></tr>
+        <tr><td><strong>Preparing</strong></td><td>✓</td><td>—</td><td>Being picked and packed</td></tr>
+        <tr><td><strong>Ready for Pickup</strong></td><td>✓</td><td>—</td><td>Waiting for the rider</td></tr>
+        <tr><td><strong>Picked Up</strong></td><td>✓</td><td>—</td><td>Rider has collected it</td></tr>
+        <tr><td>Processed</td><td>—</td><td>✓</td><td>Packed for dispatch</td></tr>
+        <tr><td>Shipped</td><td>—</td><td>✓</td><td>Handed to the carrier</td></tr>
+        <tr><td>Out For Delivery</td><td>✓</td><td>✓</td><td>On its way to the customer</td></tr>
+        <tr><td>Delivered</td><td>✓</td><td>✓</td><td>Completed</td></tr>
+        <tr><td>Cancelled</td><td>✓</td><td>✓</td><td>Cancelled</td></tr>
+        <tr><td><strong>Returned</strong></td><td>—</td><td>✓</td><td>Returned after delivery</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why quick has three extra statuses</p>
+      <p>Quick commerce is fulfilled from a nearby <a href="../admin/stores.html">store</a> with a rider who physically collects the order, so <em>Preparing / Ready for Pickup / Picked Up</em> give the store and the rider a shared view of the handover. eCommerce goes through packing and shipping instead.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not expect Processed or Shipped on a quick order</p>
+      <p>They are not part of that flow and will not appear. If someone is looking for "Shipped" on a quick-commerce order, they are looking at the wrong channel's vocabulary.</p>
+    </div>
+
+    <h2>Payment Pending</h2>
+
+    <p>An order sits here until payment is confirmed.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Orders stuck in Payment Pending usually mean a missing webhook</p>
+      <p>If money left the customer's account but the order never left this status, the gateway's callback never reached your server. See <a href="../admin/payment-gateway.html#webhooks">Payment Gateways — Webhooks</a>.</p>
+      <p>Check this before assuming the customer did not pay — you may be about to cancel an order that was paid for.</p>
+    </div>
+
+    <p>Cash on Delivery orders skip straight to <strong>Received</strong>.</p>
+
+    <h2>Assigning a delivery boy</h2>
+
+    <p>Assign a rider from the order. On assignment:</p>
+
+    <ul>
+      <li>The rider is notified (<code>assign_order_delivery_boy</code>)</li>
+      <li>The customer is notified (<code>assign_order_customer</code>)</li>
+      <li>The order appears in that rider's <a href="../admin/delivery-boy-portal.html">portal</a></li>
+    </ul>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Riders only see a restricted set of statuses</p>
+      <p>In their own portal, a rider can move a <strong>quick</strong> order through <em>Ready for Pickup → Picked Up → Out For Delivery → Delivered</em>, and an <strong>eCommerce</strong> order only between <em>Out For Delivery</em> and <em>Delivered</em>.</p>
+      <p>Everything earlier in the flow is the store's job, done from this panel. A rider cannot mark an order Received or Preparing.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Notifications need cron and Firebase</p>
+      <p>Assignment notifications are queued jobs delivered by push. Without the <a href="../admin/cron-jobs.html">cron job</a> and <a href="../admin/firebase-settings.html">Firebase</a>, riders are never told they have work — the order simply sits unassigned in their view.</p>
+    </div>
+
+    <h2>Delivery OTP</h2>
+
+    <p>If <strong>Generate OTP</strong> is enabled in <a href="../admin/app-settings.html#otp-generation">App Settings</a>, the customer receives a code the rider must enter to mark the order delivered.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Enable it for cash orders at minimum</p>
+      <p>It is the cheapest proof of delivery you have and settles most "it never arrived" disputes without an investigation.</p>
+    </div>
+
+    <h2>Cancelling</h2>
+
+    <p>Orders can be cancelled up to delivery. Cancellation triggers <code>order_item_cancelled_customer</code>, and any refund follows your <a href="../admin/payment-gateway.html">payment gateway</a> or goes to the customer's <a href="../admin/wallet-withdrawals.html">wallet</a>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Cancelling releases reserved stock</p>
+      <p>Stock held against the order returns to available at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.</p>
+    </div>
+
+    <h2>Per-item status</h2>
+
+    <p>Status is tracked at <strong>item</strong> level, not only for the order as a whole. A single order can have one item delivered and another cancelled or returned — which is why the customer notifications are named <code>order_item_*</code>.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">This matters for partial refunds</p>
+      <p>Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.</p>
+    </div>
+
+    <h2>Invoices</h2>
+
+    <p>Invoices are generated as PDFs, numbered with the prefix from <a href="../admin/general-settings.html#number-prefixes">General Settings</a>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Invoice numbering is set at creation</p>
+      <p>Changing the prefix later does not renumber existing invoices. Set it during initial setup.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Order stuck in Payment Pending</td><td>Gateway webhook not received</td><td>Register the webhook; check HTTPS reachability</td></tr>
+        <tr><td>Rider not notified of assignment</td><td>Cron or Firebase not working</td><td>Check <a href="../admin/cron-jobs.html">Cron Jobs</a>, <a href="../admin/firebase-settings.html">Firebase</a></td></tr>
+        <tr><td>Expected status missing</td><td>Wrong channel's flow</td><td>Quick and eCommerce use different statuses</td></tr>
+        <tr><td>Rider cannot advance the status</td><td>Riders only get a restricted set</td><td>Move it from the panel</td></tr>
+        <tr><td>Customer not notified of status changes</td><td><code>order_item_status_customer</code> disabled</td><td>Enable it in <a href="../admin/notification-settings.html">Notification Settings</a></td></tr>
+        <tr><td>Stock wrong after cancellations</td><td>Reserved stock released</td><td>Verify at the store's variant record</td></tr>
+        <tr><td>Cannot mark delivered</td><td>Delivery OTP required and not entered</td><td>Get the code from the customer, or disable OTP</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/orders.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

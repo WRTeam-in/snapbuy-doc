@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cron Job Setup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Cron Job Setup</h1>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Do not skip this page</p>
+      <p>SnapBuy needs <strong>one</strong> server cron job. Without it the panel still loads and looks healthy, but abandoned-cart reminders never send, scheduled maintenance windows never start or end, scheduled home layouts never publish, and every queued job — order emails, push notifications, bulk imports, referral bonuses, cashback — sits unprocessed forever.</p>
+      <p>Nothing on the dashboard warns you. This is the single most common cause of "notifications are not working" support tickets.</p>
+    </div>
+
+    <h2>The one line you need</h2>
+    <p>SnapBuy uses Laravel's scheduler. You register <strong>one</strong> cron entry that runs every minute; SnapBuy decides internally what is due.</p>
+    <pre><code>* * * * * cd /home/username/snapbuy &amp;&amp; /usr/bin/php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Copy the exact line from your panel</p>
+      <p>Do not type the paths by hand. Open <strong>Settings → Cron Jobs</strong> in the admin panel — it prints the correct line for <em>your</em> server, with the real project path and the real PHP binary already filled in, ready to copy.</p>
+    </div>
+
+    <img src="../images/panel/cron-settings-page.png" alt="Settings → Cron Jobs page showing the ready-made crontab line">
+
+    <p>The page gives the same command in three formats, because hosting panels ask for it differently:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th>Use it when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Crontab line</strong></td><td>You have SSH and run <code>crontab -e</code> — interval included</td></tr>
+        <tr><td><strong>Command only</strong></td><td>Your hosting panel has its own interval picker (cPanel, Plesk)</td></tr>
+        <tr><td><strong>PHP script style</strong></td><td>The panel asks for a PHP file plus arguments</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Adding the cron job in cPanel</h2>
+    <ol>
+      <li>Log into cPanel.</li>
+      <li>Under <strong>Advanced</strong>, open <strong>Cron Jobs</strong>.</li>
+      <li>Under <strong>Common Settings</strong>, choose <strong>Once Per Minute (* * * * *)</strong>.</li>
+      <li>Paste the <strong>Command only</strong> version from <strong>Settings → Cron Jobs</strong> into the <strong>Command</strong> box.</li>
+      <li>Click <strong>Add New Cron Job</strong>.</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Use the full path to PHP</p>
+      <p><code>php artisan schedule:run</code> often fails on shared hosting because the default <code>php</code> is an older version. Use the absolute binary path shown on the Cron Jobs page — for example <code>/usr/local/bin/ea-php83</code>. If the cron runs but nothing happens, this is usually why.</p>
+    </div>
+
+    <h2>Adding the cron job over SSH</h2>
+    <pre><code>crontab -e</code></pre>
+
+    <p>Add the line, save and exit. Confirm it registered:</p>
+    <pre><code>crontab -l</code></pre>
+
+    <h2>Verifying it works</h2>
+    <p>SnapBuy writes a <strong>heartbeat</strong> into the cache every minute from inside the scheduler. The Cron Jobs page reads it back, so you get a real answer rather than a guess.</p>
+    <ol>
+      <li>Add the cron job.</li>
+      <li>Wait two minutes.</li>
+      <li>Open <strong>Settings → Cron Jobs</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Indicator</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>🟢 <strong>Cron active</strong></td><td>The heartbeat is under 150 seconds old — your cron is firing correctly</td></tr>
+        <tr><td>🔴 <strong>Cron inactive</strong></td><td>No heartbeat, or older than 150 seconds — the cron is not running</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/cron-heartbeat-active.png" alt="Cron Jobs page showing an active heartbeat">
+
+    <p>The <strong>Setup Guide</strong> step for Cron uses this same heartbeat, so it ticks itself off once the job runs.</p>
+
+    <h2>What the scheduler runs every minute</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Task</th><th>Command</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Heartbeat</strong></td><td><em>(internal)</em></td><td>Proves to the panel that cron is alive</td></tr>
+        <tr><td><strong>Process queued jobs</strong></td><td><code>queue:work --stop-when-empty --max-time=55</code></td><td>Drains the job queue, then exits before the next minute</td></tr>
+        <tr><td><strong>Cart reminders</strong></td><td><code>cart:notification</code></td><td>Sends abandoned-cart notifications per your <a href="../admin/cart-settings.html">Cart Settings</a></td></tr>
+        <tr><td><strong>Scheduled maintenance</strong></td><td><code>maintenance:apply</code></td><td>Turns maintenance mode on and off at the times you scheduled</td></tr>
+        <tr><td><strong>Publish home layouts</strong></td><td><code>home-layout:publish-scheduled</code></td><td>Publishes Home Builder drafts at their scheduled time</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Each of these can also be triggered manually from <strong>Settings → Cron Jobs</strong> using the <strong>Run now</strong> button — useful when testing, and for confirming a task works before you trust the schedule.</p>
+
+    <img src="../images/panel/cron-run-now.png" alt="Running a scheduled task manually from the panel">
+
+    <h2>Work handled by the queue</h2>
+    <p>These are not cron entries. They are dispatched by the application and executed by the <code>queue:work</code> run above — which means <strong>they all stop if the cron job is missing</strong>:</p>
+    <ul>
+      <li>Referral bonus credit</li>
+      <li>Order cashback credit</li>
+      <li>Order confirmation and status emails</li>
+      <li>Order push notifications</li>
+      <li>Bulk promotional emails</li>
+      <li>Bulk push notifications</li>
+      <li>Product bulk import</li>
+      <li>Cart reminder notifications</li>
+    </ul>
+
+    <h2>Queue health</h2>
+    <p>The Cron Jobs page also reports queue status:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What to look for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Driver</strong></td><td><code>database</code> by default</td></tr>
+        <tr><td><strong>Pending jobs</strong></td><td>A small number that keeps changing is normal. A large number that only grows means the queue is not being processed.</td></tr>
+        <tr><td><strong>Failed jobs</strong></td><td>Should stay at zero. Anything here failed permanently.</td></tr>
+        <tr><td><strong>Oldest pending job</strong></td><td>If this timestamp is hours old, your cron is not running.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/cron-queue-health.png" alt="Queue health panel">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why <code>--stop-when-empty --max-time=55</code></p>
+      <p>A permanent queue worker is not possible on most shared hosting. Instead, SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.</p>
+    </div>
+
+    <h2>Optional — a permanent worker on a VPS</h2>
+    <p>If you run your own server and want jobs processed instantly rather than up to a minute later, use Supervisor.</p>
+
+    <p>Create <code>/etc/supervisor/conf.d/snapbuy-worker.conf</code>:</p>
+    <pre><code>[program:snapbuy-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/snapbuy/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+user=www-data
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/snapbuy/storage/logs/worker.log
+stopwaitsecs=3600</code></pre>
+
+    <p>Then:</p>
+    <pre><code>sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start snapbuy-worker:*</code></pre>
+
+    <p>Keep the <code>schedule:run</code> cron job as well — the scheduler still drives cart reminders, maintenance windows and layout publishing.</p>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Cron Jobs page shows <strong>inactive</strong> after 5 minutes</td><td>Cron not registered, or wrong PHP path</td><td>Re-copy the line from the panel; use the absolute PHP binary</td></tr>
+        <tr><td>Cron registered but still inactive</td><td>Wrong project path in the command</td><td>Compare against <strong>Project path</strong> shown on the Cron Jobs page</td></tr>
+        <tr><td>Emails and notifications never arrive</td><td>Queue not being processed</td><td>Check <strong>Pending jobs</strong> — if it only grows, cron is not running</td></tr>
+        <tr><td>Everything arrives roughly a minute late</td><td>Normal</td><td>The scheduler runs once per minute; use Supervisor for instant processing</td></tr>
+        <tr><td><strong>Failed jobs</strong> count rising</td><td>A job errors every time</td><td>Check <code>storage/logs/laravel.log</code>, or the <code>/logs</code> viewer</td></tr>
+        <tr><td>Cron runs but tasks do nothing</td><td>Cache holds stale config</td><td>Visit <code>/clear</code> once, then wait two minutes</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Test without waiting</p>
+      <p>Instead of waiting on the schedule, open <strong>Settings → Cron Jobs</strong> and press <strong>Run now</strong> on a task. The panel shows the exit code and output immediately, which tells you whether the task itself works — separating a broken task from a broken cron.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/cron-jobs.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

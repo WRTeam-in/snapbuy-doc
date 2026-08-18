@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App Prerequisites — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>App Prerequisites</h1>
+    
+    <p>Before setting up the SnapBuy mobile app, install the required software and tools listed below.</p>
+    
+    <h2>Flutter Setup</h2>
+    
+    <p>Download and install the Flutter SDK from the official site:</p>
+    
+    <ul>
+    <li><a href="https://docs.flutter.dev/get-started/install">Flutter SDK — Official Install Guide</a></li>
+    </ul>
+    
+    <p>Follow the installation steps for your operating system (Windows / macOS / Linux), then run <code>flutter doctor</code> to verify the setup.</p>
+    
+    <h2>Software Requirements</h2>
+    
+    <p>The Customer app was developed and tested with the following versions:</p>
+    
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Software</th><th>Version</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Flutter SDK</td><td>3.44.8 (stable)</td><td>App framework</td></tr>
+    <tr><td>Java (JDK)</td><td>21 (LTS)</td><td>Android build toolchain</td></tr>
+    <tr><td>Android Studio</td><td>2025.2.3</td><td>Android SDK, emulator, build tools</td></tr>
+    <tr><td>Xcode</td><td>26.2</td><td>iOS build (macOS only)</td></tr>
+    <tr><td>CocoaPods</td><td>Latest stable</td><td>iOS dependency manager</td></tr>
+    <tr><td>Git</td><td>Latest stable</td><td>Version control</td></tr>
+    <tr><td>VS Code <em>or</em> Android Studio</td><td>Latest stable</td><td>Code editor / IDE</td></tr>
+    </tbody>
+    </table>
+    </div>
+    
+    <h3>Platform-Specific</h3>
+    
+    <p><strong>Android</strong></p>
+    
+    <ul>
+    <li>Android SDK Platform 34+ (installed via Android Studio)</li>
+    <li><code>compileSdk</code> 36 / <code>targetSdk</code> 36 (set in <code>android/app/build.gradle.kts</code>)</li>
+    <li>Android SDK Command-line Tools</li>
+    <li>Android Emulator or physical device (USB debugging enabled)</li>
+    </ul>
+    
+    <p><strong>iOS</strong> (macOS only)</p>
+    
+    <ul>
+    <li>Xcode 26.2+</li>
+    <li>iOS Simulator or physical device</li>
+    <li>Apple Developer account (for signing and release builds)</li>
+    </ul>
+    
+    <h2>Verify Installation</h2>
+    
+    <p>Run the following command in your terminal to confirm everything is installed correctly:</p>
+    
+    <pre><code class="language-bash">flutter doctor -v
+    </code></pre>
+    
+    <p>All checks should pass (green check marks) before moving to the next step.</p>
+    
+    <h2>Additional Reference</h2>
+    
+    <p>For a complete environment walkthrough, see our <a href="http://wrteam-in.github.io/common_app_doc/GeneralSettings/basicsetup/">Basic Setup Guide</a>.</p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/prerequisites.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

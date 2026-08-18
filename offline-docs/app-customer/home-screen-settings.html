@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Configure Home Screen — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Configure Home Screen</h1>
+
+    <p>The app's Home screen is built and controlled from the Admin Panel using <strong>Home Builder</strong>, not hardcoded in the app. Layouts are created per <strong>Zone</strong>, so different zones can show a different Home screen.</p>
+
+    <p><strong>Admin panel path:</strong> Sidebar → <strong>Home Builder</strong></p>
+
+    <h2>1. Manage Home Builder</h2>
+
+    <p>The Home Builder list shows every layout created so far.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Column</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Name</td><td>Layout name (e.g. zone name or <code>Default Home Layout</code>)</td></tr>
+        <tr><td>Channel</td><td><code>Ecommerce</code> or <code>Quick</code> (quick-commerce)</td></tr>
+        <tr><td>Home Type</td><td><code>Category Wise</code> or <code>Single</code></td></tr>
+        <tr><td>Zone</td><td>The zone this layout applies to (or <code>Default Layout</code>)</td></tr>
+        <tr><td>Status</td><td><code>Published</code> / <code>Draft</code></td></tr>
+        <tr><td>Active</td><td>Toggle to enable/disable the layout</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Two <code>Default Home Layout</code> entries always exist (one for <strong>Ecommerce</strong>, one for <strong>Quick</strong>) — these are used when a zone has no dedicated layout of its own. Click <strong>+ New Home Layout</strong> to create a zone-specific layout, or use the row actions (edit / duplicate / delete) to manage existing ones.</p>
+
+    <img src="../images/app/customer/home1.png" alt="Manage Home Builder">
+
+    <h2>2. Home Type — Category Wise vs Single</h2>
+
+    <p>When creating/editing a layout, pick a <strong>Home Type</strong>:</p>
+    <ul>
+      <li><strong>Category Wise</strong> — the Home screen shows a row of category tabs (e.g. All, Grocery, Beauty, Pharmacy, Fashion, Electronics). Each category tab has its <strong>own</strong> Header Settings and its <strong>own</strong> section list, so the Home screen content can differ per category.</li>
+      <li><strong>Single</strong> — one layout only, no category tabs. Used for simpler storefronts (e.g. the <code>Quick</code> default layout).</li>
+    </ul>
+
+    <h2>3. Header Settings</h2>
+
+    <p>Controls the header shown at the top of the Home screen (behind the delivery-time / address / search bar).</p>
+    <ul>
+      <li><strong>Header background</strong> — solid <strong>Color</strong> or <strong>Image</strong>.</li>
+      <li><strong>Text color</strong> — color of the header title and address text.</li>
+      <li><strong>Category icon</strong> <em>(Category Wise only)</em> — icon shown on the Home category tab. If not set, the category's own logo is used.</li>
+      <li><strong>Copy layout from</strong> <em>(Category Wise only)</em> — copy an existing category's header settings into the one you're editing, instead of setting it up from scratch.</li>
+    </ul>
+
+    <img src="../images/app/customer/home2.png" alt="Category Wise Header Settings">
+
+    <img src="../images/app/customer/home3.png" alt="Single Header Settings">
+
+    <h2>4. Sections</h2>
+
+    <p>Below Header Settings, the <strong>Sections</strong> list controls what appears on the Home screen body, top to bottom.</p>
+    <ul>
+      <li>Drag the handle to <strong>reorder</strong> sections, or use the <strong>Reorder</strong> button.</li>
+      <li>Toggle a section on/off without deleting it.</li>
+      <li>Delete (trash icon) to remove a section.</li>
+      <li>Click <strong>+ Add</strong> to add a new section — choose a type from the <strong>Add Section</strong> dialog:</li>
+    </ul>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Section Type</th><th>Shows</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Banner Slider</td><td>Horizontal promotional banner carousel</td></tr>
+        <tr><td>Category Section</td><td>Grid/list of categories</td></tr>
+        <tr><td>Product Slider</td><td>Horizontal scrollable product list</td></tr>
+        <tr><td>Top Brands</td><td>Brand logos row</td></tr>
+        <tr><td>Grid Banner</td><td>Grid of promotional banner tiles</td></tr>
+        <tr><td>Title Image</td><td>Single banner image with a title</td></tr>
+        <tr><td>Heading / Text</td><td>Plain heading/subheading text block</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>You can also click <strong>Use Template</strong> to add a pre-built set of sections instead of adding them one by one.</p>
+
+    <img src="../images/app/customer/home4.png" alt="Add Section">
+
+    <p>For <strong>Category Wise</strong> layouts, this section list is repeated per category tab (e.g. All, Grocery, Beauty, …) — use <strong>Add Category</strong> to add a new category tab to the layout.</p>
+
+    <h2>5. Draft vs Published</h2>
+
+    <p>Each layout has a <strong>Draft</strong> and a <strong>Published</strong> version:</p>
+    <ul>
+      <li><strong>Edit Draft</strong> — work on changes without affecting the live app.</li>
+      <li><strong>Edit Published</strong> — edit the live layout directly.</li>
+      <li><strong>Publish Changes</strong> — pushes the current draft live.</li>
+      <li><strong>Edit setup</strong> — change the layout's name/channel/zone/home type.</li>
+    </ul>
+
+    <p>The app always renders the <strong>Published</strong> version.</p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/home-screen-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

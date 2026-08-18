@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SMTP / Email Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>SMTP / Email Settings</h1>
+
+    <p><strong>Setup Guide step 5 of 9.</strong> Menu path: <strong>Settings → SMTP Settings</strong></p>
+
+    <p>SMTP is how SnapBuy sends email. Until it is configured, <strong>no email leaves the system</strong> — no order confirmations, no password resets, no email OTP, no promotional campaigns.</p>
+
+    <img src="../images/panel/smtp-settings-page.png" alt="SMTP settings page">
+
+    <h2>What breaks without SMTP</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Feature</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Order confirmation &amp; status emails</td><td>Never sent</td></tr>
+        <tr><td>Admin password reset</td><td>Admins locked out with no way back in</td></tr>
+        <tr><td>Email OTP login</td><td>Customers cannot sign in if email OTP is their method</td></tr>
+        <tr><td>Bulk promotional emails</td><td>Silently queued and never delivered</td></tr>
+        <tr><td>Return and refund notifications</td><td>Never sent</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Configure this before you invite other admins</p>
+      <p>Password reset relies on SMTP. If an admin forgets their password and SMTP is not working, there is no in-panel way to recover the account — it takes direct database access.</p>
+    </div>
+
+    <h2>Settings</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>What to enter</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Mailer</strong></td><td><code>SMTP</code> for a mail server, <code>Sendmail</code> for the server's local binary</td></tr>
+        <tr><td><strong>From Email ID</strong></td><td>Address emails are sent from. Must be one the SMTP account is allowed to send as.</td></tr>
+        <tr><td><strong>Reply-To Email ID</strong></td><td>Where customer replies go. Often your support inbox.</td></tr>
+        <tr><td><strong>SMTP Email Password</strong></td><td>Password or app password for the sending account</td></tr>
+        <tr><td><strong>SMTP Host</strong></td><td>Your provider's server — <code>smtp.gmail.com</code>, <code>smtp.sendgrid.net</code></td></tr>
+        <tr><td><strong>SMTP Port</strong></td><td><code>587</code> for TLS, <code>465</code> for SSL</td></tr>
+        <tr><td><strong>Email Content Type</strong></td><td><code>HTML</code> (recommended) or <code>Text</code></td></tr>
+        <tr><td><strong>SMTP Encryption</strong></td><td><code>TLS</code> or <code>SSL</code> — must match the port</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Port and encryption must agree</p>
+      <p><code>587</code> pairs with <strong>TLS</strong>. <code>465</code> pairs with <strong>SSL</strong>. Mismatching them causes a connection timeout that reads as a generic "could not send" error, with nothing useful in the log.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Use HTML content type</p>
+      <p>SnapBuy's built-in <a href="../admin/notification-templates.html">email templates</a> are HTML. Setting the content type to <code>Text</code> delivers raw markup to customers.</p>
+    </div>
+
+    <h2>Common provider settings</h2>
+
+    <h3>Gmail / Google Workspace</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Host</td><td><code>smtp.gmail.com</code></td></tr>
+        <tr><td>Port</td><td><code>587</code></td></tr>
+        <tr><td>Encryption</td><td>TLS</td></tr>
+        <tr><td>Password</td><td><strong>App password</strong>, not your Google password</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Gmail requires an App Password</p>
+      <p>Google blocks normal account passwords over SMTP. Enable 2-Step Verification on the account, then generate an <strong>App Password</strong> at <a href="https://myaccount.google.com/apppasswords">myaccount.google.com/apppasswords</a> and use that 16-character value.</p>
+      <p>Free Gmail also caps sending at roughly 500 messages a day. It is fine for testing and unsuitable for a live store running campaigns.</p>
+    </div>
+
+    <h3>SendGrid</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Host</td><td><code>smtp.sendgrid.net</code></td></tr>
+        <tr><td>Port</td><td><code>587</code></td></tr>
+        <tr><td>Encryption</td><td>TLS</td></tr>
+        <tr><td>Username</td><td>the literal string <code>apikey</code></td></tr>
+        <tr><td>Password</td><td>your SendGrid API key</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Amazon SES</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Host</td><td><code>email-smtp.&lt;region&gt;.amazonaws.com</code></td></tr>
+        <tr><td>Port</td><td><code>587</code></td></tr>
+        <tr><td>Encryption</td><td>TLS</td></tr>
+        <tr><td>Password</td><td>SES <strong>SMTP credentials</strong> — not your AWS secret key</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">SES starts in sandbox mode</p>
+      <p>In sandbox, SES only delivers to addresses you have verified. Request production access before launch, or real customers receive nothing.</p>
+    </div>
+
+    <h3>cPanel / hosting mailbox</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Host</td><td><code>mail.yourdomain.com</code></td></tr>
+        <tr><td>Port</td><td><code>465</code></td></tr>
+        <tr><td>Encryption</td><td>SSL</td></tr>
+        <tr><td>From</td><td>the full mailbox address</td></tr>
+        <tr><td>Password</td><td>that mailbox's password</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Send a test email</h2>
+    <p>The page has a <strong>test mail</strong> box. Enter an address and press <strong>Test Mail</strong>.</p>
+
+    <img src="../images/panel/smtp-test-mail.png" alt="Sending a test email">
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Test to an external address</p>
+      <p>Sending to an address on your own domain can succeed while delivery to the outside world fails. Test to Gmail or Outlook, and check the spam folder too — arriving in spam is a deliverability problem, not a configuration success.</p>
+    </div>
+
+    <h2>When the Setup Guide step will not tick</h2>
+    <p>The Setup Guide marks SMTP complete only when <strong>SMTP Host</strong>, <strong>SMTP Port</strong> and <strong>From Email ID</strong> are all filled and non-blank. Filling only the password and host leaves the step red.</p>
+
+    <h2>Deliverability</h2>
+    <p>Correct settings get mail <em>sent</em>. These get it <em>delivered</em>:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Record</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>SPF</strong></td><td>Authorises your provider to send as your domain</td></tr>
+        <tr><td><strong>DKIM</strong></td><td>Cryptographically signs your mail</td></tr>
+        <tr><td><strong>DMARC</strong></td><td>Tells receivers what to do when SPF/DKIM fail</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not send as a domain you do not control</p>
+      <p>Setting the From address to a Gmail or Yahoo address while sending through your own server fails DMARC and lands in spam. Send from an address on your own domain.</p>
+    </div>
+
+    <h2>Bulk email depends on the queue</h2>
+    <p>Promotional campaigns are dispatched as <strong>queued jobs</strong>, not sent inline.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Bulk email needs the cron job</p>
+      <p>If the <a href="../admin/cron-jobs.html">cron job</a> is not running, campaigns queue up and are never delivered. The panel reports the campaign as sent. Check <strong>Settings → Cron Jobs</strong> and watch <strong>Pending jobs</strong> — if it only grows, nothing is being sent.</p>
+    </div>
+
+    <p>Transactional email — order confirmations, password resets — is also queued.</p>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>"Connection could not be established"</td><td>Port/encryption mismatch, or host blocks outbound SMTP</td><td>Try 587/TLS, then 465/SSL; ask the host to open outbound SMTP</td></tr>
+        <tr><td>"Authentication failed" with correct password</td><td>Provider requires an app password</td><td>Generate an app password (Gmail, Outlook)</td></tr>
+        <tr><td>Test mail succeeds, order emails never arrive</td><td>Queue not processed</td><td>Set up the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>Emails land in spam</td><td>Missing SPF/DKIM, or From on a domain you do not control</td><td>Add DNS records; send from your own domain</td></tr>
+        <tr><td>Emails show raw HTML tags</td><td>Content type set to <code>Text</code></td><td>Set it to <code>HTML</code></td></tr>
+        <tr><td>Nothing sends after changing settings</td><td>Cached config</td><td>Visit <code>/clear</code> once</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/smtp-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

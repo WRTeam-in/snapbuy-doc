@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Website Settings</h1>
+
+    <p>Menu path: <strong>Settings → Website Settings</strong></p>
+
+    <p>Configures the customer-facing <strong>web portal</strong> — its address, theme, app-download banners and cookie consent.</p>
+
+    <img src="../images/panel/website-settings-page.png" alt="Website settings page">
+
+    <h2>Website URL</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Website URL</strong></td><td>The public address of your storefront</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>This is used to build links in emails, notifications, shared product URLs and SEO tags.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Enter the exact production URL, with scheme</p>
+      <p>Include <code>https://</code> and get the <code>www</code> prefix right. A mismatch produces broken links in every order email and every shared product URL, and it breaks canonical tags for SEO.</p>
+      <p>Right: <code>https://www.yourstore.com</code><br>
+      Wrong: <code>yourstore.com</code>, <code>http://yourstore.com</code> on an HTTPS site</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">This is the storefront, not the panel</p>
+      <p>The panel's own address is <code>APP_URL</code> in <code>.env</code>, set during installation. This field points at the customer-facing site, which may be a different domain entirely.</p>
+    </div>
+
+    <h2>Theme colours</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Applies to</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Light Mode Color</strong></td><td>Web portal accent in light mode</td></tr>
+        <tr><td><strong>Dark Mode Color</strong></td><td>Web portal accent in dark mode</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>These are independent of the app colours in <a href="../admin/app-settings.html">App Settings</a> and of the panel colour in <a href="../admin/general-settings.html">General Settings</a>.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Keep all three in the same family</p>
+      <p>The panel, the apps and the website each have their own colour setting. Using the same brand colour across them keeps the experience coherent for customers who move between web and app.</p>
+    </div>
+
+    <h2>App download banners</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Is Android App</strong></td><td>Show the Android download banner</td></tr>
+        <tr><td><strong>Android App URL</strong></td><td>Play Store link</td></tr>
+        <tr><td><strong>Is iOS App</strong></td><td>Show the iOS download banner</td></tr>
+        <tr><td><strong>iOS App URL</strong></td><td>App Store link</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/website-app-banners.png" alt="App download banner settings">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not advertise an app that is not published yet</p>
+      <p>Turning the banner on before the store listing is live sends customers to a 404 and makes the store look broken. Enable each platform only once its listing is public.</p>
+    </div>
+
+    <h2>Cookie consent</h2>
+
+    <p><strong>Cookie Consent Enabled</strong> shows a consent banner to visitors.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Required in some regions</p>
+      <p>If you serve customers in the EU or UK, cookie consent is a legal requirement under GDPR/PECR, not a preference. Enable it, and make sure your <a href="../admin/countries.html#policies">privacy policy</a> describes what you collect.</p>
+    </div>
+
+    <h2>Related pages</h2>
+
+    <p>The rest of the storefront is configured elsewhere:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Home page content</td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
+        <tr><td>Meta titles, descriptions, OG images</td><td><a href="../admin/seo-settings.html">SEO Settings</a></td></tr>
+        <tr><td>Social profile links</td><td><a href="../admin/social-media.html">Social Media</a></td></tr>
+        <tr><td>Legal policies</td><td><a href="../admin/countries.html#policies">Countries</a></td></tr>
+        <tr><td>Blogs and FAQs</td><td>Blogs, FAQs menus</td></tr>
+        <tr><td>Taking the site offline</td><td><a href="../admin/maintenance-mode.html">Maintenance Mode</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Email links point to the wrong domain</td><td>Website URL wrong or missing scheme</td><td>Enter the full <code>https://</code> URL</td></tr>
+        <tr><td>Shared product links 404</td><td>Website URL points at the panel</td><td>Point it at the storefront</td></tr>
+        <tr><td>Download banner leads to a dead page</td><td>App not published, or wrong URL</td><td>Disable the banner or correct the URL</td></tr>
+        <tr><td>Colour change not visible</td><td>Browser cache</td><td>Hard-refresh; visit <code>/clear</code></td></tr>
+        <tr><td>Consent banner missing</td><td>Setting disabled</td><td>Enable cookie consent</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/website-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maintenance Mode — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Maintenance Mode</h1>
+
+    <p>Temporarily lock the app while you perform server updates, database migrations, or any work that should not be exposed to live users.</p>
+
+    <h2>How to Enable</h2>
+    <ol>
+      <li>Open your <strong>Admin Panel</strong>.</li>
+      <li>Navigate to <strong>Settings → Website &amp; Apps → Maintenance Mode</strong> tab.</li>
+      <li>Toggle <strong>Maintenance Mode</strong> ON.</li>
+      <li>Click <strong>Save</strong>.</li>
+    </ol>
+
+    <img src="../images/app/delivery/maintenanceMode.png" alt="Maintenance Mode">
+
+    <h2>How It Works</h2>
+    <ul>
+      <li>While maintenance mode is <strong>ON</strong>, the app blocks normal navigation and shows a full-screen maintenance message on launch (and on any subsequent API call).</li>
+      <li>Users cannot browse products, log in, or perform any action — they only see the maintenance screen until you turn it off.</li>
+      <li>Once you toggle maintenance mode <strong>OFF</strong> and save, the app resumes normally on the next launch / API refresh — no app update or republish is required.</li>
+    </ul>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">TIP</p>
+      <p>Use this whenever you need to push database changes, swap a payment gateway, or run admin-side migrations, so users don't hit half-broken states during the change window.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/maintenance-mode.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

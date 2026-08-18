@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notification Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Notification Settings</h1>
+
+    <p>Configure push notifications across the admin panel, Firebase, Android, and iOS so users receive real-time updates from the app.</p>
+
+    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/notifications">Notification Settings Documentation</a> and follow <strong>every step in the order shown</strong>.</p>
+
+    <h2>What the Guide Covers</h2>
+    <ul>
+      <li><strong>Admin Panel Settings</strong> — Adding the Firebase Project ID and uploading the Service Account JSON file.</li>
+      <li><strong>Firebase Configuration</strong> — Cloud Messaging tab setup and selecting the iOS app.</li>
+      <li><strong>iOS App Settings</strong> — Enabling Push Notifications + Background Modes capabilities, and uploading either the <code>.p8</code> token (recommended) or <code>.p12</code> certificate to Firebase.</li>
+      <li><strong>Android Setup</strong> — Downloading and placing <code>google-services.json</code> in <code>android/app/</code>.</li>
+    </ul>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">TIP</p>
+      <p>The <code>.p8</code> token-based method is preferred over <code>.p12</code> certificates — tokens don't expire and a single key works for both development and production.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/notification-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

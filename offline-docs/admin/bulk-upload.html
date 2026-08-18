@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bulk Upload &amp; Update — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Bulk Upload &amp; Update</h1>
+
+    <p>Menu paths: <strong>Bulk Upload</strong> and <strong>Bulk Update</strong></p>
+
+    <p>Create or change hundreds of products from one spreadsheet, instead of one form at a time.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tool</th><th>Use it to</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bulk Upload</strong></td><td>Create products that do not exist yet</td></tr>
+        <tr><td><strong>Bulk Update</strong></td><td>Change products that already exist</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/bulk-upload-page.png" alt="Bulk upload page">
+
+    <h2>Always start from the generated sample</h2>
+    <p>The page generates a sample <code>.xlsx</code> built for <strong>your</strong> installation — your languages, your attributes, your custom fields, and one column group per <a href="../admin/stores.html">store</a>.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Never build the file yourself</p>
+      <p>The columns are generated dynamically. A spreadsheet from another installation, or from an older version of yours, will have the wrong store columns and the wrong language columns. Download a fresh sample every time.</p>
+    </div>
+
+    <p>The sample includes example rows and a notes sheet explaining each column, plus dropdown validation on the cells that accept fixed values.</p>
+
+    <h2>File requirements</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Format</td><td><code>.xlsx</code> or <code>.xls</code></td></tr>
+        <tr><td>Maximum size</td><td><strong>20 MB</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A large catalogue may exceed the limits</p>
+      <p>20 MB is the application's cap, but PHP's own upload and execution limits bite first on shared hosting. Split a very large catalogue into batches of a few hundred rows. See <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
+    </div>
+
+    <h2>How rows become products</h2>
+    <p>Rows are grouped by a <strong>handle</strong> — a shared identifier that ties multiple rows into one product with several variants.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">One product, many rows</p>
+      <p>A t-shirt in three sizes is <strong>three rows sharing one handle</strong>, not three products. Get this wrong and you create three separate products that customers see as unrelated items.</p>
+    </div>
+
+    <h2>Per-store columns</h2>
+    <p>Because stock and price are held per store, the sheet carries a column group for <strong>each</strong> store:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Listed</strong></td><td>Whether the product is sold at this store</td></tr>
+        <tr><td><strong>Price</strong></td><td>Selling price at this store</td></tr>
+        <tr><td><strong>Discounted Price</strong></td><td>Offer price at this store</td></tr>
+        <tr><td><strong>Purchase Price</strong></td><td>Your cost at this store</td></tr>
+        <tr><td><strong>Stock Status</strong></td><td>In stock / out of stock</td></tr>
+        <tr><td><strong>Available Qty</strong></td><td>Units on hand</td></tr>
+        <tr><td><strong>Min Alert</strong></td><td>Low-stock threshold</td></tr>
+        <tr><td><strong>Unlimited Stock</strong></td><td>Skip stock counting here</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/bulk-upload-store-columns.png" alt="Per-store columns in the bulk sheet">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A product left unlisted everywhere is invisible</p>
+      <p>Importing a product without setting <strong>Listed</strong> at any store creates a catalogue entry no customer can ever see. If products "imported successfully but do not appear", check the Listed column first.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Adding a store changes the sheet</p>
+      <p>Create a new <a href="../admin/stores.html">store</a> and the sample gains a new column group. An older file will not contain it, so the new store gets nothing. Re-download after any store change.</p>
+    </div>
+
+    <h2>Languages</h2>
+    <p>Translatable fields — name, description and others — appear once per active <a href="../admin/languages.html">language</a>.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Fill the default language at minimum</p>
+      <p>Untranslated languages fall back to the default, so a partial sheet still works. Leaving the <em>default</em> language blank does not.</p>
+    </div>
+
+    <h2>Product types</h2>
+    <p>The type column accepts: <code>none</code>, <code>veg</code>, <code>non_veg</code>, <code>chemical</code>, <code>eggetarian</code>, <code>medical</code>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Type affects how products are displayed and filtered</p>
+      <p>Grocery apps commonly filter by veg/non-veg, and mislabelling has real consequences for customers with dietary or religious requirements. Get this column right.</p>
+    </div>
+
+    <h2>Images</h2>
+    <p>Image columns are validated during the import.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Upload images before importing</p>
+      <p>The sheet references images by path. Referencing a file that has not been uploaded fails validation for that row.</p>
+    </div>
+
+    <h2>Validation happens before anything is written</h2>
+    <p>The file is validated first, and errors are reported per row and per cell.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Test with five rows before importing five hundred</p>
+      <p>Import a handful first, check the result in the catalogue — pricing, stock, images, the right store, the right language — then run the full file. Fixing five bad rows is trivial; unpicking five hundred is not.</p>
+    </div>
+
+    <h2>Bulk Update</h2>
+    <p>Bulk Update changes existing products. Export the current data, edit it, and upload it back.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Bulk Update overwrites — there is no undo</p>
+      <p>A blank cell can clear a value, and a mistyped price applies immediately to every affected product across every store.</p>
+      <p>Before any bulk update:</p>
+      <ol>
+        <li>Take a <a href="../installation/backup-database.html">database backup</a></li>
+        <li>Export the current data as your rollback copy</li>
+        <li>Change only the columns you intend to change</li>
+      </ol>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Watch for spreadsheet auto-formatting</p>
+      <p>Excel and Google Sheets silently mangle data: leading zeros are stripped from SKUs, long numbers become scientific notation, and text that looks like a date gets converted. Format those columns as <strong>Text</strong> before editing, and check a sample after saving.</p>
+    </div>
+
+    <h2>Large imports run in the background</h2>
+    <p>Product bulk import is dispatched as a queued job.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">No cron, no import</p>
+      <p>The import is processed by the queue. Without the <a href="../admin/cron-jobs.html">cron job</a> running, the file uploads and reports as accepted but nothing is ever created. Check the cron heartbeat and the pending-jobs count under <strong>Settings → Cron Jobs</strong> if an import appears to do nothing.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Upload rejected</td><td>Wrong format, or over 20 MB</td><td>Use <code>.xlsx</code> under 20 MB; split the file</td></tr>
+        <tr><td>Column errors on a valid-looking file</td><td>Sheet from another installation or an older version</td><td>Download a fresh sample</td></tr>
+        <tr><td>Import accepted, nothing appears</td><td>Queue not processed</td><td>Set up the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>Products created but invisible</td><td>Not listed at any store</td><td>Set the Listed column</td></tr>
+        <tr><td>Variants became separate products</td><td>Handle not shared across rows</td><td>Use one handle per product</td></tr>
+        <tr><td>Prices wrong at one store only</td><td>Edited the wrong store's column group</td><td>Check the column headings</td></tr>
+        <tr><td>SKUs lost leading zeros</td><td>Spreadsheet auto-formatting</td><td>Format the column as Text</td></tr>
+        <tr><td>Images missing</td><td>Referenced files not uploaded</td><td>Upload first, then import</td></tr>
+        <tr><td>Update wiped values</td><td>Blank cells overwrote them</td><td>Restore from backup</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Checklist</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Fresh sample downloaded from <strong>your</strong> panel</li>
+      <li class="task-item"><input type="checkbox" disabled> Backup taken before any bulk update</li>
+      <li class="task-item"><input type="checkbox" disabled> Handles shared correctly across variant rows</li>
+      <li class="task-item"><input type="checkbox" disabled> Listed and price set for every store that should sell the product</li>
+      <li class="task-item"><input type="checkbox" disabled> Default language filled</li>
+      <li class="task-item"><input type="checkbox" disabled> Product type correct</li>
+      <li class="task-item"><input type="checkbox" disabled> Images uploaded first</li>
+      <li class="task-item"><input type="checkbox" disabled> Five-row test import verified</li>
+      <li class="task-item"><input type="checkbox" disabled> Cron heartbeat green</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/bulk-upload.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

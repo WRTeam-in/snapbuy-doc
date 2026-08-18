@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Create a Subdomain — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Create a Subdomain</h1>
+
+    <p>SnapBuy's admin panel is usually installed on its own subdomain, separate from the customer-facing website. A typical layout:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Address</th><th>What runs there</th></tr></thead>
+      <tbody>
+        <tr><td><code>https://yourstore.com</code></td><td>Web Portal (customer storefront)</td></tr>
+        <tr><td><code>https://admin.yourstore.com</code></td><td><strong>Admin Panel</strong> — this documentation</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Keeping them apart means the panel and the storefront can be updated, secured and backed up independently. The mobile apps talk to the <strong>admin panel URL</strong>, so pick something short and permanent.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Choose the URL carefully</p>
+      <p>The panel URL is written into the Customer App, the Delivery Boy App and the Web Portal configuration. Changing it later means rebuilding and re-publishing both apps. Decide once, then keep it.</p>
+    </div>
+
+    <h2>Create the subdomain in cPanel</h2>
+    <ol>
+      <li>Log into cPanel.</li>
+      <li>Under <strong>Domains</strong>, open <strong>Subdomains</strong> (on newer cPanel versions: <strong>Domains → Create A New Domain</strong>).</li>
+      <li>In <strong>Subdomain</strong>, type <code>admin</code>.</li>
+      <li>Choose your main domain from the dropdown.</li>
+      <li>cPanel fills <strong>Document Root</strong> automatically as <code>public_html/admin</code>. Note this path — you will upload SnapBuy here.</li>
+      <li>Click <strong>Create</strong>.</li>
+    </ol>
+
+    <p>The subdomain becomes reachable within a few minutes, though DNS propagation can take up to a few hours.</p>
+
+    <h2>Point the document root at <code>public/</code></h2>
+    <p>This is the step most installations get wrong.</p>
+
+    <p>SnapBuy is a Laravel application. Everything above the <code>public/</code> folder — including your <code>.env</code> file with database passwords — <strong>must not be reachable from a browser</strong>.</p>
+
+    <p>You have two safe options.</p>
+
+    <h3>Option A — document root points directly at <code>public/</code> (recommended)</h3>
+    <p>Upload SnapBuy so that the structure is:</p>
+    <pre><code>/home/username/snapbuy/          ← application files (.env, app/, storage/ …)
+/home/username/snapbuy/public/   ← document root of admin.yourstore.com</code></pre>
+
+    <p>In cPanel, edit the subdomain and set <strong>Document Root</strong> to <code>snapbuy/public</code>.</p>
+
+    <p>This is the most secure layout and needs no extra configuration.</p>
+
+    <h3>Option B — upload everything into the subdomain folder</h3>
+    <p>If your host will not let you move the document root, upload all SnapBuy files into <code>public_html/admin/</code> and rely on the bundled <code>.htaccess</code> in the project root, which forwards requests into <code>public/</code>.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Verify your <code>.env</code> is not public</p>
+      <p>After installing with Option B, open <code>https://admin.yourstore.com/.env</code> in a browser. You must see a <strong>403</strong> or <strong>404</strong>. If the file contents appear, stop immediately — your database credentials and API keys are exposed. Switch to Option A or add this to the <code>.htaccess</code> in the project root:</p>
+      <pre><code>&lt;Files ".env"&gt;
+    Require all denied
+&lt;/Files&gt;</code></pre>
+    </div>
+
+    <h2>Nginx (VPS) server block</h2>
+    <p>If you run Nginx instead of cPanel, use a server block like this:</p>
+    <pre><code>server {
+    listen 80;
+    server_name admin.yourstore.com;
+    root /var/www/snapbuy/public;
+
+    index index.php;
+    charset utf-8;
+
+    client_max_body_size 128M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}</code></pre>
+
+    <p>Enable it and reload:</p>
+    <pre><code>sudo ln -s /etc/nginx/sites-available/snapbuy /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+
+    <h2>Install an SSL certificate</h2>
+    <p>The panel must run over HTTPS in production. Firebase web push, several payment gateways and the mobile apps all refuse plain HTTP.</p>
+
+    <p><strong>cPanel:</strong> open <strong>SSL/TLS Status</strong>, select the subdomain, click <strong>Run AutoSSL</strong>.</p>
+
+    <p><strong>VPS:</strong></p>
+    <pre><code>sudo certbot --nginx -d admin.yourstore.com</code></pre>
+
+    <p>Confirm <code>https://admin.yourstore.com</code> loads with a padlock before you run the installer — the installer writes <code>APP_URL</code> from the address you visit it on, and a wrong scheme there causes mixed-content problems later.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Install over HTTPS, not HTTP</p>
+      <p>Visit the installer at <code>https://…</code> from the very first screen. If you install over <code>http://</code>, <code>APP_URL</code> is saved as <code>http://</code> and you will have to correct it in <code>.env</code> afterwards.</p>
+    </div>
+
+    <h2>Checklist</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Subdomain created and resolving</li>
+      <li class="task-item"><input type="checkbox" disabled> Document root points at SnapBuy's <code>public/</code> folder</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>https://admin.yourstore.com/.env</code> returns 403/404</li>
+      <li class="task-item"><input type="checkbox" disabled> SSL certificate installed and the padlock shows</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/create-subdomain.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

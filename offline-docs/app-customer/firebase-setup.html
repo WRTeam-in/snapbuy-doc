@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Firebase Setup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Firebase Setup</h1>
+    
+    <p>The app uses Firebase for push notifications, authentication, and other Google services. A full step-by-step guide (with screenshots) is maintained on our common docs site.</p>
+    
+    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/firebase/">Firebase Setup Documentation</a> and follow <strong>every step in the order shown</strong>.</p>
+    
+    <h2>Authentication Methods</h2>
+    
+    <p>The following authentication methods should be enabled in the Firebase console as per your app requirements:</p>
+    
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Method</th><th>Where to configure</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Phone</td><td>Firebase console → Authentication → Sign-in method</td></tr>
+    <tr><td>Google</td><td>Firebase console → Authentication → Sign-in method</td></tr>
+    <tr><td>Apple</td><td>Firebase console → Authentication → Sign-in method</td></tr>
+    </tbody>
+    </table>
+    </div>
+    
+    <div class="admonition admonition--note">
+    <p class="admonition__title">Note</p>
+    <p><strong>Email/Password</strong> authentication is handled by the backend — no Firebase configuration needed for it.</p>
+    </div>
+    
+    <h2>What the Guide Covers</h2>
+    
+    <ul>
+    <li>Installing the Firebase CLI</li>
+    <li>Creating a new Firebase project</li>
+    <li>Registering the Flutter app with Firebase</li>
+    <li>Logging in via terminal and running the FlutterFire configuration commands</li>
+    <li>Generating and adding <strong>Android SHA-1 / SHA-256</strong> keys (debug, release, and Play App Signing)</li>
+    <li>Configuring <strong>iOS URL schemes</strong> and <code>GoogleService-Info.plist</code></li>
+    </ul>
+    
+    <h2>Register the App via Firebase CLI</h2>
+    
+    <p>If you prefer the CLI over the console UI, activate the FlutterFire CLI and run configure to register the app:</p>
+    
+    <pre><code class="language-bash">dart pub global activate flutterfire_cli
+flutterfire configure --project=&lt;your-firebase-project-id&gt;</code></pre>
+    
+    <p><code>flutterfire configure</code> lets you pick (or create) the Android and iOS apps, registers them under the Firebase project, and auto-generates <code>lib/firebase_options.dart</code> plus downloads <code>google-services.json</code> / <code>GoogleService-Info.plist</code> into the correct folders.</p>
+    
+    <div class="admonition admonition--note">
+    <p class="admonition__title">Note</p>
+    <p>Change your <strong>package name</strong> in the app code first, then run the above command. Running it before changing the package name will register the app under the old/default package name.</p>
+    </div>
+    
+    <h2>Download Config Files &amp; Place in Project</h2>
+    
+    <p>Even if you used the FlutterFire CLI, you must verify that the Firebase config files are present in the correct locations. If they are missing or you prefer to add them manually, follow the steps below.</p>
+    
+    <h3>Android — google-services.json</h3>
+    
+    <ol>
+    <li>Open <a href="https://console.firebase.google.com/">Firebase Console</a> and select your project.</li>
+    <li>Go to <strong>Project Settings</strong> (gear icon) → <strong>General</strong> tab.</li>
+    <li>Scroll down to <strong>Your apps</strong> → select your Android app.</li>
+    <li>Click <strong>Download google-services.json</strong>.</li>
+    </ol>
+    
+    <p>Place the downloaded file at:</p>
+    
+    <pre><code>android/app/google-services.json</code></pre>
+    
+    <h3>iOS — GoogleService-Info.plist</h3>
+    
+    <ol>
+    <li>In the same <strong>Project Settings → General</strong> tab, select your iOS app.</li>
+    <li>Click <strong>Download GoogleService-Info.plist</strong>.</li>
+    <li>Place the downloaded file at:</li>
+    </ol>
+    
+    <pre><code>ios/Runner/GoogleService-Info.plist</code></pre>
+    
+    <div class="admonition admonition--warning">
+    <p class="admonition__title">Warning</p>
+    <p>Both files must be placed at the exact paths above. Incorrect placement will cause Firebase to fail silently at runtime.</p>
+    </div>
+    
+    <hr>
+    
+    <h2>Update firebase_options.dart</h2>
+    
+    <p>The FlutterFire CLI auto-generates <code>lib/firebase_options.dart</code> when you run <code>flutterfire configure</code>. However, if you set up Firebase manually or need to update the values, open the file and fill in the required fields.</p>
+    
+    <p><strong>File location:</strong></p>
+    
+    <pre><code>lib/firebase_options.dart</code></pre>
+    
+    <p>The file contains two platform configurations — one for Android and one for iOS. All values can be found in <strong>Firebase Console → Project Settings → General → Your apps</strong>.</p>
+    
+    <pre><code class="language-dart">static const FirebaseOptions android = FirebaseOptions(
+  apiKey: 'YOUR_ANDROID_API_KEY',
+  appId: 'YOUR_ANDROID_APP_ID',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+  projectId: 'YOUR_PROJECT_ID',
+  storageBucket: 'YOUR_PROJECT_ID.appspot.com',
+);
+
+static const FirebaseOptions ios = FirebaseOptions(
+  apiKey: 'YOUR_IOS_API_KEY',
+  appId: 'YOUR_IOS_APP_ID',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+  projectId: 'YOUR_PROJECT_ID',
+  storageBucket: 'YOUR_PROJECT_ID.appspot.com',
+  iosClientId: 'YOUR_IOS_CLIENT_ID',
+  iosBundleId: 'YOUR_IOS_BUNDLE_ID',
+);</code></pre>
+    
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Field</th><th>Where to find it</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><code>apiKey</code></td><td>Project Settings → General → app-specific key in firebase json file</td></tr>
+    <tr><td><code>appId</code></td><td>Project Settings → General → App specific ID</td></tr>
+    <tr><td><code>messagingSenderId</code></td><td>Project Settings → General → Cloud Messaging Sender ID</td></tr>
+    <tr><td><code>projectId</code></td><td>Project Settings → General → Project ID</td></tr>
+    <tr><td><code>storageBucket</code></td><td>storage_bucket key's value in firebase json file</td></tr>
+    <tr><td><code>iosClientId</code></td><td>Inside <code>GoogleService-Info.plist</code> → <code>CLIENT_ID</code> field</td></tr>
+    <tr><td><code>iosBundleId</code></td><td>Your app's iOS bundle identifier</td></tr>
+    </tbody>
+    </table>
+    </div>
+    
+    <div class="admonition admonition--warning">
+    <p class="admonition__title">Warning</p>
+    <p>Never commit <code>firebase_options.dart</code> with real API keys to a public repository. Add it to <code>.gitignore</code> or use environment-based configuration.</p>
+    </div>
+    
+    <div class="admonition admonition--tip">
+    <p class="admonition__title">Tip</p>
+    <p>Do not skip the SHA-key steps for Android or the URL scheme steps for iOS — Google Sign-In and Apple Sign-In will silently fail without them.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/firebase-setup.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

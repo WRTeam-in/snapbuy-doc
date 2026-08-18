@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Server Requirements — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Server Requirements</h1>
+
+    <p>Check every item on this page <strong>before</strong> you upload SnapBuy. The installation wizard runs the same checks and will refuse to continue if any of them fail.</p>
+
+    <h2>PHP version</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Minimum PHP version</strong></td><td><strong>8.3.0</strong></td></tr>
+        <tr><td>Recommended</td><td>8.3</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">PHP 8.2 and below will not work</p>
+      <p>SnapBuy runs on Laravel 12, which itself requires PHP 8.3 or newer. There is no fallback build for older PHP.</p>
+    </div>
+
+    <h2>Required PHP extensions</h2>
+    <p>All seventeen of these must be <strong>enabled</strong>. The installer shows them as a grid and blocks the "Next" button until every one is green.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Extension</th><th>Used for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>bcmath</code></td><td>Precise money and tax arithmetic</td></tr>
+        <tr><td><code>ctype</code></td><td>Laravel core</td></tr>
+        <tr><td><code>curl</code></td><td>Payment gateways, Firebase, Twilio, purchase-code validation</td></tr>
+        <tr><td><code>dom</code></td><td>Excel / XML import and export</td></tr>
+        <tr><td><code>fileinfo</code></td><td>Detecting the real type of uploaded files</td></tr>
+        <tr><td><code>filter</code></td><td>Input validation</td></tr>
+        <tr><td><code>gd</code></td><td>Image resizing and thumbnails</td></tr>
+        <tr><td><code>iconv</code></td><td>Character-set conversion</td></tr>
+        <tr><td><code>json</code></td><td>Laravel core</td></tr>
+        <tr><td><code>mbstring</code></td><td>Multi-byte / multi-language text</td></tr>
+        <tr><td><code>openssl</code></td><td>HTTPS calls and encryption</td></tr>
+        <tr><td><code>pdo</code></td><td>Database layer</td></tr>
+        <tr><td><code>pdo_mysql</code></td><td>MySQL driver</td></tr>
+        <tr><td><code>sodium</code></td><td>Token and key encryption</td></tr>
+        <tr><td><code>tokenizer</code></td><td>Laravel core</td></tr>
+        <tr><td><code>xml</code></td><td>Excel / XML import and export</td></tr>
+        <tr><td><code>zip</code></td><td>Bulk upload, backups, system updater</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">How to enable an extension</p>
+      <p>On <strong>cPanel</strong>: <em>Select PHP Version → Extensions</em>, tick the missing one, save.
+      On <strong>VPS / Ubuntu</strong>: <code>sudo apt install php8.3-&lt;extension&gt;</code> then <code>sudo systemctl restart apache2</code> (or <code>php8.3-fpm</code>).
+      On <strong>XAMPP</strong>: open <code>php.ini</code>, remove the <code>;</code> in front of <code>extension=&lt;name&gt;</code>, restart Apache.</p>
+    </div>
+
+    <h2>Database</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Engine</strong></td><td>MySQL 5.7+ <strong>or</strong> MariaDB 10.3+</td></tr>
+        <tr><td>Driver</td><td><code>mysql</code> only</td></tr>
+        <tr><td>Privileges needed</td><td><code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>INDEX</code>, <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">PostgreSQL and SQLite are not supported</p>
+      <p>The installer connects with the <code>mysql</code> driver only. Do not attempt to point SnapBuy at another engine.</p>
+    </div>
+
+    <p>The installer runs <code>migrate:fresh</code>, which <strong>drops every table in the database it connects to</strong>. Always create a fresh, empty database for SnapBuy.</p>
+
+    <h2>Folder and file permissions</h2>
+    <p>These four paths must be writable by the web server user. The installer verifies them and reports each one.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Path</th><th>Required</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.env</code></td><td>Writable</td></tr>
+        <tr><td><code>storage/framework/</code></td><td><code>755</code></td></tr>
+        <tr><td><code>storage/logs/</code></td><td><code>755</code></td></tr>
+        <tr><td><code>bootstrap/cache/</code></td><td><code>755</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>On a VPS, the usual fix is:</p>
+    <pre><code>sudo chown -R www-data:www-data storage bootstrap/cache .env
+sudo chmod -R 755 storage bootstrap/cache</code></pre>
+
+    <p>Replace <code>www-data</code> with <code>apache</code> on CentOS/AlmaLinux, or with your cPanel username on shared hosting.</p>
+
+    <h2>Server functions that must not be disabled</h2>
+    <p>Shared hosts often disable PHP functions for "security". SnapBuy needs these:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Function</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>symlink</code></td><td>Creates <code>public/storage</code>, which serves every uploaded image</td></tr>
+        <tr><td><code>exec</code></td><td>Used by some maintenance routines</td></tr>
+        <tr><td><code>proc_open</code></td><td>Composer and queue processing</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The most common installation failure</p>
+      <p>If <code>symlink</code> is disabled, installation appears to succeed but <strong>all uploaded images return 404</strong>. Remove <code>symlink</code> from the <code>disable_functions</code> list in your <code>php.ini</code>, then visit <code>https://yourdomain.com/linkstorage</code> once to create the link.</p>
+    </div>
+
+    <h2>Other server-side needs</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Need</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Cron access</strong></td><td>Cart reminders, maintenance windows, scheduled home layouts and queued jobs all depend on it. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</td></tr>
+        <tr><td><strong>Outbound HTTPS</strong></td><td>The panel calls Firebase, Twilio, payment gateways and the licence server. Hosts that block outbound connections will break these.</td></tr>
+        <tr><td><strong>SSL certificate</strong></td><td>Required in production. Firebase web push, several payment gateways and the mobile apps refuse plain HTTP.</td></tr>
+        <tr><td><strong>A WebSocket port</strong> (optional)</td><td>Only if you run <strong>Laravel Reverb</strong> for chat instead of Pusher. Default <code>9090</code>. See <a href="../admin/chat-settings.html">Chat Settings</a>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>For local development only</h2>
+    <p>If you are installing on your own machine rather than a server, you additionally need:</p>
+    <ul>
+      <li><strong>XAMPP</strong> (or Laragon / MAMP) — bundles Apache, PHP and MySQL</li>
+      <li><strong>Composer</strong> — PHP dependency manager</li>
+      <li><strong>Node.js 20 LTS+</strong> and <strong>npm</strong> — only if you intend to rebuild the panel's front-end assets</li>
+    </ul>
+
+    <p>Full walkthrough: <strong><a href="../admin/localhost-setup.html">Localhost Setup</a></strong>.</p>
+
+    <h2>Quick pre-flight checklist</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> PHP 8.3 or newer</li>
+      <li class="task-item"><input type="checkbox" disabled> All 17 extensions enabled</li>
+      <li class="task-item"><input type="checkbox" disabled> Empty MySQL database created, with a user that has full privileges on it</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>.env</code>, <code>storage/</code>, <code>bootstrap/cache/</code> writable</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>symlink</code> not in <code>disable_functions</code></li>
+      <li class="task-item"><input type="checkbox" disabled> PHP INI limits raised — see <a href="../admin/php-ini-settings.html">PHP INI Settings</a></li>
+      <li class="task-item"><input type="checkbox" disabled> Cron job available</li>
+      <li class="task-item"><input type="checkbox" disabled> SSL installed</li>
+    </ul>
+
+    <hr>
+
+    <p><strong>Next:</strong> <a href="../admin/create-subdomain.html">Create a Subdomain →</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/server-requirements.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

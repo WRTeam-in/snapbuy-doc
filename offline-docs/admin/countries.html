@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Countries &amp; Currency — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Countries &amp; Currency</h1>
+
+    <p><strong>Setup Guide step 1 of 9.</strong> Menu path: <strong>Countries</strong></p>
+
+    <p>A country in SnapBuy is far more than a name in a dropdown. It is the container for your <strong>currency</strong>, <strong>phone number rules</strong>, <strong>timezone</strong>, <strong>date formats</strong>, <strong>which payment gateways are offered</strong>, your <strong>referral programme</strong>, and every <strong>legal policy</strong> the apps display.</p>
+
+    <p>Get this right before anything else — zones, stores and prices all hang off it.</p>
+
+    <img src="../images/panel/countries-list.png" alt="Countries list">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">India already exists</p>
+      <p>Installation seeds one default country — <strong>India</strong>, with COD enabled. That means the Setup Guide's Country step is already ticked when you first log in.</p>
+      <p>Do not take that as "done". Open it and correct the currency, timezone, formats and policies, or delete it and create your own.</p>
+    </div>
+
+    <h2>Adding a country</h2>
+
+    <p>Go to <strong>Countries → Add Country</strong>.</p>
+
+    <img src="../images/panel/countries-add-form.png" alt="Add country form">
+
+    <h3>Basic details</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Shown in the country switcher and in address forms</td></tr>
+        <tr><td><strong>Country Code</strong></td><td>Two-letter ISO code — <code>IN</code>, <code>US</code>, <code>AE</code>. Used for flags and matching.</td></tr>
+        <tr><td><strong>Logo / Flag</strong></td><td>Icon shown beside the country in the apps</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive countries disappear from the apps immediately</td></tr>
+        <tr><td><strong>Default</strong></td><td>The country pre-selected for new customers</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Phone number rules</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Dial Code</strong></td><td><code>+91</code>, <code>+1</code>, <code>+971</code> — prefixed to every mobile number</td></tr>
+        <tr><td><strong>Min Mobile Length</strong></td><td>Shortest valid number (default <code>7</code>)</td></tr>
+        <tr><td><strong>Max Mobile Length</strong></td><td>Longest valid number (default <code>15</code>)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">These rules block logins if wrong</p>
+      <p>Customers sign in by mobile number. If the length range does not match reality for that country, valid customers are rejected at the login screen with a validation error.</p>
+      <p>For India set both min and max to <code>10</code>. For countries with variable-length numbers, widen the range rather than guessing.</p>
+    </div>
+
+    <h3>Currency</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Currency Symbol</strong></td><td>Displayed beside every price — ₹, $, AED</td></tr>
+        <tr><td><strong>Currency Code</strong></td><td>ISO code — <code>INR</code>, <code>USD</code>, <code>AED</code>. Payment gateways use <strong>this</strong>, not the symbol.</td></tr>
+        <tr><td><strong>Decimal Point</strong></td><td>Digits after the decimal (default <code>2</code>)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The currency code must match your payment gateway account</p>
+      <p>If your Stripe or Razorpay account settles in <code>INR</code> but the country is set to <code>USD</code>, payments are rejected or charged in the wrong currency. Match the code to what your gateway account actually supports.</p>
+      <p>Use <code>0</code> decimal points for currencies without minor units (for example JPY) — otherwise amounts are sent to the gateway multiplied incorrectly.</p>
+    </div>
+
+    <h3>Timezone and formats</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Example</th><th>Affects</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Timezone</strong></td><td><code>Asia/Kolkata</code></td><td>Order timestamps, delivery slots, surge windows, scheduled maintenance, scheduled home layouts</td></tr>
+        <tr><td><strong>Date Format</strong></td><td><code>d-m-Y</code></td><td>How dates read in apps and emails</td></tr>
+        <tr><td><strong>Time Format</strong></td><td><code>h:i A</code></td><td>12-hour (<code>h:i A</code>) or 24-hour (<code>H:i</code>)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Timezone drives scheduling, not just display</p>
+      <p>Zone surge slots, store operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and stores appear closed when they are open.</p>
+    </div>
+
+    <h3>Payment gateways per country</h3>
+
+    <p>Each country carries its <strong>own</strong> list of enabled gateways. A gateway configured globally in <a href="../admin/payment-gateway.html">Payment Gateway settings</a> still will not appear to customers unless it is enabled on their country.</p>
+
+    <img src="../images/panel/countries-payment-gateways.png" alt="Enabling payment gateways for a country">
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">"The gateway is configured but customers cannot see it"</p>
+      <p>This is almost always the cause. Check the country record, not just the global gateway settings.</p>
+    </div>
+
+    <p>The seeded India record has <strong>Cash on Delivery</strong> enabled by default.</p>
+
+    <h3>Referral programme</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Referral Min Order Amount</strong></td><td>Order value the referred customer must reach before any credit is paid</td></tr>
+        <tr><td><strong>Referral Credit — First Order</strong></td><td>Credited to the <strong>referrer</strong> when their invitee's first qualifying order completes</td></tr>
+        <tr><td><strong>Referral Credit — Referred</strong></td><td>Credited to the <strong>new customer</strong></td></tr>
+        <tr><td><strong>Referral Usage Limit</strong></td><td>Maximum referrals one customer can be paid for. Leave blank for unlimited.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Referral credit is paid by a queued job, so it depends on the <a href="../admin/cron-jobs.html">cron job</a> running. Set all values to <code>0</code> to switch the programme off.</p>
+
+    <h3 id="policies">Policies</h3>
+
+    <p>Every legal document lives on the country, so different regions can carry different terms:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Policy</th><th>Shown to</th></tr></thead>
+      <tbody>
+        <tr><td>Privacy Policy</td><td>Customers</td></tr>
+        <tr><td>Return Policy</td><td>Customers</td></tr>
+        <tr><td>Shipping Policy</td><td>Customers</td></tr>
+        <tr><td>Cancellation Policy</td><td>Customers</td></tr>
+        <tr><td>Terms &amp; Conditions</td><td>Customers</td></tr>
+        <tr><td>Privacy Policy — Delivery Boy</td><td>Delivery boys</td></tr>
+        <tr><td>Terms &amp; Conditions — Delivery Boy</td><td>Delivery boys</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/countries-policies.png" alt="Editing a country policy">
+
+    <p>Installation writes <strong>placeholder text</strong> into these fields so nothing appears blank in the apps.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Replace the placeholder policies before going live</p>
+      <p>App stores reject submissions that show placeholder legal text, and in many regions publishing a store without a real privacy policy is a compliance problem. Rewrite all seven before you publish.</p>
+    </div>
+
+    <p>Each policy is editable <strong>per language</strong> — see <a href="../admin/languages.html">Manage Languages</a>. Customers see the policy for their selected language, falling back to the default language when a translation is missing.</p>
+
+    <h2>Multiple countries</h2>
+
+    <p>Adding more than one country lets you sell across regions with separate currencies, gateways, policies and referral rules.</p>
+
+    <p>Things that are <strong>per country</strong>: currency, phone rules, timezone, formats, gateways, referral values, policies, zones.</p>
+
+    <p>Things that are <strong>global</strong>: languages, Firebase, SMTP, chat, catalogue attributes, most items under Settings.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Zones belong to a country</p>
+      <p>Every zone carries a <code>country_id</code>. Create the country first, then draw zones inside it. See <a href="../admin/zones.html">Delivery Zones</a>.</p>
+    </div>
+
+    <h2>Deactivating or deleting</h2>
+
+    <ul>
+      <li><strong>Set status inactive</strong> to hide a country from the apps while keeping its orders and customers intact. This is the safe option.</li>
+      <li><strong>Deleting</strong> a country whose zones, stores and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.</li>
+    </ul>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Currency symbol, currency code and decimal point all correct</li>
+      <li class="task-item"><input type="checkbox" disabled> Currency code matches what your payment gateway account settles in</li>
+      <li class="task-item"><input type="checkbox" disabled> Min/max mobile length matches real numbers in that country</li>
+      <li class="task-item"><input type="checkbox" disabled> Timezone correct — scheduling depends on it</li>
+      <li class="task-item"><input type="checkbox" disabled> At least one payment gateway enabled on the country</li>
+      <li class="task-item"><input type="checkbox" disabled> All seven policies rewritten, placeholders removed</li>
+      <li class="task-item"><input type="checkbox" disabled> Referral values set, or zeroed to disable</li>
+      <li class="task-item"><input type="checkbox" disabled> One country marked as default</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/countries.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

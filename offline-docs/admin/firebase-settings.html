@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Firebase Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Firebase Settings</h1>
+
+    <p><strong>Setup Guide step 6 of 9.</strong> Menu path: <strong>Settings → Firebase Settings</strong></p>
+
+    <p>Firebase powers three things in SnapBuy:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Feature</th><th>What Firebase does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Phone / OTP login</strong></td><td>Sends and verifies the OTP customers log in with</td></tr>
+        <tr><td><strong>Push notifications</strong></td><td>Delivers order updates and campaigns to apps and web</td></tr>
+        <tr><td><strong>Web push</strong></td><td>The same, in browsers, via a service worker</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/firebase-settings-page.png" alt="Firebase settings page">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Two halves, both required</p>
+      <p>Firebase setup has <strong>two</strong> parts, and the Setup Guide only ticks when both are done:</p>
+      <ol>
+        <li>The <strong>web config keys</strong> typed into the form.</li>
+        <li>The <strong>service account JSON file</strong> uploaded, which is saved to <code>config/firebase.json</code> on the server.</li>
+      </ol>
+      <p>The keys alone let the apps talk to Firebase. The service account is what lets <strong>your server</strong> send push notifications. Uploading only the keys is the single most common reason notifications never arrive.</p>
+    </div>
+
+    <h2>Create a Firebase project</h2>
+    <ol>
+      <li>Go to <a href="https://console.firebase.google.com/">console.firebase.google.com</a> and sign in.</li>
+      <li>Click <strong>Add project</strong>, name it, and finish the wizard.</li>
+      <li>Google Analytics is optional.</li>
+    </ol>
+
+    <h2>Get the web config keys</h2>
+    <ol>
+      <li>In the Firebase console, open <strong>Project settings</strong> (the gear icon).</li>
+      <li>Scroll to <strong>Your apps</strong>.</li>
+      <li>Click the <strong>Web</strong> icon (<code>&lt;/&gt;</code>) to register a web app.</li>
+      <li>Give it a nickname and register it.</li>
+      <li>Firebase shows a <code>firebaseConfig</code> block.</li>
+    </ol>
+
+    <pre><code>const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abc123"
+};</code></pre>
+
+    <p>Copy these into the SnapBuy form:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>SnapBuy field</th><th>Firebase value</th><th>Required</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>API Key</strong></td><td><code>apiKey</code></td><td>Yes</td></tr>
+        <tr><td><strong>Project ID</strong></td><td><code>projectId</code></td><td>Yes</td></tr>
+        <tr><td><strong>Messaging Sender ID</strong></td><td><code>messagingSenderId</code></td><td>Yes</td></tr>
+        <tr><td><strong>App ID</strong></td><td><code>appId</code></td><td>Yes</td></tr>
+        <tr><td><strong>Auth Domain</strong></td><td><code>authDomain</code></td><td>Recommended</td></tr>
+        <tr><td><strong>Storage Bucket</strong></td><td><code>storageBucket</code></td><td>Recommended</td></tr>
+        <tr><td><strong>VAPID Key</strong></td><td>See below</td><td>For web push</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Get the VAPID key</h2>
+    <p>Web push in browsers needs a separate key pair.</p>
+    <ol>
+      <li><strong>Project settings → Cloud Messaging</strong>.</li>
+      <li>Under <strong>Web configuration → Web Push certificates</strong>, click <strong>Generate key pair</strong>.</li>
+      <li>Copy the key string into <strong>VAPID Key</strong>.</li>
+    </ol>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Only needed for web push</p>
+      <p>If you are not sending notifications to browsers, you can leave this blank. Mobile push does not use it.</p>
+    </div>
+
+    <h2>Upload the service account JSON</h2>
+    <p>This is the half that gets missed.</p>
+    <ol>
+      <li><strong>Project settings → Service accounts</strong>.</li>
+      <li>Click <strong>Generate new private key</strong>, then confirm.</li>
+      <li>A <code>.json</code> file downloads.</li>
+      <li>In SnapBuy, use the <strong>Firebase JSON File</strong> upload field to attach it, and save.</li>
+    </ol>
+
+    <p>SnapBuy stores it at <code>config/firebase.json</code> on your server.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Treat this file as a password</p>
+      <p>The service account JSON grants full administrative access to your Firebase project. Never commit it to source control, never email it, and never place it inside a publicly reachable folder. If it leaks, revoke the key in the Firebase console immediately and generate a new one.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">"Notifications are configured but nothing arrives"</p>
+      <p>Check that <code>config/firebase.json</code> actually exists on the server. If the upload failed silently — usually a permissions problem on the <code>config/</code> folder — the keys are saved but the server cannot authenticate to send anything.</p>
+      <p>The Setup Guide's Firebase step checks for this file specifically, so a red Firebase step with all keys filled means the file is missing.</p>
+    </div>
+
+    <h2>Enable phone authentication</h2>
+    <p>For OTP login:</p>
+    <ol>
+      <li>In Firebase, open <strong>Authentication → Sign-in method</strong>.</li>
+      <li>Enable <strong>Phone</strong>.</li>
+      <li>Add your panel domain under <strong>Authentication → Settings → Authorized domains</strong>.</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Firebase phone auth is billed beyond the free tier</p>
+      <p>Phone OTP verification has a monthly free allowance; past it, Google charges per verification and requires the <strong>Blaze</strong> plan. A store with heavy signup traffic will hit this.</p>
+      <p>The alternative is OTP over your own SMS gateway — see <a href="../admin/sms-settings.html">SMS Settings</a>. SnapBuy requires <strong>one</strong> of the two when phone login is enabled: if you turn off Firebase Authentication, you must enable a custom SMS gateway, or saving fails with a validation error.</p>
+    </div>
+
+    <h2>Mobile apps need their own files</h2>
+    <p>The keys on this page cover the <strong>admin panel and web</strong>. The Customer and Delivery Boy apps need their own Firebase app registrations and config files:</p>
+    <ul>
+      <li><strong>Android</strong> — register an Android app with your package name, download <code>google-services.json</code></li>
+      <li><strong>iOS</strong> — register an iOS app with your bundle ID, download <code>GoogleService-Info.plist</code></li>
+    </ul>
+    <p>See <a href="../app-customer/firebase-setup.html">Customer App Firebase Setup</a> and <a href="../app-delivery/firebase-setup.html">Delivery Boy App Firebase Setup</a>.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">All of it must be the same Firebase project</p>
+      <p>The panel, the customer app and the delivery app must point at <strong>one</strong> Firebase project. Split across projects, tokens registered by the apps are unknown to the server and push silently fails.</p>
+    </div>
+
+    <h2>Web push service worker</h2>
+    <p>SnapBuy serves the messaging service worker from <code>/firebase-messaging-sw.js</code>, generated from the settings you save — you do not create this file yourself.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Web push requires HTTPS</p>
+      <p>Browsers refuse to register a service worker over plain HTTP. Web push will not work until SSL is installed. See <a href="../admin/create-subdomain.html#install-an-ssl-certificate">Create a Subdomain</a>.</p>
+    </div>
+
+    <h2>Testing</h2>
+    <ol>
+      <li>Save the settings and visit <code>/clear</code> once.</li>
+      <li>Open <strong>Notifications → Send Notification</strong> and send a test to yourself.</li>
+      <li>Check delivery on a real device — emulators are unreliable for push.</li>
+    </ol>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Push sending is queued</p>
+      <p>Notifications are dispatched as queued jobs. Without the <a href="../admin/cron-jobs.html">cron job</a> they are never sent, and the panel still reports success. If a test notification never arrives, check <strong>Settings → Cron Jobs</strong> before re-checking Firebase.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Setup Guide Firebase step stays red</td><td><code>config/firebase.json</code> missing</td><td>Re-upload the service account; check <code>config/</code> is writable</td></tr>
+        <tr><td>OTP never arrives</td><td>Phone sign-in not enabled, or domain not authorised</td><td>Enable Phone; add the domain to Authorized domains</td></tr>
+        <tr><td>OTP works then stops</td><td>Free tier exhausted</td><td>Upgrade to Blaze, or switch to an SMS gateway</td></tr>
+        <tr><td>Push works on Android, not iOS</td><td>APNs key not uploaded to Firebase</td><td>Add the APNs auth key under Cloud Messaging</td></tr>
+        <tr><td>Web push does nothing</td><td>Missing VAPID key, or site not on HTTPS</td><td>Generate the key pair; install SSL</td></tr>
+        <tr><td>Notifications sent, none delivered</td><td>Queue not processed</td><td>Set up the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>"Requested entity was not found"</td><td>Panel and apps on different Firebase projects</td><td>Point everything at one project</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Checklist</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Firebase project created</li>
+      <li class="task-item"><input type="checkbox" disabled> Web app registered; API Key, Project ID, Sender ID, App ID entered</li>
+      <li class="task-item"><input type="checkbox" disabled> Auth Domain and Storage Bucket entered</li>
+      <li class="task-item"><input type="checkbox" disabled> VAPID key generated and entered (for web push)</li>
+      <li class="task-item"><input type="checkbox" disabled> Service account JSON uploaded; <code>config/firebase.json</code> exists</li>
+      <li class="task-item"><input type="checkbox" disabled> Phone sign-in enabled and domain authorised</li>
+      <li class="task-item"><input type="checkbox" disabled> Android and iOS apps registered in the <strong>same</strong> project</li>
+      <li class="task-item"><input type="checkbox" disabled> Test notification received on a real device</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/firebase-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

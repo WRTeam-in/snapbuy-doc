@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Configure Auth Methods &amp; Default Country — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Configure Auth Methods &amp; Default Country</h1>
+    
+    <p>Both the <strong>allowed login methods</strong> and the <strong>default country</strong> shown in the country picker (used during phone-number login) are controlled from a single admin-panel screen.</p>
+    
+    <h2>How to Access</h2>
+    
+    <ol>
+    <li>Log in to your <strong>Admin Panel</strong>.</li>
+    <li>Navigate to <strong>Settings → General -&gt; Login Setting</strong>.</li>
+    </ol>
+    
+    <img src="../images/app/customer/appConfig.png" alt="System Configure Page">
+    
+    <h2>Allowed Authentication Methods</h2>
+    
+    <p>In the <strong>Allowed Authentication Methods</strong> section:</p>
+    
+    <ul>
+    <li><strong>Select</strong> the login methods you want to enable (Email, Google, Apple, Phone.).</li>
+    <li><strong>Deselect</strong> any method you want to hide from the app.</li>
+    <li>Click <strong>Save</strong> — the app fetches the updated list on next launch and shows only the enabled login options.</li>
+    </ul>
+    
+    <div class="admonition admonition--tip">
+    <p class="admonition__title">Tip</p>
+    <p>Each enabled method must also be fully configured in Firebase (e.g., Google Sign-In credentials, Apple Sign-In key, Phone OTP billing). Otherwise the option will appear in the app but fail at runtime.</p>
+    </div>
+    
+    <h2>Default Country</h2>
+    
+    <p>In the <strong>Default Country</strong> field on the same page:</p>
+    
+    <ul>
+    <li>Select the country you want to set as the default in the app's country picker.</li>
+    <li>This affects the phone-number country code prefix shown to users.</li>
+    <li>Click <strong>Save</strong> to apply.</li>
+    </ul>
+    
+    <p>Users can still change the country manually inside the app — this setting only controls the initial default.</p>
+    
+    <h3>Fallback Default in App Code</h3>
+    
+    <p>As a safety net, a default country code is hardcoded in the app's config file. This value is <strong>only used when the settings API call fails</strong> (e.g., no internet on first launch).</p>
+    
+    <ol>
+    <li>Open <code>lib/core/configs/app_config.dart</code>.</li>
+    <li>Update the <code>defaultCountry</code> constant to the country code you want as fallback.</li>
+    </ol>
+    
+    <img src="../images/app/customer/defaultinApp.png" alt="Default country in AppConfig">
+    
+    <div class="admonition admonition--info">
+    <p class="admonition__title">Info</p>
+    <p>The admin-panel default (above) is the <strong>primary</strong> source of truth. The <code>app_config.dart</code> value is only a fallback for offline / API-failure scenarios.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/auth-methods.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stores — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Stores</h1>
+
+    <p><strong>Setup Guide step 3 of 9.</strong> Menu path: <strong>Stores</strong></p>
+
+    <p>A <strong>store</strong> is a physical outlet that fulfils orders — your shop, warehouse or dark store. It holds the location orders are dispatched from, the hours it operates, and its own stock and prices.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Stores are your outlets, not third-party sellers</p>
+      <p>SnapBuy stores are fulfilment locations that you own and operate. There is no vendor account, commission split or seller login attached to a store. Adding a second store means opening a second branch, not onboarding a marketplace seller.</p>
+    </div>
+
+    <img src="../images/panel/stores-list.png" alt="Stores list">
+
+    <h2>One zone, one store</h2>
+
+    <p>This is the rule that shapes everything else:</p>
+
+    <blockquote><p><strong>Each store belongs to exactly one zone, and each zone can hold exactly one store.</strong></p></blockquote>
+
+    <p>Attempting to attach a second store to a zone is rejected with <em>"Zone already assigned to another store."</em></p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Create the zone first</p>
+      <p>You cannot create a store without selecting a zone. Work through <a href="../admin/zones.html">Delivery Zones</a> before this page. To open a second outlet, draw a <strong>new zone</strong> for its catchment area first.</p>
+    </div>
+
+    <p>This design means the customer's address decides the store: their coordinates match a zone polygon, and that zone's store fulfils the order.</p>
+
+    <h2>Creating a store</h2>
+
+    <p>Go to <strong>Stores → Add Store</strong>.</p>
+
+    <img src="../images/panel/stores-add-form.png" alt="Add store form">
+
+    <h3>Basic details</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Name</strong></td><td>Shown to customers — "Andheri West Outlet"</td></tr>
+          <tr><td><strong>Provider</strong></td><td>Optional operator or brand label for the outlet</td></tr>
+          <tr><td><strong>Fulfillment Type</strong></td><td><code>Quick</code>, <code>eCommerce</code> or <code>Both</code></td></tr>
+          <tr><td><strong>Zone</strong></td><td>The one zone this store serves</td></tr>
+          <tr><td><strong>Status</strong></td><td>Inactive stores stop receiving orders</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Fulfillment type must match the zone's sales channel</p>
+      <p>A store set to <strong>Quick</strong> cannot be attached to a zone whose sales channel is <strong>eCommerce</strong> only. SnapBuy rejects it with <em>"Selected zone does not support this fulfillment type."</em></p>
+      <p>The zone declares which channels it serves; the store must be a subset of that. A store set to <strong>Both</strong> requires a zone set to <strong>Both</strong>.</p>
+    </div>
+
+    <h3>Location</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Address</strong></td><td>Free-text address shown to customers</td></tr>
+          <tr><td><strong>Map location</strong></td><td>Click the map to drop the pin — <strong>required</strong></td></tr>
+          <tr><td><strong>Latitude / Longitude</strong></td><td>Filled from the pin</td></tr>
+          <tr><td><strong>Formatted Address / Place ID</strong></td><td>Filled automatically when using Google Maps</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The pin is what distance is measured from</p>
+      <p>On the quick channel, delivery charge is calculated from the <strong>store pin</strong> to the customer. A pin dropped on the wrong side of town produces wrong charges on every single order. Zoom in and place it on the actual building.</p>
+      <p>Saving without a pin fails with <em>"Please select store location on map."</em></p>
+    </div>
+
+    <h3>Contact</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Used for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Contact Number</strong></td><td>Shown to customers and delivery boys for that outlet</td></tr>
+          <tr><td><strong>Email</strong></td><td>Store-level notifications</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Operating hours</h3>
+
+    <p>Set open and close times per day of the week, and mark days closed.</p>
+
+    <img src="../images/panel/stores-operating-hours.png" alt="Store operating hours">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Hours are read in the country's timezone</p>
+      <p>Operating hours are evaluated against the timezone set on the store's zone's <a href="../admin/countries.html">country</a> — not the server clock. A wrong country timezone makes the store appear closed while it is open.</p>
+    </div>
+
+    <h2>Multi-language</h2>
+
+    <p>Store <strong>name</strong>, <strong>provider</strong> and <strong>address</strong> are translatable.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Create in the default language first</p>
+      <p>SnapBuy rejects creating a store in a secondary language with <em>"Please create store in default language first."</em> Create the record in your default language, then switch language and add translations. See <a href="../admin/languages.html">Manage Languages</a>.</p>
+    </div>
+
+    <h2>Per-store stock and pricing</h2>
+
+    <p>Once you have more than one store, stock and price stop being a single global number. Each product variant carries a separate record <strong>per store</strong>:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Listed</strong></td><td>Whether the product is sold at this store at all</td></tr>
+          <tr><td><strong>Unlimited stock</strong></td><td>Skip stock counting for this store</td></tr>
+          <tr><td><strong>Stock status</strong></td><td>In stock / out of stock</td></tr>
+          <tr><td><strong>Available</strong></td><td>Units on hand</td></tr>
+          <tr><td><strong>Reserved</strong></td><td>Units held by orders not yet delivered</td></tr>
+          <tr><td><strong>Min alert</strong></td><td>Low-stock threshold for this outlet</td></tr>
+          <tr><td><strong>Price</strong></td><td>Selling price <strong>at this store</strong></td></tr>
+          <tr><td><strong>Discounted price</strong></td><td>Offer price at this store</td></tr>
+          <tr><td><strong>Pricing slabs</strong></td><td>Quantity-break pricing at this store</td></tr>
+          <tr><td><strong>Purchase price</strong></td><td>Your cost at this store</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <img src="../images/panel/stores-stock-pricing.png" alt="Per-store stock and pricing">
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Prices can differ per outlet</p>
+      <p>Because price lives on the store-variant record, the same product can legitimately cost more at one outlet than another — useful when outlets sit in different tax or cost regions. If a price change "did not apply", check you edited the right store.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A product listed nowhere is invisible</p>
+      <p>A product can exist in the catalogue, be Active, and still never appear to customers because it is not <strong>listed</strong> at the store serving their zone. When a customer reports a missing product, check the store listing before checking the product itself.</p>
+    </div>
+
+    <p>Day-to-day stock work is covered in <strong>Stock Management</strong>; bulk changes across many products are covered in <a href="../admin/bulk-upload.html">Bulk Upload &amp; Update</a>.</p>
+
+    <h2>How a store gets chosen for an order</h2>
+
+    <ol>
+      <li>Customer sets a delivery address.</li>
+      <li>The coordinates are matched against zone polygons for the channel being shopped.</li>
+      <li>The matched zone's <strong>single store</strong> fulfils the order.</li>
+      <li>Prices and stock come from that store's variant records.</li>
+      <li>Delivery charge is measured from that store's pin.</li>
+    </ol>
+
+    <p>This is why a missing or misconfigured zone shows up as "delivery not available" rather than as a store error.</p>
+
+    <h2>Deactivating a store</h2>
+
+    <p>Setting a store <strong>Inactive</strong> stops new orders while preserving its history and stock records. Prefer this over deletion.</p>
+
+    <p>Deleting a store is a soft delete, but it frees the zone so another store can claim it.</p>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>"Zone already assigned to another store"</td><td>That zone already has a store</td><td>Create a new zone for the new outlet</td></tr>
+          <tr><td>"Selected zone does not support this fulfillment type"</td><td>Store channel is wider than the zone's</td><td>Change the store type, or set the zone to <code>Both</code></td></tr>
+          <tr><td>"Please select store location on map"</td><td>No pin dropped</td><td>Click the map to place the pin</td></tr>
+          <tr><td>"Please create store in default language first"</td><td>Creating in a secondary language</td><td>Switch to the default language, create, then translate</td></tr>
+          <tr><td>Delivery charges are wrong for every order</td><td>Store pin in the wrong place</td><td>Re-drop the pin at the real address</td></tr>
+          <tr><td>Store shows closed during business hours</td><td>Country timezone wrong</td><td>Fix the timezone on the <a href="../admin/countries.html">country</a></td></tr>
+          <tr><td>Product missing for some customers only</td><td>Not listed at that zone's store</td><td>List it on that store</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> A zone exists for this outlet's catchment</li>
+      <li class="task-item"><input type="checkbox" disabled> Fulfillment type is compatible with the zone's sales channel</li>
+      <li class="task-item"><input type="checkbox" disabled> Map pin dropped on the actual building</li>
+      <li class="task-item"><input type="checkbox" disabled> Operating hours set for all seven days</li>
+      <li class="task-item"><input type="checkbox" disabled> Contact number and email filled</li>
+      <li class="task-item"><input type="checkbox" disabled> Name, provider and address translated into every active language</li>
+      <li class="task-item"><input type="checkbox" disabled> Products listed and priced at this store</li>
+      <li class="task-item"><input type="checkbox" disabled> Status Active</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/stores.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

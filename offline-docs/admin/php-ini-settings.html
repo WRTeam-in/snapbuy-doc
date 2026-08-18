@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PHP INI Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>PHP INI Settings</h1>
+
+    <p>Default PHP limits on most shared hosts are too low for SnapBuy. Raise them <strong>before</strong> you run the installer — several failures (blank screens, "413" errors, half-finished imports) are caused purely by these values.</p>
+
+    <h2>Recommended values</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Directive</th><th>Minimum</th><th>Recommended</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><code>max_execution_time</code></td><td><code>300</code></td><td><code>600</code></td><td>The installer runs migrations and seeders in one request. Bulk product imports also run long.</td></tr>
+        <tr><td><code>max_input_time</code></td><td><code>300</code></td><td><code>600</code></td><td>Time allowed to receive a large upload.</td></tr>
+        <tr><td><code>memory_limit</code></td><td><code>256M</code></td><td><code>512M</code></td><td>Excel import/export and PDF invoice generation are memory-hungry.</td></tr>
+        <tr><td><code>post_max_size</code></td><td><code>64M</code></td><td><code>128M</code></td><td>Must be <strong>larger</strong> than <code>upload_max_filesize</code>.</td></tr>
+        <tr><td><code>upload_max_filesize</code></td><td><code>40M</code></td><td><code>100M</code></td><td>Bulk product files, product galleries, update packages.</td></tr>
+        <tr><td><code>max_input_vars</code></td><td><code>3000</code></td><td><code>5000</code></td><td>Product forms with many variants and attributes post a lot of fields.</td></tr>
+        <tr><td><code>max_file_uploads</code></td><td><code>20</code></td><td><code>50</code></td><td>Product image galleries upload several files at once.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title"><code>post_max_size</code> must exceed <code>upload_max_filesize</code></p>
+      <p>If <code>post_max_size</code> is smaller, PHP silently discards the whole request and the panel shows an empty error. Always keep it higher.</p>
+    </div>
+
+    <h2>Limits enforced by SnapBuy itself</h2>
+    <p>Even with generous PHP limits, SnapBuy applies its own caps:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Upload</th><th>Cap</th><th>Allowed types</th></tr></thead>
+      <tbody>
+        <tr><td>Bulk product import</td><td><strong>20 MB</strong></td><td><code>.xlsx</code>, <code>.xls</code></td></tr>
+        <tr><td>Home Builder images</td><td><strong>5 MB</strong></td><td>jpeg, jpg, png, gif, webp, svg</td></tr>
+        <tr><td>Prescription upload (customer)</td><td><strong>5 MB</strong></td><td>jpg, jpeg, png, webp, pdf, svg</td></tr>
+        <tr><td>SEO Open Graph image</td><td><strong>2 MB</strong></td><td>jpeg, png, jpg, gif, svg, webp</td></tr>
+        <tr><td>Withdrawal receipt image</td><td><strong>2 MB</strong></td><td>jpeg, png, jpg</td></tr>
+        <tr><td>System update package</td><td><strong>1 GB</strong></td><td><code>.zip</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">System Updater needs the biggest limits</p>
+      <p>Uploading an update package through <strong>Settings → System Updater</strong> can push a file far larger than a normal upload. If your update fails part-way, raise <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> first, or apply the update manually over FTP instead.</p>
+    </div>
+
+    <h2>Where to change these</h2>
+
+    <h3>cPanel</h3>
+    <ol>
+      <li>Log into cPanel.</li>
+      <li>Open <strong>Select PHP Version</strong> (or <strong>MultiPHP INI Editor</strong>).</li>
+      <li>Switch to the <strong>Options</strong> tab.</li>
+      <li>Edit each directive from the table above.</li>
+      <li>Save. cPanel applies changes immediately.</li>
+    </ol>
+
+    <h3>VPS / dedicated server</h3>
+    <p>Find your active <code>php.ini</code>:</p>
+    <pre><code>php --ini</code></pre>
+
+    <p>Edit it:</p>
+    <pre><code>sudo nano /etc/php/8.3/apache2/php.ini</code></pre>
+
+    <p>Set the values, then restart:</p>
+    <pre><code># Apache
+sudo systemctl restart apache2
+
+# Nginx + PHP-FPM
+sudo systemctl restart php8.3-fpm
+sudo systemctl restart nginx</code></pre>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Nginx has its own limit</p>
+      <p>Nginx rejects large uploads before PHP ever sees them. Add this inside your <code>server</code> block in <code>/etc/nginx/sites-available/your-site</code>:</p>
+      <pre><code class="language-nginx">client_max_body_size 128M;</code></pre>
+      <p>Then reload Nginx. Without it you get a <strong>413 Request Entity Too Large</strong> no matter what PHP says.</p>
+    </div>
+
+    <h3>XAMPP (local)</h3>
+    <ol>
+      <li>Open the XAMPP Control Panel.</li>
+      <li>Next to <strong>Apache</strong>, click <strong>Config → PHP (php.ini)</strong>.</li>
+      <li>Edit the values, save, and restart Apache.</li>
+    </ol>
+
+    <h3>Shared hosting without INI access</h3>
+    <p>Some hosts allow a <code>.user.ini</code> file in the project root:</p>
+    <pre><code class="language-ini">max_execution_time = 600
+max_input_time = 600
+memory_limit = 512M
+post_max_size = 128M
+upload_max_filesize = 100M
+max_input_vars = 5000</code></pre>
+
+    <p>If that has no effect, ask your host to apply the values for you.</p>
+
+    <h2>Verify the change took effect</h2>
+    <p>Create <code>info.php</code> in your panel's public folder:</p>
+    <pre><code class="language-php">&lt;?php phpinfo();</code></pre>
+
+    <p>Open <code>https://yourdomain.com/info.php</code> and search for each directive. The <strong>Local Value</strong> column is what actually applies.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Delete it afterwards</p>
+      <p><code>phpinfo()</code> exposes your full server configuration. Remove the file as soon as you have checked.</p>
+    </div>
+
+    <h2>Functions that must stay enabled</h2>
+    <p>Check the <code>disable_functions</code> line in your <code>php.ini</code>. None of these may appear in it:</p>
+    <pre><code>symlink, exec, proc_open, shell_exec, putenv</code></pre>
+
+    <p><code>symlink</code> is the critical one — see <a href="server-requirements.html#server-functions-that-must-not-be-disabled">Server Requirements</a>.</p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/php-ini-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

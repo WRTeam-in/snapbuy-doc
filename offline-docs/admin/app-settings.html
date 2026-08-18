@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>App Settings</h1>
+
+    <p>Menu path: <strong>Settings → App Settings</strong></p>
+
+    <p>Controls the two mobile apps: their store listings, theme colours, forced-update behaviour, and delivery boy bonuses.</p>
+
+    <img src="../images/panel/app-settings-page.png" alt="App settings page">
+
+    <h2>Customer app</h2>
+
+    <h3>Store URLs</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Where it is used</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Play Store URL</strong></td><td>"Rate us" and share links, and the update prompt on Android</td></tr>
+        <tr><td><strong>App Store URL</strong></td><td>The same on iOS</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Fill these before enabling forced updates</p>
+      <p>The update prompt sends customers to these URLs. If they are blank or wrong, customers are told to update with nowhere to go — and if the update is forced, they are locked out of the app entirely.</p>
+    </div>
+
+    <h3>Theme colours</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Light Mode Color</strong></td><td><code>#0E9623</code></td></tr>
+        <tr><td><strong>Dark Mode Color</strong></td><td><code>#1A2A3A</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Both accept hex values and apply to the customer app's accent colour.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Check contrast in both modes</p>
+      <p>A colour that reads well on white can be unreadable on the dark background. Set both, then check a real device in each mode.</p>
+    </div>
+
+    <h2>Version control and forced updates</h2>
+    <p>This is the most consequential section on the page. Android and iOS are configured separately.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Version System On</strong></td><td>Enables version checking</td></tr>
+        <tr><td><strong>Required Force Update</strong></td><td>Whether the update is mandatory</td></tr>
+        <tr><td><strong>Current Version</strong></td><td>The version you consider current</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>How the two switches combine:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Version System</th><th>Force Update</th><th>Customer experience</th></tr></thead>
+      <tbody>
+        <tr><td>Off</td><td>—</td><td>No prompt</td></tr>
+        <tr><td>On</td><td>Off</td><td>Optional prompt, dismissible</td></tr>
+        <tr><td>On</td><td><strong>On</strong></td><td><strong>Blocking screen — the app cannot be used until updated</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/app-settings-version.png" alt="Version and force update settings">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Forced update locks out every customer on an older build</p>
+      <p>Turning on <strong>Required Force Update</strong> with a <strong>Current Version</strong> higher than what is live on the stores blocks your entire customer base immediately — including customers mid-order.</p>
+      <p>The safe sequence:</p>
+      <ol>
+        <li>Submit the new build to the store.</li>
+        <li><strong>Wait for it to be approved and actually live</strong> — Apple review can take days.</li>
+        <li>Confirm you can download the new version yourself.</li>
+        <li>Only then raise <strong>Current Version</strong> and enable the force flag.</li>
+      </ol>
+      <p>Never raise it in anticipation of approval.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Set Android and iOS independently</p>
+      <p>Store approvals do not land at the same time. Forcing both to a version only released on Android locks out every iOS customer. Configure each platform to the version genuinely live on that store.</p>
+    </div>
+
+    <h2>Delivery boy app</h2>
+
+    <h3>Store URLs and colours</h3>
+    <p>The same fields as the customer app, applied to the Delivery Boy App: <strong>Play Store URL</strong>, <strong>App Store URL</strong>, <strong>Light Mode Color</strong>, <strong>Dark Mode Color</strong>.</p>
+
+    <h3>Delivery boy bonus</h3>
+    <p>Rewards riders on top of their normal earnings.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bonus Settings</strong></td><td>Master switch</td></tr>
+        <tr><td><strong>Bonus Type</strong></td><td>Fixed amount, or a percentage of the order</td></tr>
+        <tr><td><strong>Bonus Percentage</strong></td><td>Used when the type is percentage</td></tr>
+        <tr><td><strong>Bonus Min Amount</strong></td><td>Floor — the bonus never pays less than this</td></tr>
+        <tr><td><strong>Bonus Max Amount</strong></td><td>Ceiling — caps the bonus on large orders</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/app-settings-bonus.png" alt="Delivery boy bonus settings">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Always set a maximum on percentage bonuses</p>
+      <p>With a percentage type and no cap, one unusually large order pays out a correspondingly large bonus. Set <strong>Bonus Max Amount</strong> to a value you are willing to pay on your biggest realistic order.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Bonuses appear in settlements</p>
+      <p>Bonus amounts flow into delivery boy earnings and show up in settlement history and salary transactions. See <a href="../admin/wallet-withdrawals.html">Delivery Boy Money Flow</a>.</p>
+    </div>
+
+    <h2 id="otp-generation">OTP generation</h2>
+    <p><strong>Generate OTP</strong> controls whether SnapBuy issues a delivery-confirmation OTP that the customer reads out to the rider on handover.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Worth enabling for cash and high-value orders</p>
+      <p>It is the simplest proof-of-delivery you have, and it settles most "I never received it" disputes without an investigation.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Customers locked out after a release</td><td>Force update enabled before the store build went live</td><td>Lower <strong>Current Version</strong> or disable the force flag — takes effect immediately</td></tr>
+        <tr><td>Update prompt leads nowhere</td><td>Store URL blank or wrong</td><td>Fill the correct store URLs</td></tr>
+        <tr><td>iOS customers blocked, Android fine</td><td>iOS version raised before Apple approval</td><td>Set the iOS version to what is actually live</td></tr>
+        <tr><td>Theme colour unchanged in the app</td><td>App reads it at launch</td><td>Fully close and reopen the app</td></tr>
+        <tr><td>Bonus not paid</td><td>Master switch off, or the order missed the minimum</td><td>Check the switch and the min amount</td></tr>
+        <tr><td>Bonus payout far too high</td><td>Percentage type with no maximum</td><td>Set <strong>Bonus Max Amount</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/app-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

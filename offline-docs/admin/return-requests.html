@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Return Requests — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Return Requests</h1>
+
+    <p>Menu path: <strong>Return Requests</strong></p>
+
+    <p>When a customer wants to send something back, a return request is raised and moves through its own status flow — separate from the order's.</p>
+
+    <img src="../images/panel/return-requests-list.png" alt="Return requests list">
+
+    <h2>The return flow</h2>
+
+    <pre><code>Return Requested → Accepted → Delivery Boy Assigned → Out For Pickup
+    → Received From Customer → Return to Store → Refund Completed</code></pre>
+
+    <p>Or <strong>Rejected</strong> at the review stage.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Status</th><th>What it means</th><th>Who acts</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Return Requested</strong></td><td>Customer raised it</td><td>Waiting on you</td></tr>
+        <tr><td><strong>Accepted</strong></td><td>You approved the return</td><td>Admin</td></tr>
+        <tr><td><strong>Rejected</strong></td><td>You declined it</td><td>Admin</td></tr>
+        <tr><td><strong>Delivery Boy Assigned</strong></td><td>A rider will collect</td><td>Admin</td></tr>
+        <tr><td><strong>Out For Pickup</strong></td><td>Rider is on the way</td><td>Rider</td></tr>
+        <tr><td><strong>Received From Customer</strong></td><td>Rider has the item</td><td>Rider</td></tr>
+        <tr><td><strong>Return to Store</strong></td><td>Item is back at the store</td><td>Rider / store</td></tr>
+        <tr><td><strong>Refund Completed</strong></td><td>Money returned</td><td>Admin</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The return is a collection, run in reverse</p>
+      <p>Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the <a href="../admin/stores.html">store</a>. It is not a courier drop-off.</p>
+    </div>
+
+    <h2>Reviewing a request</h2>
+
+    <p>Accept or reject each request. Rejecting should carry a reason the customer can understand — it is the single biggest driver of follow-up support contact.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Judge against your published return policy</p>
+      <p>Your <a href="../admin/countries.html#policies">return policy</a> is per country and is what the customer agreed to. Rejecting a request that your own published policy allows creates a dispute you will lose, and possibly a chargeback.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Set a realistic return window in the policy</p>
+      <p>An unlimited window is unmanageable; three days is often too short for a customer who was travelling. Whatever you choose, publish it clearly and apply it consistently.</p>
+    </div>
+
+    <h2>Assigning a rider for pickup</h2>
+
+    <p>Once accepted, assign a delivery boy to collect. The rider then moves the request through <em>Out For Pickup → Received From Customer → Return to Store</em> from their <a href="../admin/delivery-boy-portal.html">portal</a>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Riders see a restricted set of return statuses too</p>
+      <p>Just as with orders, riders can only advance the pickup-related statuses. Acceptance, rejection and refunds are admin-only.</p>
+    </div>
+
+    <h2>Refunds</h2>
+
+    <p><strong>Refund Completed</strong> is the final step. Where the money goes depends on how the refund is issued:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Route</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Back to the original payment method</td><td>Through the <a href="../admin/payment-gateway.html">gateway</a> used for the order</td></tr>
+        <tr><td>To the customer's <a href="../admin/wallet-withdrawals.html">wallet</a></td><td>Instant, and keeps the value in your store</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Do not mark Refund Completed before the money moves</p>
+      <p>The status is a record, not an action. Marking it complete without issuing the refund leaves the customer out of pocket with your own system saying they were paid — an easy way to turn a return into a chargeback.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Gateway refunds need the original credentials in place</p>
+      <p>Refunding through a gateway requires the credentials that took the payment to still be configured. If you have rotated or removed them, that refund will fail. See <a href="../admin/payment-gateway.html#refunds">Payment Gateways — Refunds</a>.</p>
+    </div>
+
+    <h2>Stock</h2>
+
+    <p>When a returned item comes back to the store, decide whether it re-enters sellable stock.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Returned stock is not automatically resellable</p>
+      <p>Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> — an automatic return to shelf will eventually send a customer something they should never have received.</p>
+    </div>
+
+    <h2>Customer notifications</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Event</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><code>order_item_returned_customer</code></td><td>Return processed</td></tr>
+        <tr><td><code>wallet_refund_returned_customer</code></td><td>Refund credited to the wallet</td></tr>
+        <tr><td><code>wallet_refund_cancelled_customer</code></td><td>Refund for a cancelled item</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Enable them under <a href="../admin/notification-settings.html">Notification Settings</a>.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Notify at acceptance, not just completion</p>
+      <p>The gap between "requested" and "refunded" is where support tickets are generated. A message confirming the return was accepted and a rider is coming removes most of them.</p>
+    </div>
+
+    <h2>Which orders can be returned</h2>
+
+    <p>Returns apply to the <strong>eCommerce</strong> channel, which has a <em>Returned</em> order status. Quick-commerce orders do not carry that status — see <a href="../admin/orders.html">Orders Workflow</a>.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Quick-commerce problems are handled as cancellations or refunds</p>
+      <p>A quick order that went wrong is normally resolved by cancelling the item and refunding, rather than by a scheduled collection.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Customer cannot raise a return</td><td>Order is quick-channel, or outside the policy window</td><td>Handle as a cancellation/refund</td></tr>
+        <tr><td>Rider cannot see the pickup</td><td>Not assigned, or not notified</td><td>Assign; check <a href="../admin/cron-jobs.html">cron</a> and <a href="../admin/firebase-settings.html">Firebase</a></td></tr>
+        <tr><td>Refund fails at the gateway</td><td>Credentials changed since the order</td><td>Restore the original gateway configuration</td></tr>
+        <tr><td>Customer says no refund arrived</td><td>Marked complete without issuing it</td><td>Verify in the gateway dashboard</td></tr>
+        <tr><td>Stock wrong after returns</td><td>Returned items added back automatically</td><td>Check condition before restocking</td></tr>
+        <tr><td>Customer not told anything</td><td>Return notifications disabled</td><td>Enable them</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/return-requests.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

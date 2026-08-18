@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change App Name — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Change App Name</h1>
+
+    <p>Update the displayed app name on Android, iOS, and inside the app code.</p>
+
+    <h2>Android Configuration</h2>
+    <ol>
+      <li>Navigate to <code>android/app/src/main/AndroidManifest.xml</code>.</li>
+      <li>Change the app name by modifying the <code>android:label</code> value inside the <code>&lt;application&gt;</code> tag.</li>
+    </ol>
+
+    <img src="../images/app/delivery/appname1.png" alt="Android App Name Change">
+
+    <h2>iOS Configuration</h2>
+    <ol>
+      <li>Navigate to <code>ios/Runner/Info.plist</code>.</li>
+      <li>Change the app name by modifying the <code>CFBundleDisplayName</code> and <code>CFBundleName</code> values.</li>
+    </ol>
+
+    <img src="../images/app/delivery/appname2.png" alt="iOS App Name Change">
+
+    <h2>Change App Name in Code</h2>
+    <ol>
+      <li>Open <code>lib/core/configs/appConfig.dart</code>.</li>
+      <li>Change the value of the <code>appName</code> variable to your desired app name.</li>
+    </ol>
+
+    <img src="../images/app/delivery/appname3.png" alt="appConfig.dart App Name">
+
+    <p>Save the changes.</p>
+
+    <p>Rebuild the app by running the following commands:</p>
+    <pre><code>flutter clean
+flutter pub get
+flutter run</code></pre>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/change-app-name.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

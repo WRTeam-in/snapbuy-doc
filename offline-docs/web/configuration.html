@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Configuration &amp; Theming — SnapBuy Documentation</title>
+<meta name="description" content="Change colours, home page sections, channels, zones, and languages for the Web Portal — all from the Admin Panel, with no code changes." />
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Configuration &amp; Theming</h1>
+
+    <p>The SnapBuy Web Portal is a <strong>white-label storefront</strong>. Almost everything a visitor sees — brand colours, header artwork, the home page layout, delivery zones, channels, and languages — is controlled from the Admin Panel, not built into the site.</p>
+
+    <p>That means you can rebrand the storefront, reorder the home page, or launch a new zone without a developer and without redeploying.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">What needs a developer</p>
+      <p>Only the values in the site's <code>.env</code> file (the API address, the SEO flag, Firebase and Maps keys) are set at deploy time. Changing one of those requires a rebuild — see <a href="installation-steps.html">Installation Steps</a>. Everything on this page is a live setting: save it in the Admin Panel and reload the storefront.</p>
+    </div>
+
+    <h2>Where each setting lives</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>What you want to change</th><th>Admin panel path</th><th>Takes effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Brand colours, logo, store name</td><td>Settings → <strong>Web Settings</strong></td><td>On reload</td></tr>
+          <tr><td>Home page layout and sections</td><td><strong>Home Builder</strong></td><td>On publish</td></tr>
+          <tr><td>Header background and text colour</td><td><strong>Home Builder</strong> → Header Settings</td><td>On publish</td></tr>
+          <tr><td>Delivery zones</td><td><strong>Zones</strong></td><td>On reload</td></tr>
+          <tr><td>Languages and translations</td><td><strong>Languages</strong></td><td>On reload</td></tr>
+          <tr><td>Payment gateways</td><td>Settings → <strong>Payment Gateway</strong></td><td>On reload</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Theming</h2>
+
+    <p>The storefront reads its entire colour scheme from the Admin Panel. There is no brand colour written into the site itself, which is why the same build can serve any store.</p>
+
+    <p>Set colours under <strong>Settings → Web Settings</strong>:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Controls</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Primary colour</td><td>Buttons, links, prices, active states</td></tr>
+          <tr><td>Light primary colour</td><td>Tinted backgrounds and highlighted surfaces</td></tr>
+          <tr><td>Text colour</td><td>Default body text</td></tr>
+          <tr><td>Secondary / sub text colour</td><td>Muted captions and helper text</td></tr>
+          <tr><td>Page background</td><td>The page backdrop</td></tr>
+          <tr><td>Card background</td><td>Product and category card surfaces</td></tr>
+          <tr><td>Border colour</td><td>Dividers and hairlines</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Dark mode is automatic.</strong> Each colour has a dark-mode counterpart, so you do not configure a separate dark theme — set your colours once and both modes follow.</p>
+
+    <p>Illustrations (empty carts, 404 pages, loading animations) are also recoloured to your primary colour automatically. You do not need to supply branded artwork for these.</p>
+
+    <h3>Header appearance</h3>
+
+    <p>The header is configured per home layout, under <strong>Home Builder → Header Settings</strong>:</p>
+
+    <ul>
+      <li><strong>Background</strong> — either a solid <strong>colour</strong> or an <strong>image</strong>.</li>
+      <li><strong>Text colour</strong> — the header title, address, and icons.</li>
+      <li><strong>Category icon</strong> — shown on the home category tab (Category Wise layouts only).</li>
+    </ul>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>When you pick a solid colour, the storefront expands it into a soft vertical gradient automatically, so a single brand colour still looks finished.</p>
+      <p>When you pick an image, the header and the category strip beneath it together display one continuous picture — so choose artwork that reads well across the full height, not just the top band.</p>
+    </div>
+
+    <p>See <a href="../app-customer/home-screen-settings.html">Configure Home Screen</a> for the full Home Builder walkthrough — the same layouts drive both the app and the Web Portal.</p>
+
+    <h2>Home page composition</h2>
+
+    <p>The home page is assembled from the sections you add in <strong>Home Builder</strong>. Nothing on it is fixed; you control what appears and in what order.</p>
+
+    <p>Available section types:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Section type</th><th>Shows</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Banner Slider</td><td>Horizontal promotional banner carousel</td></tr>
+          <tr><td>Category Section</td><td>Grid or row of categories</td></tr>
+          <tr><td>Product Slider</td><td>Horizontal scrollable product list</td></tr>
+          <tr><td>Top Brands</td><td>Brand logos row</td></tr>
+          <tr><td>Grid Banner</td><td>Grid of promotional banner tiles</td></tr>
+          <tr><td>Title Image</td><td>Single banner image with a title</td></tr>
+          <tr><td>Heading / Text</td><td>Plain heading or text block</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Drag sections to reorder them, toggle one off without deleting it, or use <strong>Use Template</strong> to add a pre-built set.</p>
+
+    <h3>Section appearance</h3>
+
+    <p>Each section can be plain or given its own backdrop. Pick a <strong>variant</strong>:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Variant</th><th>Shows a title</th><th>Shows a background</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td>No</td><td>No</td></tr>
+          <tr><td>With title</td><td>Yes</td><td>No</td></tr>
+          <tr><td>With background</td><td>Yes</td><td>Your chosen image</td></tr>
+          <tr><td>With colour</td><td>Yes</td><td>Your chosen colour</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Settings apply per variant</p>
+      <p>If you set a background colour and later switch the section back to <strong>Default</strong>, the colour stays saved but stops showing. This is expected — the storefront applies only the fields belonging to the variant you selected. To make a saved colour appear again, switch the variant back to <strong>With colour</strong>.</p>
+    </div>
+
+    <p>When a section has a backdrop, you can set two text colours separately:</p>
+
+    <ul>
+      <li><strong>Heading colour</strong> — the section title, which sits <em>on</em> the backdrop.</li>
+      <li><strong>Caption colour</strong> — the labels under category or brand chips, which sit <em>below</em> it.</li>
+    </ul>
+
+    <p>They are separate because one colour rarely stays readable in both places.</p>
+
+    <p>You can also set a <strong>background aspect ratio</strong> (for example 3:1). This is a <em>minimum</em> height — if the section's contents need more room, the panel grows rather than cropping them, so chips are never cut off on narrow phone screens.</p>
+
+    <h3>Layout options</h3>
+
+    <p><strong>Product Slider</strong> — display as a carousel, a list, or a grid. You can set the number of columns, the gap between products, the card corner rounding, and the section heading.</p>
+
+    <p><strong>Category and Brand sections</strong> — display as a horizontal row, circular chips, or a grid. You can set the column count, spacing, and corner rounding. Brand sections can additionally hide their captions.</p>
+
+    <h3>"View More"</h3>
+
+    <p>Product sections can be sourced from a category, a brand, a manually chosen list of products, or an automatic list such as most-favourited.</p>
+
+    <p>The <strong>View More</strong> button appears only when there are more products than the section displays. If a section shows everything it has, no button is shown — this is expected, not a fault.</p>
+
+    <h2>Channels</h2>
+
+    <p>The store can run two channels side by side:</p>
+
+    <ul>
+      <li><strong>Quick</strong> — fast local delivery from nearby stock.</li>
+      <li><strong>Ecommerce</strong> — a wider catalogue with standard delivery.</li>
+    </ul>
+
+    <p>Configure them in <strong>Home Builder</strong>:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Available modes</td><td>Show both channels with a toggle, or run only one</td></tr>
+          <tr><td>Default mode</td><td>Which channel customers land on</td></tr>
+          <tr><td>Channel labels</td><td>The names shown on the toggle</td></tr>
+          <tr><td>Delivery time</td><td>The ETA label, e.g. "22 mins"</td></tr>
+          <tr><td>Store closed</td><td>Keeps the catalogue browsable but disables ordering</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>Each channel has its own <strong>separate cart</strong>. A customer switching between Quick and Ecommerce sees a different basket — items do not merge. Currency is also read per channel.</p>
+    </div>
+
+    <h2>Zones</h2>
+
+    <p>A zone is a delivery area with its own catalogue, pricing, and home layout. Each zone gets its own web address:</p>
+
+    <pre><code>yourstore.com/bhuj-quick              → that zone's home page
+yourstore.com/bhuj-quick/products     → that zone's product listing
+yourstore.com/ur/bhuj-quick/products  → the same, in Urdu</code></pre>
+
+    <p>These are real, shareable links. A customer who opens a zone link lands directly in that zone with the right catalogue and pricing — no need to select a location first.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Zone URLs need the server build</p>
+      <p>Zone and language web addresses only work when the storefront runs as a server build (<code>NEXT_PUBLIC_SEO=true</code>). On a static export every zone link returns a 404. See <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</p>
+    </div>
+
+    <h2>Languages</h2>
+
+    <p>Add languages and edit translations under <strong>Languages</strong> in the Admin Panel. The storefront picks them up on reload — translations are not built into the site.</p>
+
+    <p>Right-to-left languages such as Arabic and Urdu are supported; the layout mirrors automatically when an RTL language is selected.</p>
+
+    <p>Each language also gets its own URL prefix (<code>/ur/...</code>), so localised pages can be shared and indexed by search engines.</p>
+
+    <h2>SEO</h2>
+
+    <p>Per-page titles, descriptions, and share images come from the Admin Panel, so you can tune how each category or product appears in search results and on social media.</p>
+
+    <p>Where the Admin Panel supplies nothing, the storefront falls back to the default title, description, and keywords set in its <code>.env</code> file at deploy time.</p>
+
+    <p>Two settings are fixed at deploy time and need a developer:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Why it matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SEO mode</td><td>Must be enabled, or search engines see an empty page and zone URLs break</td></tr>
+          <tr><td>Site address</td><td>Generates every link in the sitemap and all canonical tags</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>See the <a href="deployment.html">Deployment Guide</a> for confirming SEO works on a live site.</p>
+
+    <h2>Payments</h2>
+
+    <p>Enable and configure gateways under <strong>Settings → Payment Gateway</strong>. Supported: Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Info</p>
+      <p>All gateway keys are stored in the Admin Panel, never in the storefront. Enabling or switching a gateway is a live change — no redeploy needed.</p>
+    </div>
+
+    <h2>Related pages</h2>
+
+    <ul>
+      <li><a href="../app-customer/home-screen-settings.html">Configure Home Screen</a> — the full Home Builder guide</li>
+      <li><a href="overview.html">Overview</a> — what the Web Portal includes</li>
+      <li><a href="installation-steps.html">Installation Steps</a> — the deploy-time settings</li>
+      <li><a href="deployment.html">Deployment Guide</a> — putting the storefront live</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "web/configuration.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

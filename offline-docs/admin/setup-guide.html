@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Setup Guide (First 9 Steps) — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Setup Guide — the first nine steps</h1>
+
+    <p>A freshly installed SnapBuy panel is empty. The apps and the web portal will load, but they will show nothing, because there is no country, no delivery zone, no store and no home layout yet.</p>
+
+    <p>The panel guides you through this with a <strong>Setup Guide</strong> widget in the sidebar. It tracks nine steps, shows a completion ring, and hides itself once all nine are done.</p>
+
+    <img src="../images/panel/setup-guide-progress.png" alt="Setup Guide widget showing progress">
+
+    <h2>The nine steps</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Step</th><th>Where</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Add a Country</strong></td><td><code>/countries/create</code></td><td>Sets currency, and the countries you deliver in</td></tr>
+        <tr><td>2</td><td><strong>Add a Zone</strong></td><td><code>/zones/create</code></td><td>The geographic area you actually deliver to</td></tr>
+        <tr><td>3</td><td><strong>Add a Store</strong></td><td><code>/stores/create</code></td><td>Products belong to a store; without one nothing can be sold</td></tr>
+        <tr><td>4</td><td><strong>Build the Home Layout</strong></td><td><code>/home_builder</code></td><td>Controls what the app and website home screen show</td></tr>
+        <tr><td>5</td><td><strong>Configure SMTP</strong></td><td><code>/settings/smtp</code></td><td>Order emails, password resets, OTP by email</td></tr>
+        <tr><td>6</td><td><strong>Configure Firebase</strong></td><td><code>/settings/firebase</code></td><td>Login, push notifications, real-time updates</td></tr>
+        <tr><td>7</td><td><strong>Configure Maps</strong></td><td><code>/settings/api</code></td><td>Address selection, delivery distance, zone drawing</td></tr>
+        <tr><td>8</td><td><strong>Configure Chat</strong></td><td><code>/settings/chat</code></td><td>Live chat between customers, delivery boys and admin</td></tr>
+        <tr><td>9</td><td><strong>Set up Cron</strong></td><td>Server</td><td>Reminders, queued jobs, scheduled publishing</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Follow them in this order. Later steps depend on earlier ones — you cannot create a store without a zone, and you cannot create a zone without a country.</p>
+
+    <h2>How each step is detected</h2>
+
+    <p>The Setup Guide does not use checkboxes you tick yourself. It inspects your data and configuration, so a step only completes when it is genuinely done.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Step</th><th>Considered complete when</th></tr></thead>
+      <tbody>
+        <tr><td>Country</td><td>At least one country exists</td></tr>
+        <tr><td>Zone</td><td>At least one zone exists</td></tr>
+        <tr><td>Store</td><td>At least one store exists</td></tr>
+        <tr><td>Home Builder</td><td>At least one home layout exists</td></tr>
+        <tr><td>SMTP</td><td><code>smtp_host</code>, <code>smtp_port</code> and <code>smtp_from_mail</code> are all filled</td></tr>
+        <tr><td>Firebase</td><td><code>apiKey</code>, <code>projectId</code>, <code>messagingSenderId</code>, <code>appId</code> are filled <strong>and</strong> <code>config/firebase.json</code> exists on the server</td></tr>
+        <tr><td>Map</td><td>Provider is OpenStreetMap (needs no key), <strong>or</strong> provider is Google and both the Map key and Places key are filled</td></tr>
+        <tr><td>Chat</td><td>Reverb or Pusher is selected and its credentials are all present</td></tr>
+        <tr><td>Cron</td><td>The scheduler heartbeat is less than 150 seconds old</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">A step that will not tick off</p>
+      <p>If a step stays red after you have configured it, the check found something missing. The two that catch people out:</p>
+      <ul>
+        <li><strong>Firebase</strong> — the web keys are saved but the <strong>service account JSON</strong> was never uploaded, so <code>config/firebase.json</code> does not exist.</li>
+        <li><strong>Map</strong> — the provider is set to Google but only the Map key was entered; the <strong>Places key</strong> is a separate field and is also required.</li>
+      </ul>
+    </div>
+
+    <h2>Step-by-step</h2>
+
+    <p>Each step has its own page with the full walkthrough:</p>
+
+    <ol>
+      <li><strong><a href="countries.html">Countries &amp; Currency</a></strong></li>
+      <li><strong><a href="zones.html">Delivery Zones</a></strong></li>
+      <li><strong><a href="stores.html">Stores</a></strong></li>
+      <li><strong><a href="home-builder.html">Home Builder</a></strong></li>
+      <li><strong><a href="smtp-settings.html">SMTP / Email Settings</a></strong></li>
+      <li><strong><a href="firebase-settings.html">Firebase Settings</a></strong></li>
+      <li><strong><a href="map-api-keys.html">Map &amp; API Keys</a></strong></li>
+      <li><strong><a href="chat-settings.html">Chat Settings (Reverb / Pusher)</a></strong></li>
+      <li><strong><a href="cron-jobs.html">Cron Job Setup</a></strong></li>
+    </ol>
+
+    <h2>Recommended order beyond the nine</h2>
+
+    <p>Once the Setup Guide is complete, the store works but is not yet ready to sell. Continue with:</p>
+
+    <ol>
+      <li><strong><a href="payment-gateway.html">Payment Gateways</a></strong> — customers cannot pay online until one is live</li>
+      <li><strong><a href="general-settings.html">General Settings</a></strong> — store name, logo, currency display, timezone</li>
+      <li><strong><a href="app-settings.html">App Settings</a></strong> — minimum order value, delivery charges, order behaviour</li>
+      <li><strong>Catalogue</strong> — categories, then brands and attributes, then products</li>
+      <li><strong><a href="login-settings.html">Login Settings</a></strong> and <strong><a href="sms-settings.html">SMS Settings</a></strong> — how customers sign in</li>
+      <li><strong><a href="notification-templates.html">Notification &amp; Email Templates</a></strong> — wording customers actually receive</li>
+      <li><strong><a href="roles-permissions.html">Roles &amp; Permissions</a></strong> — before you hand access to staff</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Reopening the Setup Guide</p>
+      <p>Once every step is complete, the sidebar widget disappears. You can still open it at any time from <strong>Setup Guide</strong> in the menu, or by visiting <code>/setup_guide</code>.</p>
+    </div>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="cron-jobs.html">← Cron Job Setup</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/setup-guide.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

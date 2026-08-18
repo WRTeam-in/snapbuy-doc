@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Send Notifications &amp; Emails — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Send Notifications &amp; Emails</h1>
+
+    <p>Menu paths: <strong>Notifications</strong>, <strong>Emails</strong>, <strong>Popup Offer</strong></p>
+
+    <p>Campaign tools for reaching customers directly — as opposed to the automatic messages covered in <a href="../admin/notification-settings.html">Notification Settings</a>.</p>
+
+    <img src="../images/panel/send-notification-page.png" alt="Send notification form">
+
+    <h2>Push notification campaigns</h2>
+    <p><strong>Notifications → Send Notification</strong>: title, message, an optional image, and a target.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Title</strong></td><td>Keep under about 40 characters — longer is truncated on a lock screen</td></tr>
+        <tr><td><strong>Message</strong></td><td>Under about 100 characters</td></tr>
+        <tr><td><strong>Image</strong></td><td>Optional rich media</td></tr>
+        <tr><td><strong>Target</strong></td><td>Where a tap takes the customer — a product, category, or nothing</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Sends are queued — no cron, no campaign</p>
+      <p>Campaigns are dispatched as queued jobs. Without the <a href="../admin/cron-jobs.html">cron job</a>, the panel reports the campaign as sent and <strong>nothing is delivered</strong>. Confirm the heartbeat is green under <strong>Settings → Cron Jobs</strong> first.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">There is no unsend</p>
+      <p>A push notification is delivered to every device within seconds. A typo, a wrong price or a broken link cannot be recalled.</p>
+      <p>Always send to yourself first. Every time, including for a "quick" campaign.</p>
+    </div>
+
+    <h2>Email campaigns</h2>
+    <p><strong>Emails → Send Email</strong> works the same way, delivered through your <a href="../admin/smtp-settings.html">SMTP</a> configuration.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Bulk email can damage your sending reputation</p>
+      <p>A large send from a domain with no sending history, or to a list with stale addresses, drives bounces and spam complaints — and can get your domain blocked for <em>transactional</em> mail too. Losing order confirmations and password resets is a far bigger problem than a failed campaign.</p>
+      <p>Warm up gradually, and make sure SPF, DKIM and DMARC are in place. See <a href="../admin/smtp-settings.html#deliverability">SMTP Settings</a>.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Include an unsubscribe path in promotional email</p>
+      <p>Required by anti-spam law in many jurisdictions, and expected by every mail provider. Without it you are both breaking the law in some markets and training spam filters to distrust you.</p>
+    </div>
+
+    <h2>Popup offers</h2>
+    <p><strong>Popup Offer</strong> shows a promotional overlay when customers open the app or website.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">One popup, timed well, or none at all</p>
+      <p>A popup on every launch is the fastest way to get an app deleted. Use them for genuinely time-limited offers, and take them down when the offer ends — nothing looks more neglected than a popup for last month's sale.</p>
+    </div>
+
+    <h2>Targeting and timing</h2>
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Send when customers can act</p>
+      <p>A grocery promotion at 3 AM is ignored and mildly irritating. Check your <a href="../admin/reports.html">order reports</a> for when customers actually shop, and send shortly before that window.</p>
+      <p>Remember the country <a href="../admin/countries.html">timezone</a> — a campaign scheduled in your local time reaches an overseas audience at the wrong hour entirely.</p>
+    </div>
+
+    <h2>Frequency</h2>
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Over-notifying costs you order updates too</p>
+      <p>Customers do not disable <em>marketing</em> notifications — they disable notifications for your app. Once off, they no longer receive order status updates, delivery alerts or chat replies, and support volume rises.</p>
+      <p>Treat push as a scarce resource. A useful campaign once a week beats a forgettable one every day.</p>
+    </div>
+
+    <h2>Language</h2>
+    <p>Campaign content is not automatically translated.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Write per language, or accept the default</p>
+      <p>Customers whose language you have not written for receive whatever you typed. If you serve a multi-lingual audience, prepare the content per <a href="../admin/languages.html">language</a>.</p>
+    </div>
+
+    <h2>Prerequisites</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="../admin/cron-jobs.html">Cron job</a></td><td>Everything — nothing sends without it</td></tr>
+        <tr><td><a href="../admin/firebase-settings.html">Firebase</a>, including <code>config/firebase.json</code></td><td>Push</td></tr>
+        <tr><td><a href="../admin/smtp-settings.html">SMTP</a></td><td>Email</td></tr>
+        <tr><td>Customer granted notification permission</td><td>Push</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Before you press send</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Cron heartbeat green</li>
+      <li class="task-item"><input type="checkbox" disabled> Sent to yourself and checked on a real device</li>
+      <li class="task-item"><input type="checkbox" disabled> Title and message not truncated</li>
+      <li class="task-item"><input type="checkbox" disabled> Target link opens the right screen</li>
+      <li class="task-item"><input type="checkbox" disabled> Prices and dates in the copy are correct</li>
+      <li class="task-item"><input type="checkbox" disabled> Content prepared for each active language</li>
+      <li class="task-item"><input type="checkbox" disabled> Timing suits the audience's timezone</li>
+      <li class="task-item"><input type="checkbox" disabled> Unsubscribe path present, for email</li>
+    </ul>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reported sent, nothing received</td><td>Queue not processed</td><td>Check the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>Push fails, email works</td><td>Firebase service account missing</td><td>Check <code>config/firebase.json</code></td></tr>
+        <tr><td>Email fails, push works</td><td>SMTP misconfigured</td><td>Check <a href="../admin/smtp-settings.html">SMTP Settings</a></td></tr>
+        <tr><td>Delivered to some customers only</td><td>Others revoked notification permission</td><td>Nothing to fix — expected</td></tr>
+        <tr><td>Message cut off</td><td>Too long</td><td>Shorten it</td></tr>
+        <tr><td>Tap opens the home screen</td><td>Target not set, or deeplink broken</td><td>Check <a href="../admin/deeplink-settings.html">Deeplink Settings</a></td></tr>
+        <tr><td>Emails landing in spam</td><td>Missing SPF/DKIM/DMARC</td><td>Add the DNS records</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../admin/reports.html">← Reports</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/send-notifications.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

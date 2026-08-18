@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact Us &amp; About Us Pages — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Contact Us &amp; About Us Pages</h1>
+
+    <p>Menu paths: <strong>Settings → Contact Us</strong> and <strong>Settings → About Us</strong></p>
+
+    <p>Two rich-text pages shown in the apps and on the web portal.</p>
+
+    <img src="../images/panel/contact-us-page.png" alt="Contact Us editor">
+
+    <h2>Contact Us</h2>
+    <p>Everything a customer needs to reach you. At minimum:</p>
+    <ul>
+      <li>Support email and phone number</li>
+      <li>Business address</li>
+      <li>Support hours, with the timezone stated</li>
+      <li>Expected response time</li>
+    </ul>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">App stores require genuine contact details</p>
+      <p>Both Apple and Google reject apps whose contact page carries placeholder text or a dead email address. This is a common rejection reason and an easy one to avoid.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">State support hours with a timezone</p>
+      <p>"9 AM – 6 PM" means nothing to a customer in another region. "9 AM – 6 PM IST, Monday to Saturday" sets a real expectation and cuts angry follow-ups.</p>
+    </div>
+
+    <h2>About Us</h2>
+    <p>Your story, what you sell and why customers should trust you. Worth including:</p>
+    <ul>
+      <li>What the business does and where it operates</li>
+      <li>How long you have been trading</li>
+      <li>Delivery areas</li>
+      <li>Any certifications or licences relevant to what you sell</li>
+    </ul>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Write it for a customer deciding whether to order</p>
+      <p>This page is most often read by someone about to spend money with a store they have never used. Concrete facts — years trading, areas served, licences held — do more than adjectives.</p>
+    </div>
+
+    <h2>The editor</h2>
+    <p>Both pages use a rich-text editor supporting headings, lists, links, images and tables.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not paste directly from Word or Google Docs</p>
+      <p>Pasting carries hidden formatting that breaks the layout on mobile. Paste as plain text, then apply formatting in the editor.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Check the result on a phone</p>
+      <p>Multi-column layouts and wide tables that look fine in the editor frequently overflow on a phone screen, where most customers will read them.</p>
+    </div>
+
+    <h2>Per-language content</h2>
+    <p>Both pages are translatable. Customers see the version for their language, falling back to the default language when a translation is missing.</p>
+    <p>See <a href="languages.html">Manage Languages</a>.</p>
+
+    <h2>Where these differ from policies</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Content</th><th>Where it lives</th><th>Scope</th></tr></thead>
+      <tbody>
+        <tr><td>Contact Us, About Us</td><td><strong>Here</strong></td><td>Global — one version per language</td></tr>
+        <tr><td>Privacy, Returns, Shipping, Cancellation, Terms</td><td><a href="countries.html#policies">Countries</a></td><td><strong>Per country</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why policies are per country and these are not</p>
+      <p>Legal terms vary by jurisdiction, so they attach to the country. Who you are and how to reach you does not change by region.</p>
+    </div>
+
+    <h2>Public print URLs</h2>
+    <p>Both pages are also served as standalone URLs, useful for app store listings and support links:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Page</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td>About Us</td><td><code>https://admin.yourstore.com/about-us</code></td></tr>
+        <tr><td>Contact Us</td><td><code>https://admin.yourstore.com/contact-us</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The per-country policies have their own equivalents:</p>
+    <pre><code>/customer-privacy-policy
+/customer-returns-and-exchanges-policy
+/customer-shipping-policy
+/customer-cancellation-policy
+/customer-terms-conditions
+/delivery-boy-privacy-policy
+/delivery-boy-terms-conditions</code></pre>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Use these for your app store listing</p>
+      <p>App stores ask for a publicly reachable privacy policy URL. These endpoints are public and always current, so the listing never drifts out of date with the panel.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Page blank in the app</td><td>Content empty for that language</td><td>Fill it, or complete the default language</td></tr>
+        <tr><td>Layout broken on mobile</td><td>Pasted formatting from a word processor</td><td>Re-paste as plain text</td></tr>
+        <tr><td>Images not displaying</td><td>Storage symlink missing</td><td>Visit <code>/linkstorage</code></td></tr>
+        <tr><td>App store rejection over contact details</td><td>Placeholder text still present</td><td>Enter real details</td></tr>
+        <tr><td>Wrong language shown</td><td>Translation missing</td><td>Add it under <a href="languages.html">Languages</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/contact-about.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

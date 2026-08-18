@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change Package Name — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Change Package Name</h1>
+
+    <p>Update the default package name to your own unique identifier before publishing the app to the Play Store / App Store.</p>
+
+    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/packagename">Change Package Name Documentation</a> for detailed instructions on changing the package name.</p>
+
+    <p>After changing the package name, you need to rerun the below commands to update the package references.</p>
+    <pre><code>flutter clean
+flutter pub get</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">UPDATE FIREBASE AFTER CHANGING THE PACKAGE NAME</p>
+      <p>If Firebase is already configured, changing the package name/bundle ID invalidates the existing <code>google-services.json</code> / <code>GoogleService-Info.plist</code>. Re-register the app (or re-run <code>flutterfire configure</code>) under the new identifier — see <a href="firebase-setup.html">Firebase Setup</a>.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/change-package-name.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

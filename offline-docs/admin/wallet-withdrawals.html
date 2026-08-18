@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wallet, Withdrawals &amp; Settlements — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Wallet, Withdrawals &amp; Settlements</h1>
+
+    <p>Menu paths: <strong>Wallet Transactions</strong>, <strong>Withdrawal Requests</strong>, <strong>Transactions</strong></p>
+
+    <p>Money inside SnapBuy moves through wallets. Customers hold a wallet balance; delivery boys hold one too. Both can request that balance out as a real payout.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Restrict these screens by role</p>
+      <p>Everything on this page moves money. Grant <code>customer</code> and <code>withdrawal_request</code> permissions only to people who should be approving payouts. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
+    </div>
+
+    <h2>Customer wallet</h2>
+
+    <p>A customer's wallet balance can come from several places:</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Source</th><th>Notification</th></tr></thead>
+    <tbody>
+    <tr><td>Top-up by the customer</td><td><code>wallet_recharged_customer</code></td></tr>
+    <tr><td>Failed top-up</td><td><code>wallet_recharge_failed_customer</code></td></tr>
+    <tr><td>Manual credit by an admin</td><td><code>wallet_admin_credit_customer</code></td></tr>
+    <tr><td>Order cashback</td><td><code>wallet_cashback_customer</code></td></tr>
+    <tr><td>Referral bonus</td><td><code>wallet_referral_bonus_customer</code></td></tr>
+    <tr><td>Refund for a returned item</td><td><code>wallet_refund_returned_customer</code></td></tr>
+    <tr><td>Refund for a cancelled item</td><td><code>wallet_refund_cancelled_customer</code></td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/wallet-transactions.png" alt="Customer wallet transactions">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Manual wallet credits are real money</p>
+      <p>Crediting a wallet by hand creates spendable value with no payment behind it. It is the right tool for goodwill and for resolving a dispute — and the wrong tool for anything routine. Every credit is recorded in the <a href="../admin/activity-logs.html">activity log</a> against your account.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Refunding to wallet keeps the value in your store</p>
+      <p>A wallet refund is instant, avoids gateway refund fees, and the customer usually spends it with you again. Offer it as the fast option, but never as the <em>only</em> option — customers are entitled to their money back by the original method.</p>
+    </div>
+
+    <h3>Referral and cashback credits are queued</h3>
+
+    <p>Both are paid by background jobs.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">No cron, no referral bonuses</p>
+      <p>Referral and cashback credits are dispatched to the queue. Without the <a href="../admin/cron-jobs.html">cron job</a> running they are never paid, and customers who were promised a bonus never receive it. Check the cron heartbeat before investigating individual cases.</p>
+    </div>
+
+    <p>Referral amounts and limits are set per country — see <a href="../admin/countries.html#referral-programme">Countries</a>.</p>
+
+    <h2>Delivery boy money</h2>
+
+    <p>Riders have three separate money flows. Keeping them straight is what makes reconciliation possible.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Screen</th><th>What it records</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Cash Collection</strong></td><td>Cash the rider took from customers on COD orders</td></tr>
+    <tr><td><strong>Salary Transactions</strong></td><td>What you pay the rider</td></tr>
+    <tr><td><strong>Settlement History</strong></td><td>Reconciliation between the two</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/cash-collection.png" alt="Delivery boy cash collection">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The direction of travel</p>
+      <p>On a COD order, the customer's cash goes to the <strong>rider</strong>, not to you. The rider is holding your money. Cash collection records that debt; settlement clears it.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Reconcile cash collection regularly</p>
+      <p>Unreconciled COD cash is the most common source of loss in delivery operations. A rider carrying several days of collections represents real exposure — settle daily or weekly, and never let it drift.</p>
+    </div>
+
+    <p>Rider earnings include any bonus configured in <a href="../admin/app-settings.html#delivery-boy-bonus">App Settings</a>.</p>
+
+    <h2>Withdrawal requests</h2>
+
+    <p>Both customers and delivery boys can request a payout of their balance. Requests arrive with a status of <strong>Pending</strong>.</p>
+
+    <img src="../images/panel/withdrawal-requests.png" alt="Withdrawal requests list">
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Pending</strong></td><td>Awaiting your decision</td></tr>
+    <tr><td><strong>Approved</strong></td><td>Paid out</td></tr>
+    <tr><td><strong>Rejected</strong></td><td>Declined</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <h3>Approving requires a receipt</h3>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Approval will not save without a receipt image</p>
+      <p>SnapBuy enforces this: <em>"The receipt image is required when the status is approved."</em> Upload proof of the bank transfer or UPI payment before marking a request approved.</p>
+      <p>This exists to protect you. A payout marked approved with no evidence is indistinguishable from one that never happened, and you will be the one asked to prove it.</p>
+    </div>
+
+    <h3>Rejecting requires a remark</h3>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A rejection reason is mandatory</p>
+      <p><em>"A remark is required when the status is Rejected."</em> Maximum 500 characters. Write something the recipient can act on — "bank details do not match account name" rather than "rejected".</p>
+    </div>
+
+    <h3>Notifications</h3>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+    <tbody>
+    <tr><td><code>withdrawal_request_admin</code></td><td>You, when a request is raised</td></tr>
+    <tr><td><code>withdrawal_status_delivery_boy</code></td><td>The rider, when you decide</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Enable the admin notification</p>
+      <p>Without <code>withdrawal_request_admin</code>, payout requests sit unnoticed in the panel. Riders waiting on money they have earned is the fastest way to lose them. Enable it in <a href="../admin/notification-settings.html">Notification Settings</a>.</p>
+    </div>
+
+    <h2>Pay out only what you actually hold</h2>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Check cash collection before approving a rider payout</p>
+      <p>A rider may be holding several days of uncollected COD cash while requesting a withdrawal of their earnings. Approving the payout without settling the cash means paying twice.</p>
+      <p>Order of operations: settle the cash, then assess the withdrawal.</p>
+    </div>
+
+    <h2>Transactions</h2>
+
+    <p><strong>Transactions</strong> is the ledger of payment gateway activity — what customers paid, through which gateway, and whether it succeeded. Use it to reconcile against your gateway dashboard.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Reconcile against the gateway, not against orders</p>
+      <p>If your panel and your gateway disagree on what was collected, the gateway is the authority on money received. A discrepancy usually points at a missing webhook — see <a href="../admin/payment-gateway.html#webhooks">Payment Gateways</a>.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>Referral bonus never credited</td><td>Cron not running</td><td>See <a href="../admin/cron-jobs.html">Cron Jobs</a></td></tr>
+    <tr><td>Cashback missing</td><td>Queued job unprocessed, or country values are zero</td><td>Check cron; check the <a href="../admin/countries.html">country</a></td></tr>
+    <tr><td>Cannot approve a withdrawal</td><td>Receipt image not uploaded</td><td>Upload proof of payment</td></tr>
+    <tr><td>Cannot reject a withdrawal</td><td>Remark empty</td><td>Enter a reason</td></tr>
+    <tr><td>Requests going unnoticed</td><td>Admin notification disabled</td><td>Enable <code>withdrawal_request_admin</code></td></tr>
+    <tr><td>Rider balance looks wrong</td><td>Cash collection not settled</td><td>Reconcile in Settlement History</td></tr>
+    <tr><td>Wallet refund not received</td><td>Refund not actually issued</td><td>Check the wallet transaction record</td></tr>
+    <tr><td>Panel and gateway totals disagree</td><td>Missing webhook</td><td>Register the webhook URL</td></tr>
+    </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/wallet-withdrawals.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

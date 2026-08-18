@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>File Structure — SnapBuy Documentation</title>
+<meta name="description" content="Understanding the SnapBuy Web Portal project structure helps you find where everything lives and what to change." />
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>File Structure</h1>
+
+    <p>How the SnapBuy Web Portal is organised, and where to look when you need to change something.</p>
+
+    <h2>Technology stack</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Choice</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Framework</td><td>Next.js 16 (<strong>Pages Router</strong>, not App Router)</td></tr>
+          <tr><td>UI</td><td>React 19</td></tr>
+          <tr><td>Styling</td><td>Tailwind CSS + <code>src/styles/globals.css</code></td></tr>
+          <tr><td>Global state</td><td>Redux Toolkit + redux-persist</td></tr>
+          <tr><td>Server state</td><td>TanStack Query (React Query)</td></tr>
+          <tr><td>HTTP</td><td>Axios (<code>src/api/axiosMiddleware.js</code>)</td></tr>
+          <tr><td>Components</td><td>shadcn/ui primitives in <code>src/components/ui</code></td></tr>
+          <tr><td>Push</td><td>Firebase Cloud Messaging</td></tr>
+          <tr><td>Maps</td><td>Google Maps + OpenStreetMap fallback</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>This project uses the <strong>Pages Router</strong> (<code>src/pages/**</code>), so routing lives in <code>src/pages</code>, not <code>src/app</code>. There is no <code>app/</code> directory.</p>
+    </div>
+
+    <h2>Top level</h2>
+
+    <pre><code>snapbuy-web/
+├── public/                   # Served as-is
+│   └── firebase-messaging-sw.js   # Background push handler
+├── scripts/
+│   ├── generator.js          # Pre-build config generation (static export)
+│   └── copy-htaccess.js      # Copies .htaccess into the export output
+├── src/
+│   ├── api/                  # All backend communication
+│   ├── assets/               # Imported images, SVGs, Lottie JSON
+│   ├── checkauth/            # Route guard for authenticated pages
+│   ├── components/           # Everything visual
+│   ├── HOC/                  # Higher-order components
+│   ├── hooks/                # Reusable logic
+│   ├── lib/                  # Chat websocket + small helpers
+│   ├── pages/                # Routes (Pages Router)
+│   ├── redux/                # Global state
+│   ├── styles/                # Global CSS
+│   ├── utils/                 # Pure helpers + translation JSON
+│   └── middleware.js          # Zone/language URL rewriting
+├── docs/                     # This documentation
+├── .env                       # Configuration (never commit)
+├── .htaccess                  # Apache → Node proxy for VPS deploys
+├── next.config.mjs             # Image hosts, SEO/export switch
+├── server.js                   # Custom Node server used by `npm start`
+└── tailwind.config.js</code></pre>
+
+    <h2><code>src/pages</code> — routes</h2>
+
+    <p>File-based routing; each file or folder becomes a URL.</p>
+
+    <pre><code>pages/
+├── _app.js                   # Providers: Redux, React Query, PersistGate
+├── _document.js               # &lt;html&gt;/&lt;body&gt; shell
+├── index.js                   # Home page
+├── 404.js                     # Custom not-found page
+├── sitemap.xml.js              # Dynamic sitemap (SEO builds)
+├── product/                   # Product detail
+├── products/                  # Product listing + filters
+├── categories/
+│   ├── index.jsx
+│   └── [slug]/                # Category listing
+├── cart/  checkout/  order-detail/
+├── profile/                    # Account dashboard
+├── blog/  blogs/               # Blog detail + index
+├── brands/  sellers/  countries/
+├── web-payment-status/          # Payment gateway return URL
+└── about-us/ contact-us/ faqs/ privacy-policy/ …   # Static content pages</code></pre>
+
+    <p><code>_app.js</code> is where the provider stack lives. Note the two deliberate choices documented in-file: <code>PersistGate</code> uses the <strong>function-child</strong> form so pages still server-render, and there is <strong>no <code>&lt;Suspense&gt;</code></strong> around the app content — a boundary there would write the fallback into the server HTML and break hydration.</p>
+
+    <h2><code>src/api</code> — backend layer</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>File</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>apiEndpoints.js</code></td><td>Endpoint path constants (<code>categories</code>, <code>products</code>, …)</td></tr>
+          <tr><td><code>apiRoutes.js</code></td><td>One function per API call; builds params/FormData</td></tr>
+          <tr><td><code>axiosMiddleware.js</code></td><td>Axios instance, base URL, auth + language headers</td></tr>
+          <tr><td><code>serverApi.js</code></td><td>Server-side fetches for <code>getServerSideProps</code> (SSR/SEO)</td></tr>
+          <tr><td><code>languageResolver.js</code></td><td>Resolves the active language server-side</td></tr>
+          <tr><td><code>zoneResolver.js</code></td><td>Resolves a zone slug to coordinates server-side</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>serverApi.js</code> exists because SSR cannot read the Redux store — it takes headers as arguments instead. It is deliberately anonymous (no auth header): server rendering produces the logged-out view for crawlers, and user state hydrates on the client.</p>
+
+    <h2><code>src/components</code></h2>
+
+    <p>Grouped by feature. The larger ones:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Folder</th><th>Contents</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>layout/</code></td><td><code>Header.jsx</code>, <code>Footer.jsx</code>, <code>Layout.jsx</code> — the app shell</td></tr>
+          <tr><td><code>homelayout/</code></td><td>API-driven home page renderer (see below)</td></tr>
+          <tr><td><code>productcards/</code></td><td><code>VerticleProductCard</code>, <code>ListViewProductCard</code>, home variants</td></tr>
+          <tr><td><code>productslist/</code></td><td>Listing page: grid, sorting, infinite scroll</td></tr>
+          <tr><td><code>productFilter/</code></td><td>Sidebar filters, price slider, mobile filter drawer</td></tr>
+          <tr><td><code>productdetail/</code></td><td>Product page; <code>productdetailmodal/</code> is the quick-view</td></tr>
+          <tr><td><code>cart/</code>, <code>checkoutpage/</code>, <code>orderdetail/</code></td><td>Purchase flow</td></tr>
+          <tr><td><code>categories/</code></td><td>Category grid, tabs, breadcrumb flow</td></tr>
+          <tr><td><code>locationmodal/</code>, <code>maps/</code></td><td>Delivery location selection</td></tr>
+          <tr><td><code>profiledashboard/</code></td><td>Account area (orders, wishlist, wallet, addresses)</td></tr>
+          <tr><td><code>login/</code>, <code>register/</code>, <code>forgetpasswordmodal/</code></td><td>Authentication</td></tr>
+          <tr><td><code>chat/</code></td><td>Support and delivery chat</td></tr>
+          <tr><td><code>skeleton/</code></td><td>Loading placeholders</td></tr>
+          <tr><td><code>ui/</code></td><td>shadcn/ui primitives — button, dialog, sheet, dropdown</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><code>homelayout/</code> — the API-driven home page</h3>
+
+    <p>The home page is <strong>not</strong> hardcoded. The <code>home_layout</code> API returns an ordered list of blocks and <code>HomeLayout.jsx</code> dispatches each to a section component:</p>
+
+    <pre><code>homelayout/
+├── HomeLayout.jsx            # Block dispatcher
+└── sections/
+    ├── ProductSliderSection.jsx   # Product carousel / grid / list
+    ├── CategorySection.jsx        # Category chips
+    ├── BrandSection.jsx           # Brand chips
+    ├── BannerSliderSection.jsx    # Banner carousel
+    ├── GridBannerSection.jsx      # Banner grid
+    ├── TitleImageSection.jsx      # Title + artwork
+    └── TextSection.jsx            # Rich text</code></pre>
+
+    <p>Each section reads its own <code>config</code> object (variant, colours, aspect ratio, column count).</p>
+
+    <h2><code>src/redux</code> — global state</h2>
+
+    <pre><code>redux/
+├── store.js
+└── slices/
+    ├── userSlice.js            # Auth, JWT, profile
+    ├── cartSlice.js             # Cart, guest cart per channel
+    ├── settingSlice.js          # Web settings from the API
+    ├── citySlice.js             # Delivery location
+    ├── shopModeSlice.js         # quick / allShop channel + layout theme
+    ├── productFilterSlice.js    # Listing filters, category flow
+    ├── languageSlice.js         # Selected + available languages
+    ├── themeSlice.js            # Light/dark
+    ├── checkoutSlice.js        addressSlice.js       FavoriteSlice.js
+    ├── countrySettingSlice.js  locationModalSlice.js shopSlice.js</code></pre>
+
+    <p>State is persisted with redux-persist (localStorage). Two consequences worth knowing:</p>
+
+    <ul>
+      <li>Persisted values are <strong>empty on the server</strong> and populated on the client, so any markup whose <em>presence</em> depends on them must be gated behind <code>useIsHydrated()</code> or a <code>mounted</code> flag — otherwise React discards the tree with a hydration mismatch.</li>
+      <li><code>shopModeSlice.mode</code> is <code>"quick"</code> or <code>"allShop"</code>. The API string for the second channel is <code>"ecommerce"</code> — they are not interchangeable.</li>
+    </ul>
+
+    <h2><code>src/hooks</code></h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Hook</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>useIsHydrated</code></td><td>Guard for persisted-state-dependent rendering</td></tr>
+          <tr><td><code>useZoneHref</code></td><td>Builds links that preserve the active zone + language</td></tr>
+          <tr><td><code>useZoneUrlSync</code>, <code>useZoneAdopt</code></td><td>Keep the URL zone and store in step</td></tr>
+          <tr><td><code>useLanguages</code>, <code>useLanguageSwitch</code>, <code>useT</code></td><td>Translation and locale switching</td></tr>
+          <tr><td><code>useIsRtl</code>, <code>useDir</code></td><td>RTL layout support</td></tr>
+          <tr><td><code>useProductFilters</code></td><td>Category-aware filter options</td></tr>
+          <tr><td><code>useDebouncedQuantity</code></td><td>Cart stepper with debounced server commits</td></tr>
+          <tr><td><code>useFavoriteToggle</code></td><td>Optimistic wishlist toggle</td></tr>
+          <tr><td><code>useStoreClosed</code></td><td>Disables the buy path when the zone is closed</td></tr>
+          <tr><td><code>useGeocode</code>, <code>useMapProvider</code></td><td>Address lookup, Google/OSM selection</td></tr>
+          <tr><td><code>useSupportChat</code>, <code>useDeliveryChat</code></td><td>Chat sessions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2><code>src/utils</code></h2>
+
+    <p>Pure helpers with no React dependency.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>File</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>translation.js</code></td><td><code>t()</code> — reads server translations, falls back to <code>en.json</code></td></tr>
+          <tr><td><code>en.json</code>, <code>ur.json</code></td><td>Bundled fallback strings</td></tr>
+          <tr><td><code>helperFunction.js</code></td><td>Currency, aspect ratio, stock, quantity helpers</td></tr>
+          <tr><td><code>categoryTree.js</code></td><td>Resolves a parent category to its leaf ids</td></tr>
+          <tr><td><code>canonicalUrl.js</code>, <code>selectSeoRow.js</code></td><td>SEO metadata</td></tr>
+          <tr><td><code>zoneUrl.js</code>, <code>reservedRoutes.js</code></td><td>Zone slug parsing and reserved paths</td></tr>
+          <tr><td><code>languageRoutes.js</code>, <code>languageEdge.js</code></td><td>Locale path handling</td></tr>
+          <tr><td><code>firebase.js</code></td><td>Client Firebase init + FCM token</td></tr>
+          <tr><td><code>mapConfig.js</code>, <code>geocode.js</code>, <code>osmGeocode.js</code></td><td>Maps</td></tr>
+          <tr><td><code>sanitizeHtml.js</code></td><td>Cleans API-supplied HTML before render</td></tr>
+          <tr><td><code>paymentSettings.js</code></td><td>Enabled gateways</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p><code>t()</code> reads translations from the server response, falling back to <code>en.json</code>. The local <code>ur.json</code> is <strong>not</strong> used at runtime — server data wins.</p>
+    </div>
+
+    <h2><code>src/middleware.js</code></h2>
+
+    <p>Runs at the edge before a page renders. It rewrites zone- and language-prefixed URLs (<code>/bhuj-quick</code>, <code>/ur/products</code>) onto the underlying route, which is why the zone slug survives only in <code>router.asPath</code> and not in the query.</p>
+
+    <h2>Configuration files</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>File</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>next.config.mjs</code></td><td>Derives image hosts from <code>NEXT_PUBLIC_API_URL</code>; switches to <code>output: "export"</code> when <code>NEXT_PUBLIC_SEO=false</code></td></tr>
+          <tr><td><code>server.js</code></td><td>Custom server; reads <code>NODE_PORT</code>, serves <code>/.well-known</code> for cert renewal</td></tr>
+          <tr><td><code>.htaccess</code></td><td>Apache → Node proxy (see the <a href="deployment.html">Deployment Guide</a>)</td></tr>
+          <tr><td><code>tailwind.config.js</code></td><td>Theme, container widths, custom animations</td></tr>
+          <tr><td><code>jsconfig.json</code></td><td>The <code>@/</code> path alias → <code>src/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Conventions</h2>
+
+    <ul>
+      <li><strong>Components</strong> — PascalCase (<code>ProductCard.jsx</code>)</li>
+      <li><strong>Hooks</strong> — <code>use</code> prefix, camelCase (<code>useZoneHref.js</code>)</li>
+      <li><strong>Redux slices</strong> — camelCase + <code>Slice</code> suffix (<code>cartSlice.js</code>)</li>
+      <li><strong>Utils</strong> — camelCase (<code>helperFunction.js</code>)</li>
+      <li><strong>Imports</strong> — use the <code>@/</code> alias (<code>@/components/...</code>), not deep relative paths</li>
+      <li><strong>Theming</strong> — colours come from CSS variables (<code>--primary-color</code>) set from the API. This is a white-label template: never hardcode a brand colour or an image host.</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "web/file-structure.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

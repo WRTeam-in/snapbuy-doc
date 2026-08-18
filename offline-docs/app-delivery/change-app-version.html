@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change the App Version — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Change the App Version</h1>
+
+    <p>Update the version number before every new Play Store / App Store upload.</p>
+
+    <h2>Version Format</h2>
+
+    <p>Open <code>pubspec.yaml</code> (project root) and find the <code>version</code> line:</p>
+
+    <pre><code class="language-yaml">version: 1.0.0+1</code></pre>
+
+    <p>The value has two parts separated by <code>+</code>:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Part</th><th>Maps to (Android)</th><th>Maps to (iOS)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>1.0.0</code> (before <code>+</code>)</td><td><code>versionName</code></td><td><code>CFBundleShortVersionString</code></td></tr>
+          <tr><td><code>1</code> (after <code>+</code>)</td><td><code>versionCode</code></td><td><code>CFBundleVersion</code> (build number)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Rules</h2>
+    <ul>
+      <li><strong>Version name</strong> (<code>1.0.0</code>) — the user-visible release number. Bump it for any release that introduces new features, fixes, or breaking changes. Follow semantic versioning (<code>MAJOR.MINOR.PATCH</code>).</li>
+      <li><strong>Build number</strong> (<code>+1</code>) — must be a <strong>strictly increasing integer</strong>. The Play Store and App Store <strong>reject</strong> uploads with a build number equal to or lower than a previously uploaded one — even for the same version name.</li>
+    </ul>
+
+    <h2>Steps to Change</h2>
+    <ol>
+      <li>Open <code>pubspec.yaml</code>.</li>
+      <li>Update the <code>version</code> line to the new value, for example:
+        <pre><code class="language-yaml">version: 1.1.0+2</code></pre>
+      </li>
+      <li>Save the file.</li>
+      <li>Run:
+        <pre><code class="language-bash">flutter clean && flutter pub get</code></pre>
+      </li>
+      <li>Build your release artifacts:
+        <ul>
+          <li>Android — <code>flutter build appbundle --release</code></li>
+          <li>iOS — see the iOS-specific steps below before building</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>The new version will now show on the Play Store / App Store listing after upload.</p>
+
+    <hr>
+
+    <h2>iOS — Additional Xcode Steps</h2>
+
+    <p>iOS requires manually updating the version values in two places inside Xcode after changing <code>pubspec.yaml</code>.</p>
+
+    <h3>Step 1 — Update the Generated file</h3>
+    <ol>
+      <li>Open the project in Xcode.</li>
+      <li>In the left sidebar, navigate to <strong>Runner → Flutter → Generated</strong>.</li>
+      <li>Open the <code>Generated</code> file.</li>
+      <li>Find and update the following two lines to match your new version:</li>
+    </ol>
+
+    <pre><code>FLUTTER_BUILD_NAME=1.1.0
+FLUTTER_BUILD_NUMBER=2</code></pre>
+
+    <img src="../images/app/delivery/appVersion1.png" alt="Generated file in Xcode">
+
+    <h3>Step 2 — Update Build Settings</h3>
+    <ol>
+      <li>In the left sidebar, select <strong>Runner → Runner</strong> (under TARGETS).</li>
+      <li>Click the <strong>Build Settings</strong> tab at the top.</li>
+      <li>Make sure <strong>All</strong> and <strong>Combined</strong> filters are selected.</li>
+      <li>Scroll down to the <strong>User-Defined</strong> section.</li>
+      <li>Update <code>FLUTTER_BUILD_NAME</code> and <code>FLUTTER_BUILD_NUMBER</code> to match your new version.</li>
+    </ol>
+
+    <img src="../images/app/delivery/appVersion2.png" alt="Build Settings in Xcode">
+
+    <p>After both steps are done, build the iOS release:</p>
+
+    <pre><code class="language-bash">flutter build ipa --release</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">WARNING</p>
+      <p>Always <strong>increment the build number</strong> for every store upload, even if the version name stays the same. The stores reject duplicate build numbers, and rebuilding without bumping will block your submission.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/change-app-version.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

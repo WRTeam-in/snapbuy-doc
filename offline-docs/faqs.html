@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FAQs — SnapBuy Documentation</title>
+<link rel="icon" href="images/favicon.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="index.html">
+    <img src="images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Frequently Asked Questions</h1>
+
+    <details>
+      <summary>What platforms does SnapBuy support?</summary>
+      <p>SnapBuy supports Android, iOS, and Web platforms.</p>
+    </details>
+
+    <details>
+      <summary>What backend technology does SnapBuy use?</summary>
+      <p>SnapBuy uses Laravel (PHP) for the backend API and admin panel.</p>
+    </details>
+
+    <details>
+      <summary>Can I white-label SnapBuy?</summary>
+      <p>Yes. You can customize the app name, logo, colors, and package name as described in the App Setup section.</p>
+    </details>
+
+    <details>
+      <summary>How do I update to the latest version?</summary>
+      <p>See the <a href="admin/overview.html">Admin Panel Overview</a> for more details.</p>
+    </details>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "";
+  window.SB_PAGE = "faqs.html";
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

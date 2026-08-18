@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SMS Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>SMS Settings</h1>
+
+    <p>Menu path: <strong>Settings → SMS Settings</strong></p>
+
+    <p>Configures the SMS gateway used to send OTPs and transactional messages, as an alternative to Firebase phone authentication.</p>
+
+    <img src="../images/panel/sms-settings-page.png" alt="SMS settings page">
+
+    <h2>When you need this</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Situation</th><th>SMS gateway needed?</th></tr></thead>
+    <tbody>
+    <tr><td>Phone login using Firebase Authentication</td><td>No</td></tr>
+    <tr><td>Phone login with <strong>Custom SMS Gateway (OTP based)</strong></td><td><strong>Yes</strong></td></tr>
+    <tr><td>Sending transactional SMS (order updates)</td><td>Yes</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Configure this before switching off Firebase Authentication</p>
+      <p><a href="../admin/login-settings.html">Login Settings</a> requires either Firebase auth or a custom SMS gateway when phone login is enabled. Disabling Firebase without a working gateway here stops phone login instantly for every customer.</p>
+      <p>Order of operations: configure and test SMS here <strong>first</strong>, then switch the login method.</p>
+    </div>
+
+    <h2>Supported providers</h2>
+
+    <h3>Twilio</h3>
+
+    <p>Global coverage, pay per message.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Twilio SID</strong></td><td>Twilio Console → Account SID</td></tr>
+    <tr><td><strong>Twilio Auth Token</strong></td><td>Twilio Console → Auth Token</td></tr>
+    <tr><td><strong>Twilio Phone Number</strong></td><td>A number you have purchased, in E.164 format — <code>+15551234567</code></td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Twilio trial accounts only message verified numbers</p>
+      <p>On a trial account, SMS is delivered only to numbers you have verified in the console, and every message carries a trial prefix. Upgrade before launch, or real customers receive nothing.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Sending to India via Twilio needs DLT registration</p>
+      <p>Indian regulations require sender IDs and templates to be pre-registered on a DLT platform. Unregistered traffic is dropped by the carrier — Twilio reports success, the customer receives nothing. If your market is India, a local provider is usually less friction.</p>
+    </div>
+
+    <h3>2Factor</h3>
+
+    <p>India-focused, generally cheaper and more reliable for Indian numbers.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
+    <tbody>
+    <tr><td><strong>2Factor API Key</strong></td><td>2Factor dashboard → API Key</td></tr>
+    <tr><td><strong>2Factor Sender ID</strong></td><td>Your approved 6-character sender ID — <code>SNPBUY</code></td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Sender IDs need approval</p>
+      <p>Sender IDs are approved by the provider and the telecom regulator, and must be exactly six alphabetic characters in India. Using an unapproved ID means undelivered messages.</p>
+    </div>
+
+    <h2>Choosing a provider</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th></th><th>Twilio</th><th>2Factor</th></tr></thead>
+    <tbody>
+    <tr><td>Coverage</td><td>Worldwide</td><td>India-focused</td></tr>
+    <tr><td>Cost per SMS in India</td><td>Higher</td><td>Lower</td></tr>
+    <tr><td>Setup friction in India</td><td>DLT registration required</td><td>Simpler</td></tr>
+    <tr><td>Branded sender ID</td><td>Via alphanumeric sender where permitted</td><td>Yes</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Selling only in India? Use 2Factor. Selling internationally? Use Twilio.</p>
+    </div>
+
+    <h2>SMS templates</h2>
+
+    <p>Message wording lives under <strong>Settings → SMS Templates</strong> — see <a href="../admin/notification-templates.html">Notification, Email &amp; SMS Templates</a>. Templates support placeholders such as <code>{otp}</code>, <code>{app_name}</code> and <code>{customer_name}</code>, and can be translated per language.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Registered templates must match exactly</p>
+      <p>Where the regulator requires pre-registered templates (India's DLT regime, for example), the text you send must match the registered text <strong>character for character</strong>. Editing a template in SnapBuy without updating the registration causes silent delivery failure.</p>
+    </div>
+
+    <h2>Cost control</h2>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">SMS costs scale with signups, including fraudulent ones</p>
+      <p>Each OTP is a paid message. An automated signup script can generate thousands of OTP requests overnight, and you are billed for all of them.</p>
+      <p>Mitigations: set a spending cap in your provider's dashboard, enable alerts, and watch for unusual signup spikes.</p>
+    </div>
+
+    <h2>Testing</h2>
+
+    <ol>
+      <li>Save the credentials and visit <code>/clear</code>.</li>
+      <li>Set phone login to use the custom SMS gateway in <a href="../admin/login-settings.html">Login Settings</a>.</li>
+      <li>Sign up with a real number on a real device.</li>
+      <li>Confirm the OTP arrives and works.</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Test with a number outside your own network</p>
+      <p>Delivery can succeed on one carrier and fail on another. Try at least two.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>OTP never arrives</td><td>Wrong credentials, or trial-account restriction</td><td>Verify keys; upgrade from trial</td></tr>
+    <tr><td>Provider reports success, nothing received</td><td>DLT/sender ID not registered</td><td>Complete registration</td></tr>
+    <tr><td>Works for some numbers only</td><td>Trial account verified-number restriction</td><td>Upgrade the account</td></tr>
+    <tr><td>"Authentication failed"</td><td>Auth token rotated at the provider</td><td>Copy the current token</td></tr>
+    <tr><td>Wrong sender name</td><td>Sender ID not set or not approved</td><td>Set an approved sender ID</td></tr>
+    <tr><td>Phone login broke after saving</td><td>Firebase auth disabled before SMS worked</td><td>Re-enable Firebase auth until SMS is verified</td></tr>
+    <tr><td>Unexpectedly large bill</td><td>OTP abuse</td><td>Set a spend cap; investigate signup spikes</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Provider chosen to match your market</li>
+      <li class="task-item"><input type="checkbox" disabled> Credentials entered and saved</li>
+      <li class="task-item"><input type="checkbox" disabled> Account upgraded from trial</li>
+      <li class="task-item"><input type="checkbox" disabled> Sender ID / DLT registration complete where required</li>
+      <li class="task-item"><input type="checkbox" disabled> Templates match any registered text exactly</li>
+      <li class="task-item"><input type="checkbox" disabled> Spending cap and alerts configured</li>
+      <li class="task-item"><input type="checkbox" disabled> Real OTP received on two different carriers</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/sms-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

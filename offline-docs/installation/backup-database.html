@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Backup Database — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Backup Database</h1>
+
+    <p>Take a full database backup before any <a href="../admin/system-updater.html">System Updater</a> update, <a href="../admin/bulk-upload.html">Bulk Upload</a>, or manual migration. A backup is a plain SQL dump you can restore in minutes if something goes wrong — there is no undo inside SnapBuy itself.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Do this every time, not just for big changes</p>
+      <p>Migrations can fail part-way even on a small update. A five-minute backup is cheaper than rebuilding lost data.</p>
+    </div>
+
+    <h2>Option 1 — cPanel (shared hosting)</h2>
+
+    <ol>
+      <li>Open <strong>phpMyAdmin</strong> from cPanel.</li>
+      <li>Select your SnapBuy database in the left sidebar.</li>
+      <li>Click the <strong>Export</strong> tab.</li>
+      <li>Export method: <strong>Quick</strong>.</li>
+      <li>Format: <strong>SQL</strong>.</li>
+      <li>Click <strong>Go</strong> and save the <code>.sql</code> file somewhere off the server (your computer or cloud storage).</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Large databases</p>
+      <p>If the export times out or the download is huge, use cPanel's <strong>Backup Wizard</strong> → <strong>Download a MySQL Database Backup</strong> instead — it streams a gzip-compressed dump.</p>
+    </div>
+
+    <h2>Option 2 — Command line (<code>mysqldump</code>)</h2>
+
+    <p>If you have SSH access:</p>
+
+    <pre><code>mysqldump -u your_db_user -p your_db_name > snapbuy_backup_$(date +%Y%m%d).sql</code></pre>
+
+    <p>You will be prompted for the database password. To compress the dump:</p>
+
+    <pre><code>mysqldump -u your_db_user -p your_db_name | gzip > snapbuy_backup_$(date +%Y%m%d).sql.gz</code></pre>
+
+    <p>Find the exact database name and username in your <code>.env</code> file (<code>DB_DATABASE</code>, <code>DB_USERNAME</code>).</p>
+
+    <h2>Option 3 — Hosting provider snapshot</h2>
+
+    <p>Many managed hosts (Cloudways, RunCloud, Forge) offer scheduled or one-click database snapshots in their dashboard. If yours does, it is the fastest option — but always confirm you can locate and restore a snapshot before you need one, not during an incident.</p>
+
+    <h2>Restoring a backup</h2>
+
+    <p><strong>Via phpMyAdmin:</strong></p>
+
+    <ol>
+      <li>Create a new empty database, or truncate the existing one.</li>
+      <li>Open the database → <strong>Import</strong> tab.</li>
+      <li>Choose your <code>.sql</code> file and click <strong>Go</strong>.</li>
+    </ol>
+
+    <p><strong>Via command line:</strong></p>
+
+    <pre><code>mysql -u your_db_user -p your_db_name < snapbuy_backup_20260101.sql</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Restoring overwrites matching tables</p>
+      <p>Import into an empty or disposable database first if you are unsure the dump is the right one. Restoring into a live database with newer data will lose anything written after the backup was taken.</p>
+    </div>
+
+    <h2>Where backups fit into an update</h2>
+
+    <ol>
+      <li><a href="backup-database.html">Backup Database</a> <em>(this page)</em></li>
+      <li><a href="backup-project.html">Backup Project Files</a></li>
+      <li>Enable <a href="../admin/maintenance-mode.html">Maintenance Mode</a></li>
+      <li>Apply the update via <a href="../admin/system-updater.html">System Updater</a></li>
+      <li>Verify, then disable maintenance mode</li>
+    </ol>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Export times out in phpMyAdmin</td><td>Database too large for the web UI</td><td>Use <code>mysqldump</code> over SSH, or the host's Backup Wizard</td></tr>
+          <tr><td><code>mysqldump: command not found</code></td><td>Not run on the database server, or MySQL client not installed</td><td>Run it on the server itself, or install the <code>mysql-client</code> package</td></tr>
+          <tr><td>Import fails with <code>Access denied</code></td><td>Wrong database user or missing privileges</td><td>Confirm the user has <code>ALL PRIVILEGES</code> on the target database</td></tr>
+          <tr><td>Restored site still shows old data</td><td>Restored into the wrong database, or caches are stale</td><td>Confirm <code>DB_DATABASE</code> in <code>.env</code>, then visit <code>/clear</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "installation/backup-database.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

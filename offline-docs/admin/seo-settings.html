@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SEO Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>SEO Settings</h1>
+
+    <p>Menu path: <strong>Settings → SEO Settings</strong></p>
+
+    <p>Controls how your web portal appears in search results and when a link is shared on social media or messaging apps.</p>
+
+    <img src="../images/panel/seo-settings-page.png" alt="SEO settings page">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Applies to the web portal only</p>
+      <p>SEO affects the customer-facing website. The mobile apps are not indexed by search engines.</p>
+    </div>
+
+    <h2>Per-page settings</h2>
+
+    <p>Each key page carries its own entry — home, category listings, product pages, blogs, and static pages.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Meta Title</strong></td><td>The clickable headline in search results</td></tr>
+        <tr><td><strong>Meta Description</strong></td><td>The summary beneath it</td></tr>
+        <tr><td><strong>Meta Keywords</strong></td><td>Largely ignored by modern search engines</td></tr>
+        <tr><td><strong>OG Image</strong></td><td>Preview image when the link is shared</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Writing meta titles</h2>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Keep titles to about 60 characters</p>
+      <p>Google truncates longer titles mid-word. Put the distinguishing part first — the brand name belongs at the end, not the beginning.</p>
+      <p>Good: <code>Fresh Organic Vegetables — Same Day Delivery | SnapBuy</code><br>
+      Weak: <code>SnapBuy — Welcome to our online store, shop now for the best deals</code></p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Every page needs a different title</p>
+      <p>Duplicate titles across pages actively hurt ranking, and they make your search results indistinguishable to a user scanning them.</p>
+    </div>
+
+    <h2>Writing meta descriptions</h2>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Around 155 characters, written as a pitch</p>
+      <p>The description does not directly affect ranking, but it decides whether someone clicks. Describe what the page offers and why it is worth a tap. Avoid keyword stuffing — it reads as spam to both search engines and people.</p>
+    </div>
+
+    <h2>Open Graph images</h2>
+
+    <p>The OG image is the preview shown when a link is pasted into WhatsApp, Facebook, X or Slack.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Recommended size</td><td>1200 × 630 px</td></tr>
+        <tr><td>Maximum file size</td><td><strong>2 MB</strong></td></tr>
+        <tr><td>Formats</td><td>jpeg, jpg, png, gif, svg, webp</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A missing OG image costs you shares</p>
+      <p>Without one, social platforms pick an arbitrary image from the page — often a logo fragment or a UI icon — or show a bare grey box. Links shared without a preview get dramatically fewer clicks.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Keep text away from the edges</p>
+      <p>Different platforms crop the 1200 × 630 image differently. Keep any text well inside the centre so it survives every crop.</p>
+    </div>
+
+    <h2>Prerequisites</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="../admin/website-settings.html#website-url">Website URL</a> set correctly</td><td>Canonical tags and OG URLs are built from it</td></tr>
+        <tr><td>SSL installed</td><td>Search engines demote plain HTTP</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A wrong Website URL breaks SEO silently</p>
+      <p>Canonical tags built from a wrong URL tell search engines your real pages are duplicates of a non-existent site. Confirm the URL in <a href="../admin/website-settings.html">Website Settings</a> before tuning anything here.</p>
+    </div>
+
+    <h2>Static generation caveat</h2>
+
+    <p>Parts of the web portal are pre-rendered at build time. Changing SEO values in the panel may require the storefront to be rebuilt before search engines see them — see <a href="../web/deployment.html">Web Portal Deployment</a>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Changes not appearing in the page source?</p>
+      <p>Check whether your storefront needs a rebuild. Panel-side changes are stored immediately, but a statically generated page keeps serving the values it was built with.</p>
+    </div>
+
+    <h2>Verifying</h2>
+
+    <ol>
+      <li>Open the storefront and view the page source.</li>
+      <li>Confirm <code>&lt;title&gt;</code>, <code>&lt;meta name="description"&gt;</code> and <code>og:image</code> reflect your entries.</li>
+      <li>Test a share preview with the <a href="https://developers.facebook.com/tools/debug/">Facebook Sharing Debugger</a>.</li>
+      <li>Submit your sitemap in <a href="https://search.google.com/search-console">Google Search Console</a>.</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Social platforms cache aggressively</p>
+      <p>After changing an OG image, use the sharing debugger to force a re-scrape. Otherwise the old preview persists for days.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Search results show the wrong title</td><td>Google chose its own, or the page needs re-crawling</td><td>Make the title relevant and distinct; request re-indexing</td></tr>
+        <tr><td>Shared links show no image</td><td>OG image missing or over 2 MB</td><td>Upload a 1200 × 630 image under 2 MB</td></tr>
+        <tr><td>Old preview still showing</td><td>Platform cache</td><td>Force a re-scrape in the sharing debugger</td></tr>
+        <tr><td>Changes not in the page source</td><td>Storefront needs rebuilding</td><td>Rebuild and redeploy the web portal</td></tr>
+        <tr><td>Pages not indexed</td><td>Sitemap not submitted, or site is new</td><td>Submit in Search Console and wait</td></tr>
+        <tr><td>Canonical points at the wrong domain</td><td>Website URL misconfigured</td><td>Fix it in <a href="../admin/website-settings.html">Website Settings</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/seo-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

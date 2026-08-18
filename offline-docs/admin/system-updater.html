@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>System Updater — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>System Updater</h1>
+
+    <p>Menu path: <strong>Settings → System Updater</strong></p>
+
+    <p>Applies a SnapBuy update from a <code>.zip</code> package you upload, without touching FTP or SSH.</p>
+
+    <img src="../images/panel/system-updater-page.png" alt="System updater page">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Back up before every update</p>
+      <p>An update overwrites application files and runs database migrations. There is no undo button.</p>
+      <p>Before you start:</p>
+      <ol>
+        <li>Back up the <strong>database</strong> — see <a href="../installation/backup-database.html">Backup Database</a></li>
+        <li>Back up the <strong>project files</strong> — see <a href="../installation/backup-project.html">Backup Project</a></li>
+      </ol>
+      <p>Do this every time, including for updates you expect to be small.</p>
+    </div>
+
+    <h2>What happens</h2>
+    <ol>
+      <li>You download the official update package from your purchase source (CodeCanyon).</li>
+      <li>You upload the <code>.zip</code> here, along with your purchase code.</li>
+      <li>The purchase code is validated against the domain the panel is actually served from.</li>
+      <li>The archive is extracted to a temporary folder.</li>
+      <li>Files are copied over the application root.</li>
+      <li>Database migrations run.</li>
+      <li>Caches are cleared.</li>
+    </ol>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">No remote update server is contacted</p>
+      <p>SnapBuy never downloads updates by itself. You control exactly which package is applied and when.</p>
+    </div>
+
+    <h2>Requirements</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Valid purchase code</strong></td><td>Validated against the panel's live domain</td></tr>
+        <tr><td><strong>PHP <code>zip</code> extension</strong></td><td>The update is refused without it</td></tr>
+        <tr><td><strong>Upload limits</strong></td><td>The ceiling is 1 GB; real packages are far smaller</td></tr>
+        <tr><td><strong>Writable application root</strong></td><td>Files are copied over the live installation</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Purchase code is checked against the real domain</p>
+      <p>Validation uses the address the panel is being served from, not the <code>APP_URL</code> value in <code>.env</code>. Editing <code>APP_URL</code> will not make a code for a different domain work.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Raise PHP limits before uploading</p>
+      <p>A large package can exceed the defaults and fail part-way — which is the worst outcome, because some files may already be replaced. Confirm <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> are generous first. See <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
+    </div>
+
+    <h2>Applying an update</h2>
+    <ol>
+      <li>Take both backups.</li>
+      <li>Put the customer-facing surfaces into <a href="../admin/maintenance-mode.html">Maintenance Mode</a>.</li>
+      <li>Go to <strong>Settings → System Updater</strong>.</li>
+      <li>Upload the <code>.zip</code> and enter your purchase code.</li>
+      <li>Wait — do not refresh or navigate away.</li>
+      <li>Visit <code>/clear</code> once it completes.</li>
+      <li>Test before turning maintenance off.</li>
+    </ol>
+
+    <img src="../images/panel/system-updater-upload.png" alt="Uploading an update package">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not interrupt an update in progress</p>
+      <p>Refreshing mid-copy can leave a half-updated file set — some files new, some old — which usually produces fatal errors. If it appears to hang, wait it out, then check <code>storage/logs/laravel.log</code> before doing anything else.</p>
+    </div>
+
+    <h2>After updating</h2>
+    <p>Check these, in order:</p>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> The panel loads and you can sign in</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>/clear</code> has been visited</li>
+      <li class="task-item"><input type="checkbox" disabled> Product images still display — if not, visit <code>/linkstorage</code></li>
+      <li class="task-item"><input type="checkbox" disabled> Place a test order end to end</li>
+      <li class="task-item"><input type="checkbox" disabled> A test payment still completes</li>
+      <li class="task-item"><input type="checkbox" disabled> Push notifications still arrive</li>
+      <li class="task-item"><input type="checkbox" disabled> The cron heartbeat is still green under <a href="../admin/cron-jobs.html">Cron Jobs</a></li>
+      <li class="task-item"><input type="checkbox" disabled> Turn maintenance off</li>
+    </ul>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Update a staging copy first if you have customised anything</p>
+      <p>The updater copies package files over yours. Any file you edited directly — a template, a controller, a style sheet — is overwritten without warning. If you have customisations, apply the update to a copy first and reapply your changes there.</p>
+    </div>
+
+    <h2>Updating manually instead</h2>
+    <p>If the uploader fails — usually because of PHP limits on shared hosting — apply it over FTP or SSH:</p>
+
+    <pre><code># with backups already taken
+unzip update.zip -d /path/to/snapbuy
+cd /path/to/snapbuy
+php artisan migrate --force
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear</code></pre>
+
+    <p>If you cannot run Artisan, the panel exposes <code>/migration</code> and <code>/clear</code> as browser equivalents.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Those URLs are unauthenticated</p>
+      <p><code>/migration</code>, <code>/clear</code>, <code>/migrate</code> and <code>/logs</code> are not behind a login. Restrict them by IP in production — see <a href="../admin/server-setup.html#secure-the-maintenance-routes">Server Setup</a>.</p>
+    </div>
+
+    <h2>Demo mode</h2>
+    <p>Updates are disabled when the installation is running in demo mode, with <em>"This action is disabled in demo mode."</em></p>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>"Invalid purchase code"</td><td>Code belongs to another domain, or no outbound HTTPS</td><td>Check the domain; test <code>curl -I https://validator.wrteam.in</code></td></tr>
+        <tr><td>"Please upload a valid zip file"</td><td>Wrong file type or a corrupt download</td><td>Re-download the package</td></tr>
+        <tr><td>"PHP zip extension is required"</td><td><code>zip</code> not enabled</td><td>Enable it and restart the web server</td></tr>
+        <tr><td>Upload fails on a large file</td><td>PHP limits too low</td><td>Raise them — see <a href="../admin/php-ini-settings.html">PHP INI Settings</a></td></tr>
+        <tr><td>Update completes, panel errors</td><td>Stale caches</td><td>Visit <code>/clear</code></td></tr>
+        <tr><td>Images gone after updating</td><td>Symlink lost</td><td>Visit <code>/linkstorage</code></td></tr>
+        <tr><td>Customisations disappeared</td><td>Overwritten by the package</td><td>Restore from your file backup</td></tr>
+        <tr><td>Update hung part-way</td><td>Execution timeout</td><td>Restore from backup and retry with higher limits</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/system-updater.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change App Theme Color — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Change App Theme Color</h1>
+    
+    <p>Update the app's primary (theme) color from the admin panel — no code changes required.</p>
+    
+    <h2>Steps</h2>
+    
+    <ol>
+    <li>Open your <strong>Admin Panel</strong>.</li>
+    <li>Navigate to <strong>Settings → Website &amp; Apps → App Setting</strong> tab.</li>
+    <li>Set the new color in the <strong>Primary Color</strong> field.</li>
+    <li>Click <strong>Save</strong>.</li>
+    </ol>
+    
+    <img src="../images/app/customer/changeThemeColor.png" alt="Change Theme Color">
+    
+    <div class="admonition admonition--warning">
+    <p class="admonition__title">Warning</p>
+    <p>Enter the color as a <strong>hex code only</strong> (e.g. <code>#0E9623</code>). Other formats (RGB, named colors) are not supported and will be rejected.</p>
+    </div>
+    
+    <p>The app fetches the updated theme color on next launch and applies it across all primary UI elements (buttons, highlights, etc.).</p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/change-theme-color.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

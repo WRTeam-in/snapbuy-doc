@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Add Map API Key — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Add Map API Key</h1>
+
+    <p>The app uses Google Maps for showing nearby stores and delivery locations. You need a Google Cloud API key with the <strong>Maps SDK for Android</strong> and <strong>Maps SDK for iOS</strong> enabled.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>Google Maps usage may incur additional charges from Google beyond your free monthly quota. See their <a href="https://mapsplatform.google.com/pricing/">pricing page</a> before going live.</p>
+    </div>
+
+    <h2>Step 1 — Open Google Cloud Console</h2>
+    <ol>
+      <li>Visit <a href="https://cloud.google.com/">https://cloud.google.com/</a> and sign in with your Google account.</li>
+      <li>Click <strong>Console</strong> (top-right) to open the Google Cloud Console.</li>
+      <li>Create a new project, or select an existing one from the project picker.</li>
+    </ol>
+
+    <img src="../images/app/customer/mapAPI1.png" alt="Google Cloud project selector">
+    <img src="../images/app/customer/mapAPI2.png" alt="Project selector">
+
+    <h2>Step 2 — Enable Required APIs</h2>
+
+    <p>In the left sidebar, go to <strong>APIs &amp; Services → Library</strong>, then search for and enable the following APIs:</p>
+    <ul>
+      <li><strong>Maps SDK for Android</strong></li>
+      <li><strong>Maps SDK for iOS</strong></li>
+    </ul>
+
+    <p>For each one, click the API → <strong>Enable</strong>.</p>
+
+    <img src="../images/app/customer/mapAPI3.png" alt="Enable Maps SDK for iOS">
+    <img src="../images/app/customer/mapAPI4.png" alt="Enable API">
+
+    <h2>Step 3 — Create an API Key</h2>
+
+    <p>Google recommends creating <strong>two separate keys</strong> — one for Android, one for iOS — instead of one shared key. Each platform uses a different restriction type (package name + SHA-1 for Android, bundle ID for iOS), and a single key cannot carry both restrictions at once. Separate keys also let you revoke or rotate one platform's key without breaking the other.</p>
+
+    <ol>
+      <li>Go to <strong>APIs &amp; Services → Credentials</strong>.</li>
+      <li>Click <strong>+ Create Credentials → API key</strong>.</li>
+      <li>Edit newly created key, rename it something clear like <code>Android Maps Key</code>, add the <strong>Maps SDK for Android</strong> API from Step 2, and tap <strong>Save</strong>.</li>
+      <li>Repeat steps 2–3 to create a second key named <code>iOS Maps Key</code>, this time adding the <strong>Maps SDK for iOS</strong> API.</li>
+      <li>Copy both generated keys — you will paste them into the app code in Step 4.</li>
+    </ol>
+
+    <img src="../images/app/customer/mapAPI5.png" alt="Copy generated API key">
+
+    <h2>Step 3.1 — Restrict Each Key for Production</h2>
+
+    <p>Before releasing to production, restrict each key so it only works from your app. An unrestricted key can be copied from your app package and used by anyone.</p>
+
+    <p><strong>Android key restrictions:</strong></p>
+    <ol>
+      <li>Open the Android key in <strong>Credentials</strong>.</li>
+      <li>Under <strong>Application restrictions</strong>, select <strong>Android apps</strong>.</li>
+      <li>Click <strong>Add an item</strong> and enter your app's <strong>package name</strong> (e.g. <code>app.snapbuy.customer</code>) and its <strong>SHA-1 certificate fingerprint</strong> (get it via <code>keytool -list -v -keystore your.keystore</code> or from Play Console → App signing).</li>
+      <li>Under <strong>API restrictions</strong>, select <strong>Restrict key</strong> and check only <strong>Maps SDK for Android</strong>.</li>
+      <li>Save.</li>
+    </ol>
+
+    <p><strong>iOS key restrictions:</strong></p>
+    <ol>
+      <li>Open the iOS key in <strong>Credentials</strong>.</li>
+      <li>Under <strong>Application restrictions</strong>, select <strong>iOS apps</strong>.</li>
+      <li>Click <strong>Add an item</strong> and enter your app's <strong>bundle identifier</strong> (e.g. <code>app.snapbuy.customer</code>, found in Xcode → Runner target → General).</li>
+      <li>Under <strong>API restrictions</strong>, select <strong>Restrict key</strong> and check only <strong>Maps SDK for iOS</strong>.</li>
+      <li>Save.</li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>Add both your debug and release SHA-1 fingerprints for the Android key, or map testing will break in debug builds while working in release (or vice versa).</p>
+    </div>
+
+    <h2>Step 4 — Paste the Key into the App</h2>
+
+    <h3>Android — <code>AndroidManifest.xml</code></h3>
+
+    <p>Open <code>android/app/src/main/AndroidManifest.xml</code> and add the following <code>&lt;meta-data&gt;</code> tag inside the <code>&lt;application&gt;</code> tag:</p>
+
+    <pre><code class="language-xml">&lt;meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_MAP_API_KEY_HERE"/&gt;</code></pre>
+
+    <p>Replace <code>YOUR_MAP_API_KEY_HERE</code> with the <strong>Android key</strong> you copied in Step 3.</p>
+
+    <h3>iOS — <code>AppDelegate.swift</code></h3>
+
+    <p>Open <code>ios/Runner/AppDelegate.swift</code> and search for the following line:</p>
+
+    <pre><code class="language-swift">GMSServices.provideAPIKey("YOUR_MAP_API_KEY_HERE")</code></pre>
+
+    <p>Replace <code>YOUR_MAP_API_KEY_HERE</code> with the <strong>iOS key</strong> you copied in Step 3.</p>
+
+    <h2>Step 5 — Rebuild</h2>
+
+    <pre><code class="language-bash">flutter clean && flutter run</code></pre>
+
+    <p>Maps should now load correctly on both platforms.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>Never commit your raw API keys to a public repository. Apply key restrictions (Step 3.1) before release, and consider storing keys in a non-tracked file for production builds.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-customer/map-api-key.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

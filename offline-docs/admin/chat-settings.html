@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chat Settings (Reverb / Pusher) — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Chat Settings (Reverb / Pusher)</h1>
+
+    <p><strong>Setup Guide step 8 of 9.</strong> Menu path: <strong>Settings → Chat Settings</strong></p>
+
+    <p>Chat lets customers, delivery boys and admins message each other in real time — a customer asking the rider to wait, or support resolving an order problem without a phone call.</p>
+
+    <p>Real-time messaging needs a <strong>WebSocket server</strong>. SnapBuy supports two:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Driver</th><th>Cost</th><th>Runs where</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Reverb</strong></td><td>Free</td><td>Your own server, as a long-running process</td><td>VPS and dedicated servers</td></tr>
+        <tr><td><strong>Pusher</strong></td><td>Paid, with a free tier</td><td>Pusher's cloud</td><td>Shared hosting, or avoiding server admin</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/chat-settings-page.png" alt="Chat settings page">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Choose by your hosting, not by price</p>
+      <p><strong>Reverb needs a permanently running process and an open port.</strong> Most shared hosting allows neither. If you are on cPanel shared hosting, choose <strong>Pusher</strong> — Reverb will never connect no matter how correct the credentials are.</p>
+    </div>
+
+    <h2>Option A — Reverb (self-hosted)</h2>
+    <p>Reverb ships with SnapBuy. Installation <strong>generates credentials automatically</strong> if they were empty, so the fields are usually already filled in.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>App ID</strong></td><td>Generated at install</td></tr>
+        <tr><td><strong>App Key</strong></td><td>Generated at install</td></tr>
+        <tr><td><strong>App Secret</strong></td><td>Generated at install</td></tr>
+        <tr><td><strong>Host</strong></td><td>Your domain, or <code>localhost</code> in development</td></tr>
+        <tr><td><strong>Port</strong></td><td><code>9090</code> by default</td></tr>
+        <tr><td><strong>Scheme</strong></td><td><code>http</code> or <code>https</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Credentials alone are not enough</p>
+      <p>The Setup Guide's Chat step goes green as soon as the credentials are present. <strong>It does not verify the Reverb process is running.</strong> A green step with a dead server means chat silently does nothing.</p>
+    </div>
+
+    <h3>Start the Reverb server</h3>
+    <pre><code>php artisan reverb:start</code></pre>
+
+    <p>That stops when you close the terminal. For production, keep it alive with Supervisor.</p>
+
+    <p>Create <code>/etc/supervisor/conf.d/snapbuy-reverb.conf</code>:</p>
+    <pre><code>[program:snapbuy-reverb]
+process_name=%(program_name)s
+command=php /var/www/snapbuy/artisan reverb:start --host=0.0.0.0 --port=9090
+autostart=true
+autorestart=true
+user=www-data
+redirect_stderr=true
+stdout_logfile=/var/www/snapbuy/storage/logs/reverb.log
+stopwaitsecs=3600</code></pre>
+
+    <p>Then:</p>
+    <pre><code>sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start snapbuy-reverb
+sudo supervisorctl status</code></pre>
+
+    <h3>Open the port</h3>
+    <pre><code>sudo ufw allow 9090</code></pre>
+
+    <h3>Proxy WebSockets through HTTPS</h3>
+    <p>Browsers on an HTTPS page refuse to open an insecure <code>ws://</code> connection. Proxy the WebSocket through Nginx so it is served over <code>wss://</code>:</p>
+    <pre><code>location /app {
+    proxy_pass http://127.0.0.1:9090;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+    proxy_set_header Host $host;
+    proxy_read_timeout 60s;
+}</code></pre>
+
+    <p>Then set <strong>Scheme</strong> to <code>https</code> and <strong>Port</strong> to <code>443</code> in the panel.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Mixed content kills chat silently</p>
+      <p>An HTTPS panel talking to <code>ws://yourdomain:9090</code> is blocked by the browser. Nothing appears in the panel — chat just never connects. Check the browser console for a blocked-insecure-connection message.</p>
+    </div>
+
+    <h2>Option B — Pusher (hosted)</h2>
+    <p>Nothing to run or keep alive.</p>
+    <ol>
+      <li>Sign up at <a href="https://pusher.com/">pusher.com</a> and open <strong>Channels</strong>.</li>
+      <li>Create an app, choosing the cluster closest to your customers.</li>
+      <li>Open <strong>App Keys</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Pusher value</th></tr></thead>
+      <tbody>
+        <tr><td><strong>App ID</strong></td><td><code>app_id</code></td></tr>
+        <tr><td><strong>App Key</strong></td><td><code>key</code></td></tr>
+        <tr><td><strong>App Secret</strong></td><td><code>secret</code></td></tr>
+        <tr><td><strong>Cluster</strong></td><td><code>cluster</code> — for example <code>ap2</code>, <code>eu</code>, <code>us2</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The cluster must match exactly</p>
+      <p>A correct key with the wrong cluster fails to connect with no useful error. Copy the cluster string from the same App Keys screen as the credentials.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Pick the cluster nearest your customers</p>
+      <p>Cluster choice sets message latency. Serving India from a US cluster adds noticeable delay to every message.</p>
+    </div>
+
+    <p>Pusher's free tier covers a limited number of daily messages and concurrent connections — fine for a small store, worth watching as you grow.</p>
+
+    <h2>Verify chat works</h2>
+    <ol>
+      <li>Save the settings, then visit <code>/clear</code>.</li>
+      <li>Open <strong>Chat</strong> in the panel.</li>
+      <li>From the customer app or web portal, send a message on an order.</li>
+      <li>It should appear in the panel <strong>without refreshing</strong>.</li>
+    </ol>
+
+    <img src="../images/panel/chat-panel.png" alt="Chat panel">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Messages appear only after refresh?</p>
+      <p>The message was stored but not broadcast — the WebSocket connection is down. For Reverb, check the process is running and the port is open. For Pusher, check the cluster.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Setup Guide Chat step red</td><td>A credential field is blank</td><td>Fill all fields for the selected driver</td></tr>
+        <tr><td>Step green, chat still dead</td><td>Reverb process not running</td><td><code>sudo supervisorctl status</code>, then start it</td></tr>
+        <tr><td>Works locally, not in production</td><td>Mixed content — <code>ws://</code> on an HTTPS page</td><td>Proxy through Nginx, set scheme to <code>https</code></td></tr>
+        <tr><td>Connection refused</td><td>Port 9090 closed</td><td><code>sudo ufw allow 9090</code></td></tr>
+        <tr><td>Pusher connects then drops</td><td>Wrong cluster</td><td>Match the cluster on the App Keys screen</td></tr>
+        <tr><td>Chat stopped after moving hosts</td><td>Reverb chosen on shared hosting</td><td>Switch to Pusher</td></tr>
+        <tr><td>Messages delayed by seconds</td><td>Distant Pusher cluster</td><td>Recreate the app on a nearer cluster</td></tr>
+        <tr><td>Nothing changed after saving</td><td>Cached config</td><td>Visit <code>/clear</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Checklist</h2>
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Driver chosen to suit the hosting</li>
+      <li class="task-item"><input type="checkbox" disabled> All credentials filled</li>
+      <li class="task-item"><input type="checkbox" disabled> Reverb: process running under Supervisor</li>
+      <li class="task-item"><input type="checkbox" disabled> Reverb: port open, or proxied through Nginx over <code>wss://</code></li>
+      <li class="task-item"><input type="checkbox" disabled> Pusher: cluster matches the dashboard</li>
+      <li class="task-item"><input type="checkbox" disabled> Live message tested end to end without refreshing</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/chat-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

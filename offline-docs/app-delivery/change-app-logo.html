@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change App Logo — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Change App Logo</h1>
+
+    <p>Replace the default app icon with your own branded logo for both Android and iOS builds.</p>
+
+    <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/appicon">Change App Logo Documentation</a> and follow <strong>every step in the order shown</strong>.</p>
+
+    <h2>What the Guide Covers</h2>
+    <ul>
+      <li>Adding the <code>flutter_launcher_icons</code> package to <code>pubspec.yaml</code></li>
+      <li>Configuring the icon source path, Android / iOS flags, and alpha-channel handling</li>
+      <li>Running <code>dart run flutter_launcher_icons</code> to generate all required sizes</li>
+      <li>Manual replacement of Android <code>mipmap-*</code> and iOS <code>AppIcon.appiconset</code> files (if you prefer not to use the package)</li>
+    </ul>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">WARNING</p>
+      <p>For iOS App Store submission, the icon <strong>must not contain an alpha channel</strong> (no transparency). Use <code>remove_alpha_ios: true</code> in the package config, or flatten the image before manual replacement.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "app-delivery/change-app-logo.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

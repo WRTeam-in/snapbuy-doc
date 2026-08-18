@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deeplink Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Deeplink Settings</h1>
+
+    <p>Menu path: <strong>Settings → Deeplink Settings</strong></p>
+
+    <p>A deeplink opens a specific screen in your app rather than the app's home screen. Tapping a shared product link should land on that product — not on a generic landing page.</p>
+
+    <img src="../images/panel/deeplink-settings-page.png" alt="Deeplink settings page">
+
+    <h2>The setting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Deeplink Schema</strong></td><td>The custom URL scheme your apps register — for example <code>snapbuy</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>With the schema set to <code>snapbuy</code>, links take the form:</p>
+
+    <pre><code>snapbuy://product/1042
+snapbuy://category/17</code></pre>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The schema must match what is built into the apps</p>
+      <p>The scheme is compiled into the Customer and Delivery Boy apps. Changing it here without rebuilding and republishing both apps breaks every deeplink — taps open nothing at all.</p>
+      <p>Set it during initial setup and leave it alone.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Choose a unique schema</p>
+      <p>Schemes are first-come, first-served on a device. A generic value like <code>shop</code> or <code>store</code> may already be claimed by another installed app, and the wrong app opens. Use your brand name.</p>
+    </div>
+
+    <h2>What deeplinks are used for</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Use</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>Shared product links</td><td>Opens that product in the app</td></tr>
+        <tr><td>Push notification taps</td><td>Opens the relevant order or offer</td></tr>
+        <tr><td>Promotional campaign links</td><td>Sends customers to a specific category or offer</td></tr>
+        <tr><td>Payment gateway returns</td><td>Brings the customer back into the app after paying</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Payment returns depend on this</p>
+      <p>Several gateways redirect the customer back after payment. Without a working deeplink, mobile customers are stranded in the browser after paying — the money is taken but they never return to the order confirmation, and they usually assume the payment failed and try again.</p>
+    </div>
+
+    <h2>App-side configuration</h2>
+
+    <p>The panel setting is only half the job. Each app must declare the scheme:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Platform</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Android</strong></td><td>Intent filter in <code>AndroidManifest.xml</code></td></tr>
+        <tr><td><strong>iOS</strong></td><td>URL Types in <code>Info.plist</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>See <a href="../app-customer/panel-url-deeplink.html">Customer App — Panel URL &amp; Deeplink</a>.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Universal Links and App Links</p>
+      <p>Custom schemes only work if the app is installed; a browser cannot resolve them otherwise. Android App Links and iOS Universal Links use your <code>https://</code> domain instead and fall back to the website when the app is absent. They need domain verification files hosted on your site and are configured in the app projects, not here.</p>
+    </div>
+
+    <h2>Testing</h2>
+
+    <p><strong>Android</strong>, over ADB:</p>
+
+    <pre><code>adb shell am start -a android.intent.action.VIEW -d "snapbuy://product/1"</code></pre>
+
+    <p><strong>iOS</strong>, in the simulator:</p>
+
+    <pre><code>xcrun simctl openurl booted "snapbuy://product/1"</code></pre>
+
+    <p>Or paste the link into a note on the device and tap it.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Test on a device without the app installed too</p>
+      <p>A deeplink that does nothing when the app is absent is expected behaviour for a custom scheme — but you should know what your customers see, and consider Universal Links if it matters.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Deeplinks do nothing</td><td>Schema differs from the app build</td><td>Match the value, or rebuild the apps</td></tr>
+        <tr><td>Wrong app opens</td><td>Schema collides with another app</td><td>Choose a unique schema</td></tr>
+        <tr><td>Works on Android, not iOS</td><td>URL Types missing from <code>Info.plist</code></td><td>Add it and rebuild</td></tr>
+        <tr><td>Customers stranded after paying</td><td>Deeplink not configured</td><td>Set the schema; verify the gateway return URL</td></tr>
+        <tr><td>Notification tap opens the home screen</td><td>Payload has no deeplink target</td><td>Check the notification template</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/deeplink-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

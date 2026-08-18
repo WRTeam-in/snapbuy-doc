@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notification, Email &amp; SMS Templates — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Notification, Email &amp; SMS Templates</h1>
+
+    <p>Three template libraries, one shared set of rules:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Library</th><th>Menu path</th><th>Delivered by</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Notification Templates</strong></td><td>Settings → Notification Templates</td><td>Firebase push</td></tr>
+          <tr><td><strong>Email Templates</strong></td><td>Settings → Email Templates</td><td><a href="../admin/smtp-settings.html">SMTP</a></td></tr>
+          <tr><td><strong>SMS Templates</strong></td><td>Settings → SMS Templates</td><td><a href="../admin/sms-settings.html">SMS gateway</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Templates decide <strong>what a message says</strong>. Whether it is sent at all is <a href="../admin/notification-settings.html">Notification Settings</a>.</p>
+
+    <img src="../images/panel/templates-list.png" alt="Notification templates list">
+
+    <h2>Placeholders</h2>
+
+    <p>Templates contain placeholders in curly braces, replaced at send time with real values.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Placeholder</th><th>Becomes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>{app_name}</code></td><td>Your store name from <a href="../admin/general-settings.html">General Settings</a></td></tr>
+          <tr><td><code>{customer_name}</code></td><td>The customer's name</td></tr>
+          <tr><td><code>{delivery_boy_name}</code></td><td>The assigned rider</td></tr>
+          <tr><td><code>{id}</code></td><td>Order or record ID</td></tr>
+          <tr><td><code>{amount}</code></td><td>Transaction amount</td></tr>
+          <tr><td><code>{final_total}</code></td><td>Order total</td></tr>
+          <tr><td><code>{discount}</code></td><td>Discount applied</td></tr>
+          <tr><td><code>{currency}</code></td><td>Currency symbol</td></tr>
+          <tr><td><code>{balance}</code></td><td>Wallet balance after the transaction</td></tr>
+          <tr><td><code>{message}</code></td><td>Chat message body</td></tr>
+          <tr><td><code>{expiry_date}</code></td><td>Promo code expiry</td></tr>
+          <tr><td><code>{blog_title}</code>, <code>{blog_url}</code></td><td>Blog post details</td></tr>
+          <tr><td><code>{created_at}</code></td><td>Timestamp</td></tr>
+          <tr><td><code>{otp}</code></td><td>One-time password (SMS)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Placeholders must match exactly</p>
+      <p><code>{customer_name}</code> works. <code>{Customer_Name}</code>, <code>{customer name}</code> and <code>{ customer_name }</code> do not — they are printed to the customer literally, braces and all.</p>
+      <p>Only use placeholders offered for that specific event. <code>{delivery_boy_name}</code> in a welcome message has no rider to resolve to and comes out blank.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Preview with real data</p>
+      <p>After editing, trigger the event once — place a test order, request a test OTP — and read what actually arrives. Placeholder mistakes are invisible in the editor and obvious in the message.</p>
+    </div>
+
+    <h2>Per-language templates</h2>
+
+    <p>Every template is editable <strong>per language</strong>. Customers receive the version matching their selected language, falling back to your default language when a translation is missing.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Add translations when you add a language</p>
+      <p>Adding a language under <a href="../admin/languages.html">Manage Languages</a> does not translate existing templates. Until you fill them in, those customers get the default language — which usually looks like a bug to them.</p>
+    </div>
+
+    <h2>Writing for each channel</h2>
+
+    <h3>Push notifications</h3>
+
+    <p>Short. A title and a body, both truncated by the operating system.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Aim for under 40 characters of title and 100 of body</p>
+      <p>Anything longer is cut off mid-sentence on a lock screen. Put the important part first: "Order ORD1042 is out for delivery" beats "We are pleased to inform you that…".</p>
+    </div>
+
+    <h3>Email</h3>
+
+    <p>HTML, so formatting and links are available.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Keep the SMTP content type set to HTML</p>
+      <p>With <a href="../admin/smtp-settings.html">SMTP</a> content type set to <code>Text</code>, HTML templates are delivered as raw markup.</p>
+    </div>
+
+    <p>Include an unsubscribe path in promotional email — required by anti-spam law in many jurisdictions.</p>
+
+    <h3>SMS</h3>
+
+    <p>Charged per segment: 160 characters for plain text, <strong>70</strong> if you include any non-GSM character.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Emoji and curly quotes triple your SMS cost</p>
+      <p>One emoji switches the whole message to Unicode encoding, dropping the segment size from 160 to 70 characters. A message that was one segment becomes three, and you pay three times for every send. Keep SMS plain.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Registered SMS templates must match character for character</p>
+      <p>Where the regulator requires pre-registration — India's DLT regime, for example — the text you send must be identical to the registered text. Editing an SMS template here without updating the registration causes silent delivery failure: the provider reports success and nothing arrives.</p>
+    </div>
+
+    <h2>OTP templates</h2>
+
+    <p>The OTP message deserves care — it is the first thing a new customer ever receives from you.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Keep OTP messages boring and short</p>
+      <p><code>{otp} is your {app_name} verification code. Do not share it.</code> — that is the whole message. Marketing copy in an OTP raises spam-filter risk and, in regulated markets, breaks the transactional classification you are billed under.</p>
+    </div>
+
+    <h2>Restoring defaults</h2>
+
+    <p>Templates are seeded at installation. If you overwrite one badly, re-seeding the template seeders restores the defaults — but this <strong>overwrites your edits to every template</strong>, not just the broken one.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Copy a template before you rewrite it</p>
+      <p>There is no per-template undo. Paste the original into a note first.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>{customer_name}</code> shown literally</td><td>Typo, or placeholder invalid for that event</td><td>Correct the spelling; use a supported placeholder</td></tr>
+          <tr><td>Message blank where a value should be</td><td>Placeholder has no value in that context</td><td>Use a placeholder valid for the event</td></tr>
+          <tr><td>Email arrives as raw HTML</td><td>SMTP content type is <code>Text</code></td><td>Set it to <code>HTML</code></td></tr>
+          <tr><td>Customers get the wrong language</td><td>Translation missing</td><td>Fill the template for that language</td></tr>
+          <tr><td>SMS costs tripled</td><td>Emoji or special characters</td><td>Remove them</td></tr>
+          <tr><td>SMS not delivered in India</td><td>Text differs from the DLT registration</td><td>Match it exactly</td></tr>
+          <tr><td>Push cut off mid-sentence</td><td>Too long</td><td>Shorten; front-load the meaning</td></tr>
+          <tr><td>Nothing sends at all</td><td>Event disabled, or cron/Firebase missing</td><td>See <a href="../admin/notification-settings.html">Notification Settings</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/notification-templates.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

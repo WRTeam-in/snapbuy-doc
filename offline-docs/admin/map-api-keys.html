@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Map &amp; API Keys — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Map &amp; API Keys</h1>
+
+    <p><strong>Setup Guide step 7 of 9.</strong> Menu path: <strong>Settings → API Credentials</strong></p>
+
+    <p>Maps do real work in SnapBuy, not decoration:</p>
+
+    <ul>
+      <li>Customers pick their delivery address on a map</li>
+      <li>You draw <a href="../admin/zones.html">zone</a> polygons on a map</li>
+      <li>You drop the <a href="../admin/stores.html">store</a> pin on a map</li>
+      <li><strong>Road distance between store and customer sets the quick-channel delivery charge</strong></li>
+    </ul>
+
+    <img src="../images/panel/map-api-page.png" alt="API credentials page">
+
+    <h2>Choose a provider</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Provider</th><th>Cost</th><th>Address autocomplete</th><th>Setup</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>OpenStreetMap</strong></td><td>Free</td><td>Basic</td><td>None — works immediately</td></tr>
+          <tr><td><strong>Google Maps</strong></td><td>Paid, with a monthly free credit</td><td>Excellent</td><td>Two API keys, billing enabled</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>SnapBuy defaults to <strong>OpenStreetMap</strong>, and distance is measured with the public OSRM routing service.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Start on OpenStreetMap</p>
+      <p>It needs no keys, no billing and no Google account, and the Setup Guide's Map step completes the moment you select it. Switch to Google later if address search quality becomes a problem.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">OpenStreetMap uses a shared public routing service</p>
+      <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a store doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
+    </div>
+
+    <h2>Using Google Maps</h2>
+
+    <p>Google needs <strong>two separate keys</strong>. This trips people up constantly.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>SnapBuy field</th><th>Google API</th><th>Used for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning stores</td></tr>
+          <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Distance Matrix belongs to the Place key, not the Map key</p>
+      <p>SnapBuy sends the Distance Matrix request using the <strong>Place API Key</strong>. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.</p>
+      <p>The symptom is "unable to fetch distance" at checkout on a panel where the maps clearly render fine.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Both keys are required</p>
+      <p>The Setup Guide marks the Map step complete only when <strong>both</strong> the Map key and the Place key are filled. Entering one leaves the step red — and address autocomplete or distance calculation will be broken depending on which is missing.</p>
+    </div>
+
+    <h3>Create the keys</h3>
+
+    <ol>
+      <li>Open <a href="https://console.cloud.google.com/">console.cloud.google.com</a>.</li>
+      <li>Create a project, or select one.</li>
+      <li><strong>Enable billing</strong> — Google refuses Maps requests without a billing account, even inside the free credit.</li>
+      <li>Go to <strong>APIs &amp; Services → Library</strong> and enable:
+        <ul>
+          <li>Maps JavaScript API</li>
+          <li>Places API</li>
+          <li>Places API (New)</li>
+          <li>Geocoding API</li>
+          <li>Distance Matrix API</li>
+          <li>Directions API</li>
+        </ul>
+      </li>
+      <li>Go to <strong>APIs &amp; Services → Credentials → Create credentials → API key</strong>.</li>
+      <li>Create <strong>two</strong> keys and name them clearly.</li>
+    </ol>
+
+    <p>Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. SnapBuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Billing must be enabled</p>
+      <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.</p>
+    </div>
+
+    <h3>Restrict the keys</h3>
+
+    <p>An unrestricted Maps key found in your page source can be used by anyone, billed to you.</p>
+
+    <p><strong>Map API Key</strong> — restrict by <strong>HTTP referrer</strong>:</p>
+
+    <pre><code>https://admin.yourstore.com/*
+https://yourstore.com/*</code></pre>
+
+    <p><strong>Place API Key</strong> — restrict by <strong>API</strong>, limited to Places, Places (New), Geocoding and Distance Matrix.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Restrict, but test afterwards</p>
+      <p>Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — <strong>then place a test order to an address a few kilometres from the store</strong> and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.</p>
+      <p>Restriction changes can take a few minutes to take effect.</p>
+    </div>
+
+    <h3>Set a budget alert</h3>
+
+    <p>In <strong>Billing → Budgets &amp; alerts</strong>, create a budget with email alerts. It will not stop charges, but you find out about a spike in hours rather than at the end of the month.</p>
+
+    <h2>Switching providers later</h2>
+
+    <p>Changing the provider is safe — existing zone polygons and store pins are stored as coordinates, not provider data, so they carry over.</p>
+
+    <p>After switching, visit <code>/clear</code> and reload the panel.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Test a real address after switching</p>
+      <p>Delivery charge depends on the distance lookup. After changing providers, place a test order to an address a few kilometres from the store and confirm the charge is sane.</p>
+    </div>
+
+    <h2>AI text generation key (optional)</h2>
+
+    <p>The same page has a <strong>Gemini Key</strong> field. It is unrelated to maps.</p>
+
+    <p>With a Google Gemini API key entered, the panel can generate text for you — product descriptions and blog content — from a short prompt.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Gemini Key</strong></td><td>From <a href="https://aistudio.google.com/app/apikey">aistudio.google.com/app/apikey</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Leave it blank to disable the feature. Nothing else depends on it.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Generated text still needs review</p>
+      <p>AI-written product copy can be confidently wrong about specifications, ingredients or compliance claims. Treat it as a first draft and check it before publishing.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Setup Guide Map step stays red</td><td>Provider is Google but only one key filled</td><td>Fill both Map and Place keys</td></tr>
+          <tr><td>Grey map with a watermark</td><td>Billing not enabled on the Google project</td><td>Enable billing</td></tr>
+          <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or key restricted too tightly</td><td>Enable the APIs; check referrer restrictions</td></tr>
+          <tr><td>Map loads, address search does nothing</td><td>Places API (New) not enabled, Places API not enabled, or Place key missing</td><td>Enable both Places services; fill the Place key</td></tr>
+          <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only</td><td>Enable Distance Matrix and allow it on the Place API Key</td></tr>
+          <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
+          <tr><td>Delivery charges wrong after switching provider</td><td>Cached config</td><td>Visit <code>/clear</code> and retest</td></tr>
+          <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Restrict by referrer and regenerate the key</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Provider chosen</li>
+      <li class="task-item"><input type="checkbox" disabled> If Google: billing enabled, all six APIs enabled (including Places API (New))</li>
+      <li class="task-item"><input type="checkbox" disabled> If Google: <strong>both</strong> Map and Place keys entered</li>
+      <li class="task-item"><input type="checkbox" disabled> Distance Matrix enabled and allowed on the Place API Key</li>
+      <li class="task-item"><input type="checkbox" disabled> Keys restricted by referrer/API</li>
+      <li class="task-item"><input type="checkbox" disabled> Budget alert configured</li>
+      <li class="task-item"><input type="checkbox" disabled> Zone map draws correctly</li>
+      <li class="task-item"><input type="checkbox" disabled> Test address returns a sensible delivery charge</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/map-api-keys.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Installation Steps — SnapBuy Documentation</title>
+<meta name="description" content="This guide will walk you through the process of installing and configuring the SnapBuy Web Portal for a production deployment." />
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Installation Steps</h1>
+
+    <p>This guide walks through installing and configuring the SnapBuy Web Portal for a production deployment.</p>
+
+    <h2>Prerequisites</h2>
+
+    <h3>Required tools</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Version</th><th>Where to get it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Node.js</td><td>20 LTS or newer</td><td><a href="https://nodejs.org/en/download/prebuilt-installer">nodejs.org</a></td></tr>
+          <tr><td>npm</td><td>ships with Node.js</td><td>—</td></tr>
+          <tr><td>VS Code (or any editor)</td><td>latest</td><td><a href="https://code.visualstudio.com/">code.visualstudio.com</a></td></tr>
+          <tr><td>Firebase account</td><td>free tier is enough</td><td><a href="https://console.firebase.google.com/">Firebase Console</a></td></tr>
+          <tr><td>Google Maps API key</td><td>—</td><td><a href="https://console.cloud.google.com/google/maps-apis">Google Maps Platform</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note</p>
+      <p>The project is built on <strong>Next.js 16</strong> and <strong>React 19</strong>. Node 20 is the minimum that supports them; older majors fail during <code>npm install</code>.</p>
+    </div>
+
+    <h3>Required access</h3>
+
+    <ul>
+      <li>The Web Portal source code.</li>
+      <li>A running <strong>Admin Panel</strong> URL that is reachable from the internet.</li>
+      <li>A <strong>VPS</strong>, or any host that can run a long-lived Node process. Shared hosting cannot — and the static export is not a workaround (see <a href="#step-7--production-build">Step 7</a>). Details in the <a href="deployment.html">Deployment Guide</a>.</li>
+    </ul>
+
+    <h2>Step 1 — Extract and open the project</h2>
+
+    <ol>
+      <li>Extract the source ZIP to a folder you can reach easily.</li>
+      <li>Open that folder in VS Code (<strong>File → Open Folder</strong>).</li>
+    </ol>
+
+    <h2>Step 2 — Verify Node.js</h2>
+
+    <p>Open a terminal in the project root and check both versions:</p>
+
+    <pre><code>node --version   # must print v20.x or newer
+npm --version</code></pre>
+
+    <p>If Node is missing or too old, install Node 20 LTS from the link above, then reopen the terminal.</p>
+
+    <h2>Step 3 — Configure the environment file</h2>
+
+    <p>All configuration lives in a <code>.env</code> file in the project root. Every variable read by the browser <strong>must</strong> start with <code>NEXT_PUBLIC_</code>.</p>
+
+    <p>Copy <code>.env.example</code> to <code>.env</code> and fill in the sections below:</p>
+
+    <pre><code>cp .env.example .env</code></pre>
+
+    <h3>Admin panel connection</h3>
+
+    <pre><code>NEXT_PUBLIC_API_URL=https://your-admin-panel-domain.com
+NEXT_PUBLIC_API_SUBURL=/customer
+NEXT_PUBLIC_BASE_URL=https://your-storefront-domain.com</code></pre>
+
+    <ul>
+      <li><code>NEXT_PUBLIC_API_URL</code> — the Admin Panel origin. <strong>No</strong> trailing slash, and do not append the API path here.</li>
+      <li><code>NEXT_PUBLIC_API_SUBURL</code> — the API path segment, appended to the URL above. The two are concatenated, so the example resolves to <code>https://your-admin-panel-domain.com/customer</code>.</li>
+      <li><code>NEXT_PUBLIC_BASE_URL</code> — your own public Web Portal URL. Used to build canonical tags, <code>sitemap.xml</code>, and share links, so it must be the real production domain for SEO to be correct.</li>
+    </ul>
+
+    <p><code>NEXT_PUBLIC_API_URL</code> also drives the allowed image hosts in <code>next.config.mjs</code> — the config derives them from that domain's apex, so product images served from sibling subdomains load without any extra configuration. <strong>Never hardcode an image host</strong>; change the API URL and the hosts follow.</p>
+
+    <h3>Store identity and metadata</h3>
+
+    <pre><code>NEXT_PUBLIC_WEB_NAME=Your Store Name
+NEXT_PUBLIC_META_TITLE=Your Store — Online Shopping
+NEXT_PUBLIC_META_DESCRIPTION=Short description used as the default meta description.
+NEXT_PUBLIC_META_KEYWORDS=ecommerce,online shopping,delivery</code></pre>
+
+    <h3>Country and phone defaults</h3>
+
+    <pre><code>NEXT_PUBLIC_DEFAULT_COUNTRY_CODE=IN
+NEXT_PUBLIC_COUNTRY_DIAL_CODE=91
+NEXT_PUBLIC_COUNTRY_DROPDOWN=true</code></pre>
+
+    <p><code>NEXT_PUBLIC_COUNTRY_DROPDOWN</code> toggles the country selector on the login form. Set it to <code>false</code> for a single-country store.</p>
+
+    <h3>Google Maps</h3>
+
+    <pre><code>NEXT_PUBLIC_MAP_API=your-google-maps-api-key</code></pre>
+
+    <p>Required for delivery-location selection and address autocomplete. Enable <strong>Maps JavaScript API</strong>, <strong>Places API</strong>, and <strong>Geocoding API</strong> on the key, and restrict it to your production domain.</p>
+
+    <h3>Real-time and analytics (optional)</h3>
+
+    <pre><code>NEXT_PUBLIC_WS_URL=wss://your-admin-domain.com/app/your-app-key
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX</code></pre>
+
+    <p>Use <code>wss://</code> on any HTTPS domain; <code>ws://</code> only works for local, non-HTTPS setups.</p>
+
+    <h3>SEO mode</h3>
+
+    <pre><code>NEXT_PUBLIC_SEO=true</code></pre>
+
+    <p>This one variable decides how the whole project builds:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Value</th><th>Build output</th><th>Hosting required</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>true</code> (or unset)</td><td>Server build — SSR, live <code>sitemap.xml</code>, per-page meta tags</td><td>VPS / Node host</td></tr>
+          <tr><td><code>false</code></td><td>Static export to <code>out/</code> — <strong>not supported</strong></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Setting it to <code>false</code> switches <code>next.config.mjs</code> to <code>output: "export"</code>, which turns off server rendering <em>and</em> middleware. Zone URLs, language URLs, per-page SEO, and <code>sitemap.xml</code> all stop working — see <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</p>
+
+    <p>Keep it <code>true</code>. The rest of this guide assumes it.</p>
+
+    <h2>Step 4 — Configure Firebase (push notifications)</h2>
+
+    <ol>
+      <li>Open the <a href="https://console.firebase.google.com/">Firebase Console</a> and create a project (or pick an existing one).</li>
+      <li>Add a <strong>Web app</strong> (<code>&lt;/&gt;</code> icon) and copy the <code>firebaseConfig</code> values.</li>
+      <li>Go to <strong>Project Settings → Cloud Messaging</strong>, ensure the <strong>Cloud Messaging API (V1)</strong> is enabled, then under <strong>Web Push certificates</strong> click <strong>Generate key pair</strong> to get the VAPID key.</li>
+    </ol>
+
+    <p>Add all of it to <code>.env</code>:</p>
+
+    <pre><code>NEXT_PUBLIC_FIREBASE_API_KEY=your-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project-id.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your-measurement-id
+NEXT_PUBLIC_FIREBASE_VAPID_KEY=your-vapid-key</code></pre>
+
+    <h3>Step 4.1 — Update the service worker</h3>
+
+    <p>Background notifications are handled by <code>public/firebase-messaging-sw.js</code>. A service worker cannot read <code>NEXT_PUBLIC_</code> variables, so the same credentials must be written into that file literally, inside its <code>firebase.initializeApp({ … })</code> call.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Replace the bundled development key</p>
+      <p>The repository ships with a working development Firebase key committed to this file. Replace it with your own before going live, and restrict the key by HTTP referrer in the Google Cloud console.</p>
+    </div>
+
+    <p>The values there must match <code>.env</code> exactly, or foreground and background notifications register against different Firebase projects.</p>
+
+    <p>See the <a href="firebase-setup.html">Firebase Setup</a> guide for the full walkthrough — creating the project, generating the VAPID key, the required backend payload shape, and how to verify notifications end to end.</p>
+
+    <h2>Step 5 — Install dependencies</h2>
+
+    <pre><code>npm install</code></pre>
+
+    <p>Expect a few minutes and an <code>added NNN packages</code> summary with no errors.</p>
+
+    <h2>Step 6 — Run locally</h2>
+
+    <pre><code>npm run dev</code></pre>
+
+    <p>Open <a href="http://localhost:3000">http://localhost:3000</a> and confirm:</p>
+
+    <ul>
+      <li>the home page renders with products,</li>
+      <li>the delivery-location modal can resolve a city,</li>
+      <li>login works against your Admin Panel.</li>
+    </ul>
+
+    <h2 id="step-7--production-build">Step 7 — Production build</h2>
+
+    <pre><code>npm run build</code></pre>
+
+    <p>This produces a <code>.next/</code> folder. Serve it with:</p>
+
+    <pre><code>npm start</code></pre>
+
+    <p>The <code>start</code> script pins <code>NODE_ENV=production</code> and <code>NODE_PORT=8004</code> and boots the custom <code>server.js</code>. Continue with the <a href="deployment.html">Deployment Guide</a> to put it behind a real domain.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not use the static export</p>
+      <p><code>npm run export</code> (with <code>NEXT_PUBLIC_SEO=false</code>) still builds, but the export drops <code>src/middleware.js</code> entirely — so zone URLs (<code>/bhuj-quick/...</code>) and language URLs (<code>/ur/...</code>) all 404, on top of losing per-page meta and <code>sitemap.xml</code>.</p>
+      <p>The build succeeds silently, which makes the breakage easy to miss. Keep <code>NEXT_PUBLIC_SEO=true</code> and deploy the Node server — see <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <h3><code>npm install</code> fails</h3>
+
+    <p>Delete the lockfile and cache, then retry:</p>
+
+    <pre><code>rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install</code></pre>
+
+    <h3>Build fails</h3>
+
+    <ul>
+      <li>Confirm every variable in <code>.env</code> is prefixed <code>NEXT_PUBLIC_</code>.</li>
+      <li>No spaces around <code>=</code>, and no quotes unless the value itself contains spaces.
+        <pre><code># correct
+NEXT_PUBLIC_API_URL=https://example.com
+
+# wrong
+NEXT_PUBLIC_API_URL = "https://example.com"</code></pre>
+      </li>
+      <li>Restart the dev server after any <code>.env</code> change — values are inlined at build time and are <strong>not</strong> hot-reloaded.</li>
+    </ul>
+
+    <h3>Images do not load</h3>
+
+    <p><code>next.config.mjs</code> derives its allowed image hosts from <code>NEXT_PUBLIC_API_URL</code>. If images 404 or throw a Next.js host error, that variable is wrong or the images sit on a domain outside the API host's apex.</p>
+
+    <h3>"Network Error" / failed API calls</h3>
+
+    <ul>
+      <li>Check <code>NEXT_PUBLIC_API_URL</code> + <code>NEXT_PUBLIC_API_SUBURL</code> resolve to a real endpoint. Open the concatenated URL in a browser — it should return JSON.</li>
+      <li>Confirm the Admin Panel allows CORS from your Web Portal domain.</li>
+      <li>Verify the SSL certificate if you are on HTTPS.</li>
+    </ul>
+
+    <h3>Push notifications never arrive</h3>
+
+    <ul>
+      <li>Firebase web push requires <strong>HTTPS</strong>; it will not work over plain HTTP.</li>
+      <li>Confirm <code>public/firebase-messaging-sw.js</code> matches <code>.env</code>.</li>
+      <li>In DevTools → <strong>Application → Service Workers</strong>, check that <code>firebase-messaging-sw.js</code> is registered and active.</li>
+      <li>Grant notification permission in the browser, then send a test message from <strong>Firebase Console → Cloud Messaging</strong>.</li>
+      <li>Full setup steps: <a href="firebase-setup.html">Firebase Setup</a>.</li>
+    </ul>
+
+    <h2>Next steps</h2>
+
+    <ul>
+      <li><a href="firebase-setup.html">Firebase Setup</a> — push notifications end to end.</li>
+      <li><a href="deployment.html">Deployment Guide</a> — VPS deployment with PM2.</li>
+      <li><a href="file-structure.html">File Structure</a> — where everything lives.</li>
+      <li><a href="configuration.html">Configuration &amp; Theming</a> — theming, zones, and translations.</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "web/installation-steps.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

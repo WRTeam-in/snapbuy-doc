@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cart Settings (Abandoned Cart Reminders) — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Cart Settings (Abandoned Cart Reminders)</h1>
+
+    <p>Menu path: <strong>Settings → Cart Settings</strong></p>
+
+    <p>Sends push reminders to customers who added items to their cart and never checked out.</p>
+
+    <img src="../images/panel/cart-settings-page.png" alt="Cart settings page">
+
+    <h2>Settings</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cart Notification</strong></td><td>Master switch</td></tr>
+        <tr><td><strong>Notification Delay After Cart Addition</strong></td><td>How long to wait after the last item is added before the first reminder</td></tr>
+        <tr><td><strong>Notification Interval</strong></td><td>Gap between repeat reminders</td></tr>
+        <tr><td><strong>Notification Stop Time</strong></td><td>When to stop reminding that customer</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>All three timings are in minutes.</p>
+
+    <h2>How the sequence runs</h2>
+
+    <ol>
+      <li>A customer adds something to the cart and does not check out.</li>
+      <li>After the <strong>delay</strong>, the first reminder is sent.</li>
+      <li>Every <strong>interval</strong> after that, another reminder is sent.</li>
+      <li>Once <strong>stop time</strong> is reached, reminders for that cart end.</li>
+      <li>Checking out — or emptying the cart — stops them immediately.</li>
+    </ol>
+
+    <p><strong>Example</strong> — delay <code>60</code>, interval <code>1440</code>, stop <code>4320</code>:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Time after last cart change</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td>1 hour</td><td>First reminder</td></tr>
+        <tr><td>1 day</td><td>Second reminder</td></tr>
+        <tr><td>2 days</td><td>Third reminder</td></tr>
+        <tr><td>3 days</td><td>Stops</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Cart reminders do not work without the cron job</p>
+      <p>Reminders are sent by <code>cart:notification</code>, run by the scheduler every minute. <strong>If the <a href="../admin/cron-jobs.html">cron job</a> is not set up, no reminder is ever sent</strong> — and the panel gives no indication anything is wrong.</p>
+      <p>Check <strong>Settings → Cron Jobs</strong> shows a green heartbeat before you spend time tuning the timings here.</p>
+    </div>
+
+    <h2>Choosing timings</h2>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Aggressive reminders get your app muted</p>
+      <p>Push notifications are easy to turn off and hard to get back. A customer reminded every hour will disable notifications for your app permanently — costing you order updates and delivery alerts too, not just marketing.</p>
+      <p>Sane starting point: first reminder after <strong>1 hour</strong>, repeat <strong>once a day</strong>, stop after <strong>3 days</strong>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Notification stop time is not optional</p>
+      <p>Leaving the stop time unset or very high means a customer who abandoned a cart months ago keeps getting reminders. Always set a limit.</p>
+    </div>
+
+    <h2>What the reminder says</h2>
+
+    <p>The wording comes from the notification templates:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Template</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><code>cart_reminder_first_customer</code></td><td>The first reminder</td></tr>
+        <tr><td><code>cart_reminder_interval_customer</code></td><td>Every repeat</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Edit them under <a href="../admin/notification-templates.html">Notification Templates</a>, including per-language versions.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Make the first reminder useful, not naggy</p>
+      <p>Mention the actual product, or note that stock is limited. "You left something behind" performs far worse than naming what it was.</p>
+    </div>
+
+    <h2>Prerequisites</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><a href="../admin/cron-jobs.html">Cron job</a> running</td><td>Nothing sends without it</td></tr>
+        <tr><td><a href="../admin/firebase-settings.html">Firebase</a> configured</td><td>Reminders are push notifications</td></tr>
+        <tr><td>Customer has the app and granted permission</td><td>No push token, no reminder</td></tr>
+        <tr><td>Templates written for each active language</td><td>Otherwise customers get the default language</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>No reminders at all</td><td>Cron job missing</td><td>See <a href="../admin/cron-jobs.html">Cron Job Setup</a></td></tr>
+        <tr><td>Cron fine, still nothing</td><td>Firebase not configured, or master switch off</td><td>Check <a href="../admin/firebase-settings.html">Firebase</a>; enable the switch</td></tr>
+        <tr><td>Reminders too frequent</td><td>Interval too short</td><td>Raise it — a day is usually right</td></tr>
+        <tr><td>Reminders never stop</td><td>Stop time unset or too high</td><td>Set a realistic limit</td></tr>
+        <tr><td>Sent after the customer ordered</td><td>Timings extremely short, race with checkout</td><td>Raise the initial delay</td></tr>
+        <tr><td>Wrong language</td><td>Template not translated</td><td>Add translations</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/cart-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

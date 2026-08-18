@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Panel Overview — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Admin Panel Overview</h1>
+
+    <p>The <strong>SnapBuy Admin Panel</strong> is the control centre for your entire store. Everything the Customer App, the Delivery Boy App and the Web Portal display is driven from here — products, stores, delivery zones, orders, payments, notifications and every configuration switch.</p>
+
+    <p>This section takes you from an empty server to a fully configured, live store.</p>
+
+    <h2>What the Admin Panel manages</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Area</th><th>What you control</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Catalogue</strong></td><td>Categories, products, brands, attributes, taxes, stock, bulk import/update</td></tr>
+        <tr><td><strong>Selling area</strong></td><td>Countries, delivery zones, delivery cities &amp; areas, stores</td></tr>
+        <tr><td><strong>Orders</strong></td><td>Order lifecycle, delivery boy assignment, return requests, invoices</td></tr>
+        <tr><td><strong>Customers</strong></td><td>Accounts, carts, wishlists, wallet, transactions, withdrawal requests</td></tr>
+        <tr><td><strong>Delivery boys</strong></td><td>Accounts, cash collection, salary, settlements, their own web portal</td></tr>
+        <tr><td><strong>Storefront</strong></td><td>Home Builder layouts, banners, offers, blogs, FAQs, SEO</td></tr>
+        <tr><td><strong>Marketing</strong></td><td>Promo codes, push notifications, emails, popup offers, cart reminders</td></tr>
+        <tr><td><strong>Configuration</strong></td><td>Firebase, maps, SMTP, SMS, payment gateways, chat, languages, deeplinks</td></tr>
+        <tr><td><strong>System</strong></td><td>Roles &amp; permissions, staff users, activity logs, cron jobs, system updater</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>How SnapBuy is put together</h2>
+    <p>SnapBuy's admin panel is a <strong>Laravel 12</strong> application with a <strong>Vue 3</strong> single-page front end. Knowing this helps when you are choosing hosting:</p>
+    <ul>
+      <li><strong>PHP 8.3 or newer</strong> is required — a hard floor, not a recommendation.</li>
+      <li><strong>MySQL / MariaDB</strong> is the only supported database.</li>
+      <li>The panel needs a <strong>server cron job</strong> for scheduled work (cart reminders, maintenance windows, scheduled home layouts, queued jobs).</li>
+      <li>Live chat and real-time order updates run over <strong>Laravel Reverb</strong> or <strong>Pusher</strong>.</li>
+      <li>Push notifications run through <strong>Firebase Cloud Messaging</strong>.</li>
+    </ul>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Version</p>
+      <p>This documentation covers <strong>SnapBuy v3.0.0</strong>.</p>
+    </div>
+
+    <h2>The recommended path</h2>
+    <p>Follow these pages in order. Each one assumes the previous is done.</p>
+    <ol>
+      <li><strong><a href="../admin/server-requirements.html">Server Requirements</a></strong> — confirm your hosting can run SnapBuy.</li>
+      <li><strong><a href="../admin/create-subdomain.html">Create a Subdomain</a></strong> — where the panel will live.</li>
+      <li><strong><a href="../admin/php-ini-settings.html">PHP INI Settings</a></strong> — limits that must be raised before installing.</li>
+      <li><strong><a href="../admin/localhost-setup.html">Localhost Setup</a></strong> — for testing on your own machine.</li>
+      <li><strong><a href="../admin/server-setup.html">Server Setup</a></strong> — the live installation wizard.</li>
+      <li><strong><a href="../admin/cron-jobs.html">Cron Job Setup</a></strong> — without this, several features silently stop working.</li>
+      <li><strong><a href="../admin/setup-guide.html">Setup Guide</a></strong> — the nine in-panel steps that make the store usable.</li>
+    </ol>
+
+    <p>After that, work through <strong>Settings</strong> and then the individual modules.</p>
+
+    <h2>The Setup Guide widget</h2>
+    <p>After installation the panel shows a <strong>Setup Guide</strong> in the sidebar with a completion ring. It tracks nine steps and hides itself once all nine are done:</p>
+
+    <p>Country → Zone → Store → Home Builder → SMTP → Firebase → Map → Chat → Cron</p>
+
+    <p>If a store ever reports "the app shows nothing" or "no notifications arrive", the Setup Guide is the first place to look — an incomplete step is almost always the cause.</p>
+
+    <img src="../images/panel/setup-guide-widget.png" alt="Setup Guide widget in the admin sidebar">
+
+    <h2>Access and permissions</h2>
+    <p>SnapBuy uses <strong>role-based access control</strong>. The account created during installation is the <strong>Super Admin</strong> and holds every permission. Staff accounts you create later see only the menus their role allows.</p>
+
+    <h2>Need help?</h2>
+    <ul>
+      <li>📧 <strong>Email</strong>: support@snapbuy.in</li>
+      <li>🌐 <strong>Website</strong>: <a href="https://www.snapbuy.in/">snapbuy.in</a></li>
+      <li>📄 <strong><a href="../support.html">Support</a></strong></li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/overview.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

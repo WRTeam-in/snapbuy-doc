@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Localhost Setup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Localhost Setup</h1>
+
+    <p>Use this page to run SnapBuy on your own computer for testing and customisation. For a live store, follow <a href="../admin/server-setup.html">Server Setup</a> instead.</p>
+
+    <h2>What you need</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tool</th><th>Version</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>XAMPP</strong></td><td>with PHP <strong>8.3+</strong></td><td>Apache + PHP + MySQL in one package</td></tr>
+        <tr><td><strong>Composer</strong></td><td>2.x</td><td>Installs PHP dependencies</td></tr>
+        <tr><td><strong>Node.js</strong></td><td>20 LTS+</td><td>Only if you want to rebuild the panel's front-end assets</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <ul>
+      <li>XAMPP — <a href="https://www.apachefriends.org/download.html">apachefriends.org/download.html</a></li>
+      <li>Composer — <a href="https://getcomposer.org/download/">getcomposer.org/download</a></li>
+    </ul>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Check the PHP version XAMPP ships with</p>
+      <p>Older XAMPP builds ship PHP 8.0 or 8.1, which <strong>cannot</strong> run SnapBuy. Download a build with PHP 8.3 or newer, or use <a href="https://laragon.org/">Laragon</a> which lets you switch PHP versions freely.</p>
+      <p>Verify with:</p>
+      <pre><code>php -v</code></pre>
+    </div>
+
+    <h2>Step 1 — Enable the required PHP extensions</h2>
+
+    <p>Open <code>C:\xampp\php\php.ini</code> and make sure none of these lines are commented out with a <code>;</code>:</p>
+
+    <pre><code>extension=bcmath
+extension=curl
+extension=fileinfo
+extension=gd
+extension=mbstring
+extension=openssl
+extension=pdo_mysql
+extension=sodium
+extension=zip</code></pre>
+
+    <p>Also raise the limits described in <a href="../admin/php-ini-settings.html">PHP INI Settings</a>, then restart Apache from the XAMPP Control Panel.</p>
+
+    <h2>Step 2 — Extract the project</h2>
+
+    <p>Extract the SnapBuy admin panel package into your web root:</p>
+
+    <pre><code>C:\xampp\htdocs\snapbuy\</code></pre>
+
+    <h2>Step 3 — Install PHP dependencies</h2>
+
+    <p>Open a terminal in <code>C:\xampp\htdocs\snapbuy</code> and run:</p>
+
+    <pre><code>composer install</code></pre>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The <code>vendor</code> folder may already be included</p>
+      <p>If your package already ships a <code>vendor/</code> folder, you can skip this. If Composer reports memory errors, run <code>composer install --no-dev</code> or temporarily set <code>memory_limit = -1</code>.</p>
+    </div>
+
+    <h2>Step 4 — Create the database</h2>
+
+    <ol>
+      <li>Start <strong>Apache</strong> and <strong>MySQL</strong> in the XAMPP Control Panel.</li>
+      <li>Open <a href="http://localhost/phpmyadmin">http://localhost/phpmyadmin</a>.</li>
+      <li>Click <strong>New</strong>, name the database <code>snapbuy</code>, choose collation <code>utf8mb4_unicode_ci</code>, and click <strong>Create</strong>.</li>
+    </ol>
+
+    <p>Leave it empty — the installer builds every table.</p>
+
+    <h2>Step 5 — Prepare the <code>.env</code> file</h2>
+
+    <p>Copy <code>.env.example</code> to <code>.env</code> in the project root, then open it and set:</p>
+
+    <pre><code>APP_NAME=SnapBuy
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost/snapbuy/public
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=snapbuy
+DB_USERNAME=root
+DB_PASSWORD=
+
+INSTALL_MODE=server</code></pre>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title"><code>INSTALL_MODE=server</code> is required</p>
+      <p>SnapBuy only runs migrations, seeders, Passport setup and the storage symlink when <code>INSTALL_MODE</code> is set to <code>server</code>. Without this line the installer writes your settings but leaves the database empty, and the panel will error immediately after &quot;installation&quot;.</p>
+      <p>Add the line before you open the installer.</p>
+    </div>
+
+    <p>Generate the application key:</p>
+
+    <pre><code>php artisan key:generate</code></pre>
+
+    <h2>Step 6 — Run the installer</h2>
+
+    <p>Open:</p>
+
+    <pre><code>http://localhost/snapbuy/public</code></pre>
+
+    <p>You are redirected to the installation wizard. It has five steps:</p>
+
+    <p><strong>Welcome → Requirements → Database → Purchase Code → Finish</strong></p>
+
+    <h3>Requirements</h3>
+
+    <p>Every PHP extension must show green and all four writable paths must pass. On Windows the permission checks normally pass without action.</p>
+
+    <h3>Database</h3>
+
+    <p>Enter the same details you put in <code>.env</code>, plus the admin account you want to create:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Local value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Database Host</td><td><code>127.0.0.1</code></td></tr>
+        <tr><td>Database Port</td><td><code>3306</code></td></tr>
+        <tr><td>Database Name</td><td><code>snapbuy</code></td></tr>
+        <tr><td>Database Username</td><td><code>root</code></td></tr>
+        <tr><td>Database Password</td><td><em>(blank on default XAMPP)</em></td></tr>
+        <tr><td>Admin Email</td><td>your email</td></tr>
+        <tr><td>Admin Password</td><td>minimum 6 characters</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">This step wipes the database</p>
+      <p>SnapBuy runs <code>migrate:fresh</code>, which drops every existing table in the database it connects to. Never point it at a database that holds other data.</p>
+    </div>
+
+    <p>The installer also generates <strong>Reverb</strong> credentials automatically if they are empty, so live chat works without extra setup.</p>
+
+    <h3>Purchase Code</h3>
+
+    <p>Enter the Envato purchase code for your SnapBuy licence. This step needs an internet connection even on localhost, because the code is validated against the licence server.</p>
+
+    <h3>Finish</h3>
+
+    <p>You land on the login page. Sign in with the admin email and password you just set.</p>
+
+    <h2>Alternative — install from the command line</h2>
+
+    <p>If you prefer not to use the wizard, run the bundled script from the project root:</p>
+
+    <pre><code>composer install
+npm install
+php artisan migrate
+php artisan db:seed
+php artisan passport:install
+php artisan storage:link</code></pre>
+
+    <p>You still need to open <code>/install</code> once afterwards to create the Super Admin account and register your purchase code — the seeders do not create an admin user.</p>
+
+    <h2>Rebuilding front-end assets (optional)</h2>
+
+    <p>Only needed if you modify the Vue source in <code>resources/js</code>:</p>
+
+    <pre><code>npm install
+npm run build      # production build
+npm run dev        # dev server with hot reload</code></pre>
+
+    <h2>Common localhost problems</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Blank white page</td><td>PHP version too old, or a missing extension</td><td><code>php -v</code>, then re-check Step 1</td></tr>
+        <tr><td><code>could not find driver</code></td><td><code>pdo_mysql</code> disabled</td><td>Uncomment it in <code>php.ini</code>, restart Apache</td></tr>
+        <tr><td>Images upload but never display</td><td>Storage symlink missing</td><td>Visit <code>http://localhost/snapbuy/public/linkstorage</code></td></tr>
+        <tr><td><code>500</code> right after install</td><td>App key not generated</td><td>Run <code>php artisan key:generate</code>, then visit <code>/clear</code></td></tr>
+        <tr><td>Login page loops back to itself</td><td><code>APP_URL</code> does not match the address you are using</td><td>Correct <code>APP_URL</code> in <code>.env</code>, then visit <code>/clear</code></td></tr>
+        <tr><td>Installer finishes but panel is broken</td><td><code>INSTALL_MODE=server</code> was missing</td><td>Add it, empty the database, run the installer again</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Clearing the cache</p>
+      <p>SnapBuy exposes <code>http://localhost/snapbuy/public/clear</code>, which clears the config, route, view and application caches in one request. Use it after any manual <code>.env</code> change.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/localhost-setup.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
