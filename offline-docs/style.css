@@ -97,6 +97,52 @@ img { max-width: 100%; }
   font-size: 1rem;
 }
 
+/* ── Hero (homepage) ────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, var(--ifm-color-primary-light) 0%, var(--ifm-color-primary-darkest) 100%);
+  padding: 4.5rem 1.5rem 6rem;
+  text-align: center;
+}
+
+.hero__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero__title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: #fff;
+  margin: 0 0 .75rem;
+}
+
+.hero__subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, .88);
+  margin: 0 0 2rem;
+}
+
+.hero__cta {
+  display: inline-block;
+  background: #fff;
+  color: var(--ifm-color-primary-darkest);
+  font-weight: 700;
+  padding: .8rem 1.8rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+}
+
+.hero__cta:hover {
+  text-decoration: none;
+  background: var(--surface-2);
+}
+
+@media (max-width: 996px) {
+  .hero { padding: 3rem 1.25rem 4rem; }
+  .hero__title { font-size: 2rem; }
+}
+
 /* ── Layout shell ───────────────────────────────────────── */
 .layout {
   display: flex;

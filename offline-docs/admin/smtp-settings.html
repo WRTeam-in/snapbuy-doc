@@ -75,7 +75,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Use HTML content type</p>
-      <p>SnapBuy's built-in <a href="../admin/notification-templates.html">email templates</a> are HTML. Setting the content type to <code>Text</code> delivers raw markup to customers.</p>
+      <p>SnapBuy's built-in <a href="notification-templates.html">email templates</a> are HTML. Setting the content type to <code>Text</code> delivers raw markup to customers.</p>
     </div>
 
     <h2 id="common-provider-settings">Common provider settings</h2>
@@ -190,7 +190,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Bulk email needs the cron job</p>
-      <p>If the <a href="../admin/cron-jobs.html">cron job</a> is not running, campaigns queue up and are never delivered. The panel reports the campaign as sent. Check <strong>Settings → Cron Jobs</strong> and watch <strong>Pending jobs</strong> — if it only grows, nothing is being sent.</p>
+      <p>If the <a href="cron-jobs.html">cron job</a> is not running, campaigns queue up and are never delivered. The panel reports the campaign as sent. Check <strong>Settings → Cron Jobs</strong> and watch <strong>Pending jobs</strong> — if it only grows, nothing is being sent.</p>
     </div>
 
     <p>Transactional email — order confirmations, password resets — is also queued.</p>
@@ -203,7 +203,7 @@
       <tbody>
         <tr><td>"Connection could not be established"</td><td>Port/encryption mismatch, or host blocks outbound SMTP</td><td>Try 587/TLS, then 465/SSL; ask the host to open outbound SMTP</td></tr>
         <tr><td>"Authentication failed" with correct password</td><td>Provider requires an app password</td><td>Generate an app password (Gmail, Outlook)</td></tr>
-        <tr><td>Test mail succeeds, order emails never arrive</td><td>Queue not processed</td><td>Set up the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>Test mail succeeds, order emails never arrive</td><td>Queue not processed</td><td>Set up the <a href="cron-jobs.html">cron job</a></td></tr>
         <tr><td>Emails land in spam</td><td>Missing SPF/DKIM, or From on a domain you do not control</td><td>Add DNS records; send from your own domain</td></tr>
         <tr><td>Emails show raw HTML tags</td><td>Content type set to <code>Text</code></td><td>Set it to <code>HTML</code></td></tr>
         <tr><td>Nothing sends after changing settings</td><td>Cached config</td><td>Visit <code>/clear</code> once</td></tr>

@@ -18,23 +18,41 @@
   <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
 </header>
 
+<div class="hero">
+  <div class="hero__inner">
+    <h1 class="hero__title">SnapBuy Documentation</h1>
+    <p class="hero__subtitle">Complete guide for the SnapBuy delivery &amp; shopping platform</p>
+    <a class="hero__cta" href="#getting-started">Get Started</a>
+  </div>
+</div>
+
 <div class="layout">
   <nav class="sidebar" id="sidebar-nav"></nav>
 
   <main class="content">
     <p class="offline-note">You are reading the offline copy of the SnapBuy documentation. Everything on this page works without an internet connection.</p>
 
-    <h1>Welcome to SnapBuy Documentation</h1>
-
     <p>SnapBuy is a complete delivery &amp; shopping platform that includes an Admin Panel, Customer App, Delivery Boy App, and Web Portal.</p>
 
     <h2 id="whats-included">What's Included</h2>
-    <ul>
-      <li><strong>Admin Panel</strong> — Manage products, orders, delivery boys, users, payments, and more</li>
-      <li><strong>Customer App</strong> — Flutter-based app for iOS and Android for customers to shop and track orders</li>
-      <li><strong>Delivery Boy App</strong> — Flutter-based app for iOS and Android for delivery boys to manage deliveries</li>
-      <li><strong>Web Portal</strong> — Web frontend for online shopping</li>
-    </ul>
+    <div class="doc-card-grid">
+      <a class="doc-card" href="admin/overview.html">
+        <div class="doc-card__title">Admin Panel</div>
+        <div class="doc-card__desc">Manage products, orders, delivery boys, users, payments, and more.</div>
+      </a>
+      <a class="doc-card" href="app-customer/prerequisites.html">
+        <div class="doc-card__title">Customer App</div>
+        <div class="doc-card__desc">Flutter-based app for iOS and Android for customers to shop and track orders.</div>
+      </a>
+      <a class="doc-card" href="app-delivery/prerequisites.html">
+        <div class="doc-card__title">Delivery Boy App</div>
+        <div class="doc-card__desc">Flutter-based app for iOS and Android for delivery boys to manage deliveries.</div>
+      </a>
+      <a class="doc-card" href="web/overview.html">
+        <div class="doc-card__title">Web Portal</div>
+        <div class="doc-card__desc">Web frontend for online shopping.</div>
+      </a>
+    </div>
 
     <h2 id="getting-started">Getting Started</h2>
     <p>Choose a section from the sidebar to begin:</p>

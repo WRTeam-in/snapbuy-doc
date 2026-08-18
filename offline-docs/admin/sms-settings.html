@@ -45,7 +45,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Configure this before switching off Firebase Authentication</p>
-      <p><a href="../admin/login-settings.html">Login Settings</a> requires either Firebase auth or a custom SMS gateway when phone login is enabled. Disabling Firebase without a working gateway here stops phone login instantly for every customer.</p>
+      <p><a href="login-settings.html">Login Settings</a> requires either Firebase auth or a custom SMS gateway when phone login is enabled. Disabling Firebase without a working gateway here stops phone login instantly for every customer.</p>
       <p>Order of operations: configure and test SMS here <strong>first</strong>, then switch the login method.</p>
     </div>
 
@@ -115,7 +115,7 @@
 
     <h2 id="sms-templates">SMS templates</h2>
 
-    <p>Message wording lives under <strong>Settings → SMS Templates</strong> — see <a href="../admin/notification-templates.html">Notification, Email &amp; SMS Templates</a>. Templates support placeholders such as <code>{otp}</code>, <code>{app_name}</code> and <code>{customer_name}</code>, and can be translated per language.</p>
+    <p>Message wording lives under <strong>Settings → SMS Templates</strong> — see <a href="notification-templates.html">Notification, Email &amp; SMS Templates</a>. Templates support placeholders such as <code>{otp}</code>, <code>{app_name}</code> and <code>{customer_name}</code>, and can be translated per language.</p>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Registered templates must match exactly</p>
@@ -134,7 +134,7 @@
 
     <ol>
       <li>Save the credentials and visit <code>/clear</code>.</li>
-      <li>Set phone login to use the custom SMS gateway in <a href="../admin/login-settings.html">Login Settings</a>.</li>
+      <li>Set phone login to use the custom SMS gateway in <a href="login-settings.html">Login Settings</a>.</li>
       <li>Sign up with a real number on a real device.</li>
       <li>Confirm the OTP arrives and works.</li>
     </ol>
