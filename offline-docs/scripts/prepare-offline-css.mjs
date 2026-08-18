@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OFFLINE_DIR = path.resolve(HERE, "..");
-const PROJECT_ROOT = path.join(path.resolve(OFFLINE_DIR, ".."), "snapbuy-doc");
+const PROJECT_ROOT = path.resolve(OFFLINE_DIR, "..");
 
 const SOURCE = path.join(PROJECT_ROOT, "src", "css", "custom.css");
 const TARGET = path.join(OFFLINE_DIR, "offline.css");

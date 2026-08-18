@@ -14,11 +14,12 @@
 const path = require("path");
 
 // Reuse the live site config as the base so content/theme stay identical.
-const ROOT = path.resolve(__dirname, "../snapbuy-doc");
+const ROOT = path.resolve(__dirname, "..");
 const baseConfig = require(path.join(ROOT, "docusaurus.config.js"));
 
 // Plugins live in snapbuy-doc/node_modules, not offline-docs/, so resolve
 // them explicitly from there instead of relying on Node's default lookup.
+/** @param {string} id */
 const resolveFromRoot = (id) => require.resolve(id, { paths: [ROOT] });
 
 /** @type {import('@docusaurus/types').Config} */
@@ -49,13 +50,6 @@ const config = {
   future: {
     ...(baseConfig.future || {}),
     experimental_router: "hash",
-  },
-
-  // The Ask-AI widget needs a remote endpoint. Blank it out for offline.
-  customFields: {
-    ...(baseConfig.customFields || {}),
-    aiApiUrl: "",
-    offlineBuild: true,
   },
 
   // Resolve every path relative to the project root, not this folder.
@@ -120,6 +114,7 @@ const config = {
       ...baseConfig.themeConfig.navbar,
       // Drop outbound marketplace link — dead weight in an offline copy.
       items: (baseConfig.themeConfig.navbar.items || []).filter(
+        /** @param {{ href?: string }} item */
         (item) => !item.href || !/^https?:/i.test(item.href)
       ),
     },

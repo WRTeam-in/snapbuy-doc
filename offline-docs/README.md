@@ -74,11 +74,7 @@ does not work from disk. Four things are handled here:
    delay rendering. `prepare-offline-css.mjs` strips every remote `@import` and
    pins the font variables to a system font stack instead.
 
-3. **The Ask-AI endpoint.** The live config points `aiApiUrl` at a hosted API.
-   The offline config blanks it and sets `offlineBuild: true`, so nothing tries
-   to reach a server.
-
-4. **Outbound navbar links and canonical tags.** The marketplace link is dropped
+3. **Outbound navbar links and canonical tags.** The marketplace link is dropped
    from the navbar, and `canonical` / `hreflang` / `og:url` tags — which would
    otherwise advertise a URL that does not exist locally — are removed.
 

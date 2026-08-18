@@ -20,7 +20,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OFFLINE_DIR = path.resolve(HERE, "..");
-const ROOT = path.resolve(OFFLINE_DIR, "..", "snapbuy-doc");
+const ROOT = path.resolve(OFFLINE_DIR, "..");
 const BUILD = path.join(OFFLINE_DIR, "build");
 
 function run(label, command, args, opts = {}) {

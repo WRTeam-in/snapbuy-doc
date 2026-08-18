@@ -71,6 +71,12 @@ const sidebars = {
         },
         {
           type: "category",
+          label: "Backup & Restore",
+          collapsed: true,
+          items: ["installation/backup-database", "installation/backup-project"],
+        },
+        {
+          type: "category",
           label: "Modules",
           collapsed: true,
           items: [
