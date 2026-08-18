@@ -92,7 +92,6 @@
     {
       label: "Customer App",
       items: [
-        ["General Settings", "app-customer/general-settings.html"],
         ["Prerequisites", "app-customer/prerequisites.html"],
         ["Basic Setup", "app-customer/basic-setup.html"],
         ["Firebase Setup", "app-customer/firebase-setup.html"],
@@ -127,7 +126,6 @@
     {
       label: "Delivery Boy App",
       items: [
-        ["General Settings", "app-delivery/general-settings.html"],
         ["Prerequisites", "app-delivery/prerequisites.html"],
         ["Basic Setup", "app-delivery/basic-setup.html"],
         ["Firebase Setup", "app-delivery/firebase-setup.html"],
