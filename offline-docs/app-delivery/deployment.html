@@ -333,6 +333,9 @@ if (keystorePropertiesFile.exists()) {
       <li>Select the capabilities your app requires, then register the Bundle ID.</li>
       <li>Use this same Bundle ID in both Xcode and App Store Connect.</li>
     </ol>
+
+    <img src="../images/app/2-3f09d64d46eb18bfd18993950654156d.png" alt="Apple Developer — Register an App ID form with Description, Bundle ID (Explicit), and Capabilities list">
+
     <div class="admonition admonition--tip">
       <p class="admonition__title">Tip</p>
       <p>Bundle ID creation can also happen automatically via Xcode if you enable automatic signing in your project settings.</p>
@@ -346,6 +349,20 @@ if (keystorePropertiesFile.exists()) {
       <li><strong>App description:</strong> name (30 characters max), subtitle (30 characters max), keywords (100 characters max), description (4000 characters max), and "What's New in This Version" notes.</li>
     </ul>
 
+    <img src="../images/app/4-3307b6d1d584fe9b103786127c0e437d.png" alt="App Store Connect — App Information page with Bundle ID, SKU, Apple ID, Primary Language, Category, Content Rights, and Age Rating sections">
+
+    <p><strong>App Privacy:</strong> enter your privacy policy URL and complete the data-collection questionnaire — declare any data types your app collects and select the matching options.</p>
+
+    <img src="../images/app/6-3b00bb087e1e14d72ad95a8d9d13a271.png" alt="App Store Connect — App Privacy page with Privacy Policy URL field and Get Started button for the data-collection questionnaire">
+
+    <p><strong>Pricing and Availability:</strong> set your base country, price schedule, and app availability across territories.</p>
+
+    <img src="../images/app/7-e863d1bf70848b2c4b37126053f58995.png" alt="App Store Connect — Pricing and Availability page with Price Schedule, Base Country or Region, Prices, and App Availability sections">
+
+    <p><strong>Screenshots and previews:</strong> upload iPhone and iPad screenshots for each display size Apple requires — only the first 3 appear on the app installation sheet.</p>
+
+    <img src="../images/app/8-92f33ba993b944cf8be6f86e2d7cb5cf.png" alt="App Store Connect — iOS App Version page with Previews and Screenshots section, iPhone 6.9-inch and 6.5-inch display tabs, and upload drop zone">
+
     <p><strong>App Review Information</strong> — required so Apple's reviewers can test the app:</p>
     <ul>
       <li>Contact information: first name, last name, phone number, email address.</li>
@@ -353,12 +370,17 @@ if (keystorePropertiesFile.exists()) {
       <li>Notes for the review team: app functionality description, special setup instructions, test account details, known issues or clarifications, and beta/sandbox environment details.</li>
     </ul>
 
-    <p><strong>App Privacy:</strong> enter your privacy policy URL and complete the data-collection questionnaire — declare any data types your app collects and select the matching options.</p>
+    <img src="../images/app/10-daa811a46ce844697b20eb76350464b6.png" alt="App Store Connect — App Review Information page with Sign-In Information, Contact Information, Notes, and App Store Version Release options">
 
     <h3 id="ios-submit">Sign, Archive &amp; Submit</h3>
     <ol>
       <li>Open the <code>ios</code> folder in Xcode.</li>
       <li>In the project navigator, select <strong>Runner</strong> under Targets, go to <strong>Signing &amp; Capabilities</strong>, and sign in with your Apple Developer account.</li>
+    </ol>
+
+    <img src="../images/app/11-570a29b75fbe525311bfe1352c844c05.png" alt="Xcode — Runner target Signing and Capabilities tab with Automatically manage signing, Team, and Bundle Identifier fields">
+
+    <ol start="3">
       <li>Update the version and build number — Xcode's <strong>Generated</strong> config file under <code>Flutter/Generated</code> shows the current <code>FLUTTER_BUILD_NAME</code> and <code>FLUTTER_BUILD_NUMBER</code> (read-only, generated from <code>pubspec.yaml</code>):</li>
     </ol>
 
@@ -372,7 +394,23 @@ if (keystorePropertiesFile.exists()) {
 
     <ol start="5">
       <li>Select <strong>Any iOS Device</strong> as the build target.</li>
-      <li>Go to <strong>Product → Archive</strong>. Once the archive completes, proceed with the upload to App Store Connect.</li>
+    </ol>
+
+    <img src="../images/app/14-6f94d6e86410a26b0d09e7dd12c8ae5e.png" alt="Xcode — Run destination picker with Any iOS Device (arm64) selected under Build">
+
+    <ol start="6">
+      <li>Go to <strong>Product → Archive</strong>.</li>
+    </ol>
+
+    <img src="../images/app/15-3f484b377a268f6047e06b3aa2bd94b1.png" alt="Xcode — Product menu with Archive option highlighted">
+
+    <ol start="7">
+      <li>Once the archive completes, proceed with the upload to App Store Connect.</li>
+    </ol>
+
+    <img src="../images/app/16-35974c1e214a893ac8097e94aed55ef2.png" alt="App Store Connect — Build section with upload instructions and Game Center checkbox">
+
+    <ol start="8">
       <li>In App Store Connect, select the build you uploaded from Xcode and click <strong>Add for Review</strong> to submit it.</li>
     </ol>
 
