@@ -46,7 +46,7 @@ All seventeen of these must be **enabled**. The installer shows them as a grid a
 
 :::tip How to enable an extension
 On **cPanel**: *Select PHP Version → Extensions*, tick the missing one, save.
-On **VPS / Ubuntu**: `sudo apt install php8.2-<extension>` then `sudo systemctl restart apache2` (or `php8.2-fpm`).
+On **VPS / Ubuntu**: `sudo apt install php8.3-<extension>` then `sudo systemctl restart apache2` (or `php8.3-fpm`).
 On **XAMPP**: open `php.ini`, remove the `;` in front of `extension=<name>`, restart Apache.
 :::
 
@@ -114,7 +114,7 @@ If you are installing on your own machine rather than a server, you additionally
 
 - **XAMPP** (or Laragon / MAMP) — bundles Apache, PHP and MySQL
 - **Composer** — PHP dependency manager
-- **Node.js 18+** and **npm** — only if you intend to rebuild the panel's front-end assets
+- **Node.js 20 LTS+** and **npm** — only if you intend to rebuild the panel's front-end assets
 
 Full walkthrough: **[Localhost Setup](/docs/admin/localhost-setup)**.
 

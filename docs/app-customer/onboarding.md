@@ -54,8 +54,8 @@ Search for the following keys and update their values:
 Example:
 
 ```json
-"onboardingTitle1": "Find Your Perfect Stay",
-"onboardingText1": "Browse thousands of hotels and properties at the best prices.",
+"onboardingTitle1": "Everything You Need, Delivered Fast",
+"onboardingText1": "Shop groceries, essentials, and more from local stores near you.",
 ```
 
 :::warning

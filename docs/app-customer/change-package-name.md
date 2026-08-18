@@ -15,3 +15,7 @@ After changing the package name, you need to rerun the below commands to update 
 flutter clean
 flutter pub get
 ```
+
+:::warning Update Firebase after changing the package name
+If Firebase is already configured, changing the package name/bundle ID invalidates the existing `google-services.json` / `GoogleService-Info.plist`. Re-register the app (or re-run `flutterfire configure`) under the new identifier — see [Firebase Setup](./firebase-setup.md).
+:::

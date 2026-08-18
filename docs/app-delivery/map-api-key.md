@@ -6,7 +6,11 @@ sidebar_position: 7
 
 # Add Map API Key
 
-The app uses Google Maps for showing nearby locations of property. You need a Google Cloud API key with the **Maps SDK for Android** and **Maps SDK for iOS** enabled.
+The app uses Google Maps for showing nearby stores and delivery locations. You need a Google Cloud API key with the **Maps SDK for Android** and **Maps SDK for iOS** enabled.
+
+:::tip
+Google Maps usage may incur additional charges from Google beyond your free monthly quota. See their [pricing page](https://mapsplatform.google.com/pricing/) before going live.
+:::
 
 ## Step 1 — Open Google Cloud Console
 
@@ -15,7 +19,7 @@ The app uses Google Maps for showing nearby locations of property. You need a Go
 3. Create a new project, or select an existing one from the project picker.
 
 ![Google Cloud project selector](/images/app/delivery/mapAPI1.png)
-![Projetc selector](/images/app/delivery/mapAPI2.png)
+![Project selector](/images/app/delivery/mapAPI2.png)
 
 ## Step 2 — Enable Required APIs
 

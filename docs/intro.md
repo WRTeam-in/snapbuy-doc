@@ -19,14 +19,34 @@ SnapBuy is a complete delivery & shopping platform that includes an Admin Panel,
 
 Choose a section from the sidebar to begin:
 
-- [Admin Panel Setup](./admin/overview.md)
+- [Admin Panel Setup](/docs/admin/overview)
 - [Customer App Setup](/docs/app-customer/prerequisites)
 - [Delivery Boy App Setup](/docs/app-delivery/prerequisites)
 - [Web Portal](/docs/web/overview)
+
+## Demo Instructions
+
+<!-- TODO: fill in before submission — do not publish with these placeholders -->
+
+| | |
+| --- | --- |
+| Demo URL | `TODO_DEMO_URL` |
+| Demo Email | `TODO_DEMO_EMAIL` |
+| Demo Password | `TODO_DEMO_PASSWORD` |
 
 ## Requirements
 
 - PHP 8.3+
 - MySQL 5.7+ / MariaDB 10.3+
-- Node.js 18+
+- Node.js 20 LTS+
 - Flutter 3.x
+
+## Third-Party Services
+
+Some features rely on external services that are **not included** in the purchase price and may involve their own costs or usage limits:
+
+- **Google Maps API** — usage-based billing beyond the free tier
+- **Firebase** — Cloud Messaging is free; other Firebase services may have usage costs at scale
+- **SMS gateway** (OTP/notifications) — billed per message by your chosen provider
+- **Payment gateways** (Stripe, Razorpay, Paystack, PhonePe, etc.) — standard transaction fees apply
+- **Hosting, domain, and SSL** — required for production deployment

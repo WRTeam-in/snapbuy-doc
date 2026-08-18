@@ -28,7 +28,7 @@ This section takes you from an empty server to a fully configured, live store.
 
 SnapBuy's admin panel is a **Laravel 12** application with a **Vue 3** single-page front end. Knowing this helps when you are choosing hosting:
 
-- **PHP 8.2 or newer** is required — a hard floor, not a recommendation.
+- **PHP 8.3 or newer** is required — a hard floor, not a recommendation.
 - **MySQL / MariaDB** is the only supported database.
 - The panel needs a **server cron job** for scheduled work (cart reminders, maintenance windows, scheduled home layouts, queued jobs).
 - Live chat and real-time order updates run over **Laravel Reverb** or **Pusher**.

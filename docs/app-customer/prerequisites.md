@@ -35,6 +35,7 @@ The Customer app was developed and tested with the following versions:
 **Android**
 
 - Android SDK Platform 34+ (installed via Android Studio)
+- `compileSdk` 36 / `targetSdk` 36 (set in `android/app/build.gradle.kts`)
 - Android SDK Command-line Tools
 - Android Emulator or physical device (USB debugging enabled)
 

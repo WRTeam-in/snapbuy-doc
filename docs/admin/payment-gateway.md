@@ -68,6 +68,8 @@ Several gateways confirm payment by calling **your server** rather than the cust
 | --- | --- |
 | PayPal (IPN) | `https://admin.yourstore.com/ipn` |
 | Stripe | `https://admin.yourstore.com/webhook/stripe` |
+| Razorpay | `https://admin.yourstore.com/webhook/razorpay` |
+| PhonePe | `https://admin.yourstore.com/phonepe/callback` |
 | Midtrans | `https://admin.yourstore.com/midtrans/callback` |
 | Cashfree | `https://admin.yourstore.com/cashfree/callback` |
 | PayTabs | `https://admin.yourstore.com/paytabs/callback` |
