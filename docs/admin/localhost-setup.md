@@ -14,7 +14,7 @@ Use this page to run SnapBuy on your own computer for testing and customisation.
 | --- | --- | --- |
 | **XAMPP** | with PHP **8.3+** | Apache + PHP + MySQL in one package |
 | **Composer** | 2.x | Installs PHP dependencies |
-| **Node.js** | 18+ | Only if you want to rebuild the panel's front-end assets |
+| **Node.js** | 20 LTS+ | Only if you want to rebuild the panel's front-end assets |
 
 - XAMPP — [apachefriends.org/download.html](https://www.apachefriends.org/download.html)
 - Composer — [getcomposer.org/download](https://getcomposer.org/download/)

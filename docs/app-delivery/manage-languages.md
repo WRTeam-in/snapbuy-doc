@@ -10,7 +10,7 @@ Add new languages, switch the default language, and configure the in-app fallbac
 
 ## 1. Add a New Language
 
-1. Log in to the your **Admin Panel**.
+1. Log in to your **Admin Panel**.
 2. Navigate to **Settings → General → Languages**.
 3. **Download the sample translation file** for each platform (App, Web, Admin Panel) from the form.
 4. Open the downloaded file and **translate only the values** in the `key: value` pairs. **Do not change the keys** — the app looks them up by key, so any change will break the lookup.

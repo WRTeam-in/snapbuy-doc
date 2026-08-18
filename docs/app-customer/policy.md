@@ -10,7 +10,7 @@ Control the Privacy Policy and Terms & Conditions shown in the app.
 
 ## Add & Edit Policy Content
 
-1. Log in to the your **Admin Panel**.
+1. Log in to your **Admin Panel**.
 2. Navigate to **Countries** and select the country.
 3. Open its **Policy** section.
 4. Enter or update the content using the **HTML editor**.

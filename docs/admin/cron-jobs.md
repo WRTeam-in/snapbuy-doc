@@ -44,7 +44,7 @@ The page gives the same command in three formats, because hosting panels ask for
 
 
 :::warning Use the full path to PHP
-`php artisan schedule:run` often fails on shared hosting because the default `php` is an older version. Use the absolute binary path shown on the Cron Jobs page — for example `/usr/local/bin/ea-php82`. If the cron runs but nothing happens, this is usually why.
+`php artisan schedule:run` often fails on shared hosting because the default `php` is an older version. Use the absolute binary path shown on the Cron Jobs page — for example `/usr/local/bin/ea-php83`. If the cron runs but nothing happens, this is usually why.
 :::
 
 ## Adding the cron job over SSH
