@@ -46,7 +46,7 @@
       <p><strong>Reverb needs a permanently running process and an open port.</strong> Most shared hosting allows neither. If you are on cPanel shared hosting, choose <strong>Pusher</strong> — Reverb will never connect no matter how correct the credentials are.</p>
     </div>
 
-    <h2>Option A — Reverb (self-hosted)</h2>
+    <h2 id="option-a-reverb-self-hosted">Option A — Reverb (self-hosted)</h2>
     <p>Reverb ships with SnapBuy. Installation <strong>generates credentials automatically</strong> if they were empty, so the fields are usually already filled in.</p>
     <div class="table-wrap">
     <table>
@@ -67,7 +67,7 @@
       <p>The Setup Guide's Chat step goes green as soon as the credentials are present. <strong>It does not verify the Reverb process is running.</strong> A green step with a dead server means chat silently does nothing.</p>
     </div>
 
-    <h3>Start the Reverb server</h3>
+    <h3 id="start-the-reverb-server">Start the Reverb server</h3>
     <pre><code>php artisan reverb:start</code></pre>
 
     <p>That stops when you close the terminal. For production, keep it alive with Supervisor.</p>
@@ -89,10 +89,10 @@ sudo supervisorctl update
 sudo supervisorctl start snapbuy-reverb
 sudo supervisorctl status</code></pre>
 
-    <h3>Open the port</h3>
+    <h3 id="open-the-port">Open the port</h3>
     <pre><code>sudo ufw allow 9090</code></pre>
 
-    <h3>Proxy WebSockets through HTTPS</h3>
+    <h3 id="proxy-websockets-through-https">Proxy WebSockets through HTTPS</h3>
     <p>Browsers on an HTTPS page refuse to open an insecure <code>ws://</code> connection. Proxy the WebSocket through Nginx so it is served over <code>wss://</code>:</p>
     <pre><code>location /app {
     proxy_pass http://127.0.0.1:9090;
@@ -110,7 +110,7 @@ sudo supervisorctl status</code></pre>
       <p>An HTTPS panel talking to <code>ws://yourdomain:9090</code> is blocked by the browser. Nothing appears in the panel — chat just never connects. Check the browser console for a blocked-insecure-connection message.</p>
     </div>
 
-    <h2>Option B — Pusher (hosted)</h2>
+    <h2 id="option-b-pusher-hosted">Option B — Pusher (hosted)</h2>
     <p>Nothing to run or keep alive.</p>
     <ol>
       <li>Sign up at <a href="https://pusher.com/">pusher.com</a> and open <strong>Channels</strong>.</li>
@@ -142,7 +142,7 @@ sudo supervisorctl status</code></pre>
 
     <p>Pusher's free tier covers a limited number of daily messages and concurrent connections — fine for a small store, worth watching as you grow.</p>
 
-    <h2>Verify chat works</h2>
+    <h2 id="verify-chat-works">Verify chat works</h2>
     <ol>
       <li>Save the settings, then visit <code>/clear</code>.</li>
       <li>Open <strong>Chat</strong> in the panel.</li>
@@ -157,7 +157,7 @@ sudo supervisorctl status</code></pre>
       <p>The message was stored but not broadcast — the WebSocket connection is down. For Reverb, check the process is running and the port is open. For Pusher, check the cluster.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
@@ -174,7 +174,7 @@ sudo supervisorctl status</code></pre>
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Driver chosen to suit the hosting</li>
       <li class="task-item"><input type="checkbox" disabled> All credentials filled</li>

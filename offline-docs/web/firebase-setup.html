@@ -29,14 +29,14 @@
 
     <p>This guide covers creating the Firebase project, wiring the credentials into the app, and verifying that notifications actually arrive.</p>
 
-    <h2>Before you start</h2>
+    <h2 id="before-you-start">Before you start</h2>
 
     <ul>
       <li>Push notifications require <strong>HTTPS</strong>. They will not work over plain HTTP, and on <code>localhost</code> support varies by browser. Plan to test on a real HTTPS domain.</li>
       <li>FCM web push is unsupported in some browsers (notably iOS Safari below 16.4). The app detects this and shows an "install the app instead" note rather than failing.</li>
     </ul>
 
-    <h2>1. Create a Firebase project</h2>
+    <h2 id="1-create-a-firebase-project">1. Create a Firebase project</h2>
 
     <ol>
       <li>Open the <a href="https://console.firebase.google.com/">Firebase Console</a>.</li>
@@ -57,7 +57,7 @@
 
     <img src="../images/web-firebase-image/step3.png" alt="Configure Google Analytics — optional">
 
-    <h2>2. Register a Web app</h2>
+    <h2 id="2-register-a-web-app">2. Register a Web app</h2>
 
     <ol>
       <li>In the project dashboard, click the <strong>Web</strong> icon (<code>&lt;/&gt;</code>).</li>
@@ -91,7 +91,7 @@ const firebaseConfig = {
       <p>The values are blanked out in the screenshots above. Use the ones shown in <strong>your own</strong> Firebase console.</p>
     </div>
 
-    <h2>3. Enable Cloud Messaging and get the VAPID key</h2>
+    <h2 id="3-enable-cloud-messaging-and-get-the-vapid-key">3. Enable Cloud Messaging and get the VAPID key</h2>
 
     <ol>
       <li>Go to <strong>Project Settings</strong> (gear icon) → <strong>Cloud Messaging</strong>.</li>
@@ -109,7 +109,7 @@ const firebaseConfig = {
       <p><strong>Cloud Messaging API (Legacy)</strong> shows as <em>Disabled</em> on this screen — that is correct. The legacy HTTP API was deprecated in 2023; the Web Portal uses the <strong>V1</strong> API, which must show <strong>Enabled</strong>.</p>
     </div>
 
-    <h2>4. Add credentials to <code>.env</code></h2>
+    <h2 id="4-add-credentials-to-env">4. Add credentials to <code>.env</code></h2>
 
     <p>The app reads its Firebase config from environment variables in <code>src/utils/firebase.js</code>:</p>
 
@@ -127,7 +127,7 @@ NEXT_PUBLIC_FIREBASE_VAPID_KEY=your-vapid-key</code></pre>
       <p><code>.env</code> values are inlined at <strong>build time</strong>. After changing them you must rebuild (<code>npm run build</code>) and restart — a reload is not enough.</p>
     </div>
 
-    <h2>5. Update the service worker</h2>
+    <h2 id="5-update-the-service-worker">5. Update the service worker</h2>
 
     <p>Background notifications — the ones that arrive when the tab is not focused — are handled by <code>public/firebase-messaging-sw.js</code>.</p>
 
@@ -159,7 +159,7 @@ NEXT_PUBLIC_FIREBASE_VAPID_KEY=your-vapid-key</code></pre>
       <p>Web Firebase keys are public by design (any visitor can read them), so the protection is a restriction, not secrecy: in Google Cloud Console → <strong>APIs &amp; Services → Credentials</strong>, restrict the key by <strong>HTTP referrer</strong> to your production domain.</p>
     </div>
 
-    <h2>Related guides</h2>
+    <h2 id="related-guides">Related guides</h2>
 
     <ul>
       <li><a href="installation-steps.html">Installation Steps</a> — full <code>.env</code> reference</li>

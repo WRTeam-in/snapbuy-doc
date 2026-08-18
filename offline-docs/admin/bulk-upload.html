@@ -40,7 +40,7 @@
 
     <img src="../images/panel/bulk-upload-page.png" alt="Bulk upload page">
 
-    <h2>Always start from the generated sample</h2>
+    <h2 id="always-start-from-the-generated-sample">Always start from the generated sample</h2>
     <p>The page generates a sample <code>.xlsx</code> built for <strong>your</strong> installation — your languages, your attributes, your custom fields, and one column group per <a href="../admin/stores.html">store</a>.</p>
 
     <div class="admonition admonition--danger">
@@ -50,7 +50,7 @@
 
     <p>The sample includes example rows and a notes sheet explaining each column, plus dropdown validation on the cells that accept fixed values.</p>
 
-    <h2>File requirements</h2>
+    <h2 id="file-requirements">File requirements</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
@@ -66,7 +66,7 @@
       <p>20 MB is the application's cap, but PHP's own upload and execution limits bite first on shared hosting. Split a very large catalogue into batches of a few hundred rows. See <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
     </div>
 
-    <h2>How rows become products</h2>
+    <h2 id="how-rows-become-products">How rows become products</h2>
     <p>Rows are grouped by a <strong>handle</strong> — a shared identifier that ties multiple rows into one product with several variants.</p>
 
     <div class="admonition admonition--tip">
@@ -74,7 +74,7 @@
       <p>A t-shirt in three sizes is <strong>three rows sharing one handle</strong>, not three products. Get this wrong and you create three separate products that customers see as unrelated items.</p>
     </div>
 
-    <h2>Per-store columns</h2>
+    <h2 id="per-store-columns">Per-store columns</h2>
     <p>Because stock and price are held per store, the sheet carries a column group for <strong>each</strong> store:</p>
     <div class="table-wrap">
     <table>
@@ -104,7 +104,7 @@
       <p>Create a new <a href="../admin/stores.html">store</a> and the sample gains a new column group. An older file will not contain it, so the new store gets nothing. Re-download after any store change.</p>
     </div>
 
-    <h2>Languages</h2>
+    <h2 id="languages">Languages</h2>
     <p>Translatable fields — name, description and others — appear once per active <a href="../admin/languages.html">language</a>.</p>
 
     <div class="admonition admonition--tip">
@@ -112,7 +112,7 @@
       <p>Untranslated languages fall back to the default, so a partial sheet still works. Leaving the <em>default</em> language blank does not.</p>
     </div>
 
-    <h2>Product types</h2>
+    <h2 id="product-types">Product types</h2>
     <p>The type column accepts: <code>none</code>, <code>veg</code>, <code>non_veg</code>, <code>chemical</code>, <code>eggetarian</code>, <code>medical</code>.</p>
 
     <div class="admonition admonition--warning">
@@ -120,7 +120,7 @@
       <p>Grocery apps commonly filter by veg/non-veg, and mislabelling has real consequences for customers with dietary or religious requirements. Get this column right.</p>
     </div>
 
-    <h2>Images</h2>
+    <h2 id="images">Images</h2>
     <p>Image columns are validated during the import.</p>
 
     <div class="admonition admonition--warning">
@@ -128,7 +128,7 @@
       <p>The sheet references images by path. Referencing a file that has not been uploaded fails validation for that row.</p>
     </div>
 
-    <h2>Validation happens before anything is written</h2>
+    <h2 id="validation-happens-before-anything-is-written">Validation happens before anything is written</h2>
     <p>The file is validated first, and errors are reported per row and per cell.</p>
 
     <div class="admonition admonition--tip">
@@ -136,7 +136,7 @@
       <p>Import a handful first, check the result in the catalogue — pricing, stock, images, the right store, the right language — then run the full file. Fixing five bad rows is trivial; unpicking five hundred is not.</p>
     </div>
 
-    <h2>Bulk Update</h2>
+    <h2 id="bulk-update">Bulk Update</h2>
     <p>Bulk Update changes existing products. Export the current data, edit it, and upload it back.</p>
 
     <div class="admonition admonition--danger">
@@ -155,7 +155,7 @@
       <p>Excel and Google Sheets silently mangle data: leading zeros are stripped from SKUs, long numbers become scientific notation, and text that looks like a date gets converted. Format those columns as <strong>Text</strong> before editing, and check a sample after saving.</p>
     </div>
 
-    <h2>Large imports run in the background</h2>
+    <h2 id="large-imports-run-in-the-background">Large imports run in the background</h2>
     <p>Product bulk import is dispatched as a queued job.</p>
 
     <div class="admonition admonition--danger">
@@ -163,7 +163,7 @@
       <p>The import is processed by the queue. Without the <a href="../admin/cron-jobs.html">cron job</a> running, the file uploads and reports as accepted but nothing is ever created. Check the cron heartbeat and the pending-jobs count under <strong>Settings → Cron Jobs</strong> if an import appears to do nothing.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
@@ -181,7 +181,7 @@
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Fresh sample downloaded from <strong>your</strong> panel</li>
       <li class="task-item"><input type="checkbox" disabled> Backup taken before any bulk update</li>

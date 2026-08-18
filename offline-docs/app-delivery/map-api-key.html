@@ -31,7 +31,7 @@
       <p>Google Maps usage may incur additional charges from Google beyond your free monthly quota. See their <a href="https://mapsplatform.google.com/pricing/">pricing page</a> before going live.</p>
     </div>
 
-    <h2>Step 1 — Open Google Cloud Console</h2>
+    <h2 id="step-1-open-google-cloud-console">Step 1 — Open Google Cloud Console</h2>
     <ol>
       <li>Visit <a href="https://cloud.google.com/">https://cloud.google.com/</a> and sign in with your Google account.</li>
       <li>Click <strong>Console</strong> (top-right) to open the Google Cloud Console.</li>
@@ -41,7 +41,7 @@
     <img src="../images/app/delivery/mapAPI1.png" alt="Google Cloud project selector">
     <img src="../images/app/delivery/mapAPI2.png" alt="Project selector">
 
-    <h2>Step 2 — Enable Required APIs</h2>
+    <h2 id="step-2-enable-required-apis">Step 2 — Enable Required APIs</h2>
 
     <p>In the left sidebar, go to <strong>APIs &amp; Services → Library</strong>, then search for and enable the following APIs:</p>
 
@@ -55,7 +55,7 @@
     <img src="../images/app/delivery/mapAPI3.png" alt="Enable Maps SDK for iOS">
     <img src="../images/app/delivery/mapAPI4.png" alt="Enable API">
 
-    <h2>Step 3 — Create an API Key</h2>
+    <h2 id="step-3-create-an-api-key">Step 3 — Create an API Key</h2>
 
     <p>Google recommends creating <strong>two separate keys</strong> — one for Android, one for iOS — instead of one shared key. Each platform uses a different restriction type (package name + SHA-1 for Android, bundle ID for iOS), and a single key cannot carry both restrictions at once. Separate keys also let you revoke or rotate one platform's key without breaking the other.</p>
 
@@ -69,7 +69,7 @@
 
     <img src="../images/app/delivery/mapAPI5.png" alt="Copy generated API key">
 
-    <h2>Step 3.1 — Restrict Each Key for Production</h2>
+    <h2 id="step-31-restrict-each-key-for-production">Step 3.1 — Restrict Each Key for Production</h2>
 
     <p>Before releasing to production, restrict each key so it only works from your app. An unrestricted key can be copied from your app package and used by anyone.</p>
 
@@ -96,9 +96,9 @@
       <p>Add both your debug and release SHA-1 fingerprints for the Android key, or map testing will break in debug builds while working in release (or vice versa).</p>
     </div>
 
-    <h2>Step 4 — Paste the Key into the App</h2>
+    <h2 id="step-4-paste-the-key-into-the-app">Step 4 — Paste the Key into the App</h2>
 
-    <h3>Android — <code>AndroidManifest.xml</code></h3>
+    <h3 id="android-androidmanifestxml">Android — <code>AndroidManifest.xml</code></h3>
 
     <p>Open <code>android/app/src/main/AndroidManifest.xml</code> and add the following <code>&lt;meta-data&gt;</code> tag inside the <code>&lt;application&gt;</code> tag:</p>
 
@@ -108,7 +108,7 @@
 
     <p>Replace <code>YOUR_MAP_API_KEY_HERE</code> with the <strong>Android key</strong> you copied in Step 3.</p>
 
-    <h3>iOS — <code>AppDelegate.swift</code></h3>
+    <h3 id="ios-appdelegateswift">iOS — <code>AppDelegate.swift</code></h3>
 
     <p>Open <code>ios/Runner/AppDelegate.swift</code> and search for the following line:</p>
 
@@ -116,7 +116,7 @@
 
     <p>Replace <code>YOUR_MAP_API_KEY_HERE</code> with the <strong>iOS key</strong> you copied in Step 3.</p>
 
-    <h2>Step 5 — Rebuild</h2>
+    <h2 id="step-5-rebuild">Step 5 — Rebuild</h2>
 
     <pre><code class="language-bash">flutter clean && flutter run</code></pre>
 

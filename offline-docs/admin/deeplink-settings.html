@@ -30,7 +30,7 @@
 
     <img src="../images/panel/deeplink-settings-page.png" alt="Deeplink settings page">
 
-    <h2>The setting</h2>
+    <h2 id="the-setting">The setting</h2>
 
     <div class="table-wrap">
     <table>
@@ -57,7 +57,7 @@ snapbuy://category/17</code></pre>
       <p>Schemes are first-come, first-served on a device. A generic value like <code>shop</code> or <code>store</code> may already be claimed by another installed app, and the wrong app opens. Use your brand name.</p>
     </div>
 
-    <h2>What deeplinks are used for</h2>
+    <h2 id="what-deeplinks-are-used-for">What deeplinks are used for</h2>
 
     <div class="table-wrap">
     <table>
@@ -76,7 +76,7 @@ snapbuy://category/17</code></pre>
       <p>Several gateways redirect the customer back after payment. Without a working deeplink, mobile customers are stranded in the browser after paying — the money is taken but they never return to the order confirmation, and they usually assume the payment failed and try again.</p>
     </div>
 
-    <h2>App-side configuration</h2>
+    <h2 id="app-side-configuration">App-side configuration</h2>
 
     <p>The panel setting is only half the job. Each app must declare the scheme:</p>
 
@@ -97,7 +97,7 @@ snapbuy://category/17</code></pre>
       <p>Custom schemes only work if the app is installed; a browser cannot resolve them otherwise. Android App Links and iOS Universal Links use your <code>https://</code> domain instead and fall back to the website when the app is absent. They need domain verification files hosted on your site and are configured in the app projects, not here.</p>
     </div>
 
-    <h2>Testing</h2>
+    <h2 id="testing">Testing</h2>
 
     <p><strong>Android</strong>, over ADB:</p>
 
@@ -114,7 +114,7 @@ snapbuy://category/17</code></pre>
       <p>A deeplink that does nothing when the app is absent is expected behaviour for a custom scheme — but you should know what your customers see, and consider Universal Links if it matters.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>

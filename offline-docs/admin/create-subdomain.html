@@ -42,7 +42,7 @@
       <p>The panel URL is written into the Customer App, the Delivery Boy App and the Web Portal configuration. Changing it later means rebuilding and re-publishing both apps. Decide once, then keep it.</p>
     </div>
 
-    <h2>Create the subdomain in cPanel</h2>
+    <h2 id="create-the-subdomain-in-cpanel">Create the subdomain in cPanel</h2>
     <ol>
       <li>Log into cPanel.</li>
       <li>Under <strong>Domains</strong>, open <strong>Subdomains</strong> (on newer cPanel versions: <strong>Domains → Create A New Domain</strong>).</li>
@@ -54,14 +54,14 @@
 
     <p>The subdomain becomes reachable within a few minutes, though DNS propagation can take up to a few hours.</p>
 
-    <h2>Point the document root at <code>public/</code></h2>
+    <h2 id="point-the-document-root-at-public">Point the document root at <code>public/</code></h2>
     <p>This is the step most installations get wrong.</p>
 
     <p>SnapBuy is a Laravel application. Everything above the <code>public/</code> folder — including your <code>.env</code> file with database passwords — <strong>must not be reachable from a browser</strong>.</p>
 
     <p>You have two safe options.</p>
 
-    <h3>Option A — document root points directly at <code>public/</code> (recommended)</h3>
+    <h3 id="option-a-document-root-points-directly-at-public-recommended">Option A — document root points directly at <code>public/</code> (recommended)</h3>
     <p>Upload SnapBuy so that the structure is:</p>
     <pre><code>/home/username/snapbuy/          ← application files (.env, app/, storage/ …)
 /home/username/snapbuy/public/   ← document root of admin.yourstore.com</code></pre>
@@ -70,7 +70,7 @@
 
     <p>This is the most secure layout and needs no extra configuration.</p>
 
-    <h3>Option B — upload everything into the subdomain folder</h3>
+    <h3 id="option-b-upload-everything-into-the-subdomain-folder">Option B — upload everything into the subdomain folder</h3>
     <p>If your host will not let you move the document root, upload all SnapBuy files into <code>public_html/admin/</code> and rely on the bundled <code>.htaccess</code> in the project root, which forwards requests into <code>public/</code>.</p>
 
     <div class="admonition admonition--danger">
@@ -81,7 +81,7 @@
 &lt;/Files&gt;</code></pre>
     </div>
 
-    <h2>Nginx (VPS) server block</h2>
+    <h2 id="nginx-vps-server-block">Nginx (VPS) server block</h2>
     <p>If you run Nginx instead of cPanel, use a server block like this:</p>
     <pre><code>server {
     listen 80;
@@ -113,7 +113,7 @@
 sudo nginx -t
 sudo systemctl reload nginx</code></pre>
 
-    <h2>Install an SSL certificate</h2>
+    <h2 id="install-an-ssl-certificate">Install an SSL certificate</h2>
     <p>The panel must run over HTTPS in production. Firebase web push, several payment gateways and the mobile apps all refuse plain HTTP.</p>
 
     <p><strong>cPanel:</strong> open <strong>SSL/TLS Status</strong>, select the subdomain, click <strong>Run AutoSSL</strong>.</p>
@@ -128,7 +128,7 @@ sudo systemctl reload nginx</code></pre>
       <p>Visit the installer at <code>https://…</code> from the very first screen. If you install over <code>http://</code>, <code>APP_URL</code> is saved as <code>http://</code> and you will have to correct it in <code>.env</code> afterwards.</p>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Subdomain created and resolving</li>
       <li class="task-item"><input type="checkbox" disabled> Document root points at SnapBuy's <code>public/</code> folder</li>

@@ -41,7 +41,8 @@
       <p>Do this every time, including for updates you expect to be small.</p>
     </div>
 
-    <h2>What happens</h2>
+    <h2 id="what-happens">What happens</h2>
+
     <ol>
       <li>You download the official update package from your purchase source (CodeCanyon).</li>
       <li>You upload the <code>.zip</code> here, along with your purchase code.</li>
@@ -57,12 +58,11 @@
       <p>SnapBuy never downloads updates by itself. You control exactly which package is applied and when.</p>
     </div>
 
-    <h2>Requirements</h2>
+    <h2 id="requirements">Requirements</h2>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Requirement</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Requirement</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td><strong>Valid purchase code</strong></td><td>Validated against the panel's live domain</td></tr>
         <tr><td><strong>PHP <code>zip</code> extension</strong></td><td>The update is refused without it</td></tr>
@@ -79,13 +79,14 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Raise PHP limits before uploading</p>
-      <p>A large package can exceed the defaults and fail part-way — which is the worst outcome, because some files may already be replaced. Confirm <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> are generous first. See <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
+      <p>A large package can exceed the defaults and fail part-way — which is the worst outcome, because some files may already be replaced. Confirm <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> are generous first. See <a href="php-ini-settings.html">PHP INI Settings</a>.</p>
     </div>
 
-    <h2>Applying an update</h2>
+    <h2 id="applying-an-update">Applying an update</h2>
+
     <ol>
       <li>Take both backups.</li>
-      <li>Put the customer-facing surfaces into <a href="../admin/maintenance-mode.html">Maintenance Mode</a>.</li>
+      <li>Put the customer-facing surfaces into <a href="maintenance-mode.html">Maintenance Mode</a>.</li>
       <li>Go to <strong>Settings → System Updater</strong>.</li>
       <li>Upload the <code>.zip</code> and enter your purchase code.</li>
       <li>Wait — do not refresh or navigate away.</li>
@@ -100,8 +101,10 @@
       <p>Refreshing mid-copy can leave a half-updated file set — some files new, some old — which usually produces fatal errors. If it appears to hang, wait it out, then check <code>storage/logs/laravel.log</code> before doing anything else.</p>
     </div>
 
-    <h2>After updating</h2>
+    <h2 id="after-updating">After updating</h2>
+
     <p>Check these, in order:</p>
+
     <ul>
       <li class="task-item"><input type="checkbox" disabled> The panel loads and you can sign in</li>
       <li class="task-item"><input type="checkbox" disabled> <code>/clear</code> has been visited</li>
@@ -109,7 +112,7 @@
       <li class="task-item"><input type="checkbox" disabled> Place a test order end to end</li>
       <li class="task-item"><input type="checkbox" disabled> A test payment still completes</li>
       <li class="task-item"><input type="checkbox" disabled> Push notifications still arrive</li>
-      <li class="task-item"><input type="checkbox" disabled> The cron heartbeat is still green under <a href="../admin/cron-jobs.html">Cron Jobs</a></li>
+      <li class="task-item"><input type="checkbox" disabled> The cron heartbeat is still green under <a href="cron-jobs.html">Cron Jobs</a></li>
       <li class="task-item"><input type="checkbox" disabled> Turn maintenance off</li>
     </ul>
 
@@ -118,7 +121,8 @@
       <p>The updater copies package files over yours. Any file you edited directly — a template, a controller, a style sheet — is overwritten without warning. If you have customisations, apply the update to a copy first and reapply your changes there.</p>
     </div>
 
-    <h2>Updating manually instead</h2>
+    <h2 id="updating-manually-instead">Updating manually instead</h2>
+
     <p>If the uploader fails — usually because of PHP limits on shared hosting — apply it over FTP or SSH:</p>
 
     <pre><code># with backups already taken
@@ -134,23 +138,23 @@ php artisan route:clear</code></pre>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Those URLs are unauthenticated</p>
-      <p><code>/migration</code>, <code>/clear</code>, <code>/migrate</code> and <code>/logs</code> are not behind a login. Restrict them by IP in production — see <a href="../admin/server-setup.html#secure-the-maintenance-routes">Server Setup</a>.</p>
+      <p><code>/migration</code>, <code>/clear</code>, <code>/migrate</code> and <code>/logs</code> are not behind a login. Restrict them by IP in production — see <a href="server-setup.html#secure-the-maintenance-routes">Server Setup</a>.</p>
     </div>
 
-    <h2>Demo mode</h2>
+    <h2 id="demo-mode">Demo mode</h2>
+
     <p>Updates are disabled when the installation is running in demo mode, with <em>"This action is disabled in demo mode."</em></p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-      </thead>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>"Invalid purchase code"</td><td>Code belongs to another domain, or no outbound HTTPS</td><td>Check the domain; test <code>curl -I https://validator.wrteam.in</code></td></tr>
         <tr><td>"Please upload a valid zip file"</td><td>Wrong file type or a corrupt download</td><td>Re-download the package</td></tr>
         <tr><td>"PHP zip extension is required"</td><td><code>zip</code> not enabled</td><td>Enable it and restart the web server</td></tr>
-        <tr><td>Upload fails on a large file</td><td>PHP limits too low</td><td>Raise them — see <a href="../admin/php-ini-settings.html">PHP INI Settings</a></td></tr>
+        <tr><td>Upload fails on a large file</td><td>PHP limits too low</td><td>Raise them — see <a href="php-ini-settings.html">PHP INI Settings</a></td></tr>
         <tr><td>Update completes, panel errors</td><td>Stale caches</td><td>Visit <code>/clear</code></td></tr>
         <tr><td>Images gone after updating</td><td>Symlink lost</td><td>Visit <code>/linkstorage</code></td></tr>
         <tr><td>Customisations disappeared</td><td>Overwritten by the package</td><td>Restore from your file backup</td></tr>

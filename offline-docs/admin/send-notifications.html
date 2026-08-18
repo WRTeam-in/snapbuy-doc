@@ -30,14 +30,12 @@
 
     <img src="../images/panel/send-notification-page.png" alt="Send notification form">
 
-    <h2>Push notification campaigns</h2>
+    <h2 id="push-notification-campaigns">Push notification campaigns</h2>
     <p><strong>Notifications → Send Notification</strong>: title, message, an optional image, and a target.</p>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>Notes</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td><strong>Title</strong></td><td>Keep under about 40 characters — longer is truncated on a lock screen</td></tr>
         <tr><td><strong>Message</strong></td><td>Under about 100 characters</td></tr>
@@ -58,7 +56,7 @@
       <p>Always send to yourself first. Every time, including for a "quick" campaign.</p>
     </div>
 
-    <h2>Email campaigns</h2>
+    <h2 id="email-campaigns">Email campaigns</h2>
     <p><strong>Emails → Send Email</strong> works the same way, delivered through your <a href="../admin/smtp-settings.html">SMTP</a> configuration.</p>
 
     <div class="admonition admonition--warning">
@@ -72,7 +70,7 @@
       <p>Required by anti-spam law in many jurisdictions, and expected by every mail provider. Without it you are both breaking the law in some markets and training spam filters to distrust you.</p>
     </div>
 
-    <h2>Popup offers</h2>
+    <h2 id="popup-offers">Popup offers</h2>
     <p><strong>Popup Offer</strong> shows a promotional overlay when customers open the app or website.</p>
 
     <div class="admonition admonition--warning">
@@ -80,21 +78,23 @@
       <p>A popup on every launch is the fastest way to get an app deleted. Use them for genuinely time-limited offers, and take them down when the offer ends — nothing looks more neglected than a popup for last month's sale.</p>
     </div>
 
-    <h2>Targeting and timing</h2>
+    <h2 id="targeting-and-timing">Targeting and timing</h2>
+
     <div class="admonition admonition--tip">
       <p class="admonition__title">Send when customers can act</p>
       <p>A grocery promotion at 3 AM is ignored and mildly irritating. Check your <a href="../admin/reports.html">order reports</a> for when customers actually shop, and send shortly before that window.</p>
       <p>Remember the country <a href="../admin/countries.html">timezone</a> — a campaign scheduled in your local time reaches an overseas audience at the wrong hour entirely.</p>
     </div>
 
-    <h2>Frequency</h2>
+    <h2 id="frequency">Frequency</h2>
+
     <div class="admonition admonition--danger">
       <p class="admonition__title">Over-notifying costs you order updates too</p>
       <p>Customers do not disable <em>marketing</em> notifications — they disable notifications for your app. Once off, they no longer receive order status updates, delivery alerts or chat replies, and support volume rises.</p>
       <p>Treat push as a scarce resource. A useful campaign once a week beats a forgettable one every day.</p>
     </div>
 
-    <h2>Language</h2>
+    <h2 id="language">Language</h2>
     <p>Campaign content is not automatically translated.</p>
 
     <div class="admonition admonition--warning">
@@ -102,12 +102,10 @@
       <p>Customers whose language you have not written for receive whatever you typed. If you serve a multi-lingual audience, prepare the content per <a href="../admin/languages.html">language</a>.</p>
     </div>
 
-    <h2>Prerequisites</h2>
+    <h2 id="prerequisites">Prerequisites</h2>
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Requirement</th><th>For</th></tr>
-      </thead>
+      <thead><tr><th>Requirement</th><th>For</th></tr></thead>
       <tbody>
         <tr><td><a href="../admin/cron-jobs.html">Cron job</a></td><td>Everything — nothing sends without it</td></tr>
         <tr><td><a href="../admin/firebase-settings.html">Firebase</a>, including <code>config/firebase.json</code></td><td>Push</td></tr>
@@ -117,7 +115,7 @@
     </table>
     </div>
 
-    <h2>Before you press send</h2>
+    <h2 id="before-you-press-send">Before you press send</h2>
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Cron heartbeat green</li>
       <li class="task-item"><input type="checkbox" disabled> Sent to yourself and checked on a real device</li>
@@ -129,12 +127,10 @@
       <li class="task-item"><input type="checkbox" disabled> Unsubscribe path present, for email</li>
     </ul>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-      </thead>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Reported sent, nothing received</td><td>Queue not processed</td><td>Check the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
         <tr><td>Push fails, email works</td><td>Firebase service account missing</td><td>Check <code>config/firebase.json</code></td></tr>

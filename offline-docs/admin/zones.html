@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Delivery Zones — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <span class="navbar__title-sub">Offline Documentation</span>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Delivery Zones</h1>
+
+    <p><strong>Setup Guide step 2 of 9.</strong> Menu path: <strong>Zones</strong></p>
+
+    <p>A <strong>zone</strong> is the area you deliver to, drawn as a polygon on a map. It also decides <strong>what delivery costs</strong> inside that area.</p>
+
+    <p>Zones are the heart of SnapBuy's delivery logic. Everything else depends on them:</p>
+
+    <ul>
+      <li>A customer's address must fall inside a zone polygon, or they cannot order at all.</li>
+      <li>Every store belongs to exactly one zone.</li>
+      <li>Delivery charges, surge pricing and extra fees are all configured per zone.</li>
+    </ul>
+
+    <img src="../images/panel/zones-list.png" alt="Zones list">
+
+    <h2>The two sales channels</h2>
+
+    <p>Before drawing anything, understand the channel model — it shapes the entire form.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Channel</th><th>Meaning</th><th>Pricing model</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Quick</strong></td><td>Fast local delivery from a nearby store</td><td>Distance-based: base charge + per-km</td></tr>
+        <tr><td><strong>eCommerce</strong></td><td>Standard shipping over a wider area</td><td>Fixed rules: flat, slab, city or area</td></tr>
+        <tr><td><strong>Both</strong></td><td>One zone serving both</td><td>Both pricing sets, each drawn separately</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>You choose this with the zone's <strong>Sales Channel</strong> field.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why a zone can hold two boundaries</p>
+      <p>Quick delivery usually covers a few kilometres; eCommerce shipping can cover a whole state. Rather than forcing two separate zones, a zone set to <strong>Both</strong> stores <strong>two polygons</strong> — one per channel — and applies the matching price rules to each.</p>
+      <p>If you draw only one of the two, SnapBuy falls back to the boundary that <em>has</em> been drawn, so a half-configured zone still resolves rather than silently rejecting every address.</p>
+    </div>
+
+    <h2>Creating a zone</h2>
+
+    <p>Go to <strong>Zones → Add Zone</strong>.</p>
+
+    <img src="../images/panel/zones-add-form.png" alt="Add zone form">
+
+    <h3>Basic details</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Internal label — "South Mumbai", "Downtown"</td></tr>
+        <tr><td><strong>Country</strong></td><td>Which country this zone sits in. Create the <a href="countries.html">country</a> first.</td></tr>
+        <tr><td><strong>City / State</strong></td><td>Text labels, used for filtering and reporting</td></tr>
+        <tr><td><strong>Sales Channel</strong></td><td><code>Quick</code>, <code>eCommerce</code>, or <code>Both</code></td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive zones stop accepting orders immediately</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Drawing the boundary</h3>
+
+    <p>The map uses the provider set in <a href="map-api-keys.html">Map &amp; API Keys</a> — OpenStreetMap by default, or Google Maps.</p>
+
+    <ol>
+      <li>Use the polygon tool to click each corner of your delivery area.</li>
+      <li>Click the first point again to close the shape.</li>
+      <li>Drag any point to adjust it.</li>
+      <li>If the zone serves <strong>Both</strong> channels, switch tabs and draw the second boundary.</li>
+    </ol>
+
+    <img src="../images/panel/zones-draw-polygon.png" alt="Drawing a zone polygon on the map">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Overlapping zones</p>
+      <p>When polygons overlap, an address can match more than one zone and the result becomes unpredictable — customers may see different charges on different attempts. Keep boundaries adjacent, not overlapping.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Draw slightly wider than you think</p>
+      <p>An address that falls a few metres outside the polygon is rejected outright with no way for the customer to proceed. A small buffer around the edge avoids losing genuine orders on the boundary.</p>
+    </div>
+
+    <h2>Quick channel pricing</h2>
+
+    <p>Distance-based. SnapBuy measures the <strong>road distance</strong> from the store to the customer using your map provider, then:</p>
+
+    <pre><code>charge = base_delivery_charge
+if distance &gt; base_distance:
+    charge += (distance − base_distance) × charge_per_km
+if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
+    charge = 0</code></pre>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Distance Unit</strong></td><td><code>km</code> or <code>mile</code>. Base distance and per-km rate are both read in this unit.</td></tr>
+        <tr><td><strong>Base Delivery Charge</strong></td><td>Charged on every order, before distance is considered</td></tr>
+        <tr><td><strong>Base Distance</strong></td><td>Distance included in the base charge. Nothing extra is charged within it.</td></tr>
+        <tr><td><strong>Charge Per Km</strong></td><td>Rate applied only to distance <strong>beyond</strong> the base distance</td></tr>
+        <tr><td><strong>Travel Time Per Km</strong></td><td>Used to estimate delivery time shown to the customer</td></tr>
+        <tr><td><strong>Minimum Order Amount</strong></td><td>Customers cannot check out below this subtotal</td></tr>
+        <tr><td><strong>Free Delivery Above</strong></td><td>Subtotal at which delivery becomes free. <code>0</code> disables it.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Worked example</strong> — base charge ₹20, base distance 3 km, ₹8/km:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Distance</th><th>Charge</th></tr></thead>
+      <tbody>
+        <tr><td>2 km</td><td>₹20</td></tr>
+        <tr><td>3 km</td><td>₹20</td></tr>
+        <tr><td>5 km</td><td>₹20 + (2 × ₹8) = ₹36</td></tr>
+        <tr><td>10 km</td><td>₹20 + (7 × ₹8) = ₹76</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/zones-quick-pricing.png" alt="Quick channel pricing fields">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Distance needs a working map provider</p>
+      <p>Road distance is fetched live from OpenStreetMap/OSRM or Google. If the provider is misconfigured or the key is invalid, the distance lookup fails and the customer is shown an "unable to fetch distance" error at checkout rather than a price. Test a real address after any map change.</p>
+    </div>
+
+    <h2>eCommerce channel pricing</h2>
+
+    <p>Choose one of four <strong>pricing strategies</strong>.</p>
+
+    <img src="../images/panel/zones-ecommerce-pricing.png" alt="eCommerce pricing strategy selector">
+
+    <h3>Flat</h3>
+
+    <p>One charge for the whole zone.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Flat Delivery Charge</strong></td><td>Applied to every order</td></tr>
+        <tr><td><strong>Flat Free Delivery Above</strong></td><td>Subtotal at which it drops to zero</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Slab</h3>
+
+    <p>Charge varies by order value. Add rows of <code>min</code> – <code>max</code> – <code>charge</code>.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Order value</th><th>Charge</th></tr></thead>
+      <tbody>
+        <tr><td>0 – 499</td><td>₹60</td></tr>
+        <tr><td>500 – 999</td><td>₹30</td></tr>
+        <tr><td>1000 and above</td><td>₹0</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Leave the <strong>max</strong> of the final row <strong>blank</strong> to mean "and above".</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Leave no gaps between slabs</p>
+      <p>If an order value matches no slab, SnapBuy falls back to the <strong>Default Delivery Charge</strong>. A gap between <code>499</code> and <code>500.01</code> means orders at <code>500.00</code> silently get the fallback price. Make ranges continuous.</p>
+    </div>
+
+    <h3>City</h3>
+
+    <p>Different charge per delivery city. Each row carries its own <strong>charge</strong> and optional <strong>free above</strong> value. Requires cities under <a href="#delivery-cities-and-areas">Delivery Cities &amp; Areas</a>.</p>
+
+    <h3>Area</h3>
+
+    <p>The same, but at the finer <strong>delivery area</strong> level within a city.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Unmatched city or area</p>
+      <p>If the customer's city or area has no row, the <strong>Default Delivery Charge</strong> applies. Set that to a sensible value rather than <code>0</code> — otherwise unlisted locations ship free.</p>
+    </div>
+
+    <h3>Zone-wide free threshold</h3>
+
+    <p><strong>Free Delivery Threshold</strong> applies across <strong>all four</strong> strategies. If the subtotal reaches it, delivery is free regardless of slab, city or area rules. Set <code>0</code> to disable.</p>
+
+    <h2>Surge pricing</h2>
+
+    <p>Surge slots add a charge during specific times of day — evening rush, weekend peaks, late night.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Start / End</strong></td><td>Wall-clock times, <code>HH:MM</code></td></tr>
+        <tr><td><strong>Charge</strong></td><td>Amount added while the slot is active</td></tr>
+        <tr><td><strong>Label</strong></td><td>Shown to the customer — "Peak hour fee". Translatable per language.</td></tr>
+        <tr><td><strong>Refundable</strong></td><td>Whether this amount is returned when an order is cancelled or refunded</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/zones-surge-slots.png" alt="Configuring surge slots">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Overnight slots are supported</p>
+      <p>A slot from <code>22:00</code> to <code>02:00</code> correctly wraps past midnight. You do not need to split it into two rows.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Surge is evaluated in the country's timezone</p>
+      <p>Slots use the timezone on the zone's <a href="countries.html">country</a>, not the server's clock. A wrong country timezone makes surge apply at the wrong hours.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Surge is shown separately, not hidden in delivery</p>
+      <p>Surge and additional charges are returned to the app as their <strong>own line items</strong> — they are not folded into the delivery charge. Customers see exactly what they are paying for, and refund handling can treat them differently.</p>
+    </div>
+
+    <h2>Additional charges</h2>
+
+    <p>Flat fees added to every order in the zone — packaging, handling, small-order fees. Configured <strong>separately for each channel</strong>, so quick orders and eCommerce orders can carry different fees.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Shown on the bill. Translatable per language.</td></tr>
+        <tr><td><strong>Amount</strong></td><td>Flat amount added</td></tr>
+        <tr><td><strong>Refundable</strong></td><td>Whether it is returned on cancellation or refund</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Rows with an amount of <code>0</code> are ignored.</p>
+
+    <h2 id="delivery-cities-and-areas">Delivery Cities and Areas</h2>
+
+    <p>Menu: <strong>Delivery Cities</strong> and <strong>Delivery Areas</strong>.</p>
+
+    <p>These serve two purposes:</p>
+
+    <ol>
+      <li>They give customers a structured city/area picker instead of free-text addresses.</li>
+      <li>They are what the <strong>city</strong> and <strong>area</strong> eCommerce pricing strategies price against.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Level</th><th>Belongs to</th><th>Carries</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delivery City</strong></td><td>A country</td><td>Name, state, latitude/longitude, optional boundary</td></tr>
+        <tr><td><strong>Delivery Area</strong></td><td>A delivery city</td><td>Name, latitude/longitude, optional boundary</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/zones-delivery-cities.png" alt="Delivery cities list">
+
+    <p>Deleting a city removes its areas with it.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Only needed for city/area pricing</p>
+      <p>If your eCommerce zones use flat or slab pricing, you can skip cities and areas entirely.</p>
+    </div>
+
+    <h2>How an address resolves at checkout</h2>
+
+    <ol>
+      <li>The customer's coordinates are tested against zone polygons for the channel they are shopping.</li>
+      <li>No match → they are told delivery is unavailable.</li>
+      <li>Match → that zone's pricing applies.</li>
+      <li>Road distance is measured (quick channel only).</li>
+      <li>Delivery charge is calculated.</li>
+      <li>Active surge slots and additional charges are added as separate lines.</li>
+      <li>Free-delivery thresholds are applied last and can zero the delivery charge.</li>
+    </ol>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>"Delivery not available at this location"</td><td>Address outside every polygon</td><td>Widen the boundary, or check the zone is Active</td></tr>
+        <tr><td>Delivery charge always zero</td><td>A free-delivery threshold is set too low, or is <code>0</code> where it should be blank</td><td>Review free-above fields on the zone and on the matched pricing row</td></tr>
+        <tr><td>"Unable to fetch distance"</td><td>Map provider misconfigured or key invalid</td><td>See <a href="map-api-keys.html">Map &amp; API Keys</a></td></tr>
+        <tr><td>Wrong charge on some orders</td><td>Slab gap, or unlisted city/area falling back to default</td><td>Make slabs continuous; add the missing city/area row</td></tr>
+        <tr><td>Surge applies at wrong hours</td><td>Country timezone incorrect</td><td>Fix the timezone on the <a href="countries.html">country</a></td></tr>
+        <tr><td>Customer matched the wrong zone</td><td>Overlapping polygons</td><td>Redraw so zones do not overlap</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Zone assigned to the correct country</li>
+      <li class="task-item"><input type="checkbox" disabled> Sales channel matches how you actually sell</li>
+      <li class="task-item"><input type="checkbox" disabled> A polygon drawn for every channel the zone serves</li>
+      <li class="task-item"><input type="checkbox" disabled> No overlap with neighbouring zones</li>
+      <li class="task-item"><input type="checkbox" disabled> Quick pricing tested against a real address at several distances</li>
+      <li class="task-item"><input type="checkbox" disabled> eCommerce slabs continuous, with no gaps</li>
+      <li class="task-item"><input type="checkbox" disabled> Default Delivery Charge set to a sensible fallback</li>
+      <li class="task-item"><input type="checkbox" disabled> Surge labels and additional charge names translated</li>
+      <li class="task-item"><input type="checkbox" disabled> Zone status Active</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/zones.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

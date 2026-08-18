@@ -30,118 +30,106 @@
 
     <img src="../images/panel/notification-settings-page.png" alt="Notification settings page">
 
-    <h2>Audiences</h2>
+    <h2 id="audiences">Audiences</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Audience</th><th>Receives</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Customer</strong></td><td>Order updates, wallet activity, promotions, chat replies</td></tr>
-          <tr><td><strong>Delivery Boy</strong></td><td>Order assignments, salary, wallet, withdrawal outcomes</td></tr>
-          <tr><td><strong>Admin</strong></td><td>Chat messages, withdrawal requests</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Audience</th><th>Receives</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Customer</strong></td><td>Order updates, wallet activity, promotions, chat replies</td></tr>
+        <tr><td><strong>Delivery Boy</strong></td><td>Order assignments, salary, wallet, withdrawal outcomes</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Chat messages, withdrawal requests</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <p>Filter by audience, or search by event name, to find what you need.</p>
 
-    <h2>The events</h2>
+    <h2 id="the-events">The events</h2>
 
     <p>Grouped by area. The same underlying event often exists separately per audience — assigning an order notifies both the customer and the rider, and each can be switched independently.</p>
 
-    <h3>Orders</h3>
+    <h3 id="orders">Orders</h3>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Event</th><th>Audience</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>assign_order_customer</code></td><td>Customer — a rider has been assigned</td></tr>
-          <tr><td><code>assign_order_delivery_boy</code></td><td>Delivery boy — you have a new order</td></tr>
-          <tr><td><code>order_item_status_customer</code></td><td>Customer — item status changed</td></tr>
-          <tr><td><code>order_item_cancelled_customer</code></td><td>Customer — item cancelled</td></tr>
-          <tr><td><code>order_item_returned_customer</code></td><td>Customer — return processed</td></tr>
-          <tr><td><code>payment_failed_customer</code></td><td>Customer — payment failed</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>assign_order_customer</code></td><td>Customer — a rider has been assigned</td></tr>
+        <tr><td><code>assign_order_delivery_boy</code></td><td>Delivery boy — you have a new order</td></tr>
+        <tr><td><code>order_item_status_customer</code></td><td>Customer — item status changed</td></tr>
+        <tr><td><code>order_item_cancelled_customer</code></td><td>Customer — item cancelled</td></tr>
+        <tr><td><code>order_item_returned_customer</code></td><td>Customer — return processed</td></tr>
+        <tr><td><code>payment_failed_customer</code></td><td>Customer — payment failed</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h3>Wallet and money</h3>
+    <h3 id="wallet-and-money">Wallet and money</h3>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Event</th><th>Audience</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>wallet_recharged_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_recharge_failed_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_admin_credit_customer</code></td><td>Customer — you credited them manually</td></tr>
-          <tr><td><code>wallet_cashback_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_referral_bonus_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_refund_cancelled_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_refund_returned_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>wallet_credited_delivery_boy</code></td><td>Delivery boy</td></tr>
-          <tr><td><code>wallet_debited_delivery_boy</code></td><td>Delivery boy</td></tr>
-          <tr><td><code>salary_paid_delivery_boy</code></td><td>Delivery boy</td></tr>
-          <tr><td><code>received_from_customer</code></td><td>Cash collected</td></tr>
-          <tr><td><code>withdrawal_request_admin</code></td><td>Admin — a rider requested a payout</td></tr>
-          <tr><td><code>withdrawal_status_delivery_boy</code></td><td>Delivery boy — request approved or rejected</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>wallet_recharged_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_recharge_failed_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_admin_credit_customer</code></td><td>Customer — you credited them manually</td></tr>
+        <tr><td><code>wallet_cashback_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_referral_bonus_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_refund_cancelled_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_refund_returned_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>wallet_credited_delivery_boy</code></td><td>Delivery boy</td></tr>
+        <tr><td><code>wallet_debited_delivery_boy</code></td><td>Delivery boy</td></tr>
+        <tr><td><code>salary_paid_delivery_boy</code></td><td>Delivery boy</td></tr>
+        <tr><td><code>received_from_customer</code></td><td>Cash collected</td></tr>
+        <tr><td><code>withdrawal_request_admin</code></td><td>Admin — a rider requested a payout</td></tr>
+        <tr><td><code>withdrawal_status_delivery_boy</code></td><td>Delivery boy — request approved or rejected</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h3>Account</h3>
+    <h3 id="account">Account</h3>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Event</th><th>Audience</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>welcome_customer</code></td><td>Customer — on signup</td></tr>
-          <tr><td><code>password_changed_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>account_status_customer</code></td><td>Customer — account enabled/disabled</td></tr>
-          <tr><td><code>account_status_delivery_boy</code></td><td>Delivery boy</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>welcome_customer</code></td><td>Customer — on signup</td></tr>
+        <tr><td><code>password_changed_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>account_status_customer</code></td><td>Customer — account enabled/disabled</td></tr>
+        <tr><td><code>account_status_delivery_boy</code></td><td>Delivery boy</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h3>Marketing and content</h3>
+    <h3 id="marketing-and-content">Marketing and content</h3>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Event</th><th>Audience</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>promo_code_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>new_blog_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>cart_reminder_first_customer</code></td><td>Customer — see <a href="../admin/cart-settings.html">Cart Settings</a></td></tr>
-          <tr><td><code>cart_reminder_interval_customer</code></td><td>Customer</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>promo_code_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>new_blog_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>cart_reminder_first_customer</code></td><td>Customer — see <a href="../admin/cart-settings.html">Cart Settings</a></td></tr>
+        <tr><td><code>cart_reminder_interval_customer</code></td><td>Customer</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h3>Chat</h3>
+    <h3 id="chat">Chat</h3>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Event</th><th>Audience</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>chat_message_customer</code></td><td>Customer</td></tr>
-          <tr><td><code>chat_message_delivery_boy</code></td><td>Delivery boy</td></tr>
-          <tr><td><code>chat_message_admin</code></td><td>Admin</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>chat_message_customer</code></td><td>Customer</td></tr>
+        <tr><td><code>chat_message_delivery_boy</code></td><td>Delivery boy</td></tr>
+        <tr><td><code>chat_message_admin</code></td><td>Admin</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h2>What to leave on</h2>
+    <h2 id="what-to-leave-on">What to leave on</h2>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Never disable order status notifications</p>
@@ -158,22 +146,20 @@
       <p>It tells a customer their password changed. If an account is compromised, this is often the first thing they notice. Leave it on.</p>
     </div>
 
-    <h2>What a switch here does not do</h2>
+    <h2 id="what-a-switch-here-does-not-do">What a switch here does not do</h2>
 
     <p>Turning an event <strong>on</strong> only permits it. Delivery still needs:</p>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Requirement</th><th>Why</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><a href="../admin/firebase-settings.html">Firebase</a> configured, including <code>config/firebase.json</code></td><td>Push cannot be sent without it</td></tr>
-          <tr><td><a href="../admin/cron-jobs.html">Cron job</a> running</td><td>Notifications are queued jobs</td></tr>
-          <tr><td>A <a href="../admin/notification-templates.html">template</a> for the event</td><td>No template, no message body</td></tr>
-          <tr><td>The customer granted notification permission</td><td>Nothing can be delivered otherwise</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Requirement</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><a href="../admin/firebase-settings.html">Firebase</a> configured, including <code>config/firebase.json</code></td><td>Push cannot be sent without it</td></tr>
+        <tr><td><a href="../admin/cron-jobs.html">Cron job</a> running</td><td>Notifications are queued jobs</td></tr>
+        <tr><td>A <a href="../admin/notification-templates.html">template</a> for the event</td><td>No template, no message body</td></tr>
+        <tr><td>The customer granted notification permission</td><td>Nothing can be delivered otherwise</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--danger">
@@ -181,26 +167,24 @@
       <p>Work through it in this order: cron heartbeat green → <code>config/firebase.json</code> exists → the template has content → the device granted permission. In practice it is almost always the first two.</p>
     </div>
 
-    <h2>Wording</h2>
+    <h2 id="wording">Wording</h2>
 
     <p>This page controls <strong>whether</strong> a message is sent. <strong>What it says</strong> comes from <a href="../admin/notification-templates.html">Notification Templates</a>.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Nothing sends at all</td><td>Cron or Firebase not set up</td><td>Check <a href="../admin/cron-jobs.html">Cron Jobs</a>, <a href="../admin/firebase-settings.html">Firebase</a></td></tr>
-          <tr><td>One event silent, others fine</td><td>That event disabled, or its template empty</td><td>Enable it; check the template</td></tr>
-          <tr><td>Riders miss new orders</td><td><code>assign_order_delivery_boy</code> disabled</td><td>Re-enable it</td></tr>
-          <tr><td>Customers complain of too many messages</td><td>Marketing events all on</td><td>Disable the promotional ones</td></tr>
-          <tr><td>Message arrives in the wrong language</td><td>Template not translated</td><td>Add translations</td></tr>
-          <tr><td>Admin misses withdrawal requests</td><td><code>withdrawal_request_admin</code> disabled</td><td>Enable it</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Nothing sends at all</td><td>Cron or Firebase not set up</td><td>Check <a href="../admin/cron-jobs.html">Cron Jobs</a>, <a href="../admin/firebase-settings.html">Firebase</a></td></tr>
+        <tr><td>One event silent, others fine</td><td>That event disabled, or its template empty</td><td>Enable it; check the template</td></tr>
+        <tr><td>Riders miss new orders</td><td><code>assign_order_delivery_boy</code> disabled</td><td>Re-enable it</td></tr>
+        <tr><td>Customers complain of too many messages</td><td>Marketing events all on</td><td>Disable the promotional ones</td></tr>
+        <tr><td>Message arrives in the wrong language</td><td>Template not translated</td><td>Add translations</td></tr>
+        <tr><td>Admin misses withdrawal requests</td><td><code>withdrawal_request_admin</code> disabled</td><td>Enable it</td></tr>
+      </tbody>
+    </table>
     </div>
   </main>
 </div>

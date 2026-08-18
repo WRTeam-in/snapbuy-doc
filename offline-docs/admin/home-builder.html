@@ -32,17 +32,17 @@
 
     <img src="../images/panel/home-builder-list.png" alt="Home Builder layout list">
 
-    <h2>Draft and published — how safety works</h2>
+    <h2 id="draft-and-published-how-safety-works">Draft and published — how safety works</h2>
 
     <p>Every layout stores <strong>two complete copies</strong> of itself:</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Copy</th><th>What it is</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Draft</strong></td><td>What you are editing. Never visible to customers.</td></tr>
-    <tr><td><strong>Published</strong></td><td>What customers actually see right now.</td></tr>
-    </tbody>
+      <thead><tr><th>Copy</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Draft</strong></td><td>What you are editing. Never visible to customers.</td></tr>
+        <tr><td><strong>Published</strong></td><td>What customers actually see right now.</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -53,7 +53,7 @@
       <p>Because edits land in the draft, you can rebuild a layout over several days with customers unaffected. Nothing goes live until you publish.</p>
     </div>
 
-    <h3>Scheduled publishing</h3>
+    <h3 id="scheduled-publishing">Scheduled publishing</h3>
 
     <p>Instead of publishing immediately, set a <strong>scheduled publish time</strong>. The layout goes live automatically at that moment — useful for sale launches and festival campaigns going live at midnight.</p>
 
@@ -65,7 +65,7 @@
 
     <p>Publishing clears the schedule, so a layout cannot publish twice.</p>
 
-    <h2>Creating a layout</h2>
+    <h2 id="creating-a-layout">Creating a layout</h2>
 
     <p><strong>Home Builder → Create</strong>.</p>
 
@@ -73,31 +73,31 @@
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Name</strong></td><td>Internal label — "Diwali Home", "Default Quick"</td></tr>
-    <tr><td><strong>Mode</strong></td><td><code>Quick</code> or <code>eCommerce</code> — which channel this layout serves</td></tr>
-    <tr><td><strong>Channel Label</strong></td><td>Optional customer-facing name for the channel, per language</td></tr>
-    <tr><td><strong>Home Type</strong></td><td><code>Single</code> or <code>Category-wise</code></td></tr>
-    <tr><td><strong>Zone Scope</strong></td><td><code>Global</code> or a specific zone</td></tr>
-    <tr><td><strong>Active</strong></td><td>Inactive layouts are never served</td></tr>
-    </tbody>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Internal label — "Diwali Home", "Default Quick"</td></tr>
+        <tr><td><strong>Mode</strong></td><td><code>Quick</code> or <code>eCommerce</code> — which channel this layout serves</td></tr>
+        <tr><td><strong>Channel Label</strong></td><td>Optional customer-facing name for the channel, per language</td></tr>
+        <tr><td><strong>Home Type</strong></td><td><code>Single</code> or <code>Category-wise</code></td></tr>
+        <tr><td><strong>Zone Scope</strong></td><td><code>Global</code> or a specific zone</td></tr>
+        <tr><td><strong>Active</strong></td><td>Inactive layouts are never served</td></tr>
+      </tbody>
     </table>
     </div>
 
-    <h3>Mode</h3>
+    <h3 id="mode">Mode</h3>
 
     <p>A layout serves exactly <strong>one</strong> channel. If you sell on both quick and eCommerce, you need at least two layouts.</p>
 
-    <h3>Zone scope</h3>
+    <h3 id="zone-scope">Zone scope</h3>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Scope</th><th>Behaviour</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Global</strong></td><td>Serves every zone that has no layout of its own</td></tr>
-    <tr><td><strong>Zone</strong></td><td>Serves one specific zone, overriding the global layout</td></tr>
-    </tbody>
+      <thead><tr><th>Scope</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Global</strong></td><td>Serves every zone that has no layout of its own</td></tr>
+        <tr><td><strong>Zone</strong></td><td>Serves one specific zone, overriding the global layout</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -106,36 +106,36 @@
       <p>Zone-specific layouts override the global one for that zone. If a zone has no layout and no global layout exists for its mode, its customers get an empty home screen. Build a global layout first, then add zone overrides only where you need different merchandising.</p>
     </div>
 
-    <h3>Home type</h3>
+    <h3 id="home-type">Home type</h3>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Type</th><th>What the customer sees</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Single</strong></td><td>One continuous home screen</td></tr>
-    <tr><td><strong>Category-wise</strong></td><td>Category tabs across the top, each with its own layout</td></tr>
-    </tbody>
+      <thead><tr><th>Type</th><th>What the customer sees</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Single</strong></td><td>One continuous home screen</td></tr>
+        <tr><td><strong>Category-wise</strong></td><td>Category tabs across the top, each with its own layout</td></tr>
+      </tbody>
     </table>
     </div>
 
     <p>For <strong>Category-wise</strong>, pick which categories become tabs. <strong>Category Scope</strong> decides whether both channels share the same tab list (<code>same</code>) or each has its own (<code>split</code>).</p>
 
-    <h2>Section types</h2>
+    <h2 id="section-types">Section types</h2>
 
     <p>Seven section types are available.</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Section</th><th>What it renders</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Banner Slider</strong></td><td>Swipeable full-width promotional banners</td></tr>
-    <tr><td><strong>Category Section</strong></td><td>Grid or row of categories</td></tr>
-    <tr><td><strong>Product Slider</strong></td><td>A horizontal row of products</td></tr>
-    <tr><td><strong>Top Brands</strong></td><td>Brand logos</td></tr>
-    <tr><td><strong>Grid Banner</strong></td><td>Several banners in a fixed grid</td></tr>
-    <tr><td><strong>Title Image</strong></td><td>A single image with a heading</td></tr>
-    <tr><td><strong>Heading / Text</strong></td><td>A text heading between sections</td></tr>
-    </tbody>
+      <thead><tr><th>Section</th><th>What it renders</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Banner Slider</strong></td><td>Swipeable full-width promotional banners</td></tr>
+        <tr><td><strong>Category Section</strong></td><td>Grid or row of categories</td></tr>
+        <tr><td><strong>Product Slider</strong></td><td>A horizontal row of products</td></tr>
+        <tr><td><strong>Top Brands</strong></td><td>Brand logos</td></tr>
+        <tr><td><strong>Grid Banner</strong></td><td>Several banners in a fixed grid</td></tr>
+        <tr><td><strong>Title Image</strong></td><td>A single image with a heading</td></tr>
+        <tr><td><strong>Heading / Text</strong></td><td>A text heading between sections</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -143,26 +143,26 @@
 
     <p>Drag sections to reorder. The order in the editor is the order customers see.</p>
 
-    <h2>Product Slider data sources</h2>
+    <h2 id="product-slider-data-sources">Product Slider data sources</h2>
 
     <p>A product slider is the most-used section, and the <strong>data source</strong> decides which products fill it.</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Source</th><th>Fills with</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Manual</strong></td><td>Exactly the products you pick, in your order</td></tr>
-    <tr><td><strong>Top Selling</strong></td><td>Best sellers by units sold</td></tr>
-    <tr><td><strong>Trending</strong></td><td>Products gaining traction recently</td></tr>
-    <tr><td><strong>New Arrivals</strong></td><td>Most recently added</td></tr>
-    <tr><td><strong>Discounted</strong></td><td>Products currently on offer</td></tr>
-    <tr><td><strong>Best Rated</strong></td><td>Highest customer ratings</td></tr>
-    <tr><td><strong>Category</strong></td><td>Everything in a chosen category</td></tr>
-    <tr><td><strong>Brand</strong></td><td>Everything from a chosen brand</td></tr>
-    <tr><td><strong>Recently Visited</strong></td><td>Personalised — what that customer viewed</td></tr>
-    <tr><td><strong>Buy Again</strong></td><td>Personalised — what that customer ordered before</td></tr>
-    <tr><td><strong>Most Favorited</strong></td><td>Most wishlisted</td></tr>
-    </tbody>
+      <thead><tr><th>Source</th><th>Fills with</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Manual</strong></td><td>Exactly the products you pick, in your order</td></tr>
+        <tr><td><strong>Top Selling</strong></td><td>Best sellers by units sold</td></tr>
+        <tr><td><strong>Trending</strong></td><td>Products gaining traction recently</td></tr>
+        <tr><td><strong>New Arrivals</strong></td><td>Most recently added</td></tr>
+        <tr><td><strong>Discounted</strong></td><td>Products currently on offer</td></tr>
+        <tr><td><strong>Best Rated</strong></td><td>Highest customer ratings</td></tr>
+        <tr><td><strong>Category</strong></td><td>Everything in a chosen category</td></tr>
+        <tr><td><strong>Brand</strong></td><td>Everything from a chosen brand</td></tr>
+        <tr><td><strong>Recently Visited</strong></td><td>Personalised — what that customer viewed</td></tr>
+        <tr><td><strong>Buy Again</strong></td><td>Personalised — what that customer ordered before</td></tr>
+        <tr><td><strong>Most Favorited</strong></td><td>Most wishlisted</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -176,7 +176,7 @@
       <p><strong>Recently Visited</strong> and <strong>Buy Again</strong> have nothing to show a first-time customer. Do not place them at the top of the home screen — put them lower, below sections that always have content.</p>
     </div>
 
-    <h2>Banners and redirects</h2>
+    <h2 id="banners-and-redirects">Banners and redirects</h2>
 
     <p>Every banner and grid tile can carry a <strong>redirect</strong> — where the customer lands on tap:</p>
 
@@ -193,7 +193,7 @@
       <p>A banner pointing at a deleted or deactivated product leaves customers tapping into an error. After removing products or categories, review banners that referenced them.</p>
     </div>
 
-    <h2>Images and platforms</h2>
+    <h2 id="images-and-platforms">Images and platforms</h2>
 
     <p>Banner images accept <strong>jpeg, jpg, png, gif, webp and svg</strong>, up to <strong>5 MB</strong> each.</p>
 
@@ -204,42 +204,42 @@
       <p>Uploading a wide desktop banner into a square mobile slot crops the middle out and usually cuts the text off. Export each size separately.</p>
     </div>
 
-    <h2>Multi-language text</h2>
+    <h2 id="multi-language-text">Multi-language text</h2>
 
     <p>Home Builder text — headings, labels, channel names — is stored <strong>per language</strong> inside the layout itself. Switch language in the editor and enter the translation for each text field.</p>
 
     <p>Missing translations fall back to the default language, so a partly translated layout still renders.</p>
 
-    <h2>Templates</h2>
+    <h2 id="templates">Templates</h2>
 
     <p>A section you have configured can be saved as a <strong>template</strong> and reused in other layouts, keeping merchandising consistent across zones and campaigns.</p>
 
     <img src="../images/panel/home-builder-templates.png" alt="Section template picker">
 
-    <h2>Preview</h2>
+    <h2 id="preview">Preview</h2>
 
     <p>The editor previews the layout as the apps will render it. Use it before publishing — section order and image cropping problems are far easier to spot here than after going live.</p>
 
     <img src="../images/panel/home-builder-preview.png" alt="Home Builder preview">
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
-    <tbody>
-    <tr><td>Home screen empty</td><td>No published layout for that mode/zone</td><td>Publish a global layout for the mode</td></tr>
-    <tr><td>Edits not visible to customers</td><td>Still in draft</td><td>Press <strong>Publish</strong></td></tr>
-    <tr><td>Scheduled layout never went live</td><td>Cron job missing</td><td>See <a href="../admin/cron-jobs.html">Cron Job Setup</a></td></tr>
-    <tr><td>Some zones show a different home screen</td><td>A zone-specific layout is overriding the global one</td><td>Check the zone-scoped layouts</td></tr>
-    <tr><td>A product row is empty</td><td>Automatic source has no qualifying products, or personalised source with no history</td><td>Switch to Manual, or move the section lower</td></tr>
-    <tr><td>Banner text cropped on mobile</td><td>One image used for all platforms</td><td>Upload per-platform sizes</td></tr>
-    <tr><td>Banner tap leads to an error</td><td>Redirect target deleted or inactive</td><td>Update or clear the redirect</td></tr>
-    </tbody>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Home screen empty</td><td>No published layout for that mode/zone</td><td>Publish a global layout for the mode</td></tr>
+        <tr><td>Edits not visible to customers</td><td>Still in draft</td><td>Press <strong>Publish</strong></td></tr>
+        <tr><td>Scheduled layout never went live</td><td>Cron job missing</td><td>See <a href="../admin/cron-jobs.html">Cron Job Setup</a></td></tr>
+        <tr><td>Some zones show a different home screen</td><td>A zone-specific layout is overriding the global one</td><td>Check the zone-scoped layouts</td></tr>
+        <tr><td>A product row is empty</td><td>Automatic source has no qualifying products, or personalised source with no history</td><td>Switch to Manual, or move the section lower</td></tr>
+        <tr><td>Banner text cropped on mobile</td><td>One image used for all platforms</td><td>Upload per-platform sizes</td></tr>
+        <tr><td>Banner tap leads to an error</td><td>Redirect target deleted or inactive</td><td>Update or clear the redirect</td></tr>
+      </tbody>
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> One global layout published per mode you sell on</li>

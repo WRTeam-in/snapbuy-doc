@@ -30,8 +30,7 @@
 
     <img src="../images/panel/return-requests-list.png" alt="Return requests list">
 
-    <h2>The return flow</h2>
-
+    <h2 id="the-return-flow">The return flow</h2>
     <pre><code>Return Requested → Accepted → Delivery Boy Assigned → Out For Pickup
     → Received From Customer → Return to Store → Refund Completed</code></pre>
 
@@ -58,8 +57,7 @@
       <p>Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the <a href="../admin/stores.html">store</a>. It is not a courier drop-off.</p>
     </div>
 
-    <h2>Reviewing a request</h2>
-
+    <h2 id="reviewing-a-request">Reviewing a request</h2>
     <p>Accept or reject each request. Rejecting should carry a reason the customer can understand — it is the single biggest driver of follow-up support contact.</p>
 
     <div class="admonition admonition--warning">
@@ -72,8 +70,7 @@
       <p>An unlimited window is unmanageable; three days is often too short for a customer who was travelling. Whatever you choose, publish it clearly and apply it consistently.</p>
     </div>
 
-    <h2>Assigning a rider for pickup</h2>
-
+    <h2 id="assigning-a-rider-for-pickup">Assigning a rider for pickup</h2>
     <p>Once accepted, assign a delivery boy to collect. The rider then moves the request through <em>Out For Pickup → Received From Customer → Return to Store</em> from their <a href="../admin/delivery-boy-portal.html">portal</a>.</p>
 
     <div class="admonition admonition--warning">
@@ -81,8 +78,7 @@
       <p>Just as with orders, riders can only advance the pickup-related statuses. Acceptance, rejection and refunds are admin-only.</p>
     </div>
 
-    <h2>Refunds</h2>
-
+    <h2 id="refunds">Refunds</h2>
     <p><strong>Refund Completed</strong> is the final step. Where the money goes depends on how the refund is issued:</p>
 
     <div class="table-wrap">
@@ -105,8 +101,7 @@
       <p>Refunding through a gateway requires the credentials that took the payment to still be configured. If you have rotated or removed them, that refund will fail. See <a href="../admin/payment-gateway.html#refunds">Payment Gateways — Refunds</a>.</p>
     </div>
 
-    <h2>Stock</h2>
-
+    <h2 id="stock">Stock</h2>
     <p>When a returned item comes back to the store, decide whether it re-enters sellable stock.</p>
 
     <div class="admonition admonition--warning">
@@ -114,8 +109,7 @@
       <p>Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> — an automatic return to shelf will eventually send a customer something they should never have received.</p>
     </div>
 
-    <h2>Customer notifications</h2>
-
+    <h2 id="customer-notifications">Customer notifications</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Event</th><th>When</th></tr></thead>
@@ -134,8 +128,7 @@
       <p>The gap between "requested" and "refunded" is where support tickets are generated. A message confirming the return was accepted and a rider is coming removes most of them.</p>
     </div>
 
-    <h2>Which orders can be returned</h2>
-
+    <h2 id="which-orders-can-be-returned">Which orders can be returned</h2>
     <p>Returns apply to the <strong>eCommerce</strong> channel, which has a <em>Returned</em> order status. Quick-commerce orders do not carry that status — see <a href="../admin/orders.html">Orders Workflow</a>.</p>
 
     <div class="admonition admonition--info">
@@ -143,8 +136,7 @@
       <p>A quick order that went wrong is normally resolved by cancelling the item and refunding, rather than by a scheduled collection.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
-
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>

@@ -26,7 +26,7 @@
     
     <p>Update the version number before every new Play Store / App Store upload.</p>
     
-    <h2>Version Format</h2>
+    <h2 id="version-format">Version Format</h2>
     
     <p>Open <code>pubspec.yaml</code> (project root) and find the <code>version</code> line:</p>
     
@@ -46,14 +46,14 @@
     </table>
     </div>
     
-    <h2>Rules</h2>
+    <h2 id="rules">Rules</h2>
     
     <ul>
     <li><strong>Version name</strong> (<code>1.0.0</code>) — the user-visible release number. Bump it for any release that introduces new features, fixes, or breaking changes. Follow semantic versioning (<code>MAJOR.MINOR.PATCH</code>).</li>
     <li><strong>Build number</strong> (<code>+1</code>) — must be a <strong>strictly increasing integer</strong>. The Play Store and App Store <strong>reject</strong> uploads with a build number equal to or lower than a previously uploaded one — even for the same version name.</li>
     </ul>
     
-    <h2>Steps to Change</h2>
+    <h2 id="steps-to-change">Steps to Change</h2>
     
     <ol>
     <li>Open <code>pubspec.yaml</code>.</li>
@@ -76,11 +76,11 @@
     
     <hr>
     
-    <h2>iOS — Additional Xcode Steps</h2>
+    <h2 id="ios-additional-xcode-steps">iOS — Additional Xcode Steps</h2>
     
     <p>iOS requires manually updating the version values in two places inside Xcode after changing <code>pubspec.yaml</code>.</p>
     
-    <h3>Step 1 — Update the Generated file</h3>
+    <h3 id="step-1-update-the-generated-file">Step 1 — Update the Generated file</h3>
     
     <ol>
     <li>Open the project in Xcode.</li>
@@ -94,7 +94,7 @@ FLUTTER_BUILD_NUMBER=2</code></pre>
     
     <img src="../images/app/customer/appVersion1.png" alt="Generated file in Xcode">
     
-    <h3>Step 2 — Update Build Settings</h3>
+    <h3 id="step-2-update-build-settings">Step 2 — Update Build Settings</h3>
     
     <ol>
     <li>In the left sidebar, select <strong>Runner → Runner</strong> (under TARGETS).</li>

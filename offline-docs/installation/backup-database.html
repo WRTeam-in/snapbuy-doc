@@ -31,7 +31,7 @@
       <p>Migrations can fail part-way even on a small update. A five-minute backup is cheaper than rebuilding lost data.</p>
     </div>
 
-    <h2>Option 1 — cPanel (shared hosting)</h2>
+    <h2 id="option-1-cpanel-shared-hosting">Option 1 — cPanel (shared hosting)</h2>
 
     <ol>
       <li>Open <strong>phpMyAdmin</strong> from cPanel.</li>
@@ -47,7 +47,7 @@
       <p>If the export times out or the download is huge, use cPanel's <strong>Backup Wizard</strong> → <strong>Download a MySQL Database Backup</strong> instead — it streams a gzip-compressed dump.</p>
     </div>
 
-    <h2>Option 2 — Command line (<code>mysqldump</code>)</h2>
+    <h2 id="option-2-command-line-mysqldump">Option 2 — Command line (<code>mysqldump</code>)</h2>
 
     <p>If you have SSH access:</p>
 
@@ -59,11 +59,11 @@
 
     <p>Find the exact database name and username in your <code>.env</code> file (<code>DB_DATABASE</code>, <code>DB_USERNAME</code>).</p>
 
-    <h2>Option 3 — Hosting provider snapshot</h2>
+    <h2 id="option-3-hosting-provider-snapshot">Option 3 — Hosting provider snapshot</h2>
 
     <p>Many managed hosts (Cloudways, RunCloud, Forge) offer scheduled or one-click database snapshots in their dashboard. If yours does, it is the fastest option — but always confirm you can locate and restore a snapshot before you need one, not during an incident.</p>
 
-    <h2>Restoring a backup</h2>
+    <h2 id="restoring-a-backup">Restoring a backup</h2>
 
     <p><strong>Via phpMyAdmin:</strong></p>
 
@@ -82,7 +82,7 @@
       <p>Import into an empty or disposable database first if you are unsure the dump is the right one. Restoring into a live database with newer data will lose anything written after the backup was taken.</p>
     </div>
 
-    <h2>Where backups fit into an update</h2>
+    <h2 id="where-backups-fit-into-an-update">Where backups fit into an update</h2>
 
     <ol>
       <li><a href="backup-database.html">Backup Database</a> <em>(this page)</em></li>
@@ -92,7 +92,7 @@
       <li>Verify, then disable maintenance mode</li>
     </ol>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
       <table>

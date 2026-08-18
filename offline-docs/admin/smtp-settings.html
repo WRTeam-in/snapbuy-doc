@@ -30,12 +30,11 @@
 
     <img src="../images/panel/smtp-settings-page.png" alt="SMTP settings page">
 
-    <h2>What breaks without SMTP</h2>
+    <h2 id="what-breaks-without-smtp">What breaks without SMTP</h2>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Feature</th><th>Effect</th></tr>
-      </thead>
+      <thead><tr><th>Feature</th><th>Effect</th></tr></thead>
       <tbody>
         <tr><td>Order confirmation &amp; status emails</td><td>Never sent</td></tr>
         <tr><td>Admin password reset</td><td>Admins locked out with no way back in</td></tr>
@@ -51,12 +50,11 @@
       <p>Password reset relies on SMTP. If an admin forgets their password and SMTP is not working, there is no in-panel way to recover the account — it takes direct database access.</p>
     </div>
 
-    <h2>Settings</h2>
+    <h2 id="settings">Settings</h2>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>What to enter</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>What to enter</th></tr></thead>
       <tbody>
         <tr><td><strong>Mailer</strong></td><td><code>SMTP</code> for a mail server, <code>Sendmail</code> for the server's local binary</td></tr>
         <tr><td><strong>From Email ID</strong></td><td>Address emails are sent from. Must be one the SMTP account is allowed to send as.</td></tr>
@@ -80,14 +78,13 @@
       <p>SnapBuy's built-in <a href="../admin/notification-templates.html">email templates</a> are HTML. Setting the content type to <code>Text</code> delivers raw markup to customers.</p>
     </div>
 
-    <h2>Common provider settings</h2>
+    <h2 id="common-provider-settings">Common provider settings</h2>
 
-    <h3>Gmail / Google Workspace</h3>
+    <h3 id="gmail-google-workspace">Gmail / Google Workspace</h3>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>Value</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td>Host</td><td><code>smtp.gmail.com</code></td></tr>
         <tr><td>Port</td><td><code>587</code></td></tr>
@@ -103,12 +100,11 @@
       <p>Free Gmail also caps sending at roughly 500 messages a day. It is fine for testing and unsuitable for a live store running campaigns.</p>
     </div>
 
-    <h3>SendGrid</h3>
+    <h3 id="sendgrid">SendGrid</h3>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>Value</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td>Host</td><td><code>smtp.sendgrid.net</code></td></tr>
         <tr><td>Port</td><td><code>587</code></td></tr>
@@ -119,12 +115,11 @@
     </table>
     </div>
 
-    <h3>Amazon SES</h3>
+    <h3 id="amazon-ses">Amazon SES</h3>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>Value</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td>Host</td><td><code>email-smtp.&lt;region&gt;.amazonaws.com</code></td></tr>
         <tr><td>Port</td><td><code>587</code></td></tr>
@@ -139,12 +134,11 @@
       <p>In sandbox, SES only delivers to addresses you have verified. Request production access before launch, or real customers receive nothing.</p>
     </div>
 
-    <h3>cPanel / hosting mailbox</h3>
+    <h3 id="cpanel-hosting-mailbox">cPanel / hosting mailbox</h3>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>Value</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td>Host</td><td><code>mail.yourdomain.com</code></td></tr>
         <tr><td>Port</td><td><code>465</code></td></tr>
@@ -155,7 +149,8 @@
     </table>
     </div>
 
-    <h2>Send a test email</h2>
+    <h2 id="send-a-test-email">Send a test email</h2>
+
     <p>The page has a <strong>test mail</strong> box. Enter an address and press <strong>Test Mail</strong>.</p>
 
     <img src="../images/panel/smtp-test-mail.png" alt="Sending a test email">
@@ -165,17 +160,17 @@
       <p>Sending to an address on your own domain can succeed while delivery to the outside world fails. Test to Gmail or Outlook, and check the spam folder too — arriving in spam is a deliverability problem, not a configuration success.</p>
     </div>
 
-    <h2>When the Setup Guide step will not tick</h2>
+    <h2 id="when-the-setup-guide-step-will-not-tick">When the Setup Guide step will not tick</h2>
+
     <p>The Setup Guide marks SMTP complete only when <strong>SMTP Host</strong>, <strong>SMTP Port</strong> and <strong>From Email ID</strong> are all filled and non-blank. Filling only the password and host leaves the step red.</p>
 
-    <h2>Deliverability</h2>
+    <h2 id="deliverability">Deliverability</h2>
+
     <p>Correct settings get mail <em>sent</em>. These get it <em>delivered</em>:</p>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Record</th><th>Purpose</th></tr>
-      </thead>
+      <thead><tr><th>Record</th><th>Purpose</th></tr></thead>
       <tbody>
         <tr><td><strong>SPF</strong></td><td>Authorises your provider to send as your domain</td></tr>
         <tr><td><strong>DKIM</strong></td><td>Cryptographically signs your mail</td></tr>
@@ -189,7 +184,8 @@
       <p>Setting the From address to a Gmail or Yahoo address while sending through your own server fails DMARC and lands in spam. Send from an address on your own domain.</p>
     </div>
 
-    <h2>Bulk email depends on the queue</h2>
+    <h2 id="bulk-email-depends-on-the-queue">Bulk email depends on the queue</h2>
+
     <p>Promotional campaigns are dispatched as <strong>queued jobs</strong>, not sent inline.</p>
 
     <div class="admonition admonition--danger">
@@ -199,12 +195,11 @@
 
     <p>Transactional email — order confirmations, password resets — is also queued.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-      </thead>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>"Connection could not be established"</td><td>Port/encryption mismatch, or host blocks outbound SMTP</td><td>Try 587/TLS, then 465/SSL; ask the host to open outbound SMTP</td></tr>
         <tr><td>"Authentication failed" with correct password</td><td>Provider requires an app password</td><td>Generate an app password (Gmail, Outlook)</td></tr>

@@ -28,25 +28,23 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">This is the thing people get wrong</p>
-      <p>There is no single &quot;Payment Gateways&quot; settings screen. Every gateway's credentials and its on/off switch live on the <strong>country</strong> it applies to.</p>
-      <p>If a gateway &quot;is configured but customers cannot see it&quot;, you are almost certainly looking at the wrong place — open <strong>Countries → edit the country → Payment Gateways</strong>.</p>
+      <p>There is no single "Payment Gateways" settings screen. Every gateway's credentials and its on/off switch live on the <strong>country</strong> it applies to.</p>
+      <p>If a gateway "is configured but customers cannot see it", you are almost certainly looking at the wrong place — open <strong>Countries → edit the country → Payment Gateways</strong>.</p>
     </div>
 
     <img src="../images/panel/payment-gateway-page.png" alt="Payment gateway configuration on a country">
 
-    <h2>Why per country</h2>
+    <h2 id="why-per-country">Why per country</h2>
 
     <p>Different regions need different processors. A store selling in India and the UAE cannot use one gateway for both — Razorpay settles in INR, PayTabs serves the Gulf. Attaching gateways to countries lets each region use what actually works there, in the right currency.</p>
 
     <p>The <strong>Payment Method Settings</strong> master switch on the country turns online payment on or off for that country as a whole.</p>
 
-    <h2>Supported gateways</h2>
+    <h2 id="supported-gateways">Supported gateways</h2>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Gateway</th><th>Credentials needed</th></tr>
-      </thead>
+      <thead><tr><th>Gateway</th><th>Credentials needed</th></tr></thead>
       <tbody>
         <tr><td><strong>Cash on Delivery</strong></td><td>None — just enable it</td></tr>
         <tr><td><strong>Razorpay</strong></td><td>Key, Secret Key</td></tr>
@@ -63,7 +61,7 @@
 
     <p>Installation enables <strong>Cash on Delivery</strong> only. Everything else starts disabled and blank.</p>
 
-    <h2>Test mode and live mode</h2>
+    <h2 id="test-mode-and-live-mode">Test mode and live mode</h2>
 
     <p>Most gateways carry a <strong>Mode</strong> field — <code>test</code>/<code>sandbox</code> or <code>live</code>.</p>
 
@@ -74,7 +72,6 @@
     </div>
 
     <p>Recommended sequence:</p>
-
     <ol>
       <li>Configure in test mode.</li>
       <li>Place a full test order end to end.</li>
@@ -88,15 +85,13 @@
       <p>A successful sandbox payment proves your keys parse. It does not prove your live account is activated, your KYC is approved, or your settlement account is attached. One real order catches all three.</p>
     </div>
 
-    <h2>Webhooks</h2>
+    <h2 id="webhooks">Webhooks</h2>
 
     <p>Several gateways confirm payment by calling <strong>your server</strong> rather than the customer's browser. If a customer closes the app after paying, the webhook is the only thing that marks the order paid.</p>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Gateway</th><th>Webhook / callback URL</th></tr>
-      </thead>
+      <thead><tr><th>Gateway</th><th>Webhook / callback URL</th></tr></thead>
       <tbody>
         <tr><td>PayPal (IPN)</td><td><code>https://admin.yourstore.com/ipn</code></td></tr>
         <tr><td>Stripe</td><td><code>https://admin.yourstore.com/webhook/stripe</code></td></tr>
@@ -119,14 +114,14 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Webhook endpoints are exempt from CSRF by design</p>
-      <p>These URLs are server-to-server POSTs with no session, so SnapBuy exempts them from CSRF checks. That is expected — do not attempt to &quot;secure&quot; them by removing the exemption, or payments will stop confirming.</p>
+      <p>These URLs are server-to-server POSTs with no session, so SnapBuy exempts them from CSRF checks. That is expected — do not attempt to "secure" them by removing the exemption, or payments will stop confirming.</p>
     </div>
 
-    <h3>Stripe webhook secret</h3>
+    <h3 id="stripe-webhook-secret">Stripe webhook secret</h3>
 
     <p>Stripe additionally needs a <strong>Webhook Secret</strong> (<code>whsec_…</code>), issued when you create the endpoint in the Stripe dashboard. Without it, SnapBuy cannot verify the request is genuinely from Stripe and rejects it.</p>
 
-    <h2>Currency must match</h2>
+    <h2 id="currency-must-match">Currency must match</h2>
 
     <p>Each gateway's <strong>Currency Code</strong> must match:</p>
 
@@ -140,7 +135,7 @@
       <p>A country set to <code>INR</code> with a gateway set to <code>USD</code> does not error — it charges the number as dollars. An order of ₹500 becomes a $500 charge. Check both sides.</p>
     </div>
 
-    <h2>Cash on Delivery</h2>
+    <h2 id="cash-on-delivery">Cash on Delivery</h2>
 
     <p>COD needs no credentials. Its <strong>mode</strong> setting controls where it is offered.</p>
 
@@ -149,7 +144,7 @@
       <p>COD carries real cost — failed deliveries, cash handling, reconciliation. If you offer it, pair it with a delivery OTP (see <a href="../admin/app-settings.html#otp-generation">App Settings</a>) so handovers are provable.</p>
     </div>
 
-    <h2>Refunds</h2>
+    <h2 id="refunds">Refunds</h2>
 
     <p>Refunds are issued from the order and flow back through the original gateway, or to the customer's <a href="../admin/wallet-withdrawals.html">wallet</a> depending on how the refund is processed.</p>
 
@@ -158,7 +153,7 @@
       <p>Removing or rotating a gateway's credentials breaks refunds for <strong>past</strong> orders taken through it. Keep credentials in place while any refundable orders remain.</p>
     </div>
 
-    <h2>Security</h2>
+    <h2 id="security">Security</h2>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Secret keys are as sensitive as your bank login</p>
@@ -171,13 +166,11 @@
       <p>Anyone with access to this screen can read your live gateway credentials.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-      </thead>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Gateway not visible to customers</td><td>Not enabled on the customer's country</td><td>Enable it on that country</td></tr>
         <tr><td>No online payment options at all</td><td>Payment Method Settings master switch off</td><td>Turn it on for that country</td></tr>
@@ -191,7 +184,7 @@
     </table>
     </div>
 
-    <h2>Launch checklist</h2>
+    <h2 id="launch-checklist">Launch checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Gateway enabled on <strong>every</strong> country you sell in</li>

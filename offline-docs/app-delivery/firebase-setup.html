@@ -28,7 +28,7 @@
 
     <p>Please visit our <a href="https://wrteam-in.github.io/common_app_doc/GeneralSettings/firebase/">Firebase Setup Documentation</a> and follow <strong>every step in the order shown</strong>.</p>
 
-    <h2>What the Guide Covers</h2>
+    <h2 id="what-the-guide-covers">What the Guide Covers</h2>
     <ul>
       <li>Installing the Firebase CLI</li>
       <li>Creating a new Firebase project</li>
@@ -38,7 +38,7 @@
       <li>Configuring <strong>iOS URL schemes</strong> and <code>GoogleService-Info.plist</code></li>
     </ul>
 
-    <h2>Register the App via Firebase CLI</h2>
+    <h2 id="register-the-app-via-firebase-cli">Register the App via Firebase CLI</h2>
 
     <p>If you prefer the CLI over the console UI, activate the FlutterFire CLI and run configure to register the app:</p>
 
@@ -52,11 +52,11 @@ flutterfire configure --project=&lt;your-firebase-project-id&gt;</code></pre>
       <p>Change your <strong>package name</strong> in the app code first, then run the above command. Running it before changing the package name will register the app under the old/default package name.</p>
     </div>
 
-    <h2>Download Config Files &amp; Place in Project</h2>
+    <h2 id="download-config-files-amp-place-in-project">Download Config Files &amp; Place in Project</h2>
 
     <p>Even if you used the FlutterFire CLI, you must verify that the Firebase config files are present in the correct locations. If they are missing or you prefer to add them manually, follow the steps below.</p>
 
-    <h3>Android — google-services.json</h3>
+    <h3 id="android-google-servicesjson">Android — google-services.json</h3>
     <ol>
       <li>Open <a href="https://console.firebase.google.com/">Firebase Console</a> and select your project.</li>
       <li>Go to <strong>Project Settings</strong> (gear icon) → <strong>General</strong> tab.</li>
@@ -68,7 +68,7 @@ flutterfire configure --project=&lt;your-firebase-project-id&gt;</code></pre>
 
     <pre><code>android/app/google-services.json</code></pre>
 
-    <h3>iOS — GoogleService-Info.plist</h3>
+    <h3 id="ios-googleservice-infoplist">iOS — GoogleService-Info.plist</h3>
     <ol>
       <li>In the same <strong>Project Settings → General</strong> tab, select your iOS app.</li>
       <li>Click <strong>Download GoogleService-Info.plist</strong>.</li>
@@ -84,7 +84,7 @@ flutterfire configure --project=&lt;your-firebase-project-id&gt;</code></pre>
 
     <hr>
 
-    <h2>Update firebase_options.dart</h2>
+    <h2 id="update-firebaseoptionsdart">Update firebase_options.dart</h2>
 
     <p>The FlutterFire CLI auto-generates <code>lib/firebase_options.dart</code> when you run <code>flutterfire configure</code>. However, if you set up Firebase manually or need to update the values, open the file and fill in the required fields.</p>
 

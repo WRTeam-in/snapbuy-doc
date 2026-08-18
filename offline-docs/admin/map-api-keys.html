@@ -37,18 +37,16 @@
 
     <img src="../images/panel/map-api-page.png" alt="API credentials page">
 
-    <h2>Choose a provider</h2>
+    <h2 id="choose-a-provider">Choose a provider</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Provider</th><th>Cost</th><th>Address autocomplete</th><th>Setup</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>OpenStreetMap</strong></td><td>Free</td><td>Basic</td><td>None — works immediately</td></tr>
-          <tr><td><strong>Google Maps</strong></td><td>Paid, with a monthly free credit</td><td>Excellent</td><td>Two API keys, billing enabled</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Provider</th><th>Cost</th><th>Address autocomplete</th><th>Setup</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OpenStreetMap</strong></td><td>Free</td><td>Basic</td><td>None — works immediately</td></tr>
+        <tr><td><strong>Google Maps</strong></td><td>Paid, with a monthly free credit</td><td>Excellent</td><td>Two API keys, billing enabled</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <p>SnapBuy defaults to <strong>OpenStreetMap</strong>, and distance is measured with the public OSRM routing service.</p>
@@ -63,20 +61,18 @@
       <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a store doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
     </div>
 
-    <h2>Using Google Maps</h2>
+    <h2 id="using-google-maps">Using Google Maps</h2>
 
     <p>Google needs <strong>two separate keys</strong>. This trips people up constantly.</p>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>SnapBuy field</th><th>Google API</th><th>Used for</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning stores</td></tr>
-          <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Google API</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning stores</td></tr>
+        <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--danger">
@@ -90,7 +86,7 @@
       <p>The Setup Guide marks the Map step complete only when <strong>both</strong> the Map key and the Place key are filled. Entering one leaves the step red — and address autocomplete or distance calculation will be broken depending on which is missing.</p>
     </div>
 
-    <h3>Create the keys</h3>
+    <h3 id="create-the-keys">Create the keys</h3>
 
     <ol>
       <li>Open <a href="https://console.cloud.google.com/">console.cloud.google.com</a>.</li>
@@ -117,7 +113,7 @@
       <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.</p>
     </div>
 
-    <h3>Restrict the keys</h3>
+    <h3 id="restrict-the-keys">Restrict the keys</h3>
 
     <p>An unrestricted Maps key found in your page source can be used by anyone, billed to you.</p>
 
@@ -134,11 +130,11 @@ https://yourstore.com/*</code></pre>
       <p>Restriction changes can take a few minutes to take effect.</p>
     </div>
 
-    <h3>Set a budget alert</h3>
+    <h3 id="set-a-budget-alert">Set a budget alert</h3>
 
     <p>In <strong>Billing → Budgets &amp; alerts</strong>, create a budget with email alerts. It will not stop charges, but you find out about a spike in hours rather than at the end of the month.</p>
 
-    <h2>Switching providers later</h2>
+    <h2 id="switching-providers-later">Switching providers later</h2>
 
     <p>Changing the provider is safe — existing zone polygons and store pins are stored as coordinates, not provider data, so they carry over.</p>
 
@@ -149,21 +145,19 @@ https://yourstore.com/*</code></pre>
       <p>Delivery charge depends on the distance lookup. After changing providers, place a test order to an address a few kilometres from the store and confirm the charge is sane.</p>
     </div>
 
-    <h2>AI text generation key (optional)</h2>
+    <h2 id="ai-text-generation-key-optional">AI text generation key (optional)</h2>
 
     <p>The same page has a <strong>Gemini Key</strong> field. It is unrelated to maps.</p>
 
     <p>With a Google Gemini API key entered, the panel can generate text for you — product descriptions and blog content — from a short prompt.</p>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Field</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Gemini Key</strong></td><td>From <a href="https://aistudio.google.com/app/apikey">aistudio.google.com/app/apikey</a></td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gemini Key</strong></td><td>From <a href="https://aistudio.google.com/app/apikey">aistudio.google.com/app/apikey</a></td></tr>
+      </tbody>
+    </table>
     </div>
 
     <p>Leave it blank to disable the feature. Nothing else depends on it.</p>
@@ -173,27 +167,25 @@ https://yourstore.com/*</code></pre>
       <p>AI-written product copy can be confidently wrong about specifications, ingredients or compliance claims. Treat it as a first draft and check it before publishing.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Setup Guide Map step stays red</td><td>Provider is Google but only one key filled</td><td>Fill both Map and Place keys</td></tr>
-          <tr><td>Grey map with a watermark</td><td>Billing not enabled on the Google project</td><td>Enable billing</td></tr>
-          <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or key restricted too tightly</td><td>Enable the APIs; check referrer restrictions</td></tr>
-          <tr><td>Map loads, address search does nothing</td><td>Places API (New) not enabled, Places API not enabled, or Place key missing</td><td>Enable both Places services; fill the Place key</td></tr>
-          <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only</td><td>Enable Distance Matrix and allow it on the Place API Key</td></tr>
-          <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
-          <tr><td>Delivery charges wrong after switching provider</td><td>Cached config</td><td>Visit <code>/clear</code> and retest</td></tr>
-          <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Restrict by referrer and regenerate the key</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Setup Guide Map step stays red</td><td>Provider is Google but only one key filled</td><td>Fill both Map and Place keys</td></tr>
+        <tr><td>Grey map with a watermark</td><td>Billing not enabled on the Google project</td><td>Enable billing</td></tr>
+        <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or key restricted too tightly</td><td>Enable the APIs; check referrer restrictions</td></tr>
+        <tr><td>Map loads, address search does nothing</td><td>Places API (New) not enabled, Places API not enabled, or Place key missing</td><td>Enable both Places services; fill the Place key</td></tr>
+        <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only</td><td>Enable Distance Matrix and allow it on the Place API Key</td></tr>
+        <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
+        <tr><td>Delivery charges wrong after switching provider</td><td>Cached config</td><td>Visit <code>/clear</code> and retest</td></tr>
+        <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Restrict by referrer and regenerate the key</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Provider chosen</li>

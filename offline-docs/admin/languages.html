@@ -30,19 +30,19 @@
 
     <img src="../images/panel/languages-list.png" alt="Languages list">
 
-    <h2>A language belongs to one surface</h2>
+    <h2 id="a-language-belongs-to-one-surface">A language belongs to one surface</h2>
 
     <p>This is the part that surprises people. A language is added for a specific <strong>system type</strong>:</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>System type</th><th>Surface</th></tr></thead>
-    <tbody>
-    <tr><td><strong>1</strong></td><td>Customer App</td></tr>
-    <tr><td><strong>2</strong></td><td>Delivery Boy App</td></tr>
-    <tr><td><strong>3</strong></td><td>Website</td></tr>
-    <tr><td><strong>4</strong></td><td>Admin Panel</td></tr>
-    </tbody>
+      <thead><tr><th>System type</th><th>Surface</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Customer App</td></tr>
+        <tr><td><strong>2</strong></td><td>Delivery Boy App</td></tr>
+        <tr><td><strong>3</strong></td><td>Website</td></tr>
+        <tr><td><strong>4</strong></td><td>Admin Panel</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -52,20 +52,20 @@
       <p>Customers reporting "the app is in Hindi but the website is in English" are seeing exactly this.</p>
     </div>
 
-    <h2>Adding a language</h2>
+    <h2 id="adding-a-language">Adding a language</h2>
 
     <p><strong>Languages → Add Language</strong>.</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Field</th><th>Notes</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Supported Language</strong></td><td>Pick from the built-in list — sets the code and name</td></tr>
-    <tr><td><strong>Display Name</strong></td><td>What customers see in the language switcher</td></tr>
-    <tr><td><strong>System Type</strong></td><td>Which surface this is for</td></tr>
-    <tr><td><strong>Default</strong></td><td>The language used when the customer has not chosen one</td></tr>
-    <tr><td><strong>Status</strong></td><td>Inactive languages disappear from the switcher</td></tr>
-    </tbody>
+      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Supported Language</strong></td><td>Pick from the built-in list — sets the code and name</td></tr>
+        <tr><td><strong>Display Name</strong></td><td>What customers see in the language switcher</td></tr>
+        <tr><td><strong>System Type</strong></td><td>Which surface this is for</td></tr>
+        <tr><td><strong>Default</strong></td><td>The language used when the customer has not chosen one</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive languages disappear from the switcher</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -74,7 +74,7 @@
       <p>If the dropdown is empty, the seeder did not run. Visit <code>/supported_language</code> once to populate it.</p>
     </div>
 
-    <h2>Translating interface strings</h2>
+    <h2 id="translating-interface-strings">Translating interface strings</h2>
 
     <p>Each language has a JSON file of key/value pairs — the labels, buttons and messages of that surface. Edit them in the panel's JSON editor.</p>
 
@@ -95,23 +95,23 @@
       <p>A partly translated language still works — untranslated keys show in the default language. You can ship a language and fill gaps over time.</p>
     </div>
 
-    <h2>Content translated elsewhere</h2>
+    <h2 id="content-translated-elsewhere">Content translated elsewhere</h2>
 
     <p>Interface strings are only part of it. These are translated on their own screens:</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Content</th><th>Where</th></tr></thead>
-    <tbody>
-    <tr><td>Product names and descriptions</td><td>Product edit form, per language</td></tr>
-    <tr><td>Category names</td><td>Category form</td></tr>
-    <tr><td>Store name, provider, address</td><td><a href="../admin/stores.html">Stores</a> — default language first</td></tr>
-    <tr><td>Zone surge labels and charge names</td><td><a href="../admin/zones.html">Zones</a></td></tr>
-    <tr><td>Home Builder headings and labels</td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
-    <tr><td>Legal policies</td><td><a href="../admin/countries.html#policies">Countries</a></td></tr>
-    <tr><td>Notification, email and SMS wording</td><td><a href="../admin/notification-templates.html">Templates</a></td></tr>
-    <tr><td>Blogs and FAQs</td><td>Their own modules</td></tr>
-    </tbody>
+      <thead><tr><th>Content</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Product names and descriptions</td><td>Product edit form, per language</td></tr>
+        <tr><td>Category names</td><td>Category form</td></tr>
+        <tr><td>Store name, provider, address</td><td><a href="../admin/stores.html">Stores</a> — default language first</td></tr>
+        <tr><td>Zone surge labels and charge names</td><td><a href="../admin/zones.html">Zones</a></td></tr>
+        <tr><td>Home Builder headings and labels</td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
+        <tr><td>Legal policies</td><td><a href="../admin/countries.html#policies">Countries</a></td></tr>
+        <tr><td>Notification, email and SMS wording</td><td><a href="../admin/notification-templates.html">Templates</a></td></tr>
+        <tr><td>Blogs and FAQs</td><td>Their own modules</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -120,7 +120,7 @@
       <p>Stores and some other records refuse to be created in a secondary language — <em>"Please create store in default language first."</em> Create the record in the default language, then switch and translate.</p>
     </div>
 
-    <h2>Changing the default language</h2>
+    <h2 id="changing-the-default-language">Changing the default language</h2>
 
     <p>The default is the fallback for every untranslated string and every customer who has not chosen one.</p>
 
@@ -129,7 +129,7 @@
       <p>Switching later re-points every fallback. Content translated into the old default but never translated into the new one starts falling back to a language your customers may not read.</p>
     </div>
 
-    <h2>Right-to-left languages</h2>
+    <h2 id="right-to-left-languages">Right-to-left languages</h2>
 
     <p>Arabic, Hebrew, Urdu and Farsi read right to left. Add them like any other language, then check the result on a real device.</p>
 
@@ -138,7 +138,7 @@
       <p>Long RTL strings routinely overflow buttons and misalign icons designed for left-to-right text. Check the cart, checkout and order tracking screens specifically.</p>
     </div>
 
-    <h2>Removing a language</h2>
+    <h2 id="removing-a-language">Removing a language</h2>
 
     <p>Deactivate rather than delete. Deactivating hides it from the switcher while keeping every translation, so you can bring it back. Deleting discards the work.</p>
 
@@ -147,24 +147,24 @@
       <p>They fall back to the default language on their next launch. If you support a large audience in that language, communicate before removing it.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
-    <tbody>
-    <tr><td>Language missing on one surface</td><td>Added for a different system type</td><td>Add it again for that surface</td></tr>
-    <tr><td>Supported-language dropdown empty</td><td>Seeder not run</td><td>Visit <code>/supported_language</code></td></tr>
-    <tr><td>Raw keys shown instead of text</td><td>A key was edited instead of its value</td><td>Restore the original key</td></tr>
-    <tr><td><code>{amount}</code> appears literally</td><td>Placeholder altered in translation</td><td>Restore the exact placeholder</td></tr>
-    <tr><td>Some text still in English</td><td>Those keys untranslated</td><td>Fill them in the JSON editor</td></tr>
-    <tr><td>Cannot save a record in a second language</td><td>Record does not exist in the default language yet</td><td>Create it in the default language first</td></tr>
-    <tr><td>Changes not visible</td><td>Cached language file</td><td>Visit <code>/clear</code>; restart the app</td></tr>
-    </tbody>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Language missing on one surface</td><td>Added for a different system type</td><td>Add it again for that surface</td></tr>
+        <tr><td>Supported-language dropdown empty</td><td>Seeder not run</td><td>Visit <code>/supported_language</code></td></tr>
+        <tr><td>Raw keys shown instead of text</td><td>A key was edited instead of its value</td><td>Restore the original key</td></tr>
+        <tr><td><code>{amount}</code> appears literally</td><td>Placeholder altered in translation</td><td>Restore the exact placeholder</td></tr>
+        <tr><td>Some text still in English</td><td>Those keys untranslated</td><td>Fill them in the JSON editor</td></tr>
+        <tr><td>Cannot save a record in a second language</td><td>Record does not exist in the default language yet</td><td>Create it in the default language first</td></tr>
+        <tr><td>Changes not visible</td><td>Cached language file</td><td>Visit <code>/clear</code>; restart the app</td></tr>
+      </tbody>
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Language added for <strong>every</strong> surface that needs it</li>

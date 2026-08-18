@@ -27,7 +27,7 @@
 
     <p>Setup, deployment, and configuration guides for the SnapBuy Web Portal.</p>
 
-    <h2>Start here</h2>
+    <h2 id="start-here">Start here</h2>
 
     <div class="table-wrap">
       <table>
@@ -45,7 +45,7 @@
       </table>
     </div>
 
-    <h2>The short version</h2>
+    <h2 id="the-short-version">The short version</h2>
 
     <p>The SnapBuy Web Portal is a <strong>Next.js 16 Pages Router</strong> app backed by an Admin Panel API. It is a <strong>white-label template</strong>: colours, header artwork, home page composition, channels, and languages all arrive from the API at runtime.</p>
 
@@ -56,7 +56,7 @@
       <li><strong><code>NEXT_PUBLIC_SEO</code> must be <code>true</code>.</strong> It produces the server build, which needs a Node host. The <code>false</code> static export is not supported — middleware does not run in it, so zone and language URLs 404. See <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</li>
     </ol>
 
-    <h2>Quick start</h2>
+    <h2 id="quick-start">Quick start</h2>
 
     <pre><code>npm install
 # create .env in the project root — see Installation Steps for every variable
@@ -67,7 +67,7 @@ npm run dev             # http://localhost:3000</code></pre>
     <pre><code>npm run build
 npm start               # NODE_ENV=production, port 8004, via server.js</code></pre>
 
-    <h2>All guides</h2>
+    <h2 id="all-guides">All guides</h2>
 
     <div class="doc-card-grid">
       <a class="doc-card" href="overview.html">

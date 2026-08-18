@@ -31,7 +31,7 @@
       <p>The updater copies package files over your installation. Any file you customised directly — a Blade template, a controller, a style sheet — is silently overwritten. A file backup is the only way back.</p>
     </div>
 
-    <h2>What to include</h2>
+    <h2 id="what-to-include">What to include</h2>
 
     <div class="table-wrap">
       <table>
@@ -48,7 +48,7 @@
 
     <p>You do <strong>not</strong> need to back up <code>vendor/</code> or <code>node_modules/</code> — both are rebuilt from <code>composer install</code> / <code>npm install</code> and only add size.</p>
 
-    <h2>Option 1 — cPanel (shared hosting)</h2>
+    <h2 id="option-1-cpanel-shared-hosting">Option 1 — cPanel (shared hosting)</h2>
 
     <ol>
       <li>Open <strong>File Manager</strong>, go to your subdomain's root folder.</li>
@@ -62,7 +62,7 @@
       <p>If File Manager lets you multi-select, exclude these two folders from the archive — they are the largest and least necessary part of a backup.</p>
     </div>
 
-    <h2>Option 2 — Command line</h2>
+    <h2 id="option-2-command-line">Option 2 — Command line</h2>
 
     <pre><code>cd /home/username/snapbuy
 tar --exclude='vendor' --exclude='node_modules' -czf ../snapbuy_files_$(date +%Y%m%d).tar.gz .</code></pre>
@@ -71,11 +71,11 @@ tar --exclude='vendor' --exclude='node_modules' -czf ../snapbuy_files_$(date +%Y
 
     <pre><code>scp username@yourserver.com:/home/username/snapbuy_files_20260101.tar.gz ./</code></pre>
 
-    <h2>Option 3 — Hosting provider snapshot</h2>
+    <h2 id="option-3-hosting-provider-snapshot">Option 3 — Hosting provider snapshot</h2>
 
     <p>If your host offers full-server or full-application snapshots (Cloudways, RunCloud, a VPS provider's disk snapshot), that covers files and database together in one step. Confirm the snapshot includes <code>storage/</code> — some default snapshot policies exclude large upload directories.</p>
 
-    <h2>Restoring a backup</h2>
+    <h2 id="restoring-a-backup">Restoring a backup</h2>
 
     <ol>
       <li>Extract the archive into place:
@@ -95,7 +95,7 @@ tar -xzf snapbuy_files_20260101.tar.gz</code></pre>
       <p>A file backup and database backup taken at different times can disagree — for example, code expecting a column a restored database doesn't have. Always restore both from the same point in time.</p>
     </div>
 
-    <h2>Where this fits into an update</h2>
+    <h2 id="where-this-fits-into-an-update">Where this fits into an update</h2>
 
     <ol>
       <li><a href="backup-database.html">Backup Database</a></li>
@@ -105,7 +105,7 @@ tar -xzf snapbuy_files_20260101.tar.gz</code></pre>
       <li>Verify, then disable maintenance mode</li>
     </ol>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
       <table>

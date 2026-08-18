@@ -30,16 +30,16 @@
 
     <img src="../images/panel/sms-settings-page.png" alt="SMS settings page">
 
-    <h2>When you need this</h2>
+    <h2 id="when-you-need-this">When you need this</h2>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Situation</th><th>SMS gateway needed?</th></tr></thead>
-    <tbody>
-    <tr><td>Phone login using Firebase Authentication</td><td>No</td></tr>
-    <tr><td>Phone login with <strong>Custom SMS Gateway (OTP based)</strong></td><td><strong>Yes</strong></td></tr>
-    <tr><td>Sending transactional SMS (order updates)</td><td>Yes</td></tr>
-    </tbody>
+      <thead><tr><th>Situation</th><th>SMS gateway needed?</th></tr></thead>
+      <tbody>
+        <tr><td>Phone login using Firebase Authentication</td><td>No</td></tr>
+        <tr><td>Phone login with <strong>Custom SMS Gateway (OTP based)</strong></td><td><strong>Yes</strong></td></tr>
+        <tr><td>Sending transactional SMS (order updates)</td><td>Yes</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -49,20 +49,20 @@
       <p>Order of operations: configure and test SMS here <strong>first</strong>, then switch the login method.</p>
     </div>
 
-    <h2>Supported providers</h2>
+    <h2 id="supported-providers">Supported providers</h2>
 
-    <h3>Twilio</h3>
+    <h3 id="twilio">Twilio</h3>
 
     <p>Global coverage, pay per message.</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
-    <tbody>
-    <tr><td><strong>Twilio SID</strong></td><td>Twilio Console → Account SID</td></tr>
-    <tr><td><strong>Twilio Auth Token</strong></td><td>Twilio Console → Auth Token</td></tr>
-    <tr><td><strong>Twilio Phone Number</strong></td><td>A number you have purchased, in E.164 format — <code>+15551234567</code></td></tr>
-    </tbody>
+      <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Twilio SID</strong></td><td>Twilio Console → Account SID</td></tr>
+        <tr><td><strong>Twilio Auth Token</strong></td><td>Twilio Console → Auth Token</td></tr>
+        <tr><td><strong>Twilio Phone Number</strong></td><td>A number you have purchased, in E.164 format — <code>+15551234567</code></td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -76,17 +76,17 @@
       <p>Indian regulations require sender IDs and templates to be pre-registered on a DLT platform. Unregistered traffic is dropped by the carrier — Twilio reports success, the customer receives nothing. If your market is India, a local provider is usually less friction.</p>
     </div>
 
-    <h3>2Factor</h3>
+    <h3 id="2factor">2Factor</h3>
 
     <p>India-focused, generally cheaper and more reliable for Indian numbers.</p>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
-    <tbody>
-    <tr><td><strong>2Factor API Key</strong></td><td>2Factor dashboard → API Key</td></tr>
-    <tr><td><strong>2Factor Sender ID</strong></td><td>Your approved 6-character sender ID — <code>SNPBUY</code></td></tr>
-    </tbody>
+      <thead><tr><th>Field</th><th>Where to find it</th></tr></thead>
+      <tbody>
+        <tr><td><strong>2Factor API Key</strong></td><td>2Factor dashboard → API Key</td></tr>
+        <tr><td><strong>2Factor Sender ID</strong></td><td>Your approved 6-character sender ID — <code>SNPBUY</code></td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -95,17 +95,17 @@
       <p>Sender IDs are approved by the provider and the telecom regulator, and must be exactly six alphabetic characters in India. Using an unapproved ID means undelivered messages.</p>
     </div>
 
-    <h2>Choosing a provider</h2>
+    <h2 id="choosing-a-provider">Choosing a provider</h2>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th></th><th>Twilio</th><th>2Factor</th></tr></thead>
-    <tbody>
-    <tr><td>Coverage</td><td>Worldwide</td><td>India-focused</td></tr>
-    <tr><td>Cost per SMS in India</td><td>Higher</td><td>Lower</td></tr>
-    <tr><td>Setup friction in India</td><td>DLT registration required</td><td>Simpler</td></tr>
-    <tr><td>Branded sender ID</td><td>Via alphanumeric sender where permitted</td><td>Yes</td></tr>
-    </tbody>
+      <thead><tr><th></th><th>Twilio</th><th>2Factor</th></tr></thead>
+      <tbody>
+        <tr><td>Coverage</td><td>Worldwide</td><td>India-focused</td></tr>
+        <tr><td>Cost per SMS in India</td><td>Higher</td><td>Lower</td></tr>
+        <tr><td>Setup friction in India</td><td>DLT registration required</td><td>Simpler</td></tr>
+        <tr><td>Branded sender ID</td><td>Via alphanumeric sender where permitted</td><td>Yes</td></tr>
+      </tbody>
     </table>
     </div>
 
@@ -113,7 +113,7 @@
       <p class="admonition__title">Selling only in India? Use 2Factor. Selling internationally? Use Twilio.</p>
     </div>
 
-    <h2>SMS templates</h2>
+    <h2 id="sms-templates">SMS templates</h2>
 
     <p>Message wording lives under <strong>Settings → SMS Templates</strong> — see <a href="../admin/notification-templates.html">Notification, Email &amp; SMS Templates</a>. Templates support placeholders such as <code>{otp}</code>, <code>{app_name}</code> and <code>{customer_name}</code>, and can be translated per language.</p>
 
@@ -122,7 +122,7 @@
       <p>Where the regulator requires pre-registered templates (India's DLT regime, for example), the text you send must match the registered text <strong>character for character</strong>. Editing a template in SnapBuy without updating the registration causes silent delivery failure.</p>
     </div>
 
-    <h2>Cost control</h2>
+    <h2 id="cost-control">Cost control</h2>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">SMS costs scale with signups, including fraudulent ones</p>
@@ -130,7 +130,7 @@
       <p>Mitigations: set a spending cap in your provider's dashboard, enable alerts, and watch for unusual signup spikes.</p>
     </div>
 
-    <h2>Testing</h2>
+    <h2 id="testing">Testing</h2>
 
     <ol>
       <li>Save the credentials and visit <code>/clear</code>.</li>
@@ -144,24 +144,24 @@
       <p>Delivery can succeed on one carrier and fail on another. Try at least two.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>
-    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
-    <tbody>
-    <tr><td>OTP never arrives</td><td>Wrong credentials, or trial-account restriction</td><td>Verify keys; upgrade from trial</td></tr>
-    <tr><td>Provider reports success, nothing received</td><td>DLT/sender ID not registered</td><td>Complete registration</td></tr>
-    <tr><td>Works for some numbers only</td><td>Trial account verified-number restriction</td><td>Upgrade the account</td></tr>
-    <tr><td>"Authentication failed"</td><td>Auth token rotated at the provider</td><td>Copy the current token</td></tr>
-    <tr><td>Wrong sender name</td><td>Sender ID not set or not approved</td><td>Set an approved sender ID</td></tr>
-    <tr><td>Phone login broke after saving</td><td>Firebase auth disabled before SMS worked</td><td>Re-enable Firebase auth until SMS is verified</td></tr>
-    <tr><td>Unexpectedly large bill</td><td>OTP abuse</td><td>Set a spend cap; investigate signup spikes</td></tr>
-    </tbody>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>OTP never arrives</td><td>Wrong credentials, or trial-account restriction</td><td>Verify keys; upgrade from trial</td></tr>
+        <tr><td>Provider reports success, nothing received</td><td>DLT/sender ID not registered</td><td>Complete registration</td></tr>
+        <tr><td>Works for some numbers only</td><td>Trial account verified-number restriction</td><td>Upgrade the account</td></tr>
+        <tr><td>"Authentication failed"</td><td>Auth token rotated at the provider</td><td>Copy the current token</td></tr>
+        <tr><td>Wrong sender name</td><td>Sender ID not set or not approved</td><td>Set an approved sender ID</td></tr>
+        <tr><td>Phone login broke after saving</td><td>Firebase auth disabled before SMS worked</td><td>Re-enable Firebase auth until SMS is verified</td></tr>
+        <tr><td>Unexpectedly large bill</td><td>OTP abuse</td><td>Set a spend cap; investigate signup spikes</td></tr>
+      </tbody>
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Provider chosen to match your market</li>

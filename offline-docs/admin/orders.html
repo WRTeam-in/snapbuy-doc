@@ -30,16 +30,16 @@
 
     <img src="../images/panel/orders-list.png" alt="Orders list">
 
-    <h2>Two flows, one order list</h2>
+    <h2 id="two-flows-one-order-list">Two flows, one order list</h2>
 
-    <h3>Quick commerce</h3>
+    <h3 id="quick-commerce">Quick commerce</h3>
 
     <pre><code>Payment Pending → Received → Preparing → Ready for Pickup
     → Picked Up → Out For Delivery → Delivered</code></pre>
 
     <p>Plus <strong>Cancelled</strong> at any point before delivery.</p>
 
-    <h3>eCommerce</h3>
+    <h3 id="ecommerce">eCommerce</h3>
 
     <pre><code>Payment Pending → Received → Processed → Shipped
     → Out For Delivery → Delivered</code></pre>
@@ -48,19 +48,19 @@
 
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Status</th><th>Quick</th><th>eCommerce</th><th>Meaning</th></tr></thead>
+      <thead><tr><th>Status</th><th style="text-align:center">Quick</th><th style="text-align:center">eCommerce</th><th>Meaning</th></tr></thead>
       <tbody>
-        <tr><td>Payment Pending</td><td>✓</td><td>✓</td><td>Awaiting payment confirmation</td></tr>
-        <tr><td>Received</td><td>✓</td><td>✓</td><td>Accepted by the store</td></tr>
-        <tr><td><strong>Preparing</strong></td><td>✓</td><td>—</td><td>Being picked and packed</td></tr>
-        <tr><td><strong>Ready for Pickup</strong></td><td>✓</td><td>—</td><td>Waiting for the rider</td></tr>
-        <tr><td><strong>Picked Up</strong></td><td>✓</td><td>—</td><td>Rider has collected it</td></tr>
-        <tr><td>Processed</td><td>—</td><td>✓</td><td>Packed for dispatch</td></tr>
-        <tr><td>Shipped</td><td>—</td><td>✓</td><td>Handed to the carrier</td></tr>
-        <tr><td>Out For Delivery</td><td>✓</td><td>✓</td><td>On its way to the customer</td></tr>
-        <tr><td>Delivered</td><td>✓</td><td>✓</td><td>Completed</td></tr>
-        <tr><td>Cancelled</td><td>✓</td><td>✓</td><td>Cancelled</td></tr>
-        <tr><td><strong>Returned</strong></td><td>—</td><td>✓</td><td>Returned after delivery</td></tr>
+        <tr><td>Payment Pending</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Awaiting payment confirmation</td></tr>
+        <tr><td>Received</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Accepted by the store</td></tr>
+        <tr><td><strong>Preparing</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Being picked and packed</td></tr>
+        <tr><td><strong>Ready for Pickup</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Waiting for the rider</td></tr>
+        <tr><td><strong>Picked Up</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Rider has collected it</td></tr>
+        <tr><td>Processed</td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td>Packed for dispatch</td></tr>
+        <tr><td>Shipped</td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td>Handed to the carrier</td></tr>
+        <tr><td>Out For Delivery</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>On its way to the customer</td></tr>
+        <tr><td>Delivered</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Completed</td></tr>
+        <tr><td>Cancelled</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Cancelled</td></tr>
+        <tr><td><strong>Returned</strong></td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td>Returned after delivery</td></tr>
       </tbody>
     </table>
     </div>
@@ -75,7 +75,7 @@
       <p>They are not part of that flow and will not appear. If someone is looking for "Shipped" on a quick-commerce order, they are looking at the wrong channel's vocabulary.</p>
     </div>
 
-    <h2>Payment Pending</h2>
+    <h2 id="payment-pending">Payment Pending</h2>
 
     <p>An order sits here until payment is confirmed.</p>
 
@@ -87,7 +87,7 @@
 
     <p>Cash on Delivery orders skip straight to <strong>Received</strong>.</p>
 
-    <h2>Assigning a delivery boy</h2>
+    <h2 id="assigning-a-delivery-boy">Assigning a delivery boy</h2>
 
     <p>Assign a rider from the order. On assignment:</p>
 
@@ -108,7 +108,7 @@
       <p>Assignment notifications are queued jobs delivered by push. Without the <a href="../admin/cron-jobs.html">cron job</a> and <a href="../admin/firebase-settings.html">Firebase</a>, riders are never told they have work — the order simply sits unassigned in their view.</p>
     </div>
 
-    <h2>Delivery OTP</h2>
+    <h2 id="delivery-otp">Delivery OTP</h2>
 
     <p>If <strong>Generate OTP</strong> is enabled in <a href="../admin/app-settings.html#otp-generation">App Settings</a>, the customer receives a code the rider must enter to mark the order delivered.</p>
 
@@ -117,7 +117,7 @@
       <p>It is the cheapest proof of delivery you have and settles most "it never arrived" disputes without an investigation.</p>
     </div>
 
-    <h2>Cancelling</h2>
+    <h2 id="cancelling">Cancelling</h2>
 
     <p>Orders can be cancelled up to delivery. Cancellation triggers <code>order_item_cancelled_customer</code>, and any refund follows your <a href="../admin/payment-gateway.html">payment gateway</a> or goes to the customer's <a href="../admin/wallet-withdrawals.html">wallet</a>.</p>
 
@@ -126,7 +126,7 @@
       <p>Stock held against the order returns to available at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.</p>
     </div>
 
-    <h2>Per-item status</h2>
+    <h2 id="per-item-status">Per-item status</h2>
 
     <p>Status is tracked at <strong>item</strong> level, not only for the order as a whole. A single order can have one item delivered and another cancelled or returned — which is why the customer notifications are named <code>order_item_*</code>.</p>
 
@@ -135,7 +135,7 @@
       <p>Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.</p>
     </div>
 
-    <h2>Invoices</h2>
+    <h2 id="invoices">Invoices</h2>
 
     <p>Invoices are generated as PDFs, numbered with the prefix from <a href="../admin/general-settings.html#number-prefixes">General Settings</a>.</p>
 
@@ -144,7 +144,7 @@
       <p>Changing the prefix later does not renumber existing invoices. Set it during initial setup.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>

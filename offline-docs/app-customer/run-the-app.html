@@ -23,78 +23,68 @@
 
   <main class="content">
     <h1>Run the App</h1>
-    
-    <h2>Prerequisites</h2>
-    
+
+    <h2 id="prerequisites">Prerequisites</h2>
+
     <p>Before running the app, ensure the following are in place:</p>
-    
     <ul>
-    <li>Flutter SDK installed</li>
-    <li>Android Studio (for Android) or Xcode (for iOS) installed</li>
-    <li>A physical device connected via USB, or an emulator/simulator set up and running</li>
-    <li>All dependencies installed:
-    <pre><code class="language-bash">flutter pub get
-    </code></pre>
-    </li>
+      <li>Flutter SDK installed</li>
+      <li>Android Studio (for Android) or Xcode (for iOS) installed</li>
+      <li>A physical device connected via USB, or an emulator/simulator set up and running</li>
+      <li>All dependencies installed:
+        <pre><code class="language-bash">flutter pub get</code></pre>
+      </li>
     </ul>
-    
+
     <hr>
-    
-    <h2>Run on Android</h2>
-    
+
+    <h2 id="run-on-android">Run on Android</h2>
     <ol>
-    <li>Open your terminal and navigate to the project directory:
-    <pre><code class="language-bash">cd path/to/your/project
-    </code></pre>
-    </li>
-    <li>Run the app:
-    <pre><code class="language-bash">flutter run
-    </code></pre>
-    </li>
-    <li>When prompted, select your target device:
-    <ul>
-    <li><strong>Physical device</strong> — connected via USB with USB debugging enabled</li>
-    <li><strong>Emulator</strong> — launched from Android Studio's AVD Manager</li>
-    </ul>
-    </li>
+      <li>Open your terminal and navigate to the project directory:
+        <pre><code class="language-bash">cd path/to/your/project</code></pre>
+      </li>
+      <li>Run the app:
+        <pre><code class="language-bash">flutter run</code></pre>
+      </li>
+      <li>When prompted, select your target device:
+        <ul>
+          <li><strong>Physical device</strong> — connected via USB with USB debugging enabled</li>
+          <li><strong>Emulator</strong> — launched from Android Studio's AVD Manager</li>
+        </ul>
+      </li>
     </ol>
-    
+
     <p>The app will be built and launched on the selected device.</p>
-    
+
     <hr>
-    
-    <h2>Run on iOS</h2>
-    
+
+    <h2 id="run-on-ios">Run on iOS</h2>
     <ol>
-    <li>Open your terminal and navigate to the project directory:
-    <pre><code class="language-bash">cd path/to/your/project
-    </code></pre>
-    </li>
-    <li>Install CocoaPods dependencies:
-    <pre><code class="language-bash">cd ios
-    pod install
-    </code></pre>
-    
-    <div class="admonition admonition--tip">
-    <p class="admonition__title">Pod install issues?</p>
-    <p>If <code>pod install</code> fails, run the following inside the <code>ios</code> folder to clean and retry:</p>
-    <pre><code class="language-bash">rm -rf Podfile.lock Pods .symlinks
-    rm -rf ~/Library/Developer/Xcode/DerivedData
-    pod install --repo-update
-    </code></pre>
-    </div>
-    </li>
-    <li>Go back to the project root and run the app:
-    <pre><code class="language-bash">cd ..
-    flutter run
-    </code></pre>
-    </li>
-    <li>When prompted, select your target device:
-    <ul>
-    <li><strong>Physical device</strong> — iPhone or iPad connected via USB</li>
-    <li><strong>iOS Simulator</strong> — iPhone or iPad simulator launched from Xcode</li>
-    </ul>
-    </li>
+      <li>Open your terminal and navigate to the project directory:
+        <pre><code class="language-bash">cd path/to/your/project</code></pre>
+      </li>
+      <li>Install CocoaPods dependencies:
+        <pre><code class="language-bash">cd ios
+pod install</code></pre>
+
+        <div class="admonition admonition--tip">
+          <p class="admonition__title">Pod install issues?</p>
+          <p>If <code>pod install</code> fails, run the following inside the <code>ios</code> folder to clean and retry:</p>
+          <pre><code class="language-bash">rm -rf Podfile.lock Pods .symlinks
+rm -rf ~/Library/Developer/Xcode/DerivedData
+pod install --repo-update</code></pre>
+        </div>
+      </li>
+      <li>Go back to the project root and run the app:
+        <pre><code class="language-bash">cd ..
+flutter run</code></pre>
+      </li>
+      <li>When prompted, select your target device:
+        <ul>
+          <li><strong>Physical device</strong> — iPhone or iPad connected via USB</li>
+          <li><strong>iOS Simulator</strong> — iPhone or iPad simulator launched from Xcode</li>
+        </ul>
+      </li>
     </ol>
   </main>
 </div>

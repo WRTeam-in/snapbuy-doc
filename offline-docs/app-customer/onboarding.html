@@ -23,71 +23,67 @@
 
   <main class="content">
     <h1>Change Onboarding Images &amp; Text</h1>
-    
+
     <p>The onboarding screen is the first thing a new user sees when they open the app. You can customize the images, titles, and body text without touching any UI code.</p>
-    
+
     <hr>
-    
-    <h2>Change Onboarding Images</h2>
-    
+
+    <h2 id="change-onboarding-images">Change Onboarding Images</h2>
+
     <p>In the folder assets/images/svg, locate the images:</p>
-    
+
     <pre><code class="language-dart">onboarding_1.svg
-    onboarding_2.jpg
-    onboarding_3.jpg
-    </code></pre>
-    
+onboarding_2.jpg
+onboarding_3.jpg</code></pre>
+
     <p>To replace an image:</p>
-    
     <ol>
-    <li>Prepare your new image file.</li>
-    <li>Name it exactly the same as the existing file (e.g. <code>onboarding_1.svg</code>).</li>
-    <li>Place it at the same path in the assets folder, replacing the old file.</li>
+      <li>Prepare your new image file.</li>
+      <li>Name it exactly the same as the existing file (e.g. <code>onboarding_1.svg</code>).</li>
+      <li>Place it at the same path in the assets folder, replacing the old file.</li>
     </ol>
-    
+
     <div class="admonition admonition--warning">
-    <p class="admonition__title">Warning</p>
-    <p>Do <strong>not</strong> change the file name or path. The constants in <code>app_constants.dart</code> must continue to point to the correct file, or the image will not load.</p>
+      <p class="admonition__title">Warning</p>
+      <p>Do <strong>not</strong> change the file name or path. The constants in <code>app_constants.dart</code> must continue to point to the correct file, or the image will not load.</p>
     </div>
-    
+
     <hr>
-    
-    <h2>Change Onboarding Text</h2>
-    
+
+    <h2 id="change-onboarding-text">Change Onboarding Text</h2>
+
     <p>The onboarding titles and descriptions are controlled via the translation file. Open:</p>
-    
-    <pre><code>assets/languages/en.json
-    </code></pre>
-    
+
+    <pre><code>assets/languages/en.json</code></pre>
+
     <p>Search for the following keys and update their values:</p>
-    
+
     <div class="table-wrap">
     <table>
-    <thead>
-    <tr><th>Key</th><th>Used for</th></tr>
-    </thead>
-    <tbody>
-    <tr><td><code>onboarding_title_1</code></td><td>Title of slide 1</td></tr>
-    <tr><td><code>onboarding_title_2</code></td><td>Title of slide 2</td></tr>
-    <tr><td><code>onboarding_title_3</code></td><td>Title of slide 3</td></tr>
-    <tr><td><code>onboarding_subtitle_1</code></td><td>Body text of slide 1</td></tr>
-    <tr><td><code>onboarding_subtitle_2</code></td><td>Body text of slide 2</td></tr>
-    <tr><td><code>onboarding_subtitle_3</code></td><td>Body text of slide 3</td></tr>
-    </tbody>
+      <thead>
+        <tr><th>Key</th><th>Used for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>onboarding_title_1</code></td><td>Title of slide 1</td></tr>
+        <tr><td><code>onboarding_title_2</code></td><td>Title of slide 2</td></tr>
+        <tr><td><code>onboarding_title_3</code></td><td>Title of slide 3</td></tr>
+        <tr><td><code>onboarding_subtitle_1</code></td><td>Body text of slide 1</td></tr>
+        <tr><td><code>onboarding_subtitle_2</code></td><td>Body text of slide 2</td></tr>
+        <tr><td><code>onboarding_subtitle_3</code></td><td>Body text of slide 3</td></tr>
+      </tbody>
     </table>
     </div>
-    
+
     <p>Example:</p>
-    
+
     <pre><code class="language-json">"onboardingTitle1": "Everything You Need, Delivered Fast",
-    "onboardingText1": "Shop groceries, essentials, and more from local stores near you.",
-    </code></pre>
-    
+"onboardingText1": "Shop groceries, essentials, and more from local stores near you."</code></pre>
+
     <div class="admonition admonition--warning">
-    <p class="admonition__title">Warning</p>
-    <p>Only change the <strong>values</strong> — never rename the keys. The app looks up text by key name, so renaming a key will cause the text to disappear.</p>
+      <p class="admonition__title">Warning</p>
+      <p>Only change the <strong>values</strong> — never rename the keys. The app looks up text by key name, so renaming a key will cause the text to disappear.</p>
     </div>
-    
+
     <p>If you support multiple languages, apply the same value changes to each language file you added in Admin panel in Language list</p>
   </main>
 </div>

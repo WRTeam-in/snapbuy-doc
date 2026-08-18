@@ -26,7 +26,7 @@
 
     <p>Update the displayed app name on Android, iOS, and inside the app code.</p>
 
-    <h2>Android Configuration</h2>
+    <h2 id="android-configuration">Android Configuration</h2>
     <ol>
       <li>Navigate to <code>android/app/src/main/AndroidManifest.xml</code>.</li>
       <li>Change the app name by modifying the <code>android:label</code> value inside the <code>&lt;application&gt;</code> tag.</li>
@@ -34,7 +34,7 @@
 
     <img src="../images/app/delivery/appname1.png" alt="Android App Name Change">
 
-    <h2>iOS Configuration</h2>
+    <h2 id="ios-configuration">iOS Configuration</h2>
     <ol>
       <li>Navigate to <code>ios/Runner/Info.plist</code>.</li>
       <li>Change the app name by modifying the <code>CFBundleDisplayName</code> and <code>CFBundleName</code> values.</li>
@@ -42,7 +42,7 @@
 
     <img src="../images/app/delivery/appname2.png" alt="iOS App Name Change">
 
-    <h2>Change App Name in Code</h2>
+    <h2 id="change-app-name-in-code">Change App Name in Code</h2>
     <ol>
       <li>Open <code>lib/core/configs/appConfig.dart</code>.</li>
       <li>Change the value of the <code>appName</code> variable to your desired app name.</li>

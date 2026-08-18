@@ -30,7 +30,7 @@
 
     <img src="../images/panel/activity-logs-page.png" alt="Activity logs page">
 
-    <h2>What is recorded</h2>
+    <h2 id="what-is-recorded">What is recorded</h2>
 
     <p>SnapBuy logs create, update and delete actions on the records that matter — products, orders, stores, zones, countries, home layouts, promo codes, staff users and settings.</p>
 
@@ -49,7 +49,7 @@
     </table>
     </div>
 
-    <h2>What it is for</h2>
+    <h2 id="what-it-is-for">What it is for</h2>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">The three questions activity logs answer</p>
@@ -63,11 +63,11 @@
 
     <p>A worked example: customers report wrong delivery charges starting Tuesday afternoon. Filter the log to zone changes, find the edit at 2:15 PM Tuesday, see exactly which field moved and who moved it, and revert it.</p>
 
-    <h2>Filtering</h2>
+    <h2 id="filtering">Filtering</h2>
 
     <p>Narrow by user, action type, record type and date range. Use it before scrolling — a busy store generates a lot of entries.</p>
 
-    <h2>Limits worth knowing</h2>
+    <h2 id="limits-worth-knowing">Limits worth knowing</h2>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Not everything is logged</p>
@@ -79,7 +79,7 @@
       <p>Log entries survive the deletion of what they describe, which is the point — but it also means the log holds values from records that no longer exist.</p>
     </div>
 
-    <h2>Growth and retention</h2>
+    <h2 id="growth-and-retention">Growth and retention</h2>
 
     <p>Activity logs grow continuously and are one of the larger tables in a mature installation.</p>
 
@@ -88,14 +88,14 @@
       <p>If your database is approaching its hosting quota, activity logs are usually a large share of it. Archive old entries to a separate table or export and prune them, rather than letting the database hit its limit — which fails writes across the whole application, not just logging.</p>
     </div>
 
-    <h2>Access control</h2>
+    <h2 id="access-control">Access control</h2>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Restrict activity log access</p>
       <p>The log shows what changed and who changed it, including edits to settings and pricing. Grant it only to roles that genuinely need oversight, and never to a role that could be tempted to use it to cover its own tracks. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
     </div>
 
-    <h2>Related diagnostics</h2>
+    <h2 id="related-diagnostics">Related diagnostics</h2>
 
     <div class="table-wrap">
     <table>
@@ -113,7 +113,7 @@
       <p>The Laravel log viewer sits outside the panel login and can reveal file paths and error detail. Restrict it by IP — see <a href="../admin/server-setup.html#secure-the-maintenance-routes">Server Setup</a>.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>

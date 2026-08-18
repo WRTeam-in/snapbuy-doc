@@ -27,7 +27,7 @@
 
     <p>How the SnapBuy Web Portal is organised, and where to look when you need to change something.</p>
 
-    <h2>Technology stack</h2>
+    <h2 id="technology-stack">Technology stack</h2>
 
     <div class="table-wrap">
       <table>
@@ -53,7 +53,7 @@
       <p>This project uses the <strong>Pages Router</strong> (<code>src/pages/**</code>), so routing lives in <code>src/pages</code>, not <code>src/app</code>. There is no <code>app/</code> directory.</p>
     </div>
 
-    <h2>Top level</h2>
+    <h2 id="top-level">Top level</h2>
 
     <pre><code>snapbuy-web/
 ├── public/                   # Served as-is
@@ -81,7 +81,7 @@
 ├── server.js                   # Custom Node server used by `npm start`
 └── tailwind.config.js</code></pre>
 
-    <h2><code>src/pages</code> — routes</h2>
+    <h2 id="srcpages-routes"><code>src/pages</code> — routes</h2>
 
     <p>File-based routing; each file or folder becomes a URL.</p>
 
@@ -105,7 +105,7 @@
 
     <p><code>_app.js</code> is where the provider stack lives. Note the two deliberate choices documented in-file: <code>PersistGate</code> uses the <strong>function-child</strong> form so pages still server-render, and there is <strong>no <code>&lt;Suspense&gt;</code></strong> around the app content — a boundary there would write the fallback into the server HTML and break hydration.</p>
 
-    <h2><code>src/api</code> — backend layer</h2>
+    <h2 id="srcapi-backend-layer"><code>src/api</code> — backend layer</h2>
 
     <div class="table-wrap">
       <table>
@@ -125,7 +125,7 @@
 
     <p><code>serverApi.js</code> exists because SSR cannot read the Redux store — it takes headers as arguments instead. It is deliberately anonymous (no auth header): server rendering produces the logged-out view for crawlers, and user state hydrates on the client.</p>
 
-    <h2><code>src/components</code></h2>
+    <h2 id="srccomponents"><code>src/components</code></h2>
 
     <p>Grouped by feature. The larger ones:</p>
 
@@ -153,7 +153,7 @@
       </table>
     </div>
 
-    <h3><code>homelayout/</code> — the API-driven home page</h3>
+    <h3 id="homelayout-the-api-driven-home-page"><code>homelayout/</code> — the API-driven home page</h3>
 
     <p>The home page is <strong>not</strong> hardcoded. The <code>home_layout</code> API returns an ordered list of blocks and <code>HomeLayout.jsx</code> dispatches each to a section component:</p>
 
@@ -170,7 +170,7 @@
 
     <p>Each section reads its own <code>config</code> object (variant, colours, aspect ratio, column count).</p>
 
-    <h2><code>src/redux</code> — global state</h2>
+    <h2 id="srcredux-global-state"><code>src/redux</code> — global state</h2>
 
     <pre><code>redux/
 ├── store.js
@@ -193,7 +193,7 @@
       <li><code>shopModeSlice.mode</code> is <code>"quick"</code> or <code>"allShop"</code>. The API string for the second channel is <code>"ecommerce"</code> — they are not interchangeable.</li>
     </ul>
 
-    <h2><code>src/hooks</code></h2>
+    <h2 id="srchooks"><code>src/hooks</code></h2>
 
     <div class="table-wrap">
       <table>
@@ -216,7 +216,7 @@
       </table>
     </div>
 
-    <h2><code>src/utils</code></h2>
+    <h2 id="srcutils"><code>src/utils</code></h2>
 
     <p>Pure helpers with no React dependency.</p>
 
@@ -246,11 +246,11 @@
       <p><code>t()</code> reads translations from the server response, falling back to <code>en.json</code>. The local <code>ur.json</code> is <strong>not</strong> used at runtime — server data wins.</p>
     </div>
 
-    <h2><code>src/middleware.js</code></h2>
+    <h2 id="srcmiddlewarejs"><code>src/middleware.js</code></h2>
 
     <p>Runs at the edge before a page renders. It rewrites zone- and language-prefixed URLs (<code>/bhuj-quick</code>, <code>/ur/products</code>) onto the underlying route, which is why the zone slug survives only in <code>router.asPath</code> and not in the query.</p>
 
-    <h2>Configuration files</h2>
+    <h2 id="configuration-files">Configuration files</h2>
 
     <div class="table-wrap">
       <table>
@@ -267,7 +267,7 @@
       </table>
     </div>
 
-    <h2>Conventions</h2>
+    <h2 id="conventions">Conventions</h2>
 
     <ul>
       <li><strong>Components</strong> — PascalCase (<code>ProductCard.jsx</code>)</li>

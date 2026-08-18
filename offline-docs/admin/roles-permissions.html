@@ -30,21 +30,17 @@
 
     <img src="../images/panel/roles-list.png" alt="Roles list">
 
-    <h2>The seeded roles</h2>
-
+    <h2 id="the-seeded-roles">The seeded roles</h2>
     <p>Installation creates three:</p>
-
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Role</th><th>Purpose</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Super Admin</strong></td><td>Every permission. Created by the installer as your account.</td></tr>
-          <tr><td><strong>Admin</strong></td><td>Broad management access</td></tr>
-          <tr><td><strong>Delivery Boy</strong></td><td>The rider's own portal — not a panel administrator</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Role</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Super Admin</strong></td><td>Every permission. Created by the installer as your account.</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Broad management access</td></tr>
+        <tr><td><strong>Delivery Boy</strong></td><td>The rider's own portal — not a panel administrator</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--danger">
@@ -52,42 +48,37 @@
       <p>It can read your live payment gateway secrets, change prices, and delete records. Use a strong unique password, and never share the login between people — the <a href="../admin/activity-logs.html">activity log</a> can only tell you <em>which account</em> acted, so a shared account destroys accountability.</p>
     </div>
 
-    <h2>Permission categories</h2>
-
+    <h2 id="permission-categories">Permission categories</h2>
     <p>Permissions are grouped by area, and most areas offer four actions — <strong>list</strong>, <strong>create</strong>, <strong>update</strong>, <strong>delete</strong>.</p>
-
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Category</th><th>Covers</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>dashboard</code></td><td>The dashboard itself</td></tr>
-          <tr><td><code>order</code></td><td>Orders</td></tr>
-          <tr><td><code>product</code></td><td>Products, brands, attributes, stock</td></tr>
-          <tr><td><code>category</code></td><td>Categories</td></tr>
-          <tr><td><code>store</code></td><td><a href="../admin/stores.html">Stores</a></td></tr>
-          <tr><td><code>location</code></td><td><a href="../admin/zones.html">Zones</a>, delivery cities and areas</td></tr>
-          <tr><td><code>countries</code></td><td><a href="../admin/countries.html">Countries</a> and their policies and gateways</td></tr>
-          <tr><td><code>customer</code></td><td>Customer accounts, wallet, transactions</td></tr>
-          <tr><td><code>delivery_boy</code></td><td>Riders, cash collection, salary, settlements</td></tr>
-          <tr><td><code>withdrawal_request</code></td><td>Payout approvals</td></tr>
-          <tr><td><code>return_request</code></td><td>Returns</td></tr>
-          <tr><td><code>promo_code</code></td><td>Promo codes</td></tr>
-          <tr><td><code>home_builder</code></td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
-          <tr><td><code>blogs</code> / <code>faq</code> / <code>popup_offer</code></td><td>Content</td></tr>
-          <tr><td><code>send_notification</code></td><td>Push and email campaigns</td></tr>
-          <tr><td><code>email_template</code></td><td>Templates</td></tr>
-          <tr><td><code>languages</code></td><td><a href="../admin/languages.html">Languages</a></td></tr>
-          <tr><td><code>report</code></td><td><a href="../admin/reports.html">Reports</a></td></tr>
-          <tr><td><code>chat</code></td><td>Live chat</td></tr>
-          <tr><td><code>settings</code></td><td><strong>Everything under Settings</strong></td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Category</th><th>Covers</th></tr></thead>
+      <tbody>
+        <tr><td><code>dashboard</code></td><td>The dashboard itself</td></tr>
+        <tr><td><code>order</code></td><td>Orders</td></tr>
+        <tr><td><code>product</code></td><td>Products, brands, attributes, stock</td></tr>
+        <tr><td><code>category</code></td><td>Categories</td></tr>
+        <tr><td><code>store</code></td><td><a href="../admin/stores.html">Stores</a></td></tr>
+        <tr><td><code>location</code></td><td><a href="../admin/zones.html">Zones</a>, delivery cities and areas</td></tr>
+        <tr><td><code>countries</code></td><td><a href="../admin/countries.html">Countries</a> and their policies and gateways</td></tr>
+        <tr><td><code>customer</code></td><td>Customer accounts, wallet, transactions</td></tr>
+        <tr><td><code>delivery_boy</code></td><td>Riders, cash collection, salary, settlements</td></tr>
+        <tr><td><code>withdrawal_request</code></td><td>Payout approvals</td></tr>
+        <tr><td><code>return_request</code></td><td>Returns</td></tr>
+        <tr><td><code>promo_code</code></td><td>Promo codes</td></tr>
+        <tr><td><code>home_builder</code></td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
+        <tr><td><code>blogs</code> / <code>faq</code> / <code>popup_offer</code></td><td>Content</td></tr>
+        <tr><td><code>send_notification</code></td><td>Push and email campaigns</td></tr>
+        <tr><td><code>email_template</code></td><td>Templates</td></tr>
+        <tr><td><code>languages</code></td><td><a href="../admin/languages.html">Languages</a></td></tr>
+        <tr><td><code>report</code></td><td><a href="../admin/reports.html">Reports</a></td></tr>
+        <tr><td><code>chat</code></td><td>Live chat</td></tr>
+        <tr><td><code>settings</code></td><td><strong>Everything under Settings</strong></td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h2>Creating a role</h2>
-
+    <h2 id="creating-a-role">Creating a role</h2>
     <p><strong>Role → Add Role</strong>, name it, then tick the permissions.</p>
 
     <img src="../images/panel/roles-permissions-edit.png" alt="Editing role permissions">
@@ -103,21 +94,18 @@
       <p>For read-only oversight — an accountant who needs to see orders and reports but must not change them — grant only the <code>list</code> permissions in those categories. This is the safest way to widen visibility.</p>
     </div>
 
-    <h2>Suggested role designs</h2>
-
+    <h2 id="suggested-role-designs">Suggested role designs</h2>
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Role</th><th>Grant</th><th>Withhold</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Store Manager</strong></td><td>order, product, category, store, return_request, chat, report (list)</td><td>settings, countries, delivery_boy payouts</td></tr>
-          <tr><td><strong>Catalogue Staff</strong></td><td>product, category (list/create/update)</td><td>delete, order, settings, customer</td></tr>
-          <tr><td><strong>Support Agent</strong></td><td>order (list/update), customer (list), chat, return_request</td><td>settings, product, report</td></tr>
-          <tr><td><strong>Accountant</strong></td><td>report, order (list), customer (list), withdrawal_request (list)</td><td>everything create/update/delete</td></tr>
-          <tr><td><strong>Marketing</strong></td><td>promo_code, home_builder, send_notification, blogs, popup_offer</td><td>settings, order, customer, product</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Role</th><th>Grant</th><th>Withhold</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Store Manager</strong></td><td>order, product, category, store, return_request, chat, report (list)</td><td>settings, countries, delivery_boy payouts</td></tr>
+        <tr><td><strong>Catalogue Staff</strong></td><td>product, category (list/create/update)</td><td>delete, order, settings, customer</td></tr>
+        <tr><td><strong>Support Agent</strong></td><td>order (list/update), customer (list), chat, return_request</td><td>settings, product, report</td></tr>
+        <tr><td><strong>Accountant</strong></td><td>report, order (list), customer (list), withdrawal_request (list)</td><td>everything create/update/delete</td></tr>
+        <tr><td><strong>Marketing</strong></td><td>promo_code, home_builder, send_notification, blogs, popup_offer</td><td>settings, order, customer, product</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--tip">
@@ -125,8 +113,7 @@
       <p>It is far easier to add a permission when someone asks than to discover months later that a role could delete products all along. Build the minimum, then respond to real needs.</p>
     </div>
 
-    <h2>Creating staff users</h2>
-
+    <h2 id="creating-staff-users">Creating staff users</h2>
     <p><strong>System Users → Add User</strong>: username, email, password, and the role.</p>
 
     <img src="../images/panel/system-users-add.png" alt="Adding a system user">
@@ -141,7 +128,7 @@
       <p>Staff who forget their password recover by email. If <a href="../admin/smtp-settings.html">SMTP</a> is not configured, there is no in-panel recovery path — it takes direct database access. Configure SMTP before you create staff accounts.</p>
     </div>
 
-    <h2>When someone leaves</h2>
+    <h2 id="when-someone-leaves">When someone leaves</h2>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Deactivate the account the same day</p>
@@ -150,8 +137,7 @@
 
     <p>Deactivate rather than delete, so their history in the <a href="../admin/activity-logs.html">activity log</a> stays attributable.</p>
 
-    <h2>The Delivery Boy role is different</h2>
-
+    <h2 id="the-delivery-boy-role-is-different">The Delivery Boy role is different</h2>
     <p>The <code>Delivery Boy</code> role is not a panel administrator. Riders sign in at <code>/delivery_boy/login</code> and get their own portal — orders, cash collection, settlements, chat. See <a href="../admin/delivery-boy-portal.html">Delivery Boy Portal</a>.</p>
 
     <div class="admonition admonition--warning">
@@ -159,26 +145,22 @@
       <p>It changes what riders see in their own app, and can expose customer or financial data on a device that is frequently lost or shared.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
-
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Menu item missing for a staff member</td><td>Role lacks that <code>list</code> permission</td><td>Grant it</td></tr>
-          <tr><td>"Unauthorized" on save</td><td>Has <code>list</code> but not <code>update</code></td><td>Grant <code>update</code></td></tr>
-          <tr><td>Permission changes not taking effect</td><td>Cached permissions</td><td>Visit <code>/clear</code>; have the user sign out and back in</td></tr>
-          <tr><td>Staff can see payment credentials</td><td>Role has <code>settings</code></td><td>Remove it</td></tr>
-          <tr><td>Cannot tell who made a change</td><td>Shared account</td><td>Give each person their own</td></tr>
-          <tr><td>Permission list looks incomplete</td><td>Seeder not fully run</td><td>Re-run the permission seeders after a backup</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Menu item missing for a staff member</td><td>Role lacks that <code>list</code> permission</td><td>Grant it</td></tr>
+        <tr><td>"Unauthorized" on save</td><td>Has <code>list</code> but not <code>update</code></td><td>Grant <code>update</code></td></tr>
+        <tr><td>Permission changes not taking effect</td><td>Cached permissions</td><td>Visit <code>/clear</code>; have the user sign out and back in</td></tr>
+        <tr><td>Staff can see payment credentials</td><td>Role has <code>settings</code></td><td>Remove it</td></tr>
+        <tr><td>Cannot tell who made a change</td><td>Shared account</td><td>Give each person their own</td></tr>
+        <tr><td>Permission list looks incomplete</td><td>Seeder not fully run</td><td>Re-run the permission seeders after a backup</td></tr>
+      </tbody>
+    </table>
     </div>
 
-    <h2>Checklist</h2>
-
+    <h2 id="checklist">Checklist</h2>
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Super Admin password strong and not shared</li>
       <li class="task-item"><input type="checkbox" disabled> <code>settings</code> granted to as few roles as possible</li>

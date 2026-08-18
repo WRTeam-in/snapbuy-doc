@@ -34,7 +34,7 @@
 
     <img src="../images/panel/delivery-boys-list.png" alt="Delivery boys list">
 
-    <h2>Two ways a rider gets an account</h2>
+    <h2 id="two-ways-a-rider-gets-an-account">Two ways a rider gets an account</h2>
 
     <div class="table-wrap">
     <table>
@@ -52,7 +52,7 @@
       <p>Verify identity and right to work before approving. Check <strong>Registered Delivery Boys</strong> regularly — an unreviewed queue is a security gap, not an inbox.</p>
     </div>
 
-    <h2>What a rider sees in their portal</h2>
+    <h2 id="what-a-rider-sees-in-their-portal">What a rider sees in their portal</h2>
 
     <div class="table-wrap">
     <table>
@@ -72,7 +72,7 @@
     </table>
     </div>
 
-    <h2>What riders cannot do</h2>
+    <h2 id="what-riders-cannot-do">What riders cannot do</h2>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">The rider portal is deliberately narrow</p>
@@ -89,7 +89,7 @@
       <p>It changes what riders see in their own portal and can expose customer and financial data on a device that is frequently lost, shared or sold. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
     </div>
 
-    <h2>Assigning work</h2>
+    <h2 id="assigning-work">Assigning work</h2>
 
     <p>Orders are assigned from the admin panel — see <a href="../admin/orders.html#assigning-a-delivery-boy">Orders Workflow</a>. On assignment the rider is notified by push.</p>
 
@@ -98,7 +98,7 @@
       <p>Assignment notifications are queued jobs delivered through Firebase. If either is missing, the order appears in the portal but the rider is never alerted — and in practice, never picks it up. Check <a href="../admin/cron-jobs.html">Cron Jobs</a> and <a href="../admin/firebase-settings.html">Firebase</a>.</p>
     </div>
 
-    <h2>Money</h2>
+    <h2 id="money">Money</h2>
 
     <p>Three separate flows, covered in full under <a href="../admin/wallet-withdrawals.html">Wallet, Withdrawals &amp; Settlements</a>:</p>
 
@@ -120,7 +120,7 @@
 
     <p>Bonuses are configured in <a href="../admin/app-settings.html#delivery-boy-bonus">App Settings</a> — always set a maximum on percentage bonuses.</p>
 
-    <h2>Deactivating a rider</h2>
+    <h2 id="deactivating-a-rider">Deactivating a rider</h2>
 
     <p>Set the account inactive. They can no longer sign in or receive assignments, while their history stays intact. <code>account_status_delivery_boy</code> notifies them.</p>
 
@@ -134,7 +134,7 @@
       <p>Deactivating a rider with orders out for delivery leaves those orders stranded — no one can advance them. Reassign first.</p>
     </div>
 
-    <h2>The Delivery Boy App</h2>
+    <h2 id="the-delivery-boy-app">The Delivery Boy App</h2>
 
     <p>Riders normally work from the mobile app rather than the web portal. Its setup is documented separately:</p>
 
@@ -145,7 +145,7 @@
 
     <p>The portal and the app show the same data — the portal is useful when a phone is lost or a rider needs a desktop view.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>

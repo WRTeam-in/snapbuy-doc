@@ -38,13 +38,13 @@
       <p>Do not take that as "done". Open it and correct the currency, timezone, formats and policies, or delete it and create your own.</p>
     </div>
 
-    <h2>Adding a country</h2>
+    <h2 id="adding-a-country">Adding a country</h2>
 
     <p>Go to <strong>Countries → Add Country</strong>.</p>
 
     <img src="../images/panel/countries-add-form.png" alt="Add country form">
 
-    <h3>Basic details</h3>
+    <h3 id="basic-details">Basic details</h3>
 
     <div class="table-wrap">
     <table>
@@ -59,7 +59,7 @@
     </table>
     </div>
 
-    <h3>Phone number rules</h3>
+    <h3 id="phone-number-rules">Phone number rules</h3>
 
     <div class="table-wrap">
     <table>
@@ -78,7 +78,7 @@
       <p>For India set both min and max to <code>10</code>. For countries with variable-length numbers, widen the range rather than guessing.</p>
     </div>
 
-    <h3>Currency</h3>
+    <h3 id="currency">Currency</h3>
 
     <div class="table-wrap">
     <table>
@@ -97,7 +97,7 @@
       <p>Use <code>0</code> decimal points for currencies without minor units (for example JPY) — otherwise amounts are sent to the gateway multiplied incorrectly.</p>
     </div>
 
-    <h3>Timezone and formats</h3>
+    <h3 id="timezone-and-formats">Timezone and formats</h3>
 
     <div class="table-wrap">
     <table>
@@ -115,7 +115,7 @@
       <p>Zone surge slots, store operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and stores appear closed when they are open.</p>
     </div>
 
-    <h3>Payment gateways per country</h3>
+    <h3 id="payment-gateways-per-country">Payment gateways per country</h3>
 
     <p>Each country carries its <strong>own</strong> list of enabled gateways. A gateway configured globally in <a href="../admin/payment-gateway.html">Payment Gateway settings</a> still will not appear to customers unless it is enabled on their country.</p>
 
@@ -128,7 +128,7 @@
 
     <p>The seeded India record has <strong>Cash on Delivery</strong> enabled by default.</p>
 
-    <h3>Referral programme</h3>
+    <h3 id="referral-programme">Referral programme</h3>
 
     <div class="table-wrap">
     <table>
@@ -174,7 +174,7 @@
 
     <p>Each policy is editable <strong>per language</strong> — see <a href="../admin/languages.html">Manage Languages</a>. Customers see the policy for their selected language, falling back to the default language when a translation is missing.</p>
 
-    <h2>Multiple countries</h2>
+    <h2 id="multiple-countries">Multiple countries</h2>
 
     <p>Adding more than one country lets you sell across regions with separate currencies, gateways, policies and referral rules.</p>
 
@@ -187,14 +187,14 @@
       <p>Every zone carries a <code>country_id</code>. Create the country first, then draw zones inside it. See <a href="../admin/zones.html">Delivery Zones</a>.</p>
     </div>
 
-    <h2>Deactivating or deleting</h2>
+    <h2 id="deactivating-or-deleting">Deactivating or deleting</h2>
 
     <ul>
       <li><strong>Set status inactive</strong> to hide a country from the apps while keeping its orders and customers intact. This is the safe option.</li>
       <li><strong>Deleting</strong> a country whose zones, stores and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.</li>
     </ul>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Currency symbol, currency code and decimal point all correct</li>

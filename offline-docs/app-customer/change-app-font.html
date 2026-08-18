@@ -26,7 +26,7 @@
     
     <p>Swap the default font for one of your choice across the entire app. The app uses the <a href="https://pub.dev/packages/google_fonts"><code>google_fonts</code></a> package, so no font files need to be added manually.</p>
     
-    <h2>Step 1 — Update the Font in <code>app_config.dart</code></h2>
+    <h2 id="step-1-update-the-font-in-appconfigdart">Step 1 — Update the Font in <code>app_config.dart</code></h2>
     
     <p>Open <code>lib/core/configs/app_config.dart</code> and change the <code>fontFamily</code> value to the <a href="https://fonts.google.com/">Google Font</a> of your choice:</p>
     
@@ -37,7 +37,7 @@ static final String? fontFamily = GoogleFonts.instrumentSans().fontFamily;</code
     
     <pre><code class="language-dart">static final String? fontFamily = GoogleFonts.poppins().fontFamily;</code></pre>
     
-    <h2>Step 2 — Rebuild</h2>
+    <h2 id="step-2-rebuild">Step 2 — Rebuild</h2>
     
     <pre><code class="language-bash">flutter pub get
 flutter clean &amp;&amp; flutter run</code></pre>

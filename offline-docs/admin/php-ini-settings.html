@@ -26,7 +26,7 @@
 
     <p>Default PHP limits on most shared hosts are too low for SnapBuy. Raise them <strong>before</strong> you run the installer — several failures (blank screens, "413" errors, half-finished imports) are caused purely by these values.</p>
 
-    <h2>Recommended values</h2>
+    <h2 id="recommended-values">Recommended values</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Directive</th><th>Minimum</th><th>Recommended</th><th>Why it matters</th></tr></thead>
@@ -47,7 +47,7 @@
       <p>If <code>post_max_size</code> is smaller, PHP silently discards the whole request and the panel shows an empty error. Always keep it higher.</p>
     </div>
 
-    <h2>Limits enforced by SnapBuy itself</h2>
+    <h2 id="limits-enforced-by-snapbuy-itself">Limits enforced by SnapBuy itself</h2>
     <p>Even with generous PHP limits, SnapBuy applies its own caps:</p>
     <div class="table-wrap">
     <table>
@@ -68,9 +68,9 @@
       <p>Uploading an update package through <strong>Settings → System Updater</strong> can push a file far larger than a normal upload. If your update fails part-way, raise <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> first, or apply the update manually over FTP instead.</p>
     </div>
 
-    <h2>Where to change these</h2>
+    <h2 id="where-to-change-these">Where to change these</h2>
 
-    <h3>cPanel</h3>
+    <h3 id="cpanel">cPanel</h3>
     <ol>
       <li>Log into cPanel.</li>
       <li>Open <strong>Select PHP Version</strong> (or <strong>MultiPHP INI Editor</strong>).</li>
@@ -79,7 +79,7 @@
       <li>Save. cPanel applies changes immediately.</li>
     </ol>
 
-    <h3>VPS / dedicated server</h3>
+    <h3 id="vps-dedicated-server">VPS / dedicated server</h3>
     <p>Find your active <code>php.ini</code>:</p>
     <pre><code>php --ini</code></pre>
 
@@ -101,14 +101,14 @@ sudo systemctl restart nginx</code></pre>
       <p>Then reload Nginx. Without it you get a <strong>413 Request Entity Too Large</strong> no matter what PHP says.</p>
     </div>
 
-    <h3>XAMPP (local)</h3>
+    <h3 id="xampp-local">XAMPP (local)</h3>
     <ol>
       <li>Open the XAMPP Control Panel.</li>
       <li>Next to <strong>Apache</strong>, click <strong>Config → PHP (php.ini)</strong>.</li>
       <li>Edit the values, save, and restart Apache.</li>
     </ol>
 
-    <h3>Shared hosting without INI access</h3>
+    <h3 id="shared-hosting-without-ini-access">Shared hosting without INI access</h3>
     <p>Some hosts allow a <code>.user.ini</code> file in the project root:</p>
     <pre><code class="language-ini">max_execution_time = 600
 max_input_time = 600
@@ -119,7 +119,7 @@ max_input_vars = 5000</code></pre>
 
     <p>If that has no effect, ask your host to apply the values for you.</p>
 
-    <h2>Verify the change took effect</h2>
+    <h2 id="verify-the-change-took-effect">Verify the change took effect</h2>
     <p>Create <code>info.php</code> in your panel's public folder:</p>
     <pre><code class="language-php">&lt;?php phpinfo();</code></pre>
 
@@ -130,11 +130,11 @@ max_input_vars = 5000</code></pre>
       <p><code>phpinfo()</code> exposes your full server configuration. Remove the file as soon as you have checked.</p>
     </div>
 
-    <h2>Functions that must stay enabled</h2>
+    <h2 id="functions-that-must-stay-enabled">Functions that must stay enabled</h2>
     <p>Check the <code>disable_functions</code> line in your <code>php.ini</code>. None of these may appear in it:</p>
     <pre><code>symlink, exec, proc_open, shell_exec, putenv</code></pre>
 
-    <p><code>symlink</code> is the critical one — see <a href="server-requirements.html#server-functions-that-must-not-be-disabled">Server Requirements</a>.</p>
+    <p><code>symlink</code> is the critical one — see <a href="../admin/server-requirements.html#server-functions-that-must-not-be-disabled">Server Requirements</a>.</p>
   </main>
 </div>
 

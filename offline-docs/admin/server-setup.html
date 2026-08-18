@@ -25,7 +25,6 @@
     <h1>Server Setup</h1>
 
     <p>This is the live installation. Before starting, confirm you have completed:</p>
-
     <ul>
       <li><a href="../admin/server-requirements.html">Server Requirements</a></li>
       <li><a href="../admin/create-subdomain.html">Create a Subdomain</a> — with SSL working</li>
@@ -38,11 +37,9 @@
     </div>
 
     <h2>Step 1 — Upload the files</h2>
-
     <p>Upload the SnapBuy admin panel package to your server and extract it into the folder your subdomain points at.</p>
 
     <p><strong>Via cPanel File Manager</strong></p>
-
     <ol>
       <li>Open <strong>File Manager</strong> and go to your subdomain folder.</li>
       <li>Click <strong>Upload</strong> and select the <code>.zip</code>.</li>
@@ -51,7 +48,6 @@
     </ol>
 
     <p><strong>Via SSH</strong> (faster for large packages)</p>
-
     <pre><code>cd /home/username/snapbuy
 unzip snapbuy-admin.zip</code></pre>
 
@@ -61,9 +57,7 @@ unzip snapbuy-admin.zip</code></pre>
     </div>
 
     <h2>Step 2 — Create the database and user</h2>
-
     <p>In cPanel, open <strong>MySQL® Databases</strong>:</p>
-
     <ol>
       <li><strong>Create New Database</strong> — for example <code>username_snapbuy</code>.</li>
       <li><strong>Add New User</strong> — create a dedicated user with a strong password.</li>
@@ -78,9 +72,7 @@ unzip snapbuy-admin.zip</code></pre>
     </div>
 
     <h2>Step 3 — Set file permissions</h2>
-
     <p>The installer checks four paths. Set them before you start:</p>
-
     <pre><code>cd /home/username/snapbuy
 chmod -R 755 storage bootstrap/cache
 chmod 644 .env
@@ -89,10 +81,8 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     <p>On cPanel without SSH, use File Manager → select folder → <strong>Permissions</strong>.</p>
 
     <h2>Step 4 — Prepare <code>.env</code></h2>
-
     <p>Copy <code>.env.example</code> to <code>.env</code>, then add this line:</p>
-
-    <pre><code>INSTALL_MODE=server</code></pre>
+    <pre><code class="language-ini">INSTALL_MODE=server</code></pre>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">This line is mandatory on a live server</p>
@@ -100,9 +90,7 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     </div>
 
     <h2>Step 5 — Open the installer</h2>
-
     <p>Visit your panel over <strong>HTTPS</strong>:</p>
-
     <pre><code>https://admin.yourstore.com</code></pre>
 
     <p>You are redirected to the installation wizard.</p>
@@ -113,11 +101,9 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     </div>
 
     <h2>Step 6 — Requirements check</h2>
-
     <p>The wizard verifies your PHP version, all seventeen extensions, and the four writable paths.</p>
 
     <p>Every item must be green. If something fails:</p>
-
     <div class="table-wrap">
     <table>
       <thead><tr><th>Failure</th><th>Fix</th></tr></thead>
@@ -150,7 +136,6 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     </div>
 
     <p>When you continue, SnapBuy:</p>
-
     <ol>
       <li>Tests the database connection.</li>
       <li>Writes <code>DB_*</code>, <code>APP_URL</code> and <code>APP_ENV=production</code> into <code>.env</code>.</li>
@@ -168,7 +153,6 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     </div>
 
     <h2>Step 8 — Purchase code</h2>
-
     <p>Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.</p>
 
     <div class="admonition admonition--warning">
@@ -178,21 +162,17 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     </div>
 
     <h2>Step 9 — Finish</h2>
-
     <p>The wizard confirms the installation and sends you to the login page at <code>https://admin.yourstore.com</code>. Sign in with the admin email and password from Step 7.</p>
 
     <h2>Immediately after installing</h2>
-
     <p>Three things must be done before the store is usable:</p>
-
     <ol>
       <li><strong><a href="../admin/cron-jobs.html">Set up the cron job</a></strong> — cart reminders, maintenance windows, scheduled home layouts and every queued job depend on it. Nothing warns you if this is missing.</li>
-      <li>Work through the <a href="../admin/setup-guide.html">Setup Guide</a> — nine steps covering Country, Zone, Store, Home Builder, SMTP, Firebase, Map, Chat and Cron.</li>
-      <li>Secure the maintenance routes — see below.</li>
+      <li>Work through the <strong><a href="../admin/setup-guide.html">Setup Guide</a></strong> — nine steps covering Country, Zone, Store, Home Builder, SMTP, Firebase, Map, Chat and Cron.</li>
+      <li><strong>Secure the maintenance routes</strong> — see below.</li>
     </ol>
 
     <h3>Secure the maintenance routes</h3>
-
     <p>SnapBuy exposes several helper URLs that are <strong>not behind a login</strong>:</p>
 
     <div class="table-wrap">
@@ -214,14 +194,13 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     <div class="admonition admonition--danger">
       <p class="admonition__title">Restrict these in production</p>
       <p>Protect them with an IP allow-list or HTTP authentication in your web server configuration, for example:</p>
-      <pre><code>&lt;LocationMatch "^/(logs|migrate|migration|generate_key|get_path)"&gt;
+      <pre><code class="language-apache">&lt;LocationMatch "^/(logs|migrate|migration|generate_key|get_path)"&gt;
     Require ip 203.0.113.10
 &lt;/LocationMatch&gt;</code></pre>
       <p>Replace the address with your own IP.</p>
     </div>
 
     <h2>Troubleshooting</h2>
-
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>

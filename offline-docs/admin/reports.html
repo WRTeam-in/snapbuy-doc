@@ -30,7 +30,7 @@
 
     <img src="../images/panel/reports-page.png" alt="Reports overview">
 
-    <h2>The ten reports</h2>
+    <h2 id="the-ten-reports">The ten reports</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Report</th><th>Answers</th></tr></thead>
@@ -49,82 +49,82 @@
     </table>
     </div>
 
-    <h2>Reading them well</h2>
+    <h2 id="reading-them-well">Reading them well</h2>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Compare periods, not just totals</p>
       <p>A single month's revenue tells you almost nothing on its own. The same month against the previous one, or against the same month last year, tells you whether the business is growing. Every report supports a date range — use two.</p>
     </div>
 
-    <h3>Sales and Orders</h3>
+    <h3 id="sales-and-orders">Sales and Orders</h3>
     <p>Sales shows revenue; Orders shows volume and status mix.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">A high cancellation rate is a symptom, not a statistic</p>
-      <p>Cancellations concentrated in one <a href="zones.html">zone</a> usually mean delivery charges are wrong or the area is unserviceable. Concentrated at Payment Pending, they usually mean a payment gateway problem — see <a href="payment-gateway.html#webhooks">Payment Gateways</a> before blaming customers.</p>
+      <p>Cancellations concentrated in one <a href="../admin/zones.html">zone</a> usually mean delivery charges are wrong or the area is unserviceable. Concentrated at Payment Pending, they usually mean a payment gateway problem — see <a href="../admin/payment-gateway.html#webhooks">Payment Gateways</a> before blaming customers.</p>
     </div>
 
-    <h3>Products and Category</h3>
+    <h3 id="products-and-category">Products and Category</h3>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Look at the bottom of the product report, not just the top</p>
       <p>The products that never sell are costing you stock capital, shelf space and catalogue clutter. The slow-moving tail is usually a bigger opportunity than the bestsellers, which are already working.</p>
     </div>
 
-    <h3>Inventory</h3>
-    <p>Stock on hand, by <a href="stores.html">store</a>.</p>
+    <h3 id="inventory">Inventory</h3>
+    <p>Stock on hand, by <a href="../admin/stores.html">store</a>.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Inventory is per store</p>
-      <p>A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the store serving their <a href="zones.html">zone</a>, so a healthy total across all stores can still mean "unavailable" for most customers.</p>
+      <p>A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the store serving their <a href="../admin/zones.html">zone</a>, so a healthy total across all stores can still mean "unavailable" for most customers.</p>
     </div>
 
-    <h3>Delivery</h3>
+    <h3 id="delivery">Delivery</h3>
     <p>Rider and delivery performance.</p>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Cross-check against cash collection</p>
-      <p>A rider with strong delivery numbers but persistently unsettled COD cash is a reconciliation problem, not a performance success. Read this alongside <a href="wallet-withdrawals.html">Wallet &amp; Settlements</a>.</p>
+      <p>A rider with strong delivery numbers but persistently unsettled COD cash is a reconciliation problem, not a performance success. Read this alongside <a href="../admin/wallet-withdrawals.html">Wallet &amp; Settlements</a>.</p>
     </div>
 
-    <h3>Payment</h3>
+    <h3 id="payment">Payment</h3>
     <p>Methods used and success rates.</p>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">A falling success rate on one gateway needs immediate attention</p>
-      <p>Payment failures are silent lost revenue — the customer rarely tells you, they just leave. A sudden drop usually means expired credentials, an account issue at the provider, or a mode/currency mismatch. Check <a href="payment-gateway.html">Payment Gateways</a>.</p>
+      <p>Payment failures are silent lost revenue — the customer rarely tells you, they just leave. A sudden drop usually means expired credentials, an account issue at the provider, or a mode/currency mismatch. Check <a href="../admin/payment-gateway.html">Payment Gateways</a>.</p>
     </div>
 
-    <h3>Promo</h3>
+    <h3 id="promo">Promo</h3>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Measure promo codes against margin, not revenue</p>
       <p>A discount code will almost always increase order volume. The question is whether the extra orders covered the discount given, and whether they went to customers who would have bought anyway. Revenue alone flatters every campaign.</p>
     </div>
 
-    <h3>Returns</h3>
+    <h3 id="returns">Returns</h3>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Returns clustered on one product are a product problem</p>
       <p>A single item appearing repeatedly in the returns report usually means the listing is misleading — wrong size guidance, a photograph that does not match, or an inaccurate description. Fixing the listing is cheaper than processing the returns.</p>
     </div>
 
-    <h2>Timezone and currency</h2>
-    <p>Report periods are evaluated against the <a href="countries.html">country's</a> timezone, and amounts in its currency.</p>
+    <h2 id="timezone-and-currency">Timezone and currency</h2>
+    <p>Report periods are evaluated against the <a href="../admin/countries.html">country's</a> timezone, and amounts in its currency.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">A wrong country timezone shifts every daily figure</p>
       <p>Orders land in the wrong day, so daily comparisons and "best hour" analysis are quietly wrong. If your figures look shifted by a few hours, check the timezone before anything else.</p>
     </div>
 
-    <h2>Access</h2>
+    <h2 id="access">Access</h2>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Reports expose commercial data</p>
-      <p>Revenue, margin, customer value and purchase prices are all visible here. Grant the <code>report</code> permission narrowly — and remember that granting <code>list</code> only, with no update rights, is the right shape for an accountant or analyst. See <a href="roles-permissions.html">Roles &amp; Permissions</a>.</p>
+      <p>Revenue, margin, customer value and purchase prices are all visible here. Grant the <code>report</code> permission narrowly — and remember that granting <code>list</code> only, with no update rights, is the right shape for an accountant or analyst. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
     </div>
 
-    <h2>Exports</h2>
+    <h2 id="exports">Exports</h2>
     <p>Reports can be exported for use in a spreadsheet.</p>
 
     <div class="admonition admonition--warning">
@@ -132,14 +132,14 @@
       <p>Once downloaded, a file containing customer details and revenue can be forwarded anywhere. Treat exports as sensitive documents, and be deliberate about who can produce them.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Report empty</td><td>Date range has no data, or filters too narrow</td><td>Widen the range</td></tr>
-        <tr><td>Figures shifted by hours</td><td>Country timezone wrong</td><td>Fix it on the <a href="countries.html">country</a></td></tr>
-        <tr><td>Totals disagree with the gateway</td><td>Missing webhook, some payments unrecorded</td><td>See <a href="payment-gateway.html#webhooks">Payment Gateways</a></td></tr>
+        <tr><td>Figures shifted by hours</td><td>Country timezone wrong</td><td>Fix it on the <a href="../admin/countries.html">country</a></td></tr>
+        <tr><td>Totals disagree with the gateway</td><td>Missing webhook, some payments unrecorded</td><td>See <a href="../admin/payment-gateway.html#webhooks">Payment Gateways</a></td></tr>
         <tr><td>Inventory looks wrong</td><td>Reading totals across stores</td><td>Filter by store</td></tr>
         <tr><td>Export times out</td><td>Range too large</td><td>Export in smaller periods</td></tr>
         <tr><td>Staff cannot open reports</td><td><code>report</code> permission not granted</td><td>Grant <code>list</code> in that category</td></tr>

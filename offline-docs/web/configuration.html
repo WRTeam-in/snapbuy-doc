@@ -34,7 +34,7 @@
       <p>Only the values in the site's <code>.env</code> file (the API address, the SEO flag, Firebase and Maps keys) are set at deploy time. Changing one of those requires a rebuild — see <a href="installation-steps.html">Installation Steps</a>. Everything on this page is a live setting: save it in the Admin Panel and reload the storefront.</p>
     </div>
 
-    <h2>Where each setting lives</h2>
+    <h2 id="where-each-setting-lives">Where each setting lives</h2>
 
     <div class="table-wrap">
       <table>
@@ -52,7 +52,7 @@
       </table>
     </div>
 
-    <h2>Theming</h2>
+    <h2 id="theming">Theming</h2>
 
     <p>The storefront reads its entire colour scheme from the Admin Panel. There is no brand colour written into the site itself, which is why the same build can serve any store.</p>
 
@@ -79,7 +79,7 @@
 
     <p>Illustrations (empty carts, 404 pages, loading animations) are also recoloured to your primary colour automatically. You do not need to supply branded artwork for these.</p>
 
-    <h3>Header appearance</h3>
+    <h3 id="header-appearance">Header appearance</h3>
 
     <p>The header is configured per home layout, under <strong>Home Builder → Header Settings</strong>:</p>
 
@@ -97,7 +97,7 @@
 
     <p>See <a href="../app-customer/home-screen-settings.html">Configure Home Screen</a> for the full Home Builder walkthrough — the same layouts drive both the app and the Web Portal.</p>
 
-    <h2>Home page composition</h2>
+    <h2 id="home-page-composition">Home page composition</h2>
 
     <p>The home page is assembled from the sections you add in <strong>Home Builder</strong>. Nothing on it is fixed; you control what appears and in what order.</p>
 
@@ -122,7 +122,7 @@
 
     <p>Drag sections to reorder them, toggle one off without deleting it, or use <strong>Use Template</strong> to add a pre-built set.</p>
 
-    <h3>Section appearance</h3>
+    <h3 id="section-appearance">Section appearance</h3>
 
     <p>Each section can be plain or given its own backdrop. Pick a <strong>variant</strong>:</p>
 
@@ -156,19 +156,19 @@
 
     <p>You can also set a <strong>background aspect ratio</strong> (for example 3:1). This is a <em>minimum</em> height — if the section's contents need more room, the panel grows rather than cropping them, so chips are never cut off on narrow phone screens.</p>
 
-    <h3>Layout options</h3>
+    <h3 id="layout-options">Layout options</h3>
 
     <p><strong>Product Slider</strong> — display as a carousel, a list, or a grid. You can set the number of columns, the gap between products, the card corner rounding, and the section heading.</p>
 
     <p><strong>Category and Brand sections</strong> — display as a horizontal row, circular chips, or a grid. You can set the column count, spacing, and corner rounding. Brand sections can additionally hide their captions.</p>
 
-    <h3>"View More"</h3>
+    <h3 id="view-more">"View More"</h3>
 
     <p>Product sections can be sourced from a category, a brand, a manually chosen list of products, or an automatic list such as most-favourited.</p>
 
     <p>The <strong>View More</strong> button appears only when there are more products than the section displays. If a section shows everything it has, no button is shown — this is expected, not a fault.</p>
 
-    <h2>Channels</h2>
+    <h2 id="channels">Channels</h2>
 
     <p>The store can run two channels side by side:</p>
 
@@ -199,7 +199,7 @@
       <p>Each channel has its own <strong>separate cart</strong>. A customer switching between Quick and Ecommerce sees a different basket — items do not merge. Currency is also read per channel.</p>
     </div>
 
-    <h2>Zones</h2>
+    <h2 id="zones">Zones</h2>
 
     <p>A zone is a delivery area with its own catalogue, pricing, and home layout. Each zone gets its own web address:</p>
 
@@ -214,7 +214,7 @@ yourstore.com/ur/bhuj-quick/products  → the same, in Urdu</code></pre>
       <p>Zone and language web addresses only work when the storefront runs as a server build (<code>NEXT_PUBLIC_SEO=true</code>). On a static export every zone link returns a 404. See <a href="overview.html#two-decisions-that-shape-everything">Overview</a>.</p>
     </div>
 
-    <h2>Languages</h2>
+    <h2 id="languages">Languages</h2>
 
     <p>Add languages and edit translations under <strong>Languages</strong> in the Admin Panel. The storefront picks them up on reload — translations are not built into the site.</p>
 
@@ -222,7 +222,7 @@ yourstore.com/ur/bhuj-quick/products  → the same, in Urdu</code></pre>
 
     <p>Each language also gets its own URL prefix (<code>/ur/...</code>), so localised pages can be shared and indexed by search engines.</p>
 
-    <h2>SEO</h2>
+    <h2 id="seo">SEO</h2>
 
     <p>Per-page titles, descriptions, and share images come from the Admin Panel, so you can tune how each category or product appears in search results and on social media.</p>
 
@@ -244,7 +244,7 @@ yourstore.com/ur/bhuj-quick/products  → the same, in Urdu</code></pre>
 
     <p>See the <a href="deployment.html">Deployment Guide</a> for confirming SEO works on a live site.</p>
 
-    <h2>Payments</h2>
+    <h2 id="payments">Payments</h2>
 
     <p>Enable and configure gateways under <strong>Settings → Payment Gateway</strong>. Supported: Razorpay, Stripe, PayPal, Paystack, Cashfree, Midtrans, PhonePe, PayTabs, and cash on delivery.</p>
 
@@ -253,7 +253,7 @@ yourstore.com/ur/bhuj-quick/products  → the same, in Urdu</code></pre>
       <p>All gateway keys are stored in the Admin Panel, never in the storefront. Enabling or switching a gateway is a live change — no redeploy needed.</p>
     </div>
 
-    <h2>Related pages</h2>
+    <h2 id="related-pages">Related pages</h2>
 
     <ul>
       <li><a href="../app-customer/home-screen-settings.html">Configure Home Screen</a> — the full Home Builder guide</li>

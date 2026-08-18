@@ -30,23 +30,21 @@
 
     <img src="../images/panel/general-settings-page.png" alt="General settings page">
 
-    <h2>Store identity</h2>
+    <h2 id="store-identity">Store identity</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Field</th><th>What it does</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>App Name</strong></td><td>Your store name. Appears in the panel, app headers, email subjects and notification titles.</td></tr>
-          <tr><td><strong>Support Number</strong></td><td>Shown to customers in the apps and on the web portal</td></tr>
-          <tr><td><strong>Support Email</strong></td><td>Where customer enquiries are directed</td></tr>
-          <tr><td><strong>Logo</strong></td><td>Displayed in the panel, on invoices and in emails</td></tr>
-          <tr><td><strong>Favicon</strong></td><td>Browser tab icon</td></tr>
-          <tr><td><strong>Admin Theme Color</strong></td><td>Accent colour of the admin panel</td></tr>
-          <tr><td><strong>Copyright Details</strong></td><td>Footer text on the web portal</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>App Name</strong></td><td>Your store name. Appears in the panel, app headers, email subjects and notification titles.</td></tr>
+        <tr><td><strong>Support Number</strong></td><td>Shown to customers in the apps and on the web portal</td></tr>
+        <tr><td><strong>Support Email</strong></td><td>Where customer enquiries are directed</td></tr>
+        <tr><td><strong>Logo</strong></td><td>Displayed in the panel, on invoices and in emails</td></tr>
+        <tr><td><strong>Favicon</strong></td><td>Browser tab icon</td></tr>
+        <tr><td><strong>Admin Theme Color</strong></td><td>Accent colour of the admin panel</td></tr>
+        <tr><td><strong>Copyright Details</strong></td><td>Footer text on the web portal</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--tip">
@@ -54,19 +52,17 @@
       <p>It is substituted into notification and email templates through the <code>{app_name}</code> placeholder. Changing it updates every template at once — you do not need to edit them individually.</p>
     </div>
 
-    <h2>Number prefixes</h2>
+    <h2 id="number-prefixes">Number prefixes</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Field</th><th>Applies to</th><th>Example</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Order Prefix</strong></td><td>Order IDs</td><td><code>ORD</code> → <code>ORD1042</code></td></tr>
-          <tr><td><strong>Invoice Prefix</strong></td><td>Invoice numbers</td><td><code>INV</code> → <code>INV1042</code></td></tr>
-          <tr><td><strong>Return Request Prefix</strong></td><td>Return requests</td><td><code>RET</code> → <code>RET87</code></td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Field</th><th>Applies to</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Order Prefix</strong></td><td>Order IDs</td><td><code>ORD</code> → <code>ORD1042</code></td></tr>
+        <tr><td><strong>Invoice Prefix</strong></td><td>Invoice numbers</td><td><code>INV</code> → <code>INV1042</code></td></tr>
+        <tr><td><strong>Return Request Prefix</strong></td><td>Return requests</td><td><code>RET</code> → <code>RET87</code></td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--danger">
@@ -79,18 +75,16 @@
       <p>Two-to-four characters is plenty. Use different prefixes for orders, invoices and returns so a support agent can tell at a glance what a customer is quoting.</p>
     </div>
 
-    <h2>Store location</h2>
+    <h2 id="store-location">Store location</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Field</th><th>Used for</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Store Address</strong></td><td>Displayed on invoices and the contact page</td></tr>
-          <tr><td><strong>Map Latitude / Longitude</strong></td><td>Default map centre when no customer location is known</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Field</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Store Address</strong></td><td>Displayed on invoices and the contact page</td></tr>
+        <tr><td><strong>Map Latitude / Longitude</strong></td><td>Default map centre when no customer location is known</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--info">
@@ -98,21 +92,19 @@
       <p>Delivery distance is measured from the <a href="../admin/stores.html">store</a> pin, not from here. This address is for display and for centring the map on first load.</p>
     </div>
 
-    <h2>Behaviour</h2>
+    <h2 id="behaviour">Behaviour</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Field</th><th>What it does</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Max Cart Items Count</strong></td><td>Largest number of items a customer may place in one cart</td></tr>
-          <tr><td><strong>Product Rating</strong></td><td>Whether customers can rate and review products</td></tr>
-          <tr><td><strong>Date Format</strong></td><td>Panel-wide date display</td></tr>
-          <tr><td><strong>Time Format</strong></td><td>12-hour or 24-hour</td></tr>
-          <tr><td><strong>Default City</strong></td><td>Pre-selected city for new customers</td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Max Cart Items Count</strong></td><td>Largest number of items a customer may place in one cart</td></tr>
+        <tr><td><strong>Product Rating</strong></td><td>Whether customers can rate and review products</td></tr>
+        <tr><td><strong>Date Format</strong></td><td>Panel-wide date display</td></tr>
+        <tr><td><strong>Time Format</strong></td><td>12-hour or 24-hour</td></tr>
+        <tr><td><strong>Default City</strong></td><td>Pre-selected city for new customers</td></tr>
+      </tbody>
+    </table>
     </div>
 
     <div class="admonition admonition--warning">
@@ -125,7 +117,7 @@
       <p><a href="../admin/countries.html">Countries</a> carry their own date and time formats, currency and decimal settings. Those apply to customers; the values here apply to the admin panel.</p>
     </div>
 
-    <h2>Currency display</h2>
+    <h2 id="currency-display">Currency display</h2>
 
     <p>The <strong>Currency</strong>, <strong>Currency Code</strong> and <strong>Decimal Point</strong> fields here are the panel-level defaults. Customer-facing currency comes from their <a href="../admin/countries.html">country</a>.</p>
 
@@ -134,21 +126,19 @@
       <p>If the panel shows <code>₹</code> while the country is set to <code>$</code>, your reports and the customer's invoice disagree. Match them unless you deliberately operate multiple currencies.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Logo not updating</td><td>Cached assets</td><td>Hard-refresh the browser; visit <code>/clear</code></td></tr>
-          <tr><td>Logo uploads but does not display</td><td>Storage symlink missing</td><td>Visit <code>/linkstorage</code></td></tr>
-          <tr><td>Order numbers in two formats</td><td>Prefix changed after go-live</td><td>Existing records keep their old prefix — expected</td></tr>
-          <tr><td>Customers see a different currency</td><td>Country overrides the panel default</td><td>Check the <a href="../admin/countries.html">country</a> record</td></tr>
-          <tr><td><code>{app_name}</code> appears literally in a message</td><td>Placeholder typo in the template</td><td>Check the <a href="../admin/notification-templates.html">notification templates</a></td></tr>
-        </tbody>
-      </table>
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Logo not updating</td><td>Cached assets</td><td>Hard-refresh the browser; visit <code>/clear</code></td></tr>
+        <tr><td>Logo uploads but does not display</td><td>Storage symlink missing</td><td>Visit <code>/linkstorage</code></td></tr>
+        <tr><td>Order numbers in two formats</td><td>Prefix changed after go-live</td><td>Existing records keep their old prefix — expected</td></tr>
+        <tr><td>Customers see a different currency</td><td>Country overrides the panel default</td><td>Check the <a href="../admin/countries.html">country</a> record</td></tr>
+        <tr><td><code>{app_name}</code> appears literally in a message</td><td>Placeholder typo in the template</td><td>Check the <a href="../admin/notification-templates.html">notification templates</a></td></tr>
+      </tbody>
+    </table>
     </div>
 
     <hr>

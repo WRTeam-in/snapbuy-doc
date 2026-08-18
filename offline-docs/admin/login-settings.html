@@ -35,7 +35,7 @@
       <p>A wrong combination here locks out your entire customer base at once, with no error the customer can act on. Sign in yourself after every change.</p>
     </div>
 
-    <h2>Login methods</h2>
+    <h2 id="login-methods">Login methods</h2>
 
     <div class="table-wrap">
     <table>
@@ -59,7 +59,7 @@
       <p>If your iOS app offers any third-party sign-in — Google, Facebook — Apple's review guidelines require Apple Sign-In as well. Omitting it is a common rejection reason.</p>
     </div>
 
-    <h2>Phone login — how the OTP is sent</h2>
+    <h2 id="phone-login-how-the-otp-is-sent">Phone login — how the OTP is sent</h2>
 
     <p>With <strong>Phone Login</strong> on, choose how the verification code is delivered:</p>
 
@@ -76,16 +76,16 @@
     <div class="admonition admonition--danger">
       <p class="admonition__title">One of the two is required</p>
       <p>Enabling phone login with <strong>both</strong> disabled fails validation: <em>"When phone login is enabled, either Firebase Authentication or Custom SMS Gateway OTP Based must be enabled."</em></p>
-      <p>If you disable Firebase Authentication, configure <a href="sms-settings.html">SMS Settings</a> <strong>first</strong> — otherwise phone login stops working the moment you save.</p>
+      <p>If you disable Firebase Authentication, configure <a href="../admin/sms-settings.html">SMS Settings</a> <strong>first</strong> — otherwise phone login stops working the moment you save.</p>
     </div>
 
-    <h3>Choosing between them</h3>
+    <h3 id="choosing-between-them">Choosing between them</h3>
 
     <div class="table-wrap">
     <table>
       <thead><tr><th></th><th>Firebase</th><th>Custom SMS gateway</th></tr></thead>
       <tbody>
-        <tr><td>Setup</td><td>Already done if you followed <a href="firebase-settings.html">Firebase Settings</a></td><td>Twilio or 2Factor account needed</td></tr>
+        <tr><td>Setup</td><td>Already done if you followed <a href="../admin/firebase-settings.html">Firebase Settings</a></td><td>Twilio or 2Factor account needed</td></tr>
         <tr><td>Cost</td><td>Free allowance, then per-verification on the Blaze plan</td><td>Per-SMS at your provider's rate</td></tr>
         <tr><td>Sender ID</td><td>Google's</td><td>Your own branded sender</td></tr>
         <tr><td>Delivery in India</td><td>Sometimes unreliable</td><td>Usually better with a local provider</td></tr>
@@ -98,7 +98,7 @@
       <p>2Factor and similar Indian providers generally deliver faster and cheaper than Firebase for Indian numbers, and let you use a branded sender ID.</p>
     </div>
 
-    <h2>Phone authentication mode</h2>
+    <h2 id="phone-authentication-mode">Phone authentication mode</h2>
 
     <div class="table-wrap">
     <table>
@@ -115,7 +115,7 @@
       <p>No password to forget and no reset flow to support. It is what most delivery apps use. Password mode makes sense if customers share a household number and you want a second factor.</p>
     </div>
 
-    <h2>Password policy</h2>
+    <h2 id="password-policy">Password policy</h2>
 
     <p>Applies wherever customers set a password.</p>
 
@@ -145,16 +145,16 @@
       <p>A 10-character minimum with no symbol requirement is both stronger and easier for customers than 6 characters with four character-class rules. Heavy complexity rules mostly generate password resets.</p>
     </div>
 
-    <h2>Mobile number length</h2>
+    <h2 id="mobile-number-length">Mobile number length</h2>
 
-    <p>Valid phone-number lengths are <strong>not</strong> set here — they come from the <a href="countries.html#phone-number-rules">country</a> record's min and max mobile length.</p>
+    <p>Valid phone-number lengths are <strong>not</strong> set here — they come from the <a href="../admin/countries.html#phone-number-rules">country</a> record's min and max mobile length.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">"Valid customers cannot log in"</p>
       <p>When phone login rejects real numbers, the country's length range is nearly always the cause, not this page.</p>
     </div>
 
-    <h2>Social login prerequisites</h2>
+    <h2 id="social-login-prerequisites">Social login prerequisites</h2>
 
     <div class="table-wrap">
     <table>
@@ -169,7 +169,7 @@
 
     <p>Enabling a toggle here does not configure the provider — it only exposes the button.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
     <div class="table-wrap">
     <table>
@@ -177,16 +177,16 @@
       <tbody>
         <tr><td>Cannot save the page</td><td>Both phone and Google login disabled</td><td>Enable at least one</td></tr>
         <tr><td>Cannot save with phone login on</td><td>Neither Firebase auth nor SMS gateway enabled</td><td>Enable one of them</td></tr>
-        <tr><td>OTP never arrives</td><td>Firebase quota exhausted, or gateway misconfigured</td><td>Check <a href="firebase-settings.html">Firebase</a> / <a href="sms-settings.html">SMS Settings</a></td></tr>
+        <tr><td>OTP never arrives</td><td>Firebase quota exhausted, or gateway misconfigured</td><td>Check <a href="../admin/firebase-settings.html">Firebase</a> / <a href="../admin/sms-settings.html">SMS Settings</a></td></tr>
         <tr><td>Google button does nothing</td><td>Domain not in Firebase authorised domains</td><td>Add it under Authentication → Settings</td></tr>
         <tr><td>Apple sign-in fails on iOS</td><td>Service ID or capability missing</td><td>Complete the Apple Developer setup</td></tr>
-        <tr><td>Real numbers rejected</td><td>Country min/max mobile length wrong</td><td>Fix it on the <a href="countries.html">country</a></td></tr>
+        <tr><td>Real numbers rejected</td><td>Country min/max mobile length wrong</td><td>Fix it on the <a href="../admin/countries.html">country</a></td></tr>
         <tr><td>Customers cannot set a password</td><td>Policy too strict</td><td>Relax the requirements</td></tr>
       </tbody>
     </table>
     </div>
 
-    <h2>Checklist</h2>
+    <h2 id="checklist">Checklist</h2>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> At least one of phone or Google login enabled</li>

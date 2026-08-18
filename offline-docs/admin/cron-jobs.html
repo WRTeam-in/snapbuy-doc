@@ -30,7 +30,7 @@
       <p>Nothing on the dashboard warns you. This is the single most common cause of "notifications are not working" support tickets.</p>
     </div>
 
-    <h2>The one line you need</h2>
+    <h2 id="the-one-line-you-need">The one line you need</h2>
     <p>SnapBuy uses Laravel's scheduler. You register <strong>one</strong> cron entry that runs every minute; SnapBuy decides internally what is due.</p>
     <pre><code>* * * * * cd /home/username/snapbuy &amp;&amp; /usr/bin/php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre>
 
@@ -53,7 +53,7 @@
     </table>
     </div>
 
-    <h2>Adding the cron job in cPanel</h2>
+    <h2 id="adding-the-cron-job-in-cpanel">Adding the cron job in cPanel</h2>
     <ol>
       <li>Log into cPanel.</li>
       <li>Under <strong>Advanced</strong>, open <strong>Cron Jobs</strong>.</li>
@@ -67,13 +67,13 @@
       <p><code>php artisan schedule:run</code> often fails on shared hosting because the default <code>php</code> is an older version. Use the absolute binary path shown on the Cron Jobs page — for example <code>/usr/local/bin/ea-php83</code>. If the cron runs but nothing happens, this is usually why.</p>
     </div>
 
-    <h2>Adding the cron job over SSH</h2>
+    <h2 id="adding-the-cron-job-over-ssh">Adding the cron job over SSH</h2>
     <pre><code>crontab -e</code></pre>
 
     <p>Add the line, save and exit. Confirm it registered:</p>
     <pre><code>crontab -l</code></pre>
 
-    <h2>Verifying it works</h2>
+    <h2 id="verifying-it-works">Verifying it works</h2>
     <p>SnapBuy writes a <strong>heartbeat</strong> into the cache every minute from inside the scheduler. The Cron Jobs page reads it back, so you get a real answer rather than a guess.</p>
     <ol>
       <li>Add the cron job.</li>
@@ -95,7 +95,7 @@
 
     <p>The <strong>Setup Guide</strong> step for Cron uses this same heartbeat, so it ticks itself off once the job runs.</p>
 
-    <h2>What the scheduler runs every minute</h2>
+    <h2 id="what-the-scheduler-runs-every-minute">What the scheduler runs every minute</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Task</th><th>Command</th><th>What it does</th></tr></thead>
@@ -113,7 +113,7 @@
 
     <img src="../images/panel/cron-run-now.png" alt="Running a scheduled task manually from the panel">
 
-    <h2>Work handled by the queue</h2>
+    <h2 id="work-handled-by-the-queue">Work handled by the queue</h2>
     <p>These are not cron entries. They are dispatched by the application and executed by the <code>queue:work</code> run above — which means <strong>they all stop if the cron job is missing</strong>:</p>
     <ul>
       <li>Referral bonus credit</li>
@@ -126,7 +126,7 @@
       <li>Cart reminder notifications</li>
     </ul>
 
-    <h2>Queue health</h2>
+    <h2 id="queue-health">Queue health</h2>
     <p>The Cron Jobs page also reports queue status:</p>
     <div class="table-wrap">
     <table>
@@ -147,7 +147,7 @@
       <p>A permanent queue worker is not possible on most shared hosting. Instead, SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.</p>
     </div>
 
-    <h2>Optional — a permanent worker on a VPS</h2>
+    <h2 id="optional-a-permanent-worker-on-a-vps">Optional — a permanent worker on a VPS</h2>
     <p>If you run your own server and want jobs processed instantly rather than up to a minute later, use Supervisor.</p>
 
     <p>Create <code>/etc/supervisor/conf.d/snapbuy-worker.conf</code>:</p>
@@ -169,7 +169,7 @@ sudo supervisorctl start snapbuy-worker:*</code></pre>
 
     <p>Keep the <code>schedule:run</code> cron job as well — the scheduler still drives cart reminders, maintenance windows and layout publishing.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>

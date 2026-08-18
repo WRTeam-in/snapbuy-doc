@@ -35,7 +35,7 @@
 
     <p>Complete the <a href="installation-steps.html">Installation Steps</a> first — this guide assumes a working <code>.env</code> and a successful local <code>npm run build</code>.</p>
 
-    <h2>Prerequisites</h2>
+    <h2 id="prerequisites">Prerequisites</h2>
 
     <ul>
       <li>A VPS you can SSH into (this guide assumes Debian/Ubuntu and <code>apt</code>; substitute your distro's package manager otherwise).</li>
@@ -44,7 +44,7 @@
       <li>Apache with <code>mod_rewrite</code> and <code>mod_proxy</code> enabled, or Nginx (config below).</li>
     </ul>
 
-    <h2>Step 1 — Upload the project</h2>
+    <h2 id="step-1-upload-the-project">Step 1 — Upload the project</h2>
 
     <p>Upload the project folder to the server with FileZilla, <code>scp</code>, or <code>git clone</code>.</p>
 
@@ -54,7 +54,7 @@
 rsync -av --exclude node_modules --exclude .next \
   ./ user@your-server:/var/www/snapbuy-web/</code></pre>
 
-    <h2>Step 2 — Install Node.js 20 via NVM</h2>
+    <h2 id="step-2-install-nodejs-20-via-nvm">Step 2 — Install Node.js 20 via NVM</h2>
 
     <p>NVM lets you run several Node versions side by side.</p>
 
@@ -74,14 +74,14 @@ nvm alias default 20</code></pre>
     <pre><code>node -v    # v20.x
 npm -v</code></pre>
 
-    <h2>Step 3 — Install PM2</h2>
+    <h2 id="step-3-install-pm2">Step 3 — Install PM2</h2>
 
     <p>PM2 keeps the Node process alive and restarts it after a crash or reboot.</p>
 
     <pre><code>npm install pm2 -g
 pm2 -v</code></pre>
 
-    <h2>Step 4 — Choose a port</h2>
+    <h2 id="step-4-choose-a-port">Step 4 — Choose a port</h2>
 
     <p>The project ships configured for port <strong>8004</strong> (see <code>package.json</code>). Check that it is free:</p>
 
@@ -98,7 +98,7 @@ pm2 -v</code></pre>
 
     <p><code>server.js</code> reads <code>NODE_PORT</code> and falls back to 3000 if it is unset.</p>
 
-    <h2>Step 5 — Configure the environment</h2>
+    <h2 id="step-5-configure-the-environment">Step 5 — Configure the environment</h2>
 
     <p>On the server, make sure <code>.env</code> holds the <strong>production</strong> values:</p>
 
@@ -114,7 +114,7 @@ NEXT_PUBLIC_BASE_URL=https://your-storefront-domain.com</code></pre>
       <p><code>.env</code> values are inlined at <strong>build time</strong>. Changing <code>.env</code> after a build has no effect until you rebuild and restart. This trips people up constantly.</p>
     </div>
 
-    <h2>Step 6 — Install and build</h2>
+    <h2 id="step-6-install-and-build">Step 6 — Install and build</h2>
 
     <pre><code>cd /var/www/snapbuy-web
 npm install
@@ -122,7 +122,7 @@ npm run build</code></pre>
 
     <p><code>npm run build</code> writes the server build to <code>.next/</code>. Do <strong>not</strong> run <code>npm run export</code> — that produces the static output, which loses both SEO and zone/language routing.</p>
 
-    <h2>Step 7 — Start with PM2</h2>
+    <h2 id="step-7-start-with-pm2">Step 7 — Start with PM2</h2>
 
     <pre><code>pm2 start "npm start" -n "snapbuy-web"
 pm2 ls</code></pre>
@@ -146,11 +146,11 @@ pm2 restart snapbuy-web   # restart after a rebuild
 pm2 stop snapbuy-web
 pm2 delete snapbuy-web</code></pre>
 
-    <h2>Step 8 — Proxy the web server to Node</h2>
+    <h2 id="step-8-proxy-the-web-server-to-node">Step 8 — Proxy the web server to Node</h2>
 
     <p>The Node process listens on <code>127.0.0.1:8004</code>; the web server forwards public traffic to it.</p>
 
-    <h3>Apache</h3>
+    <h3 id="apache">Apache</h3>
 
     <p>The repository already contains a working <code>.htaccess</code> at the project root. Place it in your domain's document root, and change <code>8004</code> if you chose another port:</p>
 
@@ -181,7 +181,7 @@ sudo systemctl restart apache2</code></pre>
       <p>The <code>.well-known</code> rule is kept first so Let's Encrypt renewals work. <code>server.js</code> also serves <code>/.well-known</code> directly for domain-verification files.</p>
     </div>
 
-    <h3>Nginx</h3>
+    <h3 id="nginx">Nginx</h3>
 
     <pre><code class="language-nginx">server {
     listen 443 ssl;
@@ -211,7 +211,7 @@ server {
 
     <pre><code>sudo nginx -t &amp;&amp; sudo systemctl reload nginx</code></pre>
 
-    <h2>Step 9 — Verify SEO output</h2>
+    <h2 id="step-9-verify-seo-output">Step 9 — Verify SEO output</h2>
 
     <p>SEO is the reason for this deployment style, so confirm it actually works. Run these from your own machine, not the server:</p>
 
@@ -232,7 +232,7 @@ curl -s https://your-storefront-domain.com/robots.txt</code></pre>
       <li>Submit the sitemap in Google Search Console.</li>
     </ul>
 
-    <h2>Updating a deployed site</h2>
+    <h2 id="updating-a-deployed-site">Updating a deployed site</h2>
 
     <pre><code>cd /var/www/snapbuy-web
 git pull                  # or upload the new files
@@ -242,9 +242,9 @@ pm2 restart snapbuy-web</code></pre>
 
     <p>Always rebuild before restarting — PM2 serves whatever is in <code>.next/</code>.</p>
 
-    <h2>Troubleshooting</h2>
+    <h2 id="troubleshooting">Troubleshooting</h2>
 
-    <h3>502 Bad Gateway</h3>
+    <h3 id="502-bad-gateway">502 Bad Gateway</h3>
 
     <p>Node is not running or is on a different port.</p>
 
@@ -254,7 +254,7 @@ sudo lsof -i -P -n | grep 8004</code></pre>
 
     <p>Confirm the port in <code>.htaccess</code>/Nginx matches <code>NODE_PORT</code> in <code>package.json</code>.</p>
 
-    <h3>Blank white page</h3>
+    <h3 id="blank-white-page">Blank white page</h3>
 
     <p>Open DevTools → Console. Common causes:</p>
 
@@ -266,26 +266,26 @@ sudo lsof -i -P -n | grep 8004</code></pre>
       </li>
     </ul>
 
-    <h3>Pages render but client navigation 404s</h3>
+    <h3 id="pages-render-but-client-navigation-404s">Pages render but client navigation 404s</h3>
 
     <p>A <code>_next</code> rewrite is mapping to the filesystem. Remove it — see the warning in Step 8.</p>
 
-    <h3>Environment changes have no effect</h3>
+    <h3 id="environment-changes-have-no-effect">Environment changes have no effect</h3>
 
     <p><code>.env</code> is read at build time. Rebuild and restart:</p>
 
     <pre><code>npm run build && pm2 restart snapbuy-web</code></pre>
 
-    <h3>PM2 does not come back after reboot</h3>
+    <h3 id="pm2-does-not-come-back-after-reboot">PM2 does not come back after reboot</h3>
 
     <pre><code>pm2 startup    # run the command it prints
 pm2 save</code></pre>
 
-    <h3>Push notifications work locally but not in production</h3>
+    <h3 id="push-notifications-work-locally-but-not-in-production">Push notifications work locally but not in production</h3>
 
     <p>Firebase web push requires HTTPS with a valid certificate, and <code>public/firebase-messaging-sw.js</code> must be served from the same origin as the app. Confirm the worker is registered under DevTools → Application → Service Workers.</p>
 
-    <h2>Related pages</h2>
+    <h2 id="related-pages">Related pages</h2>
 
     <ul>
       <li><a href="installation-steps.html">Installation Steps</a> — complete this first</li>

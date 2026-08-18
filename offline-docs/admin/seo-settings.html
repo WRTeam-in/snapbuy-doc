@@ -35,15 +35,12 @@
       <p>SEO affects the customer-facing website. The mobile apps are not indexed by search engines.</p>
     </div>
 
-    <h2>Per-page settings</h2>
-
+    <h2 id="per-page-settings">Per-page settings</h2>
     <p>Each key page carries its own entry — home, category listings, product pages, blogs, and static pages.</p>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Field</th><th>What it does</th></tr>
-      </thead>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
       <tbody>
         <tr><td><strong>Meta Title</strong></td><td>The clickable headline in search results</td></tr>
         <tr><td><strong>Meta Description</strong></td><td>The summary beneath it</td></tr>
@@ -53,7 +50,7 @@
     </table>
     </div>
 
-    <h2>Writing meta titles</h2>
+    <h2 id="writing-meta-titles">Writing meta titles</h2>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Keep titles to about 60 characters</p>
@@ -67,22 +64,19 @@
       <p>Duplicate titles across pages actively hurt ranking, and they make your search results indistinguishable to a user scanning them.</p>
     </div>
 
-    <h2>Writing meta descriptions</h2>
+    <h2 id="writing-meta-descriptions">Writing meta descriptions</h2>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Around 155 characters, written as a pitch</p>
       <p>The description does not directly affect ranking, but it decides whether someone clicks. Describe what the page offers and why it is worth a tap. Avoid keyword stuffing — it reads as spam to both search engines and people.</p>
     </div>
 
-    <h2>Open Graph images</h2>
-
+    <h2 id="open-graph-images">Open Graph images</h2>
     <p>The OG image is the preview shown when a link is pasted into WhatsApp, Facebook, X or Slack.</p>
 
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Requirement</th><th>Value</th></tr>
-      </thead>
+      <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td>Recommended size</td><td>1200 × 630 px</td></tr>
         <tr><td>Maximum file size</td><td><strong>2 MB</strong></td></tr>
@@ -101,13 +95,10 @@
       <p>Different platforms crop the 1200 × 630 image differently. Keep any text well inside the centre so it survives every crop.</p>
     </div>
 
-    <h2>Prerequisites</h2>
-
+    <h2 id="prerequisites">Prerequisites</h2>
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Requirement</th><th>Why</th></tr>
-      </thead>
+      <thead><tr><th>Requirement</th><th>Why</th></tr></thead>
       <tbody>
         <tr><td><a href="../admin/website-settings.html#website-url">Website URL</a> set correctly</td><td>Canonical tags and OG URLs are built from it</td></tr>
         <tr><td>SSL installed</td><td>Search engines demote plain HTTP</td></tr>
@@ -120,8 +111,7 @@
       <p>Canonical tags built from a wrong URL tell search engines your real pages are duplicates of a non-existent site. Confirm the URL in <a href="../admin/website-settings.html">Website Settings</a> before tuning anything here.</p>
     </div>
 
-    <h2>Static generation caveat</h2>
-
+    <h2 id="static-generation-caveat">Static generation caveat</h2>
     <p>Parts of the web portal are pre-rendered at build time. Changing SEO values in the panel may require the storefront to be rebuilt before search engines see them — see <a href="../web/deployment.html">Web Portal Deployment</a>.</p>
 
     <div class="admonition admonition--warning">
@@ -129,8 +119,7 @@
       <p>Check whether your storefront needs a rebuild. Panel-side changes are stored immediately, but a statically generated page keeps serving the values it was built with.</p>
     </div>
 
-    <h2>Verifying</h2>
-
+    <h2 id="verifying">Verifying</h2>
     <ol>
       <li>Open the storefront and view the page source.</li>
       <li>Confirm <code>&lt;title&gt;</code>, <code>&lt;meta name="description"&gt;</code> and <code>og:image</code> reflect your entries.</li>
@@ -143,13 +132,10 @@
       <p>After changing an OG image, use the sharing debugger to force a re-scrape. Otherwise the old preview persists for days.</p>
     </div>
 
-    <h2>Troubleshooting</h2>
-
+    <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
     <table>
-      <thead>
-        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-      </thead>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Search results show the wrong title</td><td>Google chose its own, or the page needs re-crawling</td><td>Make the title relevant and distinct; request re-indexing</td></tr>
         <tr><td>Shared links show no image</td><td>OG image missing or over 2 MB</td><td>Upload a 1200 × 630 image under 2 MB</td></tr>

@@ -26,7 +26,7 @@
     
     <p>Both the <strong>allowed login methods</strong> and the <strong>default country</strong> shown in the country picker (used during phone-number login) are controlled from a single admin-panel screen.</p>
     
-    <h2>How to Access</h2>
+    <h2 id="how-to-access">How to Access</h2>
     
     <ol>
     <li>Log in to your <strong>Admin Panel</strong>.</li>
@@ -35,7 +35,7 @@
     
     <img src="../images/app/customer/appConfig.png" alt="System Configure Page">
     
-    <h2>Allowed Authentication Methods</h2>
+    <h2 id="allowed-authentication-methods">Allowed Authentication Methods</h2>
     
     <p>In the <strong>Allowed Authentication Methods</strong> section:</p>
     
@@ -50,7 +50,7 @@
     <p>Each enabled method must also be fully configured in Firebase (e.g., Google Sign-In credentials, Apple Sign-In key, Phone OTP billing). Otherwise the option will appear in the app but fail at runtime.</p>
     </div>
     
-    <h2>Default Country</h2>
+    <h2 id="default-country">Default Country</h2>
     
     <p>In the <strong>Default Country</strong> field on the same page:</p>
     
@@ -62,7 +62,7 @@
     
     <p>Users can still change the country manually inside the app — this setting only controls the initial default.</p>
     
-    <h3>Fallback Default in App Code</h3>
+    <h3 id="fallback-default-in-app-code">Fallback Default in App Code</h3>
     
     <p>As a safety net, a default country code is hardcoded in the app's config file. This value is <strong>only used when the settings API call fails</strong> (e.g., no internet on first launch).</p>
     
