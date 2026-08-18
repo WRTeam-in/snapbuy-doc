@@ -34,7 +34,7 @@ This guide covers creating the Firebase project, wiring the credentials into the
 ## 2. Register a Web app
 
 1. In the project dashboard, click the **Web** icon (`</>`).
-2. Give it a nickname (e.g. "Storefront"). **Firebase Hosting is not required** — the Web Portal runs on your own VPS, so you can leave that box unticked.
+2. Give it a nickname (e.g. "Storefront"). **Firebase Hosting is not required** — the Web Portal runs on your own VPS. The wizard may leave the "Also set up Firebase Hosting" box checked by default; uncheck it unless you specifically plan to deploy to Firebase Hosting.
 3. Click **Register app**.
 
 ![Register your web app](./web-firebase-image/step4.png)
@@ -54,9 +54,9 @@ const firebaseConfig = {
 };
 ```
 
-If you close the wizard, the same values are always available under **Project Settings → General → Your apps**, with the **Config** option selected:
+If you close the wizard, the same values are always available under **Project Settings → General → Your apps**. Select your app, then choose the **Config** radio button under **SDK setup and configuration**:
 
-![Firebase SDK config values under Project Settings](./web-firebase-image/step6.png)
+![Firebase SDK config values under SDK setup and configuration](./web-firebase-image/step6.png)
 
 :::note
 
