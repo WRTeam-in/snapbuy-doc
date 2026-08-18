@@ -24,15 +24,7 @@ Choose a section from the sidebar to begin:
 - [Delivery Boy App Setup](/docs/app-delivery/prerequisites)
 - [Web Portal](/docs/web/overview)
 
-## Demo Instructions
 
-<!-- TODO: fill in before submission — do not publish with these placeholders -->
-
-| | |
-| --- | --- |
-| Demo URL | `TODO_DEMO_URL` |
-| Demo Email | `TODO_DEMO_EMAIL` |
-| Demo Password | `TODO_DEMO_PASSWORD` |
 
 ## Requirements
 
