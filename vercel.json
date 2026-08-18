@@ -1,8 +1,0 @@
-{
-  "functions": {
-    "api/ask.js": {
-      "maxDuration": 30,
-      "includeFiles": "api/_data/**"
-    }
-  }
-}

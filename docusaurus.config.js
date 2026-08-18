@@ -25,14 +25,6 @@ const config = {
     locales: ["en"],
   },
 
-  customFields: {
-    aiApiUrl:
-      process.env.AI_API_URL ||
-      (process.env.NODE_ENV === "development"
-        ? "http://localhost:8787/api/ask"
-        : "https://YOUR-PROJECT.vercel.app/api/ask"),
-  },
-
   presets: [
     [
       "classic",
