@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Manage Payment Gateway and Credentials — SnapBuy Documentation</title>
+<title>Payment Gateway — SnapBuy Documentation</title>
 <link rel="icon" href="../images/favicon.png" />
 <link rel="stylesheet" href="../style.css" />
 </head>
@@ -22,53 +22,84 @@
   <nav class="sidebar" id="sidebar-nav"></nav>
 
   <main class="content">
-    <h1>Manage Payment Gateway and Credentials</h1>
+    <h1>Payment Gateway</h1>
 
-    <p>Configure which payment gateways are available in the app and enter their API credentials.</p>
+    <p>The app itself holds no payment credentials and no gateway toggle screen. Every gateway is configured and enabled in the <strong>Admin Panel</strong>, per country — the app only reflects what's turned on for the customer's selected country and drives the checkout flow.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Don't look for a settings screen in the app</p>
+      <p>There is nothing to configure inside the Flutter project for payment gateways — no API keys, no SDK setup files. All of that lives in the <a href="../admin/payment-gateway.html">Admin Panel — Payment Gateways</a> page, attached to each country's record.</p>
+    </div>
 
     <h2 id="supported-gateways">Supported Gateways</h2>
 
-    <p>The system has built-in integration for the following payment gateways:</p>
+    <p>The app's checkout screen can present any of the gateways enabled for the customer's country:</p>
     <ul>
-      <li><strong>COD (Cash on Delivery)</strong></li>
+      <li><strong>Cash on Delivery (COD)</strong></li>
+      <li><strong>Razorpay</strong> (India)</li>
+      <li><strong>Stripe</strong> (international)</li>
       <li><strong>PayPal</strong></li>
-      <li><strong>Razorpay</strong></li>
-      <li><strong>Paystack</strong></li>
-      <li><strong>Stripe</strong></li>
-      <li><strong>Midtrans</strong></li>
-      <li><strong>PhonePe</strong></li>
-      <li><strong>Cashfree</strong></li>
-      <li><strong>PayTabs</strong></li>
+      <li><strong>Paystack</strong> (Africa)</li>
+      <li><strong>Midtrans</strong> (Indonesia)</li>
+      <li><strong>PhonePe</strong> (India)</li>
+      <li><strong>Cashfree</strong> (India)</li>
+      <li><strong>PayTabs</strong> (Middle East)</li>
     </ul>
 
-    <p>Only these gateways can be added — pick the ones which most closely match your business needs.</p>
+    <p>Which of these actually appear at checkout depends entirely on what's enabled for that customer's country in the panel — see <a href="../admin/payment-gateway.html#supported-gateways">the full credentials table</a>.</p>
 
-    <h2 id="1-add-and-configure-a-gateway">1. Add and Configure a Gateway</h2>
+    <h2 id="how-checkout-works">How Checkout Works in the App</h2>
+
     <ol>
-      <li>Open your <strong>Admin Panel</strong>.</li>
-      <li>Navigate to <strong>Settings → Payment Gateway</strong>.</li>
-      <li>Click <strong>Payment Gateway Setting</strong> and select one from the supported list.</li>
-      <li>Enter the required credentials (API keys / secrets / publishable key, depending on the gateway).</li>
-      <li>Click <strong>Save</strong>.</li>
+      <li>At checkout, the app calls the backend to fetch the list of payment methods enabled for the customer's country.</li>
+      <li>The customer selects one. <strong>Cash on Delivery</strong> completes immediately — no network round-trip to a gateway.</li>
+      <li>For online gateways (Razorpay, Stripe, PayPal, etc.), the app opens the gateway's checkout using its official Flutter SDK or a secure in-app WebView, depending on the gateway.</li>
+      <li>The customer completes payment on the gateway's own UI (card entry, UPI, wallet, etc.) — the app never sees or stores card details directly.</li>
+      <li>On success or failure, the gateway redirects back into the app. Gateways that redirect via a browser (PayPal, PayTabs, some Stripe flows) return through the app's <strong>deeplink</strong> — see <a href="panel-url-deeplink.html">Panel URL &amp; Deeplink</a>.</li>
+      <li>The app polls or listens for the order's payment status, which is authoritatively set by the backend once it receives the gateway's <strong>webhook</strong> confirmation — not by the app's own return-from-checkout event.</li>
     </ol>
 
-    <img src="../images/app/customer/paymentGateway1.png" alt="Add Payment Gateway">
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The app's return screen is not proof of payment</p>
+      <p>A customer can close the app mid-payment, lose connectivity, or background the app right after paying. The app returning to a "success" screen is a UI convenience — the order is only truly marked <strong>Paid</strong> once the backend receives the gateway's webhook. If webhooks aren't configured correctly on the panel side, orders can show as paid to the customer's bank but stay <strong>unpaid</strong> in the Admin Panel. See the <a href="../admin/payment-gateway.html#webhooks">Webhooks section</a> of the admin payment gateway guide.</p>
+    </div>
 
-    <h2 id="2-activate-deactivate-an-existing-gateway">2. Activate / Deactivate an Existing Gateway</h2>
+    <h2 id="deeplink-return">Deeplink Return for Redirect-Based Gateways</h2>
 
-    <p>To turn an already-added gateway on or off without deleting its credentials:</p>
+    <p>PayPal, PayTabs, and some Stripe checkout flows redirect the customer to a hosted payment page outside the app, then need a way back in. This return trip uses the app's custom URL scheme, configured in <code>env/&lt;environment&gt;.json</code> as <code>DEEPLINK_SCHEME</code>.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Without a working deeplink, customers get stranded</p>
+      <p>If the deeplink scheme isn't set (or doesn't match what's registered in the Admin Panel's Deeplink Settings), a customer who pays through a redirect-based gateway is left in the browser after paying — money taken, but no path back into the app. See <a href="panel-url-deeplink.html">Panel URL &amp; Deeplink</a> to configure and test this before launch.</p>
+    </div>
+
+    <h2 id="testing-a-payment">Testing a Payment End to End</h2>
+
     <ol>
-      <li>Return to <strong>Settings → Payment Gateway</strong>.</li>
-      <li>Find the gateway in the list and click <strong>Edit</strong>.</li>
-      <li>Toggle the <strong>Status</strong> field (Active / Inactive).</li>
-      <li>Click <strong>Save</strong>.</li>
+      <li>In the Admin Panel, enable the gateway on your test country and enter its <strong>test/sandbox</strong> keys — see <a href="../admin/payment-gateway.html#test-mode-and-live-mode">Test mode and live mode</a>.</li>
+      <li>Run the app (<a href="basic-setup.html">Basic Setup</a>) and place an order using that gateway's test credentials (test card numbers, sandbox account, etc. — provided by each gateway's own documentation).</li>
+      <li>Confirm the app returns cleanly to an order-confirmation screen.</li>
+      <li>Confirm in the Admin Panel that the order shows as <strong>Paid</strong>, not just that the app showed success — this is what actually proves the webhook is wired correctly.</li>
     </ol>
-
-    <img src="../images/app/customer/paymentGateway2.png" alt="Edit Payment Gateway Status">
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Tip</p>
-      <p>You can keep credentials saved for multiple gateways and only mark one as <strong>Active</strong> at a time — useful when switching providers without re-entering keys.</p>
+      <p>Test every gateway you plan to launch with, not just one — each has a different redirect/callback behavior, and a working Razorpay flow does not guarantee PayPal's redirect-based flow is also configured correctly.</p>
+    </div>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Likely cause</th><th>Where to look</th></tr></thead>
+      <tbody>
+        <tr><td>Gateway doesn't show at checkout</td><td>Not enabled for the customer's country</td><td><a href="../admin/payment-gateway.html">Admin — Payment Gateways</a></td></tr>
+        <tr><td>Payment completes but order stays unpaid in panel</td><td>Webhook not registered or unreachable</td><td><a href="../admin/payment-gateway.html#webhooks">Admin — Webhooks</a></td></tr>
+        <tr><td>App doesn't return after browser-based payment</td><td>Deeplink scheme missing or mismatched</td><td><a href="panel-url-deeplink.html">Panel URL &amp; Deeplink</a></td></tr>
+        <tr><td>Works on web, fails in the app</td><td>Return URL / deeplink not configured for mobile</td><td><a href="../admin/deeplink-settings.html">Admin — Deeplink Settings</a></td></tr>
+        <tr><td>Charged the wrong amount</td><td>Gateway currency ≠ country currency</td><td><a href="../admin/payment-gateway.html#currency-must-match">Admin — Currency must match</a></td></tr>
+      </tbody>
+    </table>
     </div>
   </main>
 </div>

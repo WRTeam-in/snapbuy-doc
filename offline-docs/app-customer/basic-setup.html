@@ -24,9 +24,9 @@
   <main class="content">
     <h1>Basic Setup Guide</h1>
 
-    <p>This guide walks you through the step-by-step installation of Flutter SDK, Java JDK, and IDE tools required to build and run the SnapBuy mobile app.</p>
+    <p>This guide takes you from a fresh machine to the Customer app running against your Admin Panel — installing the toolchain, opening the project, and confirming the first successful launch.</p>
 
-    <h2>1. Install Flutter SDK</h2>
+    <h2 id="1-install-flutter-sdk">1. Install Flutter SDK</h2>
     <p>Download the latest stable release of Flutter SDK (from official release channels).</p>
     <ul>
       <li>Extract the ZIP archive into your development folder (e.g., <code>C:\flutter</code> on Windows or <code>~/flutter</code> on macOS/Linux).</li>
@@ -43,7 +43,7 @@
       </li>
     </ul>
 
-    <h2>2. Install Java JDK</h2>
+    <h2 id="2-install-java-jdk">2. Install Java JDK</h2>
     <p>Download and install <strong>Java Development Kit (JDK 21 LTS)</strong> from Oracle or OpenJDK.</p>
     <ul>
       <li>Set up the <code>JAVA_HOME</code> environment variable pointing to your JDK installation directory.</li>
@@ -53,15 +53,67 @@
       </li>
     </ul>
 
-    <h2>3. Setup IDE &amp; Android Tools</h2>
+    <h2 id="3-setup-ide">3. Setup IDE &amp; Android Tools</h2>
     <ul>
       <li><strong>Android Studio:</strong> Install Android Studio, open SDK Manager, and install Android SDK Platform 34+ and Command-line Tools.</li>
       <li><strong>VS Code:</strong> Install the official Flutter and Dart extensions from Marketplace.</li>
     </ul>
 
+    <h2 id="4-open-the-project">4. Open the Project &amp; Install Dependencies</h2>
+    <ol>
+      <li>Extract the Customer app source you downloaded from CodeCanyon into a working folder — e.g. <code>snapbuy-customer/</code>.</li>
+      <li>Open that folder in Android Studio or VS Code.</li>
+      <li>From the project root, fetch all Dart/Flutter package dependencies:
+        <pre><code class="language-bash">flutter pub get</code></pre>
+      </li>
+      <li>iOS only — install CocoaPods dependencies:
+        <pre><code class="language-bash">cd ios
+pod install
+cd ..</code></pre>
+      </li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p><code>flutter pub get</code> must complete without errors before continuing. A version conflict here (shown as "Because ... depends on ...") means your installed Flutter/Dart SDK version doesn't match what the project expects — check <a href="prerequisites.html">Prerequisites</a> for the exact version this app was built against.</p>
+    </div>
+
+    <h2 id="5-point-the-app-at-your-backend">5. Point the App at Your Backend</h2>
+    <p>Before the app can log in or load products, it needs your Admin Panel's URL. This is configured in <code>lib/core/configs/app_config.dart</code> via the <code>env/</code> JSON files.</p>
+    <p>Full details — config keys, environments, the sync script — are covered in <a href="panel-url-deeplink.html">Panel URL &amp; Deeplink</a>. At minimum, edit <code>env/demo.json</code> and set:</p>
+    <pre><code class="language-json">{
+  "BASE_URL": "https://your-admin-panel-domain.com/customer/"
+}</code></pre>
+    <p>then run the sync script from the project root:</p>
+    <pre><code class="language-bash">dart run tool/apply_config.dart</code></pre>
+
+    <h2 id="6-run-the-app">6. Run the App</h2>
+    <ol>
+      <li>Start an Android emulator, connect a physical device (USB debugging enabled), or open an iOS Simulator.</li>
+      <li>List available devices to confirm one is detected:
+        <pre><code class="language-bash">flutter devices</code></pre>
+      </li>
+      <li>Launch the app:
+        <pre><code class="language-bash">flutter run</code></pre>
+      </li>
+    </ol>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">What "done" looks like</p>
+      <p>The app builds, installs, and opens to the SnapBuy splash/onboarding screen without a red error screen, and the home screen loads categories or products from your Admin Panel — confirming <code>BASE_URL</code> is reachable and correctly set.</p>
+    </div>
+
+    <h2 id="verify-installation">Verify Installation</h2>
+
+    <p>Run the following command in your terminal to confirm your toolchain itself is installed correctly:</p>
+
+    <pre><code class="language-bash">flutter doctor -v</code></pre>
+
+    <p>All checks should pass (green check marks) before moving to the next step.</p>
+
     <div class="admonition admonition--info">
       <p class="admonition__title">Back to Prerequisites</p>
-      <p>Return to <a href="prerequisites.html">App Prerequisites</a> for minimum version requirements table.</p>
+      <p>See <a href="prerequisites.html">App Prerequisites</a> for the exact software versions this app was built and tested against.</p>
     </div>
   </main>
 </div>
