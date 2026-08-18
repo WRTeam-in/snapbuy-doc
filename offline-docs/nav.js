@@ -21,15 +21,26 @@
       href: "admin/overview.html",
       groups: [
         {
+          label: "Getting Started",
+          items: [
+            ["Demo Instructions", "admin/demo-instructions.html"],
+            ["Third-Party Service Costs", "admin/third-party-costs.html"],
+          ],
+        },
+        {
           label: "Installation",
           items: [
+            ["Installation Overview", "installation/overview.html"],
             ["Server Requirements", "admin/server-requirements.html"],
-            ["Create a Subdomain", "admin/create-subdomain.html"],
+            ["Server Setup", "installation/server-preparation.html"],
+            ["Domain, DNS & SSL", "admin/create-subdomain.html"],
             ["PHP INI Settings", "admin/php-ini-settings.html"],
-            ["Localhost Setup", "admin/localhost-setup.html"],
-            ["Server Setup", "admin/server-setup.html"],
+            ["Panel Installation", "admin/server-setup.html"],
+            ["Environment Configuration", "installation/environment-configuration.html"],
+            ["Database & Migrations", "installation/database-migration.html"],
             ["Cron Job Setup", "admin/cron-jobs.html"],
             ["Setup Guide", "admin/setup-guide.html"],
+            ["Localhost Setup", "admin/localhost-setup.html"],
           ],
         },
         {
@@ -65,13 +76,6 @@
             ["Contact Us & About Us Pages", "admin/contact-about.html"],
             ["System Updater", "admin/system-updater.html"],
             ["Activity Logs", "admin/activity-logs.html"],
-          ],
-        },
-        {
-          label: "Backup & Restore",
-          items: [
-            ["Backup Database", "installation/backup-database.html"],
-            ["Backup Project", "installation/backup-project.html"],
           ],
         },
         {

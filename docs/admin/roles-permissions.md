@@ -26,48 +26,32 @@ Installation creates three:
 It can read your live payment gateway secrets, change prices, and delete records. Use a strong unique password, and never share the login between people — the [activity log](/docs/admin/activity-logs) can only tell you *which account* acted, so a shared account destroys accountability.
 :::
 
-## Permission categories
+## How permissions work
 
-Permissions are grouped by area, and most areas offer four actions — **list**, **create**, **update**, **delete**.
+Permissions are grouped by area of the panel — orders, products, customers, delivery boys, reports, settings and so on. Most areas offer four separate actions:
 
-| Category | Covers |
+| Action | Allows |
 | --- | --- |
-| `dashboard` | The dashboard itself |
-| `order` | Orders |
-| `product` | Products, brands, attributes, stock |
-| `category` | Categories |
-| `store` | [Stores](/docs/admin/stores) |
-| `location` | [Zones](/docs/admin/zones), delivery cities and areas |
-| `countries` | [Countries](/docs/admin/countries) and their policies and gateways |
-| `customer` | Customer accounts, wallet, transactions |
-| `delivery_boy` | Riders, cash collection, salary, settlements |
-| `withdrawal_request` | Payout approvals |
-| `return_request` | Returns |
-| `promo_code` | Promo codes |
-| `home_builder` | [Home Builder](/docs/admin/home-builder) |
-| `blogs` / `faq` / `popup_offer` | Content |
-| `send_notification` | Push and email campaigns |
-| `email_template` | Templates |
-| `languages` | [Languages](/docs/admin/languages) |
-| `report` | [Reports](/docs/admin/reports) |
-| `chat` | Live chat |
-| `settings` | **Everything under Settings** |
+| **List** | Seeing the menu and viewing records |
+| **Create** | Adding new records |
+| **Update** | Editing existing records |
+| **Delete** | Removing records |
+
+Granting **List** alone gives read-only access to that area — the right shape for an accountant or analyst who needs visibility but must not change anything.
+
+The full set of areas is shown on the role form itself, grouped and labelled, so there is no need to memorise them.
+
+:::danger Guard the Settings area hardest
+The **Settings** permission covers payment gateway credentials, SMTP passwords, Firebase keys and SMS gateway tokens — all readable in plain form by anyone who has it.
+
+Grant it only to people you would trust with your bank login. A warehouse supervisor who needs stock access does not need Settings.
+:::
 
 ## Creating a role
 
 **Role → Add Role**, name it, then tick the permissions.
 
 ![Editing role permissions](/images/panel/roles-permissions-edit.png)
-
-:::danger `settings` is the permission to guard hardest
-The settings category covers payment gateway credentials, SMTP passwords, Firebase keys and SMS gateway tokens — all readable in plain form by anyone who has it.
-
-Grant it only to people you would trust with your bank login. A warehouse supervisor who needs stock access does not need settings.
-:::
-
-:::warning `list` without `update` is genuinely useful
-For read-only oversight — an accountant who needs to see orders and reports but must not change them — grant only the `list` permissions in those categories. This is the safest way to widen visibility.
-:::
 
 ## Suggested role designs
 

@@ -30,8 +30,13 @@ The keys alone let the apps talk to Firebase. The service account is what lets *
 ## Create a Firebase project
 
 1. Go to [console.firebase.google.com](https://console.firebase.google.com/) and sign in.
-2. Click **Add project**, name it, and finish the wizard.
-3. Google Analytics is optional.
+2. Click **Add project**, enter a project name, and click **Continue**.
+
+![Name your Firebase project](/images/panel/firebase-create-project.png)
+
+3. The wizard offers **Gemini in Firebase** and **Google Analytics**. Both are optional and neither is needed for push notifications — enable or skip them, then click **Create project**.
+
+![Configure Google Analytics — optional](/images/panel/firebase-analytics-optional.png)
 
 
 ## Get the web config keys
@@ -39,7 +44,10 @@ The keys alone let the apps talk to Firebase. The service account is what lets *
 1. In the Firebase console, open **Project settings** (the gear icon).
 2. Scroll to **Your apps**.
 3. Click the **Web** icon (`</>`) to register a web app.
-4. Give it a nickname and register it.
+4. Give it a nickname and click **Register app**. **Firebase Hosting is not required** — the panel runs on your own server, so leave that box unchecked.
+
+![Register your web app](/images/panel/firebase-register-web-app.png)
+
 5. Firebase shows a `firebaseConfig` block.
 
 ```js
@@ -53,6 +61,14 @@ const firebaseConfig = {
 };
 ```
 
+
+If you close the wizard the same values are always available under **Project settings → General → Your apps** — select the app, then choose the **Config** option under **SDK setup and configuration**.
+
+![Firebase SDK config values under SDK setup and configuration](/images/panel/firebase-web-config.png)
+
+:::note
+Values are blanked out in these screenshots. Use the ones shown in **your own** Firebase console.
+:::
 
 Copy these into the SnapBuy form:
 
@@ -74,6 +90,8 @@ Web push in browsers needs a separate key pair.
 2. Under **Web configuration → Web Push certificates**, click **Generate key pair**.
 3. Copy the key string into **VAPID Key**.
 
+![Cloud Messaging settings and Web Push certificates](/images/panel/firebase-vapid-key.png)
+
 
 :::info Only needed for web push
 If you are not sending notifications to browsers, you can leave this blank. Mobile push does not use it.
@@ -87,6 +105,8 @@ This is the half that gets missed.
 2. Click **Generate new private key**, then confirm.
 3. A `.json` file downloads.
 4. In SnapBuy, use the **Firebase JSON File** upload field to attach it, and save.
+
+![Generating the service account private key](/images/panel/firebase-service-account.png)
 
 
 SnapBuy stores it at `config/firebase.json` on your server.
@@ -134,7 +154,7 @@ The panel, the customer app and the delivery app must point at **one** Firebase 
 SnapBuy serves the messaging service worker from `/firebase-messaging-sw.js`, generated from the settings you save — you do not create this file yourself.
 
 :::warning Web push requires HTTPS
-Browsers refuse to register a service worker over plain HTTP. Web push will not work until SSL is installed. See [Create a Subdomain](/docs/admin/create-subdomain#install-an-ssl-certificate).
+Browsers refuse to register a service worker over plain HTTP. Web push will not work until SSL is installed. See [Domain, DNS & SSL](/docs/admin/create-subdomain#install-ssl).
 :::
 
 ## Testing

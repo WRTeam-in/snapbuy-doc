@@ -61,6 +61,210 @@
 
     <p>Installation enables <strong>Cash on Delivery</strong> only. Everything else starts disabled and blank.</p>
 
+    <h2 id="getting-the-credentials-for-each-gateway">Getting the credentials for each gateway</h2>
+
+    <p>Every gateway names its keys differently. This section maps SnapBuy's fields to where you find each value in the provider's own dashboard.</p>
+
+    <p>All of them follow the same shape: create an account, complete business verification (KYC), copy the test keys, test, then swap in the live keys.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Verification takes time</p>
+      <p>Most providers will not issue live keys until your business documents are approved. This commonly takes several working days. Start the account opening before you need to launch, and use test keys meanwhile.</p>
+    </div>
+
+    <h3 id="cash-on-delivery-credentials">Cash on Delivery</h3>
+
+    <p>No account and no credentials. Enable the toggle on the country and choose the COD mode:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mode</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Global</strong></td><td>COD offered on every product</td></tr>
+        <tr><td><strong>Product wise</strong></td><td>COD offered only on products individually marked as COD-eligible</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="razorpay">Razorpay (India)</h3>
+
+    <ol>
+      <li>Sign up at dashboard.razorpay.com.</li>
+      <li>Complete KYC under <strong>Account &amp; Settings → Business details</strong>.</li>
+      <li>Go to <strong>Account &amp; Settings → API Keys</strong>.</li>
+      <li>Select <strong>Test Mode</strong> or <strong>Live Mode</strong> using the toggle at the top of the dashboard.</li>
+      <li>Click <strong>Generate Key</strong>. The secret is shown <strong>once</strong> — copy it immediately.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Razorpay value</th></tr></thead>
+      <tbody>
+        <tr><td>Razorpay Key</td><td>Key ID, begins <code>rzp_test_</code> or <code>rzp_live_</code></td></tr>
+        <tr><td>Razorpay Secret Key</td><td>Key Secret</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="stripe">Stripe (international)</h3>
+
+    <ol>
+      <li>Sign up at dashboard.stripe.com.</li>
+      <li>Complete business activation.</li>
+      <li>Go to <strong>Developers → API keys</strong> for the publishable and secret keys.</li>
+      <li>Go to <strong>Developers → Webhooks → Add endpoint</strong>, enter your webhook URL, and copy the <strong>Signing secret</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Stripe value</th></tr></thead>
+      <tbody>
+        <tr><td>Stripe Publishable Key</td><td>Publishable key, begins <code>pk_</code></td></tr>
+        <tr><td>Stripe Secret Key</td><td>Secret key, begins <code>sk_</code></td></tr>
+        <tr><td>Stripe Webhook Secret Key</td><td>Signing secret from the endpoint, begins <code>whsec_</code></td></tr>
+        <tr><td>Stripe Currency Code</td><td>The currency your Stripe account settles in</td></tr>
+        <tr><td>Stripe Mode</td><td><code>test</code> or <code>live</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Without the signing secret SnapBuy cannot verify that a callback genuinely came from Stripe, and will reject it.</p>
+
+    <h3 id="paypal">PayPal</h3>
+
+    <ol>
+      <li>Sign up at paypal.com and upgrade to a <strong>Business</strong> account.</li>
+      <li>Use the Developer Dashboard sandbox accounts for testing.</li>
+      <li>Enable <strong>Instant Payment Notification (IPN)</strong> in <strong>Account Settings → Notifications</strong> and point it at your IPN URL.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>PayPal value</th></tr></thead>
+      <tbody>
+        <tr><td>PayPal Business Email</td><td>The email address on the Business account</td></tr>
+        <tr><td>PayPal Currency Code</td><td>Currency your PayPal account accepts</td></tr>
+        <tr><td>PayPal Mode</td><td><code>sandbox</code> or <code>live</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="paystack">Paystack (Africa)</h3>
+
+    <ol>
+      <li>Sign up at dashboard.paystack.com.</li>
+      <li>Complete business verification.</li>
+      <li>Go to <strong>Settings → API Keys &amp; Webhooks</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Paystack value</th></tr></thead>
+      <tbody>
+        <tr><td>Paystack Public Key</td><td>Public key, begins <code>pk_test_</code> or <code>pk_live_</code></td></tr>
+        <tr><td>Paystack Secret Key</td><td>Secret key, begins <code>sk_test_</code> or <code>sk_live_</code></td></tr>
+        <tr><td>Paystack Currency Code</td><td>NGN, GHS, ZAR, USD as enabled on your account</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="midtrans">Midtrans (Indonesia)</h3>
+
+    <ol>
+      <li>Sign up at midtrans.com.</li>
+      <li>Complete merchant verification.</li>
+      <li>Go to <strong>Settings → Access Keys</strong>.</li>
+      <li>Sandbox and Production have separate keys — take them from the matching environment.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Midtrans value</th></tr></thead>
+      <tbody>
+        <tr><td>Midtrans Server Key</td><td>Server Key</td></tr>
+        <tr><td>Midtrans Mode</td><td><code>sandbox</code> or <code>production</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Set the payment notification URL in <strong>Settings → Configuration</strong> to your Midtrans callback URL.</p>
+
+    <h3 id="phonepe">PhonePe (India)</h3>
+
+    <ol>
+      <li>Register as a merchant at business.phonepe.com.</li>
+      <li>Complete onboarding — PhonePe issues credentials directly to the merchant.</li>
+      <li>Collect the values from the merchant dashboard or your onboarding email.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>PhonePe value</th></tr></thead>
+      <tbody>
+        <tr><td>PhonePe Merchant ID</td><td>Merchant ID</td></tr>
+        <tr><td>PhonePe Client ID</td><td>Client ID</td></tr>
+        <tr><td>PhonePe Client Version</td><td>Client version supplied during onboarding</td></tr>
+        <tr><td>PhonePe Client Secret</td><td>Client secret</td></tr>
+        <tr><td>PhonePe Mode</td><td><code>UAT</code> for testing, <code>PROD</code> for live</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="cashfree">Cashfree (India)</h3>
+
+    <ol>
+      <li>Sign up at merchant.cashfree.com.</li>
+      <li>Complete KYC.</li>
+      <li>Go to <strong>Developers → API Keys</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>Cashfree value</th></tr></thead>
+      <tbody>
+        <tr><td>Cashfree App ID</td><td>App ID / Client ID</td></tr>
+        <tr><td>Cashfree Secret Key</td><td>Secret Key / Client Secret</td></tr>
+        <tr><td>Cashfree Mode</td><td><code>TEST</code> or <code>PROD</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Register the callback URL under <strong>Developers → Webhooks</strong>.</p>
+
+    <h3 id="paytabs">PayTabs (Middle East)</h3>
+
+    <ol>
+      <li>Sign up at paytabs.com for your country.</li>
+      <li>Complete merchant verification.</li>
+      <li>Open <strong>Developers → Key management</strong> in the merchant dashboard.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>SnapBuy field</th><th>PayTabs value</th></tr></thead>
+      <tbody>
+        <tr><td>PayTabs Profile ID</td><td>Profile ID</td></tr>
+        <tr><td>PayTabs Secret Key</td><td>Server key</td></tr>
+        <tr><td>PayTabs Mode</td><td>Test or live</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="where-to-enter-them">Where to enter them</h2>
+
+    <p>Credentials are stored <strong>per country</strong>, not globally:</p>
+
+    <ol>
+      <li>Open <strong>Countries</strong> and edit the country you sell in.</li>
+      <li>Go to step 2 of the wizard, <strong>Payment Gateways</strong>.</li>
+      <li>Turn on the gateway and fill its fields.</li>
+      <li>Save.</li>
+    </ol>
+
+    <p>The <strong>Payment Method Settings</strong> master switch on the same step enables online payment for that country as a whole.</p>
+
+    <p>Repeat for every country you sell in. A gateway configured on India is not offered to customers in the UAE.</p>
+
     <h2 id="test-mode-and-live-mode">Test mode and live mode</h2>
 
     <p>Most gateways carry a <strong>Mode</strong> field — <code>test</code>/<code>sandbox</code> or <code>live</code>.</p>

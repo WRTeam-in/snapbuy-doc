@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Third-Party Service Costs — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Third-Party Service Costs</h1>
+
+    <p>SnapBuy is a one-time purchase. The <strong>external services it connects to are not included</strong> and are billed directly to you by their providers.</p>
+
+    <p>Nothing on this page is charged by us. Every account below is opened in your own name, with your own billing details, and you keep full control of it.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Read this before you launch</p>
+      <p>Most services have a free allowance that comfortably covers development and a small store. Costs begin when order volume grows. Knowing which meter is running — and where the free tier ends — avoids an unexpected bill in month two.</p>
+    </div>
+
+    <h2 id="what-is-optional-and-what-is-not">What is optional and what is not</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Service</th><th>Needed for</th><th>Can you launch without it?</th></tr></thead>
+      <tbody>
+        <tr><td>Hosting (VPS)</td><td>Running the panel, website and APIs</td><td>No</td></tr>
+        <tr><td>Domain + SSL</td><td>Any production install</td><td>No</td></tr>
+        <tr><td>Google Maps <em>or</em> OpenStreetMap</td><td>Address selection, delivery distance</td><td>A map provider is required; OpenStreetMap is free</td></tr>
+        <tr><td>Firebase Cloud Messaging</td><td>Push notifications</td><td>Yes, but customers get no order updates</td></tr>
+        <tr><td>Firebase Phone Auth <em>or</em> an SMS gateway</td><td>OTP login</td><td>Only if you disable phone login entirely</td></tr>
+        <tr><td>SMTP email</td><td>Order mail, password reset</td><td>No — password reset depends on it</td></tr>
+        <tr><td>Payment gateway</td><td>Online payment</td><td>Yes, if you sell Cash on Delivery only</td></tr>
+        <tr><td>Pusher</td><td>Live chat, if you do not self-host Reverb</td><td>Yes — Reverb is free and bundled</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="maps">Maps</h2>
+
+    <p>SnapBuy supports two providers. <strong>OpenStreetMap is the default and costs nothing.</strong></p>
+
+    <h3 id="openstreetmap-free">OpenStreetMap — free</h3>
+
+    <p>No account, no key, no billing. Address search and routing use public community services.</p>
+
+    <p>The trade-off is reliability: the public routing endpoint is rate-limited and carries no uptime guarantee. Fine for launch and low volume; move to Google Maps or a self-hosted routing server once order volume is steady.</p>
+
+    <h3 id="google-maps-platform">Google Maps Platform — paid, with a monthly free allowance</h3>
+
+    <p>Google changed its pricing model in March 2025. The old <strong>$200 monthly credit was replaced</strong> by a per-API free allowance of <strong>10,000 calls per month, per SKU</strong>.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>API SnapBuy uses</th><th>Free per month</th><th>Cost after the free tier (per 1,000 calls)</th></tr></thead>
+      <tbody>
+        <tr><td>Maps JavaScript API</td><td>10,000</td><td>from $7.00</td></tr>
+        <tr><td>Places Autocomplete</td><td>10,000</td><td>from $2.83</td></tr>
+        <tr><td>Place Details</td><td>10,000</td><td>from $5.00</td></tr>
+        <tr><td>Geocoding</td><td>10,000</td><td>from $5.00</td></tr>
+        <tr><td>Distance Matrix</td><td>10,000</td><td>from $5.00</td></tr>
+        <tr><td>Directions</td><td>10,000</td><td>from $5.00</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Rates fall as volume rises. Figures above are the entry band.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A billing account is mandatory even inside the free tier</p>
+      <p>Google refuses Maps requests from a project with no billing account attached — the map renders grey with a "for development purposes only" watermark. You must attach a card even if you never exceed the free allowance.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Set a budget alert on day one</p>
+      <p>In <strong>Billing → Budgets &amp; alerts</strong>, create a budget with email notifications. It does not cap spending, but it tells you within hours instead of at the end of the month. Also restrict every key — an unrestricted key found in your page source can be used by anyone and billed to you.</p>
+    </div>
+
+    <p><strong>Rough sizing.</strong> Each customer checkout that uses address autocomplete plus a distance lookup consumes roughly one Autocomplete, one Place Details and one Distance Matrix call. At 10,000 free calls per SKU you can serve on the order of 10,000 address selections a month before any charge.</p>
+
+    <h2 id="firebase">Firebase</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cloud Messaging (push)</strong></td><td>Free and unlimited, on both Spark and Blaze plans. No per-message fee, no device cap.</td></tr>
+        <tr><td><strong>Authentication (email, Google, Apple)</strong></td><td>Free up to 50,000 monthly active users</td></tr>
+        <tr><td><strong>Phone / SMS authentication</strong></td><td><strong>Charged per verification</strong> — roughly $0.01–$0.06 depending on country</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Phone OTP requires the paid Blaze plan</p>
+      <p>Since September 2024 Google requires a Blaze plan with a billing account for SMS verification. This is the Firebase cost that surprises people: push notifications are genuinely free, but every OTP sent during signup is billed.</p>
+      <p>A store with heavy signup traffic — or one being probed by automated signups — can run up a real bill here. If your market is India, an Indian SMS gateway is usually cheaper and delivers more reliably. See <a href="../admin/sms-settings.html">SMS Settings</a>.</p>
+    </div>
+
+    <h2 id="sms-gateways">SMS gateways</h2>
+
+    <p>Only needed if you send OTP or transactional SMS through your own provider instead of Firebase.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Provider</th><th>Region</th><th>Indicative cost</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Twilio</strong></td><td>Worldwide</td><td>From about $0.0079 per segment in the US; under $0.005 to India</td><td>US A2P 10DLC adds a carrier surcharge plus monthly brand and campaign registration fees. Phone numbers are rented monthly.</td></tr>
+        <tr><td><strong>MSG91</strong></td><td>India</td><td>Around ₹0.15 per SMS</td><td>DLT registration required</td></tr>
+        <tr><td><strong>Fast2SMS</strong></td><td>India</td><td>Roughly ₹0.12–₹0.25 per SMS by volume</td><td>DLT registration required</td></tr>
+        <tr><td><strong>2Factor</strong></td><td>India</td><td>Pay-per-delivered-OTP</td><td>Only charges when the OTP is delivered inside its delivery window</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Indian prices are subject to 18% GST. All Indian providers operate on DLT-registered routes.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">India requires DLT registration</p>
+      <p>Sender IDs and message templates must be pre-registered on a DLT platform before anything is delivered. Unregistered traffic is dropped by the carrier while the provider still reports success — messages simply never arrive. Budget time for this; approval is not instant.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Cap your SMS spend</p>
+      <p>Every OTP is a paid message, and an automated signup script can generate thousands overnight. Set a spending cap in your provider's dashboard and enable alerts before you go live.</p>
+    </div>
+
+    <h2 id="real-time-chat">Real-time chat</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Option</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Laravel Reverb</strong> (bundled)</td><td>Free — runs on your own server</td></tr>
+        <tr><td><strong>Pusher Channels</strong></td><td>Free Sandbox plan: 100 concurrent connections, 200,000 messages/day. Paid plans start around $49/month for 500 connections.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Reverb needs a long-running process and an open port, which your VPS provides. Pusher costs money at scale but requires no server administration.</p>
+
+    <h2 id="email">Email</h2>
+
+    <p>SMTP is not bundled. Use any provider:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Option</th><th>Typical cost</th></tr></thead>
+      <tbody>
+        <tr><td>Mailbox on your own domain</td><td>Usually included with hosting</td></tr>
+        <tr><td>SendGrid, Mailgun, Amazon SES</td><td>Free tiers exist; SES is billed per thousand emails and is the cheapest at volume</td></tr>
+        <tr><td>Gmail / Google Workspace</td><td>Fine for testing; roughly 500 messages/day and unsuitable for campaigns</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="payment-gateways">Payment gateways</h2>
+
+    <p>Gateways charge a percentage of each transaction rather than a subscription. Typical rates run about 2–3% per domestic transaction, with higher rates for international cards. Rates are negotiated with the provider and vary by country, business type and volume.</p>
+
+    <p>There is no charge for configuring a gateway in SnapBuy — you pay the provider only when you take money.</p>
+
+    <h2 id="hosting">Hosting</h2>
+
+    <p>See <a href="../admin/server-requirements.html">Server Requirements</a>. SnapBuy requires a <strong>VPS or dedicated server</strong>. Budget shared hosting cannot run it, because the web portal is server-rendered for SEO and the panel needs long-running background processes.</p>
+
+    <p>Expect from roughly $10–$40 per month for a VPS sized for a new store, rising with traffic and catalogue size.</p>
+
+    <h2 id="summary">Summary</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Cost</th><th>When it starts</th></tr></thead>
+      <tbody>
+        <tr><td>VPS hosting</td><td>Immediately — required</td></tr>
+        <tr><td>Domain and SSL</td><td>Immediately — SSL is free via Let's Encrypt</td></tr>
+        <tr><td>Google Maps</td><td>Only past 10,000 calls per API per month, and only if you choose Google over OpenStreetMap</td></tr>
+        <tr><td>Firebase push</td><td>Never — free and unlimited</td></tr>
+        <tr><td>Firebase phone OTP</td><td>From the first verification, on the Blaze plan</td></tr>
+        <tr><td>SMS gateway</td><td>Per message sent</td></tr>
+        <tr><td>Pusher</td><td>Only past the free Sandbox limits, and only if you choose it over Reverb</td></tr>
+        <tr><td>Payment gateway</td><td>Per transaction, as a percentage</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Prices change</p>
+      <p>Every figure here was accurate at the time of writing and is provided for planning only. Confirm current rates on each provider's own pricing page before committing.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/third-party-costs.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

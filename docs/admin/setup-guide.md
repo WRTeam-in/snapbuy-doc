@@ -83,4 +83,4 @@ Once every step is complete, the sidebar widget disappears. You can still open i
 
 ---
 
-**Previous:** [← Cron Job Setup](/docs/admin/cron-jobs)
+**Previous:** [← Cron Job Setup](/docs/admin/cron-jobs) · **Next:** [Localhost Setup →](/docs/admin/localhost-setup)

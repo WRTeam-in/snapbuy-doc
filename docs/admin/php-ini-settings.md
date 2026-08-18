@@ -24,35 +24,11 @@ Default PHP limits on most shared hosts are too low for SnapBuy. Raise them **be
 If `post_max_size` is smaller, PHP silently discards the whole request and the panel shows an empty error. Always keep it higher.
 :::
 
-## Limits enforced by SnapBuy itself
-
-Even with generous PHP limits, SnapBuy applies its own caps:
-
-| Upload | Cap | Allowed types |
-| --- | --- | --- |
-| Bulk product import | **20 MB** | `.xlsx`, `.xls` |
-| Home Builder images | **5 MB** | jpeg, jpg, png, gif, webp, svg |
-| Prescription upload (customer) | **5 MB** | jpg, jpeg, png, webp, pdf, svg |
-| SEO Open Graph image | **2 MB** | jpeg, png, jpg, gif, svg, webp |
-| Withdrawal receipt image | **2 MB** | jpeg, png, jpg |
-| System update package | **1 GB** | `.zip` |
-
-:::danger System Updater needs the biggest limits
-Uploading an update package through **Settings → System Updater** can push a file far larger than a normal upload. If your update fails part-way, raise `upload_max_filesize`, `post_max_size` and `max_execution_time` first, or apply the update manually over FTP instead.
-:::
-
 ## Where to change these
 
-### cPanel
-
-1. Log into cPanel.
-2. Open **Select PHP Version** (or **MultiPHP INI Editor**).
-3. Switch to the **Options** tab.
-4. Edit each directive from the table above.
-5. Save. cPanel applies changes immediately.
-
-
 ### VPS / dedicated server
+
+Edit **both** the FPM and CLI configurations. The web installer uses FPM; Artisan commands and the queue worker use CLI, and the two have separate files.
 
 Find your active `php.ini`:
 
@@ -63,7 +39,8 @@ php --ini
 Edit it:
 
 ```bash
-sudo nano /etc/php/8.3/apache2/php.ini
+sudo nano /etc/php/8.3/fpm/php.ini
+sudo nano /etc/php/8.3/cli/php.ini
 ```
 
 Set the values, then restart:
@@ -93,9 +70,9 @@ Then reload Nginx. Without it you get a **413 Request Entity Too Large** no matt
 2. Next to **Apache**, click **Config → PHP (php.ini)**.
 3. Edit the values, save, and restart Apache.
 
-### Shared hosting without INI access
+### Per-site override
 
-Some hosts allow a `.user.ini` file in the project root:
+If you prefer not to change the global configuration, a `.user.ini` file in the project root applies to that site alone:
 
 ```ini
 max_execution_time = 600
@@ -106,7 +83,7 @@ upload_max_filesize = 100M
 max_input_vars = 5000
 ```
 
-If that has no effect, ask your host to apply the values for you.
+Directives set in `.user.ini` apply to FPM requests only, not to Artisan commands. Set the CLI values in `php.ini` as well.
 
 ## Verify the change took effect
 
@@ -132,3 +109,7 @@ symlink, exec, proc_open, shell_exec, putenv
 ```
 
 `symlink` is the critical one — see [Server Requirements](/docs/admin/server-requirements#server-functions-that-must-not-be-disabled).
+
+---
+
+**Previous:** [← Domain, DNS & SSL](/docs/admin/create-subdomain) · **Next:** [Panel Installation](/docs/admin/server-setup)

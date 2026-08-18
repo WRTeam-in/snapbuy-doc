@@ -14,13 +14,13 @@ Real-time messaging needs a **WebSocket server**. SnapBuy supports two:
 
 | Driver | Cost | Runs where | Best for |
 | --- | --- | --- | --- |
-| **Reverb** | Free | Your own server, as a long-running process | VPS and dedicated servers |
-| **Pusher** | Paid, with a free tier | Pusher's cloud | Shared hosting, or avoiding server admin |
+| **Reverb** | Free | Your own server, as a long-running process | Most installations |
+| **Pusher** | Paid, with a free tier | Pusher's cloud | Avoiding server administration |
 
 ![Chat settings page](/images/panel/chat-settings-page.png)
 
-:::danger Choose by your hosting, not by price
-**Reverb needs a permanently running process and an open port.** Most shared hosting allows neither. If you are on cPanel shared hosting, choose **Pusher** — Reverb will never connect no matter how correct the credentials are.
+:::danger Reverb is free but needs a managed process
+**Reverb needs a permanently running process and an open port.** Your VPS provides both, so Reverb is the cheaper choice for most installations. Choose Pusher if you would rather not manage a long-running service, or if your host blocks the WebSocket port.
 :::
 
 ## Option A — Reverb (self-hosted)
@@ -146,7 +146,7 @@ The message was stored but not broadcast — the WebSocket connection is down. F
 | Works locally, not in production | Mixed content — `ws://` on an HTTPS page | Proxy through Nginx, set scheme to `https` |
 | Connection refused | Port 9090 closed | `sudo ufw allow 9090` |
 | Pusher connects then drops | Wrong cluster | Match the cluster on the App Keys screen |
-| Chat stopped after moving hosts | Reverb chosen on shared hosting | Switch to Pusher |
+| Chat stopped after moving hosts | Reverb process not started on the new server | Recreate the Supervisor entry |
 | Messages delayed by seconds | Distant Pusher cluster | Recreate the app on a nearer cluster |
 | Nothing changed after saving | Cached config | Visit `/clear` |
 

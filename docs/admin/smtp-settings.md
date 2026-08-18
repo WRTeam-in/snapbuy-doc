@@ -87,7 +87,7 @@ Free Gmail also caps sending at roughly 500 messages a day. It is fine for testi
 In sandbox, SES only delivers to addresses you have verified. Request production access before launch, or real customers receive nothing.
 :::
 
-### cPanel / hosting mailbox
+### Mailbox on your own domain
 
 | Field | Value |
 | --- | --- |

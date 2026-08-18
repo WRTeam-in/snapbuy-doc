@@ -15,9 +15,24 @@ SnapBuy is a complete delivery & shopping platform that includes an Admin Panel,
 - **Delivery Boy App** — Flutter-based app for iOS and Android for delivery boys to manage deliveries
 - **Web Portal** — Web frontend for online shopping
 
+## Before you start
+
+- **[Demo Instructions](/docs/admin/demo-instructions)** — try the live demo, with login details
+- **[Third-Party Service Costs](/docs/admin/third-party-costs)** — what Google Maps, Firebase, SMS and hosting cost outside the purchase price
+
 ## Getting Started
 
-Choose a section from the sidebar to begin:
+SnapBuy ships as four codebases. Install them in order:
+
+1. **[Admin Panel → Installation](/docs/installation/installation-overview)** — provision the server and install the backend
+2. **[Web Portal](/docs/web/overview)** — point the storefront at the panel
+3. **[Customer App](/docs/app-customer/prerequisites)** and **[Delivery Boy App](/docs/app-delivery/prerequisites)** — configure and build
+
+:::warning A VPS is required
+The web portal is server-rendered for SEO and the panel runs background processes for notifications and chat. Entry-level shared hosting cannot run either. See [Server Requirements](/docs/admin/server-requirements).
+:::
+
+Or choose a section from the sidebar:
 
 - [Admin Panel Setup](/docs/admin/overview)
 - [Customer App Setup](/docs/app-customer/prerequisites)

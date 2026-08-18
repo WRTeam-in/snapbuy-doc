@@ -75,7 +75,7 @@ The log shows what changed and who changed it, including edits to settings and p
 | **[Cron Jobs](/docs/admin/cron-jobs)** | Whether scheduled work is running, and queue health |
 
 :::warning `/logs` is unauthenticated
-The Laravel log viewer sits outside the panel login and can reveal file paths and error detail. Restrict it by IP — see [Server Setup](/docs/admin/server-setup#secure-the-maintenance-routes).
+The Laravel log viewer sits outside the panel login and can reveal file paths and error detail. Restrict it by IP — see [Database & Migrations](/docs/installation/database-migration).
 :::
 
 ## Troubleshooting

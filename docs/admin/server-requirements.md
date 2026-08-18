@@ -8,15 +8,39 @@ sidebar_position: 2
 
 Check every item on this page **before** you upload SnapBuy. The installation wizard runs the same checks and will refuse to continue if any of them fail.
 
+## Hosting type
+
+SnapBuy requires a **VPS, cloud instance or dedicated server with root access**.
+
+| Requirement | Why a VPS is necessary |
+| --- | --- |
+| Server-rendered storefront | The web portal renders pages on the server so search engines can index your products. That needs a continuously running Node process. |
+| Background processing | Order emails, push notifications, referral credit and bulk imports run on a queue worker started by the scheduler. |
+| Real-time chat | Laravel Reverb runs as a long-lived WebSocket process on its own port. |
+| Installation | The installer runs the full migration and seeding in one request, beyond the execution limits of most entry-level plans. |
+
+:::danger Entry-level shared hosting will not run SnapBuy
+Plans that offer only PHP and MySQL — with no shell access, no persistent processes and no Node runtime — cannot run the storefront's server-side rendering or the queue worker. SEO and notifications will not work.
+
+Provision a VPS. See [Server Setup](/docs/installation/server-preparation) for a step-by-step build.
+:::
+
+### Suggested sizing
+
+| Store size | vCPU | RAM | Disk |
+| --- | --- | --- | --- |
+| Launch / small catalogue | 2 | 4 GB | 50 GB SSD |
+| Established store | 4 | 8 GB | 100 GB SSD |
+| High volume | 8+ | 16 GB+ | 200 GB+ SSD |
+
 ## PHP version
 
 | Requirement | Value |
 | --- | --- |
 | **Minimum PHP version** | **8.3.0** |
-| Recommended | 8.3 |
 
 :::danger PHP 8.2 and below will not work
-SnapBuy runs on Laravel 12, which itself requires PHP 8.3 or newer. There is no fallback build for older PHP.
+SnapBuy requires PHP 8.3 or newer. There is no fallback build for older PHP.
 :::
 
 ## Required PHP extensions
@@ -45,9 +69,9 @@ All seventeen of these must be **enabled**. The installer shows them as a grid a
 
 
 :::tip How to enable an extension
-On **cPanel**: *Select PHP Version → Extensions*, tick the missing one, save.
-On **VPS / Ubuntu**: `sudo apt install php8.3-<extension>` then `sudo systemctl restart apache2` (or `php8.3-fpm`).
-On **XAMPP**: open `php.ini`, remove the `;` in front of `extension=<name>`, restart Apache.
+On **Ubuntu / Debian**: `sudo apt install php8.3-<extension>` then `sudo systemctl restart php8.3-fpm`.
+On **AlmaLinux / RHEL**: `sudo dnf install php-<extension>` then restart PHP-FPM.
+On a machine used for local development with XAMPP or Laragon: open `php.ini`, remove the `;` in front of `extension=<name>`, restart Apache.
 :::
 
 ## Database
@@ -83,11 +107,11 @@ sudo chown -R www-data:www-data storage bootstrap/cache .env
 sudo chmod -R 755 storage bootstrap/cache
 ```
 
-Replace `www-data` with `apache` on CentOS/AlmaLinux, or with your cPanel username on shared hosting.
+Replace `www-data` with `apache` on AlmaLinux / RHEL.
 
 ## Server functions that must not be disabled
 
-Shared hosts often disable PHP functions for "security". SnapBuy needs these:
+Some hardened server images disable PHP functions by default. SnapBuy needs these:
 
 | Function | Why |
 | --- | --- |
@@ -120,6 +144,7 @@ Full walkthrough: **[Localhost Setup](/docs/admin/localhost-setup)**.
 
 ## Quick pre-flight checklist
 
+- [ ] VPS or dedicated server with root access
 - [ ] PHP 8.3 or newer
 - [ ] All 17 extensions enabled
 - [ ] Empty MySQL database created, with a user that has full privileges on it
@@ -128,7 +153,8 @@ Full walkthrough: **[Localhost Setup](/docs/admin/localhost-setup)**.
 - [ ] PHP INI limits raised — see [PHP INI Settings](/docs/admin/php-ini-settings)
 - [ ] Cron job available
 - [ ] SSL installed
+- [ ] Node 20 LTS installed for the web portal
 
 ---
 
-**Next:** [Create a Subdomain →](/docs/admin/create-subdomain)
+**Next:** [Server Setup →](/docs/installation/server-preparation)

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Demo Instructions — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Demo Instructions</h1>
+
+    <p>Use the live demo to explore SnapBuy before installing it, or to check how a feature is meant to behave.</p>
+
+    <h2 id="admin-panel">Admin panel</h2>
+
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td><strong>URL</strong></td><td><a href="https://admin-snapbuy.wrteam.me/login">https://admin-snapbuy.wrteam.me/login</a></td></tr>
+        <tr><td><strong>Email</strong></td><td><code>admin@gmail.com</code></td></tr>
+        <tr><td><strong>Password</strong></td><td><code>123456</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="delivery-boy-portal">Delivery boy portal</h2>
+
+    <p>Delivery partners sign in through a separate portal on the same installation.</p>
+
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td><strong>URL</strong></td><td><a href="https://admin-snapbuy.wrteam.me/delivery_boy/login">https://admin-snapbuy.wrteam.me/delivery_boy/login</a></td></tr>
+        <tr><td><strong>Email</strong></td><td><code>alex@gmail.com</code></td></tr>
+        <tr><td><strong>Password</strong></td><td><code>Alex@1234</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="web-portal">Web portal</h2>
+
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td><strong>URL</strong></td><td><a href="https://snapbuy.wrteam.me">https://snapbuy.wrteam.me</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Customer accounts on the web portal are created by signing up.</p>
+
+    <h2 id="what-the-demo-will-and-will-not-do">What the demo will and will not do</h2>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The demo is shared and resets periodically</p>
+      <p>Everyone evaluating SnapBuy uses the same installation. Records you create may be changed or removed by someone else, and the database is reset from time to time. Treat it as a showroom, not a sandbox you own.</p>
+    </div>
+
+    <p>A few operations are limited on the shared demo so it stays usable for everyone. Third-party credentials — payment, SMS, Firebase — are either blank or point at test accounts, so payments do not settle and OTP messages are not delivered to arbitrary numbers.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Your own installation has no such limits</p>
+      <p>A licensed installation on your own server runs with every feature enabled.</p>
+    </div>
+
+    <h2 id="suggested-tour">Suggested tour</h2>
+
+    <p>If you have fifteen minutes and want to judge whether SnapBuy fits your business:</p>
+
+    <ol>
+      <li><strong>Dashboard</strong> — the operational overview.</li>
+      <li><a href="../admin/zones.html">Zones</a> — open a zone and look at the two pricing models. This is where most delivery businesses succeed or fail.</li>
+      <li><a href="../admin/stores.html">Stores</a> — note that stock and price are held per outlet.</li>
+      <li><a href="../admin/home-builder.html">Home Builder</a> — open a layout and use the live device preview.</li>
+      <li><a href="../admin/roles-permissions.html">Roles &amp; Permissions</a> — check the permission granularity against your staffing.</li>
+      <li><a href="../admin/reports.html">Reports</a> — ten reports covering sales, inventory, delivery and payment.</li>
+    </ol>
+
+    <h2 id="mobile-apps">Mobile apps</h2>
+
+    <p>Demo builds of the Customer and Delivery Boy apps are linked from the product page. Both point at the demo panel above, so anything you change in the panel appears in the apps.</p>
+
+    <h2 id="questions">Questions</h2>
+
+    <ul>
+      <li>📧 <strong>Email</strong>: support@snapbuy.in</li>
+      <li>🌐 <strong>Website</strong>: <a href="https://www.snapbuy.in/">snapbuy.in</a></li>
+      <li>📄 <a href="../support.html">Support</a></li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/demo-instructions.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

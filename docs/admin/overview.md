@@ -43,10 +43,10 @@ This documentation covers **SnapBuy v3.0.0**.
 Follow these pages in order. Each one assumes the previous is done.
 
 1. **[Server Requirements](/docs/admin/server-requirements)** — confirm your hosting can run SnapBuy.
-2. **[Create a Subdomain](/docs/admin/create-subdomain)** — where the panel will live.
+2. **[Domain, DNS & SSL](/docs/admin/create-subdomain)** — where the panel will live.
 3. **[PHP INI Settings](/docs/admin/php-ini-settings)** — limits that must be raised before installing.
 4. **[Localhost Setup](/docs/admin/localhost-setup)** — for testing on your own machine.
-5. **[Server Setup](/docs/admin/server-setup)** — the live installation wizard.
+5. **[Panel Installation](/docs/admin/server-setup)** — the live installation wizard.
 6. **[Cron Job Setup](/docs/admin/cron-jobs)** — without this, several features silently stop working.
 7. **[Setup Guide](/docs/admin/setup-guide)** — the nine in-panel steps that make the store usable.
 

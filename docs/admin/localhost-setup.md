@@ -6,7 +6,7 @@ sidebar_position: 5
 
 # Localhost Setup
 
-Use this page to run SnapBuy on your own computer for testing and customisation. For a live store, follow [Server Setup](/docs/admin/server-setup) instead.
+Use this page to run SnapBuy on your own computer for testing and customisation. For a live store, follow [Panel Installation](/docs/admin/server-setup) instead.
 
 ## What you need
 
@@ -194,3 +194,7 @@ npm run dev        # dev server with hot reload
 :::tip Clearing the cache
 SnapBuy exposes `http://localhost/snapbuy/public/clear`, which clears the config, route, view and application caches in one request. Use it after any manual `.env` change.
 :::
+
+---
+
+**Previous:** [← Setup Guide](/docs/admin/setup-guide)
