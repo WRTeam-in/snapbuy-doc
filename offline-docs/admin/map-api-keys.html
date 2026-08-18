@@ -178,37 +178,69 @@ curl -4 ifconfig.co   # IPv4</code></pre>
 
     <p>In <strong>Billing → Budgets &amp; alerts</strong>, create a budget with email alerts. It will not stop charges, but you find out about a spike in hours rather than at the end of the month.</p>
 
-    <h2 id="switching-providers-later">Switching providers later</h2>
+    <h2 id="gemini-key-ai-content-generation-optional">Gemini key — AI content generation (optional)</h2>
 
-    <p>Changing the provider is safe — existing zone polygons and store pins are stored as coordinates, not provider data, so they carry over.</p>
+    <p>The same page carries a <strong>Gemini Key</strong> field. It has nothing to do with maps and is entirely optional.</p>
 
-    <p>After switching, visit <code>/clear</code> and reload the panel.</p>
+    <h3 id="what-it-powers">What it powers</h3>
 
-    <div class="admonition admonition--warning">
-      <p class="admonition__title">Test a real address after switching</p>
-      <p>Delivery charge depends on the distance lookup. After changing providers, place a test order to an address a few kilometres from the store and confirm the charge is sane.</p>
-    </div>
-
-    <h2 id="ai-text-generation-key-optional">AI text generation key (optional)</h2>
-
-    <p>The same page has a <strong>Gemini Key</strong> field. It is unrelated to maps.</p>
-
-    <p>With a Google Gemini API key entered, the panel can generate text for you — product descriptions and blog content — from a short prompt.</p>
+    <p>With a key entered, the panel can generate text for you from a short prompt:</p>
 
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Feature</th><th>Where</th></tr></thead>
       <tbody>
-        <tr><td><strong>Gemini Key</strong></td><td>From <a href="https://aistudio.google.com/app/apikey">aistudio.google.com/app/apikey</a></td></tr>
+        <tr><td>Product descriptions</td><td>Product add/edit form</td></tr>
+        <tr><td>Blog content</td><td>Blogs</td></tr>
+        <tr><td>SEO content — meta titles and descriptions</td><td><a href="../admin/seo-settings.html">SEO Settings</a></td></tr>
+        <tr><td>Automatic translation of fields into your other languages</td><td>Any translatable field</td></tr>
       </tbody>
     </table>
     </div>
 
-    <p>Leave it blank to disable the feature. Nothing else depends on it.</p>
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Leaving it blank simply turns the feature off</p>
+      <p>The Gemini key is <strong>not required</strong>. With no key, the "Generate with AI" buttons do nothing and every one of those fields is written by hand as normal. Nothing else in SnapBuy depends on it — orders, payments, notifications and delivery are all unaffected.</p>
+      <p>Add it only if you want the AI writing assistance.</p>
+    </div>
+
+    <h3 id="getting-a-key">Getting a key</h3>
+
+    <ol>
+      <li>Open aistudio.google.com/app/apikey.</li>
+      <li>Sign in and click <strong>Create API key</strong>.</li>
+      <li>Select an existing Google Cloud project, or let it create one.</li>
+      <li>Copy the key into the <strong>Gemini Key</strong> field and save.</li>
+    </ol>
+
+    <h3 id="enable-only-the-generative-language-api">Enable only the Generative Language API</h3>
+
+    <p>SnapBuy calls a single endpoint — the <strong>Generative Language API</strong>, model <code>gemini-2.5-flash</code>.</p>
+
+    <p>In <strong>APIs &amp; Services → Library</strong>, enable <strong>Generative Language API</strong> and nothing else. Then open the key under <strong>Credentials</strong> and, under <strong>API restrictions</strong>, choose <strong>Restrict key</strong> and select only that API.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not leave the key unrestricted</p>
+      <p>An unrestricted key works against every Google API your project has enabled, and anyone who obtains it can spend against your billing account. Restricting it to one API caps the damage.</p>
+    </div>
+
+    <h3 id="restrict-by-ip-address-gemini">Restrict by IP address</h3>
+
+    <p>Like the Place API Key, this key is used <strong>from your server</strong>, not from the browser. Restrict it by <strong>IP addresses</strong> and enter your server's address — the IPv6 address if your VPS uses one, plus IPv4 if it has one.</p>
+
+    <pre><code>2400:xxxx:xxxx:xxxx::1
+203.0.113.10</code></pre>
+
+    <p>A referrer restriction would break it, because a server-to-server request sends no referrer.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Costs</p>
+      <p>Gemini has a free tier that covers light use. Beyond it you are billed per token by Google, not by us. See <a href="../admin/third-party-costs.html">Third-Party Service Costs</a>.</p>
+    </div>
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Generated text still needs review</p>
-      <p>AI-written product copy can be confidently wrong about specifications, ingredients or compliance claims. Treat it as a first draft and check it before publishing.</p>
+      <p>AI-written product copy can be confidently wrong about specifications, ingredients or compliance claims — and wrong product information is a refund and a complaint, not just a typo. Treat every generated description as a first draft and check it before publishing.</p>
     </div>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
@@ -224,8 +256,9 @@ curl -4 ifconfig.co   # IPv4</code></pre>
         <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted by referrer instead of by server IP</td><td>Enable Distance Matrix; restrict the Place key by IP address</td></tr>
         <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
         <tr><td>Distance lookups failed after a server migration</td><td>Place key still restricted to the old server IP</td><td>Update the IP restriction</td></tr>
-        <tr><td>Delivery charges wrong after switching provider</td><td>Cached config</td><td>Visit <code>/clear</code> and retest</td></tr>
         <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Apply the restrictions above and regenerate the key</td></tr>
+        <tr><td>"Generate with AI" does nothing</td><td>Gemini key blank, or Generative Language API not enabled</td><td>Add the key; enable the API</td></tr>
+        <tr><td>AI generation fails only from the server</td><td>Gemini key restricted by referrer instead of IP</td><td>Switch it to an IP address restriction</td></tr>
       </tbody>
     </table>
     </div>
@@ -241,6 +274,7 @@ curl -4 ifconfig.co   # IPv4</code></pre>
       <li class="task-item"><input type="checkbox" disabled> Budget alert configured</li>
       <li class="task-item"><input type="checkbox" disabled> Zone map draws correctly</li>
       <li class="task-item"><input type="checkbox" disabled> Test address returns a sensible delivery charge</li>
+      <li class="task-item"><input type="checkbox" disabled> If using AI generation: Gemini key added, Generative Language API enabled, key restricted to that API and your server IP</li>
     </ul>
   </main>
 </div>

@@ -26,6 +26,7 @@ Most services have a free allowance that comfortably covers development and a sm
 | SMTP email | Order mail, password reset | No — password reset depends on it |
 | Payment gateway | Online payment | Yes, if you sell Cash on Delivery only |
 | Pusher | Live chat, if you do not self-host Reverb | Yes — Reverb is free and bundled |
+| Gemini API key | AI-written product, blog and SEO content | Yes — entirely optional |
 
 ## Maps
 
@@ -97,6 +98,26 @@ Sender IDs and message templates must be pre-registered on a DLT platform before
 Every OTP is a paid message, and an automated signup script can generate thousands overnight. Set a spending cap in your provider's dashboard and enable alerts before you go live.
 :::
 
+## Gemini — AI content generation
+
+Optional. Powers the "Generate with AI" buttons for product descriptions, blog content, SEO meta text and automatic field translation. With no key those buttons do nothing and everything is written by hand — nothing else in SnapBuy is affected.
+
+SnapBuy uses the **Generative Language API** with the `gemini-2.5-flash` model.
+
+| | |
+| --- | --- |
+| **Free tier** | Yes — `gemini-2.5-flash` has a free tier suitable for light use |
+| **Paid input** | About $0.30 per 1M tokens |
+| **Paid output** | About $2.50 per 1M tokens |
+
+:::tip Token cost in practice
+A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most stores never leave the free tier.
+:::
+
+:::warning Restrict the key
+The key is used from your server. Restrict it to the **Generative Language API** only, and to your server's IP address. An unrestricted key can be spent against your billing account by anyone who obtains it. See [Map & API Keys](/docs/admin/map-api-keys).
+:::
+
 ## Real-time chat
 
 | Option | Cost |
@@ -126,8 +147,6 @@ There is no charge for configuring a gateway in SnapBuy — you pay the provider
 
 See [Server Requirements](/docs/admin/server-requirements). SnapBuy requires a **VPS or dedicated server**. Budget shared hosting cannot run it, because the web portal is server-rendered for SEO and the panel needs long-running background processes.
 
-Expect from roughly $10–$40 per month for a VPS sized for a new store, rising with traffic and catalogue size.
-
 ## Summary
 
 | Cost | When it starts |
@@ -139,8 +158,46 @@ Expect from roughly $10–$40 per month for a VPS sized for a new store, rising 
 | Firebase phone OTP | From the first verification, on the Blaze plan |
 | SMS gateway | Per message sent |
 | Pusher | Only past the free Sandbox limits, and only if you choose it over Reverb |
+| Gemini AI generation | Only past the free tier, and only if you enable it at all |
 | Payment gateway | Per transaction, as a percentage |
 
-:::info Prices change
-Every figure here was accurate at the time of writing and is provided for planning only. Confirm current rates on each provider's own pricing page before committing.
+---
+
+## Third-party services and additional costs — disclaimer
+
+:::danger Additional fees may apply
+SnapBuy integrates with third-party services that are **not included with your purchase**. Those providers may charge you directly, depending on your usage, your region and the plan you select.
+:::
+
+### What your purchase covers
+
+Your purchase covers the **source code, the application features and the components listed in the item package**, and nothing beyond that.
+
+Charges arising from third-party services — APIs, cloud infrastructure, SMS delivery, maps, AI services, hosting, domains, email, payment gateways or any other external provider — are **the buyer's responsibility** and are not part of the item price.
+
+### Services SnapBuy integrates with
+
+| Service | Used for | What you need |
+| --- | --- | --- |
+| **Google Gemini AI** | AI-generated blog posts, product descriptions, SEO content and multilingual translation | Your own Gemini API credentials. Usage may be charged under Google's pricing. |
+| **Google Maps Platform** | Maps, geolocation, coordinate lookup and place search/autocomplete across the mobile apps, web portal and admin panel | Your own Google Maps API credentials. Usage may be charged under Google Maps Platform pricing. |
+| **Firebase Authentication (OTP login)** | Mobile number authentication and OTP verification | A Firebase project, and an active **Blaze** pay-as-you-go plan for SMS verification. Charges vary by destination country. |
+| **Firebase Cloud Messaging** | Push notifications | A Firebase project. No per-message fee at the time of writing. |
+| **SMS gateways** (Twilio, MSG91, Fast2SMS, 2Factor) | OTP and transactional SMS | Your own account and credentials with the provider. Delivery is billed by them, and varies by country, region and volume. |
+| **Payment gateways** | Taking online payment | Your own merchant account. Transaction fees are set by the provider. |
+| **Pusher** *(optional)* | Real-time chat, if you do not self-host Reverb | Your own Pusher account beyond the free tier. |
+| **Hosting, domain, email** | Running the platform | Billed by your hosting provider, registrar and mail provider. |
+
+### Buyer responsibility
+
+Review the pricing and requirements of every third-party service you intend to use **before** you purchase and before you go to production.
+
+We do not charge, control or receive any part of these fees, and we are not responsible for amounts billed by Google, Firebase, Twilio or any other SMS provider, payment gateways, hosting providers, email providers, domain registrars or any other third party.
+
+By purchasing SnapBuy you acknowledge that third-party service fees, API usage costs, SMS charges, hosting expenses and related running costs are **separate from the purchase price** and payable directly to those providers.
+
+:::warning Pricing and free tiers can change without notice
+Third-party pricing, free-tier allowances, billing requirements and regional availability are set by those providers and may change at any time. Every figure on this page was accurate when written and is offered for planning only.
+
+Confirm the current terms on each provider's own pricing page before deployment and before going live.
 :::
