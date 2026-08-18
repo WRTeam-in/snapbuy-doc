@@ -36,89 +36,375 @@
     <h3 id="play-prerequisites">Prerequisites</h3>
     <ul>
       <li>A <strong>Google Play Developer Account</strong> (one-time $25 registration fee).</li>
-      <li>Store listing assets: app icon (512×512 px), feature graphic (1024×500 px), and at least 2 phone screenshots (minimum 1920×1080 px, 16:9 ratio).</li>
-      <li>A <strong>Privacy Policy URL</strong> — see <a href="policy.html">Privacy Policy / Terms</a>.</li>
+      <li>Your Flutter app ready for release.</li>
       <li>Basic comfort with the command line/terminal.</li>
+      <li>Required assets:
+        <ul>
+          <li>App icon (512×512 px)</li>
+          <li>Feature graphic (1024×500 px)</li>
+          <li>Screenshots for different devices (Phone, Tablet)</li>
+          <li>Privacy Policy URL — see <a href="policy.html">Privacy Policy / Terms</a></li>
+          <li>Short description (up to 80 characters)</li>
+          <li>Full description (up to 4000 characters)</li>
+          <li>Promotional video (optional)</li>
+        </ul>
+      </li>
     </ul>
 
+    <h3 id="play-account-setup">Developer Account Setup</h3>
+    <ol>
+      <li>Visit <a href="https://play.google.com/console">Google Play Console</a>.</li>
+      <li>Choose your account type:
+        <ul>
+          <li><strong>Individual developer</strong> — additional testing requirements apply.</li>
+          <li><strong>Organization</strong> — requires a D-U-N-S Number.</li>
+        </ul>
+      </li>
+      <li>Complete registration: pay the $25 fee, verify your identity, set up a payment profile, provide contact information, and accept the developer agreement.</li>
+    </ol>
+    <div class="admonition admonition--note">
+      <p class="admonition__title">Note — Organization accounts</p>
+      <p>Obtaining a D-U-N-S Number can take 1–30 business days. You'll also need to submit business verification documents and organization details.</p>
+    </div>
+
     <h3 id="play-versioning">Version the Release</h3>
-    <p>In <code>pubspec.yaml</code>, the version is written as <code>version_name+version_code</code>, for example:</p>
-    <pre><code class="language-yaml">version: 1.0.0+1</code></pre>
+    <p>In <code>pubspec.yaml</code>, the version is written as <code>version_name+version_code</code>:</p>
+    <pre><code class="language-yaml">version: 1.0.0+1  # Format: version_name+version_code</code></pre>
+    <ul>
+      <li><code>version_name</code> (<code>1.0.0</code>) — the public version number shown to users.</li>
+      <li><code>version_code</code> (<code>1</code>) — an internal number used by Play Store.</li>
+    </ul>
+    <p>Example sequence across releases:</p>
+    <pre><code>First release:    1.0.0+1
+Bug fix update:   1.0.1+2
+Feature update:   1.1.0+3
+Major update:     2.0.0+4</code></pre>
     <div class="admonition admonition--warning">
       <p class="admonition__title">Warning</p>
       <p>For every new release, you <strong>must</strong> increment <code>version_code</code> (the number after <code>+</code>) by at least 1. Play Console rejects an upload whose version code isn't higher than the last one, even if <code>version_name</code> changed.</p>
     </div>
 
+    <p>Also confirm <code>android/app/src/main/AndroidManifest.xml</code> has your app's display name and icon set:</p>
+    <pre><code class="language-xml">&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;application
+        android:label="Your App Name"
+        android:icon="@mipmap/ic_launcher"&gt;
+        &lt;!-- Your app configuration --&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</code></pre>
+
     <h3 id="play-signing">Sign the App</h3>
     <p>Generate an upload keystore (skip if you already have one):</p>
-    <pre><code class="language-bash">keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload</code></pre>
+    <pre><code class="language-bash"># Mac / Linux
+keytool -genkey -v -keystore YOUR-KEYSTORE-FILE.jks -keyalg RSA -keysize 2048 -validity 10000 -alias YOUR-ALIAS
+
+# Windows
+keytool -genkey -v -keystore YOUR-KEYSTORE-FILE.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias YOUR-ALIAS</code></pre>
+    <p>Follow the prompts to set a password and your details, then confirm. Store the keystore file securely and keep backup copies — it cannot be recovered if lost.</p>
+
+    <img src="../images/app/createJKSFile-a6db6304e084c6144d18542e6d58d045.png" alt="Terminal output from running the keytool -genkey command to create the upload keystore">
 
     <p>Create <code>android/key.properties</code> (never commit this file):</p>
-    <pre><code class="language-properties">storePassword=&lt;your-store-password&gt;
-keyPassword=&lt;your-key-password&gt;
+    <pre><code class="language-properties">storePassword=&lt;your keystore password&gt;
+keyPassword=&lt;your key password&gt;
 keyAlias=upload
-storeFile=&lt;path-to-upload-keystore.jks&gt;</code></pre>
+storeFile=&lt;path to your keystore file&gt;</code></pre>
 
-    <p>Build the release App Bundle:</p>
+    <img src="../images/app/createKeyProperties-02adfeea9e516d09515f778e28c6b285.png" alt="android/key.properties file with storePassword, keyPassword, keyAlias, and storeFile fields, shown in the project tree next to android.jks">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Android Developer Verification</p>
+      <p>Once your signing key is generated, Google requires you to register your package name and signing key for developer verification before the app can go live.</p>
+    </div>
+
+    <p>Open <code>android/app/build.gradle</code> and confirm it loads <code>key.properties</code> — add this block near the top if it's missing:</p>
+    <pre><code class="language-groovy">def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}</code></pre>
+
+    <img src="../images/app/buildGradle-16925935d4bad495675bbf0f565b51ac.png" alt="android/app/build.gradle — keystoreProperties block loading key.properties, shown above the android { } block">
+
+    <p>Then confirm the <code>signingConfigs</code> block references it:</p>
+    <pre><code class="language-groovy">signingConfigs {
+    release {
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+        storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+        storePassword keystoreProperties['storePassword']
+    }
+}</code></pre>
+    <p>And that the release build type uses it:</p>
+    <pre><code class="language-groovy">signingConfig signingConfigs.release</code></pre>
+
+    <img src="../images/app/buildGradle1-ccbadcf8275aa62f26ab8a5b4ca530ce.png" alt="android/app/build.gradle — signingConfigs.release block and buildTypes.release referencing signingConfig signingConfigs.release">
+
+    <p>Save the file and sync your project to apply the changes.</p>
+
+    <h3 id="play-build">Build Your App</h3>
     <pre><code class="language-bash">flutter build appbundle --release</code></pre>
-
+    <p>Optional flags: <code>--obfuscate</code> to protect your code, <code>--split-debug-info</code> for crash reporting.</p>
     <p>The signed bundle is written to:</p>
     <pre><code>build/app/outputs/bundle/release/app.aab</code></pre>
 
-    <h3 id="play-listing">Store Listing</h3>
+    <h3 id="play-app-setup">App Setup — Create App Listing</h3>
+    <ol>
+      <li>Go to Play Console and click <strong>Create app</strong>.</li>
+      <li>Fill in basic information: app name, default language, app/game category, free/paid status, and declaration of app content.</li>
+    </ol>
+
+    <img src="../images/Firebase-image/createApp-64d0f88e22f0e39337806e24dcbb74bd.png" alt="Google Play Console — Create app screen with app name, language, and app/game selection">
+
+    <p>Once created, the Play Console dashboard tracks your setup progress across 12 steps:</p>
+
+    <img src="../images/app/setupApp-08bd1d059925efe0d2b33c93fa4fd1bc.png" alt="Play Console Dashboard — Set up your app checklist covering privacy policy, app access, ads, content rating, target audience, data safety, and more">
+
+    <h3 id="play-store-listing-content">Complete Store Listing</h3>
+    <p>Play Console's "Let us know about the content of your app" section covers several declarations:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Section</th><th>What's required</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Privacy Policy</strong></td><td>Required for all apps. Must be accessible without login. Cover data collection/usage, security practices, deletion policies, and contact information.</td></tr>
+        <tr><td><strong>App Access</strong></td><td>Specify if the app requires login; provide test account credentials if needed; list any special access or region restrictions.</td></tr>
+        <tr><td><strong>Ads Declaration</strong></td><td>Declare whether the app shows ads, which types (banner, interstitial, rewarded, native), and which ad networks are used.</td></tr>
+        <tr><td><strong>Content Rating</strong></td><td>Complete the questionnaire covering violence, sexual content, language, controlled substances, etc. Affects visibility and target audience.</td></tr>
+        <tr><td><strong>Target Audience</strong></td><td>Select target age groups; specify if the app is designed for children.</td></tr>
+        <tr><td><strong>Data Safety</strong></td><td>Declare all data collected (location, personal info, files/media, device info), why it's used (functionality, analytics, personalization, advertising), security measures, and sharing practices.</td></tr>
+        <tr><td><strong>News, Government, Financial, Health Apps</strong></td><td>Only if applicable — each requires extra verification, disclaimers, licensing, or documentation specific to that category.</td></tr>
+        <tr><td><strong>Categorization &amp; Contact</strong></td><td>Primary category, tags/keywords, and your contact details — email, phone, website, physical address.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Set the category and contact details under <strong>Grow users → Store presence → Store settings</strong>:</p>
+
+    <img src="../images/app/selectCategory-883beea5a725b5317c31f0af01ca0967.png" alt="Play Console Dashboard checklist — Select an app category and provide contact details step highlighted">
+    <img src="../images/app/editCategory-e99ae00a7c798ba4907b84ad23e29352.png" alt="Play Console Store settings — App category Edit link, and Store listing contact details section">
+
+    <h3 id="play-listing">Store Listing Assets</h3>
+
+    <p><strong>Text:</strong> App name (30 characters max), short description (80 characters max), full description (4000 characters max), and "what's new in this release" notes.</p>
+
     <div class="table-wrap">
     <table>
       <thead><tr><th>Asset</th><th>Requirement</th></tr></thead>
       <tbody>
         <tr><td>App icon</td><td>512×512 px PNG, max 1MB</td></tr>
-        <tr><td>Feature graphic</td><td>1024×500 px, max 15MB</td></tr>
+        <tr><td>Feature graphic</td><td>1024×500 px JPG/PNG, max 15MB</td></tr>
         <tr><td>Phone screenshots</td><td>Min 1920×1080 px, 16:9 ratio, at least 2 required</td></tr>
+        <tr><td>Tablet screenshots</td><td>Min 2048×1536 px, 16:9 ratio (if the app supports tablets)</td></tr>
       </tbody>
     </table>
     </div>
 
-    <h3 id="play-testing">Testing &amp; Release Track</h3>
-    <p>Upload the <code>.aab</code> under <strong>Testing → Internal testing</strong> first, then progress through <strong>Closed testing → Open testing → Production</strong>.</p>
+    <p>Go to <strong>Grow users → Store presence → Store listings</strong> and click <strong>Create default store listing</strong>:</p>
+
+    <img src="../images/app/createStoreListing-1a0ef7b0febda69c18fda9f9a8ed1016.png" alt="Play Console Store listings — Create default store listing button">
+
+    <p>Fill in the app name, descriptions, and upload the app icon, feature graphic, and phone/tablet/Chromebook screenshots:</p>
+
+    <img src="../images/app/storeListing-60e0ffcf4e040f6eaf0ffa42a06d1abc.png" alt="Play Console — Create default store listing form with App name, descriptions, Graphics (icon, feature graphic, video), Phone, Tablet, and Chromebook screenshot upload sections">
+
+    <p>You can also add a default language plus additional languages, with localized descriptions and language-specific screenshots via <strong>Manage translations → Change default language</strong>:</p>
+
+    <img src="../images/app/defaultLanguage-07dacfbaae8943df19dd6df2136ad13d.png" alt="Play Console Store listing — Manage translations dropdown with Change default language, Select languages, and Purchase translations options">
+
+    <h3 id="play-testing">Testing Setup</h3>
     <div class="admonition admonition--note">
       <p class="admonition__title">Note</p>
-      <p>Personal developer accounts created after <strong>November 13, 2023</strong> must run a closed test with a minimum of <strong>12 testers</strong> for <strong>14 consecutive days</strong> before Google allows a production release.</p>
+      <p>Personal developer accounts created after <strong>November 13, 2023</strong> must run a closed test with a minimum of <strong>12 testers</strong>, opted in for at least <strong>14 consecutive days</strong>, and complete an application process before Google grants production access.</p>
     </div>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Track</th><th>Purpose</th><th>Requirements</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Internal testing</strong></td><td>Quick distribution to trusted testers; builds ready within seconds</td><td>None — optional but recommended first step</td></tr>
+        <tr><td><strong>Closed testing</strong></td><td>Controlled group testing, policy compliance checks, bug fixing, feedback</td><td>App setup complete; 12+ opted-in testers for 14 consecutive days</td></tr>
+        <tr><td><strong>Open testing</strong></td><td>Public testing — anyone can join; app visible on Google Play</td><td>Production access granted</td></tr>
+        <tr><td><strong>Production</strong></td><td>Full public release, all Play Console features</td><td>Successful closed testing + approved production access application</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="play-production-release">Production Release</h3>
+    <ol>
+      <li>Go to <strong>Test and release → Production</strong> and click <strong>Create new release</strong>.</li>
+    </ol>
+
+    <img src="../images/app/createNewRelease-ca866e78571f123a85f72213b471ae68.png" alt="Play Console Production track — Create new release button, Releases tab showing no releases yet">
+
+    <ol start="2">
+      <li>Upload the app bundle (<code>.aab</code>) and add a release name and release notes.</li>
+    </ol>
+
+    <img src="../images/app/addReleaseFile-dd4817bc366ccb40efefdf7c5db8fd70.png" alt="Play Console Create production release — App bundles upload area, Release name field, and Release notes textarea">
+
+    <ol start="3">
+      <li>Select the countries you want this track to be available in.</li>
+    </ol>
+
+    <img src="../images/app/selectCountries-3bc89d82bab86850b6f4be0a3f11d01f.png" alt="Play Console Production — Countries / regions tab, Add countries / regions button">
+
+    <ol start="4">
+      <li>Configure a rollout percentage (you can release gradually rather than to 100% of users at once).</li>
+      <li>Review every section — store listing, content rating, data safety, app content — then submit for review.</li>
+    </ol>
+
+    <h3 id="play-post-release">Post-Release Tasks</h3>
+    <ul>
+      <li>Monitor app performance in Play Console.</li>
+      <li>Track user feedback and reviews.</li>
+      <li>Address bug reports promptly.</li>
+      <li>Plan and schedule future updates.</li>
+      <li>Keep policy compliance up to date.</li>
+    </ul>
 
     <h2 id="apple-app-store">2. Apple App Store</h2>
 
     <h3 id="ios-prerequisites">Prerequisites</h3>
     <ul>
       <li>An <strong>Apple Developer Program</strong> account ($99/year).</li>
+      <li>Your Flutter app ready for release.</li>
       <li>A <strong>Mac</strong> with Xcode installed.</li>
-      <li>App icon at <strong>1024×1024 px</strong>, plus required screenshots for each supported device size.</li>
-      <li>A <strong>Privacy Policy URL</strong> and an <strong>App Store Connect</strong> app record already created.</li>
+      <li>Required assets:
+        <ul>
+          <li>App icon (1024×1024 px)</li>
+          <li>Screenshots for different devices (iPhone, iPad)</li>
+          <li>Privacy Policy URL — see <a href="policy.html">Privacy Policy / Terms</a></li>
+          <li>App description</li>
+          <li>Keywords</li>
+          <li>Support URL</li>
+          <li>Marketing URL (optional)</li>
+        </ul>
+      </li>
+      <li>An <strong>App Store Connect</strong> account set up.</li>
     </ul>
 
+    <h3 id="ios-account-setup">Developer Account Setup</h3>
+    <ol>
+      <li>Visit the <a href="https://developer.apple.com/programs/">Apple Developer Program</a> page.</li>
+      <li>Enroll in the program: pay the $99 annual fee, complete organization verification, set up a payment profile, and provide contact information.</li>
+      <li>In <a href="https://appstoreconnect.apple.com/">App Store Connect</a>: create the app record, set up basic information, and configure app capabilities.</li>
+    </ol>
+
     <h3 id="ios-versioning">Version the Release</h3>
-    <p>Same <code>version_name+version_code</code> format in <code>pubspec.yaml</code> as Android. For every new release, increment the build number (the value after <code>+</code>) by at least 1.</p>
+    <p>Same <code>version_name+version_code</code> format in <code>pubspec.yaml</code> as Android:</p>
+    <pre><code class="language-yaml">version: 1.0.0+1  # Format: version_name+version_code</code></pre>
+    <ul>
+      <li><code>version_name</code> (<code>1.0.0</code>) — the public version number shown to users.</li>
+      <li><code>version_code</code> (<code>1</code>) — an internal build number used by the App Store.</li>
+    </ul>
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Warning</p>
+      <p>For every new release, you <strong>must</strong> increment the build number (the value after <code>+</code>) by at least 1.</p>
+    </div>
+
+    <h3 id="ios-signing-certificate">Generate App Signing Certificate</h3>
+    <ol>
+      <li>Open Xcode, go to <strong>Xcode → Settings → Accounts</strong>, and add your Apple ID.</li>
+      <li>Create certificates: a <strong>Development</strong> certificate and a <strong>Distribution</strong> certificate.</li>
+      <li>Create provisioning profiles: a <strong>Development</strong> profile and an <strong>App Store</strong> profile.</li>
+    </ol>
 
     <h3 id="ios-build">Build the IPA</h3>
     <pre><code class="language-bash">flutter build ipa --release</code></pre>
-    <p>Add <code>--obfuscate --split-debug-info=&lt;dir&gt;</code> to the command if you want the release build obfuscated. The resulting archive is written to:</p>
+    <p>Optional flags: <code>--obfuscate</code> to protect your code, <code>--split-debug-info</code> for crash reporting. The resulting archive is written to:</p>
     <pre><code>build/ios/ipa/YourApp.ipa</code></pre>
 
     <h3 id="ios-connect">App Store Connect Setup</h3>
+
+    <p><strong>Create the app record:</strong></p>
     <ol>
-      <li>Create the app record using your <strong>Bundle ID</strong> (format <code>com.companyname.appname</code> — see <a href="change-package-name.html">Package Name</a>).</li>
-      <li>Fill in app information: category, pricing, screenshots, description, keywords, and privacy details.</li>
+      <li>Log in to <a href="https://appstoreconnect.apple.com/">App Store Connect</a> and click <strong>My Apps</strong>.</li>
+      <li>Click <strong>+</strong> to create a new app.</li>
+      <li>Fill in basic information: app name, Bundle ID, SKU, and user access.</li>
     </ol>
+
+    <img src="../images/Firebase-image/1-383814911b5bac1305291d778a4da023.png" alt="App Store Connect — New App dialog with Platforms, Name, Primary Language, Bundle ID, SKU, and User Access fields">
+
+    <p><strong>Choose or create a Bundle ID:</strong></p>
+    <ol>
+      <li>In the Apple Developer portal, go to <strong>Certificates, Identifiers &amp; Profiles → Identifiers</strong>.</li>
+      <li>Click <strong>+</strong> to register a new Bundle ID if you don't already have one (format <code>com.companyname.appname</code> — see <a href="change-package-name.html">Package Name</a>).</li>
+      <li>Select the capabilities your app requires, then register the Bundle ID.</li>
+      <li>Use this same Bundle ID in both Xcode and App Store Connect.</li>
+    </ol>
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>Bundle ID creation can also happen automatically via Xcode if you enable automatic signing in your project settings.</p>
+    </div>
+
+    <p><strong>Complete App Information:</strong></p>
+    <ul>
+      <li>Privacy Policy URL, Support URL, Marketing URL (optional), App Store category, age rating.</li>
+      <li><strong>Pricing and Availability:</strong> price tier, available territories, release date.</li>
+      <li><strong>Screenshots:</strong> iPhone screenshots (6.5" display), iPad screenshots (if supported), App Preview videos (optional).</li>
+      <li><strong>App description:</strong> name (30 characters max), subtitle (30 characters max), keywords (100 characters max), description (4000 characters max), and "What's New in This Version" notes.</li>
+    </ul>
+
+    <p><strong>App Review Information</strong> — required so Apple's reviewers can test the app:</p>
+    <ul>
+      <li>Contact information: first name, last name, phone number, email address.</li>
+      <li>Demo account (if login is required): username/email, password, any special instructions.</li>
+      <li>Notes for the review team: app functionality description, special setup instructions, test account details, known issues or clarifications, and beta/sandbox environment details.</li>
+    </ul>
+
+    <p><strong>App Privacy:</strong> enter your privacy policy URL and complete the data-collection questionnaire — declare any data types your app collects and select the matching options.</p>
 
     <h3 id="ios-submit">Sign, Archive &amp; Submit</h3>
     <ol>
-      <li>Open the project in Xcode and confirm your signing team and provisioning profile under <strong>Signing &amp; Capabilities</strong>.</li>
-      <li>Archive the build: <strong>Product → Archive</strong>.</li>
-      <li>Use the Organizer window to <strong>upload</strong> the archive to App Store Connect.</li>
-      <li>In App Store Connect, attach the uploaded build to your release and <strong>submit for review</strong>.</li>
+      <li>Open the <code>ios</code> folder in Xcode.</li>
+      <li>In the project navigator, select <strong>Runner</strong> under Targets, go to <strong>Signing &amp; Capabilities</strong>, and sign in with your Apple Developer account.</li>
+      <li>Update the version and build number — Xcode's <strong>Generated</strong> config file under <code>Flutter/Generated</code> shows the current <code>FLUTTER_BUILD_NAME</code> and <code>FLUTTER_BUILD_NUMBER</code> (read-only, generated from <code>pubspec.yaml</code>):</li>
+    </ol>
+
+    <img src="../images/app/delivery/appVersion1.png" alt="Xcode — Flutter/Generated config file showing FLUTTER_BUILD_NAME and FLUTTER_BUILD_NUMBER">
+
+    <ol start="4">
+      <li>In <strong>Build Settings</strong>, scroll down to the <strong>User-Defined</strong> section and update <code>FLUTTER_BUILD_NAME</code> and <code>FLUTTER_BUILD_NUMBER</code> if you need to override them directly:</li>
+    </ol>
+
+    <img src="../images/app/delivery/appVersion2.png" alt="Xcode — Runner target Build Settings, User-Defined section with FLUTTER_BUILD_NAME and FLUTTER_BUILD_NUMBER highlighted">
+
+    <ol start="5">
+      <li>Select <strong>Any iOS Device</strong> as the build target.</li>
+      <li>Go to <strong>Product → Archive</strong>. Once the archive completes, proceed with the upload to App Store Connect.</li>
+      <li>In App Store Connect, select the build you uploaded from Xcode and click <strong>Add for Review</strong> to submit it.</li>
     </ol>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Warning</p>
       <p>Safeguard your signing certificates and provisioning profiles — losing them means regenerating and re-registering test devices. Thoroughly test the release build before submitting, and monitor the review status in App Store Connect.</p>
+    </div>
+
+    <h3 id="ios-post-release">Post-Release Tasks</h3>
+    <ul>
+      <li>Monitor app performance.</li>
+      <li>Track user feedback.</li>
+      <li>Address bug reports.</li>
+      <li>Plan future updates.</li>
+      <li>Maintain compliance with App Store guidelines.</li>
+    </ul>
+
+    <h3 id="ios-troubleshooting">Troubleshooting</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Issue</th><th>Check</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Build fails</strong></td><td>Flutter version, dependency versions, Xcode version, signing configuration, bundle identifier</td></tr>
+        <tr><td><strong>Upload issues</strong></td><td>Certificates, version number, asset validity, bundle size, API compatibility</td></tr>
+        <tr><td><strong>Review rejection</strong></td><td>Read the rejection reason carefully, make the necessary changes, update compliance, and resubmit</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Tip</p>
+      <p>The first deployment usually takes the longest — subsequent updates go faster once certificates, profiles, and the App Store Connect record already exist.</p>
     </div>
   </main>
 </div>
