@@ -32,6 +32,9 @@
       <li><strong>Firebase Project ID</strong> — Project Settings → General tab → Project ID.</li>
       <li><strong>Service Account File</strong> — Project Settings → Service accounts tab → click <strong>Generate new private key</strong> to download a JSON file.</li>
     </ol>
+
+    <img src="../images/Firebase-image/notifications-firebase-ac05dc00929db579f2f3c2a1358833ee.png" alt="Firebase Project settings — Service accounts tab with Generate new private key button">
+
     <p>Upload the downloaded JSON file and enter the Project ID in your <strong>Admin Panel → Settings → Firebase Settings</strong> to complete notification setup.</p>
 
     <div class="admonition admonition--warning">
@@ -56,6 +59,8 @@
       <li>Replace or add <code>GoogleService-Info.plist</code> at <code>ios/Runner/GoogleService-Info.plist</code>.</li>
     </ol>
 
+    <img src="../images/Firebase-image/notifications-xcode-capabilities-5d67a7f2079bcf93919da0833c72dc51.png" alt="Xcode Signing and Capabilities — Push Notifications and Background Modes (Background fetch, Remote notifications)">
+
     <h3 id="apns">APNs Authentication</h3>
     <p>Firebase needs an APNs credential to deliver notifications to iOS devices. Two methods are supported:</p>
 
@@ -63,10 +68,22 @@
     <ol>
       <li>Log in to the <a href="https://developer.apple.com/account">Apple Developer Portal</a>.</li>
       <li>Under <strong>Certificates, Identifiers &amp; Profiles → Keys</strong>, create a new key with <strong>Apple Push Notifications service (APNs)</strong> enabled.</li>
+    </ol>
+
+    <img src="../images/Firebase-image/notifications-apn-3-2c2a46d5316ed295002ba4a2ba9f8bc4.png" alt="Apple Developer Configure key — APNs Authentication Key name and Apple Push Notifications service checkbox">
+
+    <ol start="3">
       <li>Download the <code>.p8</code> file — it can only be downloaded once, so store it safely.</li>
       <li>Note the <strong>Key ID</strong> and your <strong>Team ID</strong> (found in your Apple Developer account's Membership details).</li>
+    </ol>
+
+    <img src="../images/Firebase-image/notifications-apn-4-628dccd3497b62a42b9781651983477b.png" alt="Apple Developer — key created confirmation showing the Key ID">
+
+    <ol start="5">
       <li>In Firebase Console, go to <strong>Project Settings → Cloud Messaging → Apple app configuration</strong> and upload the <code>.p8</code> file with its Key ID and Team ID.</li>
     </ol>
+
+    <img src="../images/Firebase-image/notifications-firebase-p8-755bf77c1c710f11f3ebd2a8bd301df0.png" alt="Firebase Cloud Messaging — Upload APNs Auth key dialog with Key ID and Team ID fields">
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Tip</p>
@@ -79,8 +96,11 @@
       <li>In Apple Developer Portal, generate a Development or Production SSL certificate using the CSR.</li>
       <li>Download the certificate and export it as a <code>.p12</code> file from Keychain Access.</li>
       <li>Download and install the matching Provisioning Profile in Xcode.</li>
-      <li>Upload the <code>.p12</code> file(s) to Firebase Console under <strong>Cloud Messaging → Apple app configuration</strong>.</li>
+      <li>Upload the <code>.p12</code> file(s) to Firebase Console under <strong>Cloud Messaging → Apple app configuration</strong> — separate uploads for debug and production certificates.</li>
     </ol>
+
+    <img src="../images/Firebase-image/notifications-firebase-p12-1-340a910a4068ce7454950dd7cc09bcd6.png" alt="Firebase Cloud Messaging — Upload your debug APNs certificate dialog">
+    <img src="../images/Firebase-image/notifications-firebase-p12-2-b2438ffb81f6451a3b726998ae872878.png" alt="Firebase Cloud Messaging — Upload your production APNs certificate dialog">
   </main>
 </div>
 

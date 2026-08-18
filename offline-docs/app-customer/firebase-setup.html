@@ -43,14 +43,22 @@
 
     <h2 id="create-firebase-project">2. Create a Firebase Project</h2>
     <ol>
-      <li>Open the <a href="https://console.firebase.google.com/">Firebase Console</a> and click <strong>Create a Project</strong>.</li>
+      <li>Open the <a href="https://console.firebase.google.com/">Firebase Console</a> and click <strong>Create a Firebase project</strong>.</li>
+    </ol>
+
+    <img src="../images/Firebase-image/firebase1-c0a7b7623e8bbb84dcdc0b1375d8bb6c.png" alt="Firebase Console — Create a Firebase project card">
+
+    <ol start="2">
       <li>Enter your project name (e.g. <code>SnapBuy</code>) and press <strong>Continue</strong>.</li>
-      <li>Press <strong>Continue</strong> on the next screen (Gemini / Analytics options — optional).</li>
+    </ol>
+
+    <img src="../images/Firebase-image/firebase2-4fd7030e0d6ea483c6c794ab07087378.png" alt="Firebase Console — name your project">
+
+    <ol start="3">
+      <li>Press <strong>Continue</strong> on the next screen (Gemini AI assistance — optional, enabled by default).</li>
       <li>Click <strong>Create Project</strong> and wait for setup to complete.</li>
       <li>Once done, press <strong>Continue</strong> into the project dashboard.</li>
     </ol>
-
-    <img src="../images/web-firebase-image/step1.png" alt="Create a Firebase project — name your project">
 
     <h2 id="firebase-authentication">3. Enable Firebase Authentication</h2>
 
@@ -60,6 +68,8 @@
       <li>Go to <strong>Authentication → Sign-in method</strong>.</li>
       <li>Click <strong>Add New Provider</strong> and enable the sign-in methods you need (e.g. Apple, Phone, Google).</li>
     </ol>
+
+    <img src="../images/Firebase-image/firebase15-69f89fd04165bb63b486b5c7f4d9e693.png" alt="Firebase Authentication — Select a sign-in provider dialog with Phone, Google, Apple highlighted">
 
     <div class="admonition admonition--note">
       <p class="admonition__title">Note</p>
@@ -74,9 +84,16 @@
       <li>Add the regions where you want to enable SMS authentication for OTP login.</li>
     </ol>
 
+    <img src="../images/Firebase-image/firebase20-316cf72c46503276e85f23079c360032.png" alt="Firebase Authentication Settings — SMS region policy, Allow selected with a region added">
+
     <h2 id="register-flutter-app">4. Create a Firebase App for Flutter</h2>
     <ol>
-      <li>Select <strong>Flutter</strong> as the app platform when adding a new app in Firebase Console.</li>
+      <li>On the project overview page, click the <strong>Flutter</strong> icon under "Add an app to get started".</li>
+    </ol>
+
+    <img src="../images/Firebase-image/firebase6-4875ca9818db4046c8a8d7b1d7e2c596.png" alt="Firebase project overview — Add an app to get started, Flutter icon highlighted">
+
+    <ol start="2">
       <li>Press <strong>Next</strong> to continue through the wizard.</li>
     </ol>
 
@@ -86,6 +103,11 @@
       <li>Run:
         <pre><code class="language-bash">firebase login</code></pre>
       </li>
+    </ol>
+
+    <img src="../images/Firebase-image/firebase7-cd8dbc8eef5c9d279f532ff52baada9b.png" alt="Terminal — running firebase login command">
+
+    <ol start="3">
       <li>A browser window opens — log in with your Firebase account.</li>
       <li>If prompted to allow Firebase to collect CLI usage data, answer as you prefer and press Enter.</li>
     </ol>
