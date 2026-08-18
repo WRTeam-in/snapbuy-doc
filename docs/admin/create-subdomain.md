@@ -1,75 +1,50 @@
 ---
 id: create-subdomain
-title: Create a Subdomain
+title: Domain, DNS & SSL
 sidebar_position: 3
 ---
 
-# Create a Subdomain
+# Domain, DNS & SSL
 
-SnapBuy's admin panel is usually installed on its own subdomain, separate from the customer-facing website. A typical layout:
+The admin panel is normally installed on its own hostname, separate from the customer-facing storefront.
 
 | Address | What runs there |
 | --- | --- |
-| `https://yourstore.com` | Web Portal (customer storefront) |
-| `https://admin.yourstore.com` | **Admin Panel** — this documentation |
+| `https://yourstore.com` | Web Portal — the customer storefront |
+| `https://admin.yourstore.com` | **Admin Panel and API** |
 
-Keeping them apart means the panel and the storefront can be updated, secured and backed up independently. The mobile apps talk to the **admin panel URL**, so pick something short and permanent.
+Both can live on the same VPS. Separate hostnames let you update, secure and back them up independently, and keep the panel out of your public search results.
 
-:::warning Choose the URL carefully
-The panel URL is written into the Customer App, the Delivery Boy App and the Web Portal configuration. Changing it later means rebuilding and re-publishing both apps. Decide once, then keep it.
+:::danger Choose this URL once
+The panel URL is written into the Web Portal configuration and compiled into the Customer and Delivery Boy apps. Changing it later means editing the portal config and rebuilding and republishing both apps through the stores.
+
+Decide it before installing, and keep it.
 :::
 
-## Create the subdomain in cPanel
+## Point DNS at your server
 
-1. Log into cPanel.
-2. Under **Domains**, open **Subdomains** (on newer cPanel versions: **Domains → Create A New Domain**).
-3. In **Subdomain**, type `admin`.
-4. Choose your main domain from the dropdown.
-5. cPanel fills **Document Root** automatically as `public_html/admin`. Note this path — you will upload SnapBuy here.
-6. Click **Create**.
+Create two records with your DNS provider:
 
+| Type | Name | Value |
+| --- | --- | --- |
+| `A` | `@` | Your server's IPv4 address |
+| `A` | `admin` | Your server's IPv4 address |
 
-The subdomain becomes reachable within a few minutes, though DNS propagation can take up to a few hours.
+Add `AAAA` records as well if your server has IPv6.
 
-## Point the document root at `public/`
+Propagation is usually minutes but can take several hours. Verify before continuing:
 
-This is the step most installations get wrong.
-
-SnapBuy is a Laravel application. Everything above the `public/` folder — including your `.env` file with database passwords — **must not be reachable from a browser**.
-
-You have two safe options.
-
-### Option A — document root points directly at `public/` (recommended)
-
-Upload SnapBuy so that the structure is:
-
-```
-/home/username/snapbuy/          ← application files (.env, app/, storage/ …)
-/home/username/snapbuy/public/   ← document root of admin.yourstore.com
+```bash
+dig +short admin.yourstore.com
 ```
 
-In cPanel, edit the subdomain and set **Document Root** to `snapbuy/public`.
+The output should be your server's IP address.
 
-This is the most secure layout and needs no extra configuration.
+## Serve the panel from `public/`
 
-### Option B — upload everything into the subdomain folder
+SnapBuy is a Laravel application. Everything above the `public/` folder — including the `.env` file holding your database password, payment keys and application key — **must not be reachable from a browser**.
 
-If your host will not let you move the document root, upload all SnapBuy files into `public_html/admin/` and rely on the bundled `.htaccess` in the project root, which forwards requests into `public/`.
-
-:::danger Verify your `.env` is not public
-After installing with Option B, open `https://admin.yourstore.com/.env` in a browser. You must see a **403** or **404**. If the file contents appear, stop immediately — your database credentials and API keys are exposed. Switch to Option A or add this to the `.htaccess` in the project root:
-
-```apache
-<Files ".env">
-    Require all denied
-</Files>
-```
-:::
-
-
-## Nginx (VPS) server block
-
-If you run Nginx instead of cPanel, use a server block like this:
+The Nginx `root` directive therefore points at `public/`, not the project root:
 
 ```nginx
 server {
@@ -79,7 +54,6 @@ server {
 
     index index.php;
     charset utf-8;
-
     client_max_body_size 128M;
 
     location / {
@@ -90,6 +64,7 @@ server {
         fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
+        fastcgi_read_timeout 600;
     }
 
     location ~ /\.(?!well-known).* {
@@ -98,7 +73,7 @@ server {
 }
 ```
 
-Enable it and reload:
+Enable and reload:
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/snapbuy /etc/nginx/sites-enabled/
@@ -106,27 +81,59 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## Install an SSL certificate
+:::danger Verify `.env` is not public
+Once the site responds, open `https://admin.yourstore.com/.env` in a browser. You must see a **403** or **404**.
 
-The panel must run over HTTPS in production. Firebase web push, several payment gateways and the mobile apps all refuse plain HTTP.
+If the file contents appear, stop immediately — your database credentials, application key and payment gateway secrets are exposed to anyone who requests that URL. Correct the `root` directive so it ends in `/public` and reload Nginx.
+:::
 
-**cPanel:** open **SSL/TLS Status**, select the subdomain, click **Run AutoSSL**.
+## Apache alternative
 
-**VPS:**
+If you run Apache rather than Nginx, the equivalent virtual host is:
 
-```bash
-sudo certbot --nginx -d admin.yourstore.com
+```apache
+<VirtualHost *:80>
+    ServerName admin.yourstore.com
+    DocumentRoot /var/www/snapbuy/public
+
+    <Directory /var/www/snapbuy/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
 ```
 
-Confirm `https://admin.yourstore.com` loads with a padlock before you run the installer — the installer writes `APP_URL` from the address you visit it on, and a wrong scheme there causes mixed-content problems later.
+Enable `mod_rewrite`, then restart Apache. The bundled `.htaccess` handles routing.
 
-:::tip Install over HTTPS, not HTTP
-Visit the installer at `https://…` from the very first screen. If you install over `http://`, `APP_URL` is saved as `http://` and you will have to correct it in `.env` afterwards.
+## Install SSL
+
+HTTPS is mandatory in production. Firebase web push, several payment gateway callbacks and both mobile apps refuse plain HTTP.
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d admin.yourstore.com -d yourstore.com
+```
+
+Certbot installs the certificate, adds the HTTPS server block and sets up automatic renewal. Confirm renewal works:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+:::danger Install SSL before running the installer
+The installer saves whatever address you visit it on as `APP_URL`. Installing over `http://` writes the wrong scheme into your configuration and causes mixed-content errors, failed payment callbacks and blocked web push.
+
+Load `https://admin.yourstore.com` and confirm the padlock appears **before** you open the installer.
 :::
 
 ## Checklist
 
-- [ ] Subdomain created and resolving
-- [ ] Document root points at SnapBuy's `public/` folder
-- [ ] `https://admin.yourstore.com/.env` returns 403/404
-- [ ] SSL certificate installed and the padlock shows
+- [ ] DNS records resolve to your server
+- [ ] Nginx (or Apache) document root ends in `/public`
+- [ ] `https://admin.yourstore.com/.env` returns 403 or 404
+- [ ] SSL certificate installed and auto-renewal tested
+- [ ] The panel URL is final and recorded for the apps and web portal
+
+---
+
+**Previous:** [← Server Setup](/docs/installation/server-preparation) · **Next:** [PHP INI Settings →](/docs/admin/php-ini-settings)

@@ -26,20 +26,54 @@
 
     <p>Check every item on this page <strong>before</strong> you upload SnapBuy. The installation wizard runs the same checks and will refuse to continue if any of them fail.</p>
 
+    <h2 id="hosting-type">Hosting type</h2>
+
+    <p>SnapBuy requires a <strong>VPS, cloud instance or dedicated server with root access</strong>.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>Why a VPS is necessary</th></tr></thead>
+      <tbody>
+        <tr><td>Server-rendered storefront</td><td>The web portal renders pages on the server so search engines can index your products. That needs a continuously running Node process.</td></tr>
+        <tr><td>Background processing</td><td>Order emails, push notifications, referral credit and bulk imports run on a queue worker started by the scheduler.</td></tr>
+        <tr><td>Real-time chat</td><td>Laravel Reverb runs as a long-lived WebSocket process on its own port.</td></tr>
+        <tr><td>Installation</td><td>The installer runs the full migration and seeding in one request, beyond the execution limits of most entry-level plans.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Entry-level shared hosting will not run SnapBuy</p>
+      <p>Plans that offer only PHP and MySQL — with no shell access, no persistent processes and no Node runtime — cannot run the storefront's server-side rendering or the queue worker. SEO and notifications will not work.</p>
+      <p>Provision a VPS. See <a href="../installation/server-preparation.html">Server Setup</a> for a step-by-step build.</p>
+    </div>
+
+    <h3 id="suggested-sizing">Suggested sizing</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Store size</th><th>vCPU</th><th>RAM</th><th>Disk</th></tr></thead>
+      <tbody>
+        <tr><td>Launch / small catalogue</td><td>2</td><td>4 GB</td><td>50 GB SSD</td></tr>
+        <tr><td>Established store</td><td>4</td><td>8 GB</td><td>100 GB SSD</td></tr>
+        <tr><td>High volume</td><td>8+</td><td>16 GB+</td><td>200 GB+ SSD</td></tr>
+      </tbody>
+    </table>
+    </div>
+
     <h2 id="php-version">PHP version</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td><strong>Minimum PHP version</strong></td><td><strong>8.3.0</strong></td></tr>
-        <tr><td>Recommended</td><td>8.3</td></tr>
       </tbody>
     </table>
     </div>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">PHP 8.2 and below will not work</p>
-      <p>SnapBuy runs on Laravel 12, which itself requires PHP 8.3 or newer. There is no fallback build for older PHP.</p>
+      <p>SnapBuy requires PHP 8.3 or newer. There is no fallback build for older PHP.</p>
     </div>
 
     <h2 id="required-php-extensions">Required PHP extensions</h2>
@@ -72,9 +106,9 @@
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">How to enable an extension</p>
-      <p>On <strong>cPanel</strong>: <em>Select PHP Version → Extensions</em>, tick the missing one, save.
-      On <strong>VPS / Ubuntu</strong>: <code>sudo apt install php8.3-&lt;extension&gt;</code> then <code>sudo systemctl restart apache2</code> (or <code>php8.3-fpm</code>).
-      On <strong>XAMPP</strong>: open <code>php.ini</code>, remove the <code>;</code> in front of <code>extension=&lt;name&gt;</code>, restart Apache.</p>
+      <p>On <strong>Ubuntu / Debian</strong>: <code>sudo apt install php8.3-&lt;extension&gt;</code> then <code>sudo systemctl restart php8.3-fpm</code>.
+      On <strong>AlmaLinux / RHEL</strong>: <code>sudo dnf install php-&lt;extension&gt;</code> then restart PHP-FPM.
+      On a machine used for local development with XAMPP or Laragon: open <code>php.ini</code>, remove the <code>;</code> in front of <code>extension=&lt;name&gt;</code>, restart Apache.</p>
     </div>
 
     <h2 id="database">Database</h2>
@@ -115,10 +149,10 @@
     <pre><code>sudo chown -R www-data:www-data storage bootstrap/cache .env
 sudo chmod -R 755 storage bootstrap/cache</code></pre>
 
-    <p>Replace <code>www-data</code> with <code>apache</code> on CentOS/AlmaLinux, or with your cPanel username on shared hosting.</p>
+    <p>Replace <code>www-data</code> with <code>apache</code> on AlmaLinux / RHEL.</p>
 
     <h2 id="server-functions-that-must-not-be-disabled">Server functions that must not be disabled</h2>
-    <p>Shared hosts often disable PHP functions for "security". SnapBuy needs these:</p>
+    <p>Some hardened server images disable PHP functions by default. SnapBuy needs these:</p>
 
     <div class="table-wrap">
     <table>
@@ -161,6 +195,7 @@ sudo chmod -R 755 storage bootstrap/cache</code></pre>
 
     <h2 id="quick-pre-flight-checklist">Quick pre-flight checklist</h2>
     <ul>
+      <li class="task-item"><input type="checkbox" disabled> VPS or dedicated server with root access</li>
       <li class="task-item"><input type="checkbox" disabled> PHP 8.3 or newer</li>
       <li class="task-item"><input type="checkbox" disabled> All 17 extensions enabled</li>
       <li class="task-item"><input type="checkbox" disabled> Empty MySQL database created, with a user that has full privileges on it</li>
@@ -169,11 +204,12 @@ sudo chmod -R 755 storage bootstrap/cache</code></pre>
       <li class="task-item"><input type="checkbox" disabled> PHP INI limits raised — see <a href="../admin/php-ini-settings.html">PHP INI Settings</a></li>
       <li class="task-item"><input type="checkbox" disabled> Cron job available</li>
       <li class="task-item"><input type="checkbox" disabled> SSL installed</li>
+      <li class="task-item"><input type="checkbox" disabled> Node 20 LTS installed for the web portal</li>
     </ul>
 
     <hr>
 
-    <p><strong>Next:</strong> <a href="../admin/create-subdomain.html">Create a Subdomain →</a></p>
+    <p><strong>Next:</strong> <a href="../installation/server-preparation.html">Server Setup →</a></p>
   </main>
 </div>
 

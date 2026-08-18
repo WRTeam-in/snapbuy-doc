@@ -55,9 +55,16 @@
 
     <ol>
       <li>Go to <a href="https://console.firebase.google.com/">console.firebase.google.com</a> and sign in.</li>
-      <li>Click <strong>Add project</strong>, name it, and finish the wizard.</li>
-      <li>Google Analytics is optional.</li>
+      <li>Click <strong>Add project</strong>, enter a project name, and click <strong>Continue</strong>.</li>
     </ol>
+
+    <img src="../images/panel/firebase-create-project.png" alt="Name your Firebase project">
+
+    <ol start="3">
+      <li>The wizard offers <strong>Gemini in Firebase</strong> and <strong>Google Analytics</strong>. Both are optional and neither is needed for push notifications — enable or skip them, then click <strong>Create project</strong>.</li>
+    </ol>
+
+    <img src="../images/panel/firebase-analytics-optional.png" alt="Configure Google Analytics — optional">
 
     <h2 id="get-the-web-config-keys">Get the web config keys</h2>
 
@@ -65,7 +72,12 @@
       <li>In the Firebase console, open <strong>Project settings</strong> (the gear icon).</li>
       <li>Scroll to <strong>Your apps</strong>.</li>
       <li>Click the <strong>Web</strong> icon (<code>&lt;/&gt;</code>) to register a web app.</li>
-      <li>Give it a nickname and register it.</li>
+      <li>Give it a nickname and click <strong>Register app</strong>. <strong>Firebase Hosting is not required</strong> — the panel runs on your own server, so leave that box unchecked.</li>
+    </ol>
+
+    <img src="../images/panel/firebase-register-web-app.png" alt="Register your web app">
+
+    <ol start="5">
       <li>Firebase shows a <code>firebaseConfig</code> block.</li>
     </ol>
 
@@ -77,6 +89,14 @@
   messagingSenderId: "123456789012",
   appId: "1:123456789012:web:abc123"
 };</code></pre>
+
+    <p>If you close the wizard the same values are always available under <strong>Project settings → General → Your apps</strong> — select the app, then choose the <strong>Config</strong> option under <strong>SDK setup and configuration</strong>.</p>
+
+    <img src="../images/panel/firebase-web-config.png" alt="Firebase SDK config values under SDK setup and configuration">
+
+    <div class="admonition admonition--note">
+      <p>Values are blanked out in these screenshots. Use the ones shown in <strong>your own</strong> Firebase console.</p>
+    </div>
 
     <p>Copy these into the SnapBuy form:</p>
 
@@ -105,6 +125,8 @@
       <li>Copy the key string into <strong>VAPID Key</strong>.</li>
     </ol>
 
+    <img src="../images/panel/firebase-vapid-key.png" alt="Cloud Messaging settings and Web Push certificates">
+
     <div class="admonition admonition--info">
       <p class="admonition__title">Only needed for web push</p>
       <p>If you are not sending notifications to browsers, you can leave this blank. Mobile push does not use it.</p>
@@ -120,6 +142,8 @@
       <li>A <code>.json</code> file downloads.</li>
       <li>In SnapBuy, use the <strong>Firebase JSON File</strong> upload field to attach it, and save.</li>
     </ol>
+
+    <img src="../images/panel/firebase-service-account.png" alt="Generating the service account private key">
 
     <p>SnapBuy stores it at <code>config/firebase.json</code> on your server.</p>
 

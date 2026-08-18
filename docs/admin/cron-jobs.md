@@ -31,23 +31,19 @@ The page gives the same command in three formats, because hosting panels ask for
 | Format | Use it when |
 | --- | --- |
 | **Crontab line** | You have SSH and run `crontab -e` — interval included |
-| **Command only** | Your hosting panel has its own interval picker (cPanel, Plesk) |
+| **Command only** | Your control panel supplies its own interval picker |
 | **PHP script style** | The panel asks for a PHP file plus arguments |
 
-## Adding the cron job in cPanel
+## Registering the cron job
 
-1. Log into cPanel.
-2. Under **Advanced**, open **Cron Jobs**.
-3. Under **Common Settings**, choose **Once Per Minute (\* \* \* \* \*)**.
-4. Paste the **Command only** version from **Settings → Cron Jobs** into the **Command** box.
-5. Click **Add New Cron Job**.
+Open a shell on the server and run `crontab -e`, then paste the line shown on **Settings → Cron Jobs**. Save and exit — the entry takes effect immediately.
 
 
 :::warning Use the full path to PHP
 `php artisan schedule:run` often fails on shared hosting because the default `php` is an older version. Use the absolute binary path shown on the Cron Jobs page — for example `/usr/local/bin/ea-php83`. If the cron runs but nothing happens, this is usually why.
 :::
 
-## Adding the cron job over SSH
+## Verifying from the shell
 
 ```bash
 crontab -e
@@ -163,3 +159,7 @@ Keep the `schedule:run` cron job as well — the scheduler still drives cart rem
 :::tip Test without waiting
 Instead of waiting on the schedule, open **Settings → Cron Jobs** and press **Run now** on a task. The panel shows the exit code and output immediately, which tells you whether the task itself works — separating a broken task from a broken cron.
 :::
+
+---
+
+**Previous:** [← Database & Migrations](/docs/installation/database-migration) · **Next:** [Setup Guide →](/docs/admin/setup-guide)

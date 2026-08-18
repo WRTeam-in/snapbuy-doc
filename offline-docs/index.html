@@ -30,7 +30,6 @@
   <nav class="sidebar" id="sidebar-nav"></nav>
 
   <main class="content">
-    <p class="offline-note">You are reading the offline copy of the SnapBuy documentation. Everything on this page works without an internet connection.</p>
 
     <p>SnapBuy is a complete delivery &amp; shopping platform that includes an Admin Panel, Customer App, Delivery Boy App, and Web Portal.</p>
 
@@ -54,14 +53,24 @@
       </a>
     </div>
 
-    <h2 id="getting-started">Getting Started</h2>
-    <p>Choose a section from the sidebar to begin:</p>
+    <h2 id="before-you-start">Before you start</h2>
     <ul>
-      <li><a href="admin/overview.html">Admin Panel Setup</a></li>
-      <li><a href="app-customer/prerequisites.html">Customer App Setup</a></li>
-      <li><a href="app-delivery/prerequisites.html">Delivery Boy App Setup</a></li>
-      <li><a href="web/overview.html">Web Portal</a></li>
+      <li><a href="admin/demo-instructions.html">Demo Instructions</a> — try the live demo, with login details</li>
+      <li><a href="admin/third-party-costs.html">Third-Party Service Costs</a> — what Google Maps, Firebase, SMS and hosting cost outside the purchase price</li>
     </ul>
+
+    <h2 id="getting-started">Getting Started</h2>
+    <p>SnapBuy ships as four codebases. Install them in order:</p>
+    <ol>
+      <li><a href="installation/overview.html">Admin Panel → Installation</a> — provision the server and install the backend</li>
+      <li><a href="web/overview.html">Web Portal</a> — point the storefront at the panel</li>
+      <li><a href="app-customer/prerequisites.html">Customer App</a> and <a href="app-delivery/prerequisites.html">Delivery Boy App</a> — configure and build</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A VPS is required</p>
+      <p>The web portal is server-rendered for SEO and the panel runs background processes for notifications and chat. Entry-level shared hosting cannot run either. See <a href="admin/server-requirements.html">Server Requirements</a>.</p>
+    </div>
 
     <h2 id="requirements">Requirements</h2>
     <ul>
@@ -72,7 +81,7 @@
     </ul>
 
     <h2 id="third-party-services">Third-Party Services</h2>
-    <p>Some features rely on external services that are <strong>not included</strong> in the purchase price and may involve their own costs or usage limits:</p>
+    <p>Some features rely on external services that are <strong>not included</strong> in the purchase price and may involve their own costs or usage limits. Full breakdown with current pricing and free allowances: <a href="admin/third-party-costs.html">Third-Party Service Costs</a>.</p>
     <ul>
       <li><strong>Google Maps API</strong> — usage-based billing beyond the free tier</li>
       <li><strong>Firebase</strong> — Cloud Messaging is free; other Firebase services may have usage costs at scale</li>

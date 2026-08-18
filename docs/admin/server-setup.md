@@ -1,15 +1,15 @@
 ---
 id: server-setup
-title: Server Setup
+title: Panel Installation
 sidebar_position: 6
 ---
 
-# Server Setup
+# Panel Installation
 
 This is the live installation. Before starting, confirm you have completed:
 
 - [Server Requirements](/docs/admin/server-requirements)
-- [Create a Subdomain](/docs/admin/create-subdomain) — with SSL working
+- [Domain, DNS & SSL](/docs/admin/create-subdomain) — with SSL working
 - [PHP INI Settings](/docs/admin/php-ini-settings)
 
 :::danger Read this before you begin
@@ -18,20 +18,20 @@ The installer runs `migrate:fresh`, which **drops every table** in the database 
 
 ## Step 1 — Upload the files
 
-Upload the SnapBuy admin panel package to your server and extract it into the folder your subdomain points at.
-
-**Via cPanel File Manager**
-
-1. Open **File Manager** and go to your subdomain folder.
-2. Click **Upload** and select the `.zip`.
-3. Once uploaded, right-click the file → **Extract**.
-4. Delete the `.zip` afterwards.
-
-**Via SSH** (faster for large packages)
+Upload the SnapBuy admin panel package to your server and extract it into the directory your hostname points at.
 
 ```bash
-cd /home/username/snapbuy
+sudo mkdir -p /var/www/snapbuy
+cd /var/www/snapbuy
+# transfer the archive here, then:
 unzip snapbuy-admin.zip
+rm snapbuy-admin.zip
+```
+
+Transfer the archive with `scp` or SFTP:
+
+```bash
+scp snapbuy-admin.zip user@your-server:/var/www/snapbuy/
 ```
 
 
@@ -41,13 +41,21 @@ Uploading thousands of individual files over FTP is slow and often leaves files 
 
 ## Step 2 — Create the database and user
 
-In cPanel, open **MySQL® Databases**:
+If you followed [Server Setup](/docs/installation/server-preparation) this is already done. Otherwise:
 
-1. **Create New Database** — for example `username_snapbuy`.
-2. **Add New User** — create a dedicated user with a strong password.
-3. **Add User To Database** — grant **ALL PRIVILEGES**.
+```bash
+sudo mysql -u root -p
+```
 
-Write down the exact database name, username and password. cPanel prefixes both with your account name.
+```sql
+CREATE DATABASE snapbuy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'snapbuy'@'localhost' IDENTIFIED BY 'a-strong-password';
+GRANT ALL PRIVILEGES ON snapbuy.* TO 'snapbuy'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Record the database name, username and password — the installer asks for all three.
 
 
 :::warning Password characters
@@ -59,13 +67,14 @@ Use a password made of capitals, lowercase letters, numbers and `@` or `_`. Some
 The installer checks four paths. Set them before you start:
 
 ```bash
-cd /home/username/snapbuy
-chmod -R 755 storage bootstrap/cache
-chmod 644 .env
-chown -R username:username storage bootstrap/cache .env
+cd /var/www/snapbuy
+sudo chown -R www-data:www-data .
+sudo chmod -R 755 .
+sudo chmod -R 775 storage bootstrap/cache
+sudo chmod 644 .env
 ```
 
-On cPanel without SSH, use File Manager → select folder → **Permissions**.
+Replace `www-data` with `apache` on AlmaLinux / RHEL.
 
 ## Step 4 — Prepare `.env`
 
@@ -89,6 +98,8 @@ https://admin.yourstore.com
 
 You are redirected to the installation wizard.
 
+![Installation wizard welcome step](/images/panel/server-installer-welcome.png)
+
 
 :::tip Always use `https://`
 The installer saves whatever address you visit it on as `APP_URL`. Installing over `http://` bakes the wrong scheme into your configuration and causes mixed-content and callback failures later.
@@ -98,13 +109,15 @@ The installer saves whatever address you visit it on as `APP_URL`. Installing ov
 
 The wizard verifies your PHP version, all seventeen extensions, and the four writable paths.
 
+![Installer requirements step with all checks passing](/images/panel/server-installer-requirements.png)
+
 
 Every item must be green. If something fails:
 
 | Failure | Fix |
 | --- | --- |
-| PHP version | Switch to 8.3+ in **Select PHP Version** |
-| A red extension | Enable it in **Select PHP Version → Extensions** |
+| PHP version | Install PHP 8.3+ and point PHP-FPM at it |
+| A red extension | `sudo apt install php8.3-<name>` then restart PHP-FPM |
 | `.env` not writable | `chmod 644 .env` and check ownership |
 | `storage/` or `bootstrap/cache/` | `chmod -R 755` and check ownership |
 
@@ -112,13 +125,14 @@ Fix the issue, then click **Try again** — you do not need to restart the wizar
 
 ## Step 7 — Database and admin account
 
+![Installer database step](/images/panel/server-installer-database.png)
 
 | Field | What to enter |
 | --- | --- |
 | **Database Host** | `localhost` (or `127.0.0.1`) |
 | **Database Port** | `3306` |
-| **Database Name** | The full name including the cPanel prefix |
-| **Database Username** | The full username including the prefix |
+| **Database Name** | The database you created |
+| **Database Username** | The user you granted privileges to |
 | **Database Password** | The password you set |
 | **Admin Email** | The Super Admin login email |
 | **Admin Password** | Minimum 6 characters — use a strong one |
@@ -142,6 +156,8 @@ Migrations and seeders run inside a single request. On a slow shared host this c
 
 Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
 
+![Installer purchase code step](/images/panel/server-installer-purchase-code.png)
+
 
 :::warning "Invalid code supplied!"
 This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:
@@ -155,50 +171,28 @@ curl -I https://api.envato.com
 
 The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 7.
 
+![SnapBuy admin login screen after installation](/images/panel/server-installer-finish.png)
+
 
 ## Immediately after installing
 
-Three things must be done before the store is usable:
+Two things must be done before the store is usable:
 
 1. **[Set up the cron job](/docs/admin/cron-jobs)** — cart reminders, maintenance windows, scheduled home layouts and every queued job depend on it. Nothing warns you if this is missing.
 2. **Work through the [Setup Guide](/docs/admin/setup-guide)** — nine steps covering Country, Zone, Store, Home Builder, SMTP, Firebase, Map, Chat and Cron.
-3. **Secure the maintenance routes** — see below.
-
-### Secure the maintenance routes
-
-SnapBuy exposes several helper URLs that are **not behind a login**:
-
-| URL | What it does |
-| --- | --- |
-| `/clear` | Clears config, route, view and application caches |
-| `/migrate`, `/migration` | Runs pending database migrations |
-| `/generate_key` | Regenerates the application key |
-| `/linkstorage` | Recreates the `public/storage` symlink |
-| `/logs` | Opens the Laravel log viewer |
-| `/get_path` | Prints the server file path |
-
-They are useful for support, but `/logs` in particular can reveal file paths and error details to anyone who finds it.
-
-:::danger Restrict these in production
-Protect them with an IP allow-list or HTTP authentication in your web server configuration, for example:
-
-```apache
-<LocationMatch "^/(logs|migrate|migration|generate_key|get_path)">
-    Require ip 203.0.113.10
-</LocationMatch>
-```
-
-Replace the address with your own IP.
-:::
 
 ## Troubleshooting
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| "Could not connect to the database" | Wrong prefix, wrong host, or user not attached | Re-check the full prefixed names; confirm ALL PRIVILEGES |
+| "Could not connect to the database" | Wrong credentials, wrong host, or missing privileges | Re-check the names; confirm the user has ALL PRIVILEGES on that database |
 | "Could not connect" with correct details | `symlink` or `proc_open` disabled | Remove them from `disable_functions` in `php.ini` |
 | Blank page after the database step | PHP timeout mid-migration | Raise `max_execution_time` and `memory_limit`, empty the database, re-run |
 | Panel loads but every image is 404 | Storage symlink missing | Visit `https://admin.yourstore.com/linkstorage` once |
 | `500` on first login | Caches hold stale config | Visit `https://admin.yourstore.com/clear` |
 | Redirect loop at login | `APP_URL` scheme or host is wrong | Fix `APP_URL` in `.env`, then visit `/clear` |
 | Installer reappears after installing | `storage/installed` missing or storage not writable | `chmod -R 755 storage` and re-run the installer |
+
+---
+
+**Previous:** [← PHP INI Settings](/docs/admin/php-ini-settings) · **Next:** [Environment Configuration →](/docs/installation/environment-configuration)

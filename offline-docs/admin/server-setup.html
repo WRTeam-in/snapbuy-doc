@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Server Setup — SnapBuy Documentation</title>
+<title>Panel Installation — SnapBuy Documentation</title>
 <link rel="icon" href="../images/favicon.png" />
 <link rel="stylesheet" href="../style.css" />
 </head>
@@ -22,7 +22,7 @@
   <nav class="sidebar" id="sidebar-nav"></nav>
 
   <main class="content">
-    <h1>Server Setup</h1>
+    <h1>Panel Installation</h1>
 
     <p>This is the live installation. Before starting, confirm you have completed:</p>
     <ul>
@@ -37,19 +37,16 @@
     </div>
 
     <h2>Step 1 — Upload the files</h2>
-    <p>Upload the SnapBuy admin panel package to your server and extract it into the folder your subdomain points at.</p>
+    <p>Upload the SnapBuy admin panel package to your server and extract it into the directory your hostname points at.</p>
 
-    <p><strong>Via cPanel File Manager</strong></p>
-    <ol>
-      <li>Open <strong>File Manager</strong> and go to your subdomain folder.</li>
-      <li>Click <strong>Upload</strong> and select the <code>.zip</code>.</li>
-      <li>Once uploaded, right-click the file → <strong>Extract</strong>.</li>
-      <li>Delete the <code>.zip</code> afterwards.</li>
-    </ol>
+    <pre><code>sudo mkdir -p /var/www/snapbuy
+cd /var/www/snapbuy
+# transfer the archive here, then:
+unzip snapbuy-admin.zip
+rm snapbuy-admin.zip</code></pre>
 
-    <p><strong>Via SSH</strong> (faster for large packages)</p>
-    <pre><code>cd /home/username/snapbuy
-unzip snapbuy-admin.zip</code></pre>
+    <p>Transfer the archive with <code>scp</code> or SFTP:</p>
+    <pre><code>scp snapbuy-admin.zip user@your-server:/var/www/snapbuy/</code></pre>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Extract on the server, not locally</p>
@@ -57,14 +54,17 @@ unzip snapbuy-admin.zip</code></pre>
     </div>
 
     <h2>Step 2 — Create the database and user</h2>
-    <p>In cPanel, open <strong>MySQL® Databases</strong>:</p>
-    <ol>
-      <li><strong>Create New Database</strong> — for example <code>username_snapbuy</code>.</li>
-      <li><strong>Add New User</strong> — create a dedicated user with a strong password.</li>
-      <li><strong>Add User To Database</strong> — grant <strong>ALL PRIVILEGES</strong>.</li>
-    </ol>
+    <p>If you followed <a href="../installation/server-preparation.html">Server Setup</a> this is already done. Otherwise:</p>
 
-    <p>Write down the exact database name, username and password. cPanel prefixes both with your account name.</p>
+    <pre><code>sudo mysql -u root -p</code></pre>
+
+    <pre><code>CREATE DATABASE snapbuy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'snapbuy'@'localhost' IDENTIFIED BY 'a-strong-password';
+GRANT ALL PRIVILEGES ON snapbuy.* TO 'snapbuy'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+
+    <p>Record the database name, username and password — the installer asks for all three.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Password characters</p>
@@ -73,12 +73,13 @@ unzip snapbuy-admin.zip</code></pre>
 
     <h2>Step 3 — Set file permissions</h2>
     <p>The installer checks four paths. Set them before you start:</p>
-    <pre><code>cd /home/username/snapbuy
-chmod -R 755 storage bootstrap/cache
-chmod 644 .env
-chown -R username:username storage bootstrap/cache .env</code></pre>
+    <pre><code>cd /var/www/snapbuy
+sudo chown -R www-data:www-data .
+sudo chmod -R 755 .
+sudo chmod -R 775 storage bootstrap/cache
+sudo chmod 644 .env</code></pre>
 
-    <p>On cPanel without SSH, use File Manager → select folder → <strong>Permissions</strong>.</p>
+    <p>Replace <code>www-data</code> with <code>apache</code> on AlmaLinux / RHEL.</p>
 
     <h2>Step 4 — Prepare <code>.env</code></h2>
     <p>Copy <code>.env.example</code> to <code>.env</code>, then add this line:</p>
@@ -95,6 +96,8 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
 
     <p>You are redirected to the installation wizard.</p>
 
+    <img src="../images/panel/server-installer-welcome.png" alt="Installation wizard welcome step">
+
     <div class="admonition admonition--tip">
       <p class="admonition__title">Always use <code>https://</code></p>
       <p>The installer saves whatever address you visit it on as <code>APP_URL</code>. Installing over <code>http://</code> bakes the wrong scheme into your configuration and causes mixed-content and callback failures later.</p>
@@ -103,13 +106,15 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     <h2>Step 6 — Requirements check</h2>
     <p>The wizard verifies your PHP version, all seventeen extensions, and the four writable paths.</p>
 
+    <img src="../images/panel/server-installer-requirements.png" alt="Installer requirements step with all checks passing">
+
     <p>Every item must be green. If something fails:</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Failure</th><th>Fix</th></tr></thead>
       <tbody>
-        <tr><td>PHP version</td><td>Switch to 8.3+ in <strong>Select PHP Version</strong></td></tr>
-        <tr><td>A red extension</td><td>Enable it in <strong>Select PHP Version → Extensions</strong></td></tr>
+        <tr><td>PHP version</td><td>Install PHP 8.3+ and point PHP-FPM at it</td></tr>
+        <tr><td>A red extension</td><td><code>sudo apt install php8.3-&lt;name&gt;</code> then restart PHP-FPM</td></tr>
         <tr><td><code>.env</code> not writable</td><td><code>chmod 644 .env</code> and check ownership</td></tr>
         <tr><td><code>storage/</code> or <code>bootstrap/cache/</code></td><td><code>chmod -R 755</code> and check ownership</td></tr>
       </tbody>
@@ -120,14 +125,16 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
 
     <h2>Step 7 — Database and admin account</h2>
 
+    <img src="../images/panel/server-installer-database.png" alt="Installer database step">
+
     <div class="table-wrap">
     <table>
       <thead><tr><th>Field</th><th>What to enter</th></tr></thead>
       <tbody>
         <tr><td><strong>Database Host</strong></td><td><code>localhost</code> (or <code>127.0.0.1</code>)</td></tr>
         <tr><td><strong>Database Port</strong></td><td><code>3306</code></td></tr>
-        <tr><td><strong>Database Name</strong></td><td>The full name including the cPanel prefix</td></tr>
-        <tr><td><strong>Database Username</strong></td><td>The full username including the prefix</td></tr>
+        <tr><td><strong>Database Name</strong></td><td>The database you created</td></tr>
+        <tr><td><strong>Database Username</strong></td><td>The user you granted privileges to</td></tr>
         <tr><td><strong>Database Password</strong></td><td>The password you set</td></tr>
         <tr><td><strong>Admin Email</strong></td><td>The Super Admin login email</td></tr>
         <tr><td><strong>Admin Password</strong></td><td>Minimum 6 characters — use a strong one</td></tr>
@@ -155,6 +162,8 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     <h2>Step 8 — Purchase code</h2>
     <p>Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.</p>
 
+    <img src="../images/panel/server-installer-purchase-code.png" alt="Installer purchase code step">
+
     <div class="admonition admonition--warning">
       <p class="admonition__title">"Invalid code supplied!"</p>
       <p>This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:</p>
@@ -164,48 +173,21 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
     <h2>Step 9 — Finish</h2>
     <p>The wizard confirms the installation and sends you to the login page at <code>https://admin.yourstore.com</code>. Sign in with the admin email and password from Step 7.</p>
 
+    <img src="../images/panel/server-installer-finish.png" alt="SnapBuy admin login screen after installation">
+
     <h2>Immediately after installing</h2>
-    <p>Three things must be done before the store is usable:</p>
+    <p>Two things must be done before the store is usable:</p>
     <ol>
       <li><strong><a href="../admin/cron-jobs.html">Set up the cron job</a></strong> — cart reminders, maintenance windows, scheduled home layouts and every queued job depend on it. Nothing warns you if this is missing.</li>
       <li>Work through the <strong><a href="../admin/setup-guide.html">Setup Guide</a></strong> — nine steps covering Country, Zone, Store, Home Builder, SMTP, Firebase, Map, Chat and Cron.</li>
-      <li><strong>Secure the maintenance routes</strong> — see below.</li>
     </ol>
-
-    <h3 id="secure-the-maintenance-routes">Secure the maintenance routes</h3>
-    <p>SnapBuy exposes several helper URLs that are <strong>not behind a login</strong>:</p>
-
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>URL</th><th>What it does</th></tr></thead>
-      <tbody>
-        <tr><td><code>/clear</code></td><td>Clears config, route, view and application caches</td></tr>
-        <tr><td><code>/migrate</code>, <code>/migration</code></td><td>Runs pending database migrations</td></tr>
-        <tr><td><code>/generate_key</code></td><td>Regenerates the application key</td></tr>
-        <tr><td><code>/linkstorage</code></td><td>Recreates the <code>public/storage</code> symlink</td></tr>
-        <tr><td><code>/logs</code></td><td>Opens the Laravel log viewer</td></tr>
-        <tr><td><code>/get_path</code></td><td>Prints the server file path</td></tr>
-      </tbody>
-    </table>
-    </div>
-
-    <p>They are useful for support, but <code>/logs</code> in particular can reveal file paths and error details to anyone who finds it.</p>
-
-    <div class="admonition admonition--danger">
-      <p class="admonition__title">Restrict these in production</p>
-      <p>Protect them with an IP allow-list or HTTP authentication in your web server configuration, for example:</p>
-      <pre><code class="language-apache">&lt;LocationMatch "^/(logs|migrate|migration|generate_key|get_path)"&gt;
-    Require ip 203.0.113.10
-&lt;/LocationMatch&gt;</code></pre>
-      <p>Replace the address with your own IP.</p>
-    </div>
 
     <h2>Troubleshooting</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
-        <tr><td>"Could not connect to the database"</td><td>Wrong prefix, wrong host, or user not attached</td><td>Re-check the full prefixed names; confirm ALL PRIVILEGES</td></tr>
+        <tr><td>"Could not connect to the database"</td><td>Wrong credentials, wrong host, or missing privileges</td><td>Re-check the names; confirm the user has ALL PRIVILEGES on that database</td></tr>
         <tr><td>"Could not connect" with correct details</td><td><code>symlink</code> or <code>proc_open</code> disabled</td><td>Remove them from <code>disable_functions</code> in <code>php.ini</code></td></tr>
         <tr><td>Blank page after the database step</td><td>PHP timeout mid-migration</td><td>Raise <code>max_execution_time</code> and <code>memory_limit</code>, empty the database, re-run</td></tr>
         <tr><td>Panel loads but every image is 404</td><td>Storage symlink missing</td><td>Visit <code>https://admin.yourstore.com/linkstorage</code> once</td></tr>
@@ -215,6 +197,10 @@ chown -R username:username storage bootstrap/cache .env</code></pre>
       </tbody>
     </table>
     </div>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../admin/php-ini-settings.html">← PHP INI Settings</a> · <strong>Next:</strong> <a href="../installation/environment-configuration.html">Environment Configuration →</a></p>
   </main>
 </div>
 

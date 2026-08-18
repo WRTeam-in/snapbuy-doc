@@ -78,14 +78,57 @@ Without a billing account every Google Maps request fails and the map area rende
 
 An unrestricted Maps key found in your page source can be used by anyone, billed to you.
 
-**Map API Key** — restrict by **HTTP referrer**:
+The two keys are restricted differently, because they are called from different places:
+
+| Key | Called from | Application restriction |
+| --- | --- | --- |
+| **Map API Key** | The visitor's browser | **Websites (HTTP referrers)** — your domain |
+| **Place API Key** | Your server | **IP addresses** — your server's IP |
+
+#### Map API Key — restrict by domain
+
+This key is loaded into the page, so anyone can read it. Restricting it by referrer means it only works when requested from your own site.
+
+In **APIs & Services → Credentials**, open the key and under **Application restrictions** choose **Websites**, then add:
 
 ```
 https://admin.yourstore.com/*
 https://yourstore.com/*
 ```
 
-**Place API Key** — restrict by **API**, limited to Places, Places (New), Geocoding and Distance Matrix.
+![Map API key restricted by website domain](/images/panel/map-key-restriction-referrer.png)
+
+#### Place API Key — restrict by IP address
+
+SnapBuy calls Places, Geocoding and Distance Matrix **from the server**, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.
+
+Restrict this key by **IP addresses** instead and enter your server's address. Modern VPS providers usually assign an **IPv6** address, so add that — and the IPv4 address too if your server has one.
+
+In **APIs & Services → Credentials**, open the key, choose **IP addresses** under **Application restrictions**, and add:
+
+```
+2400:xxxx:xxxx:xxxx::1
+203.0.113.10
+```
+
+![Place API key restricted by server IP address](/images/panel/map-key-restriction-ip.png)
+
+Under **API restrictions**, limit it to Places, Places (New), Geocoding and Distance Matrix.
+
+:::danger Do not restrict the Place key by referrer
+It is the most common way to break delivery-charge calculation. Server-side requests carry no referrer, so the key is rejected — the map still draws, because that uses the other key, and the failure looks like a distance problem rather than a key problem.
+:::
+
+:::tip Find your server's IP
+Run this on the server:
+
+```bash
+curl -6 ifconfig.co   # IPv6
+curl -4 ifconfig.co   # IPv4
+```
+
+If your server's IP changes, the key stops working until you update the restriction. Static addressing is worth having here.
+:::
 
 :::warning Restrict, but test afterwards
 Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the store** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.
@@ -129,12 +172,13 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 | --- | --- | --- |
 | Setup Guide Map step stays red | Provider is Google but only one key filled | Fill both Map and Place keys |
 | Grey map with a watermark | Billing not enabled on the Google project | Enable billing |
-| "This page can't load Google Maps correctly" | Required API not enabled, or key restricted too tightly | Enable the APIs; check referrer restrictions |
+| "This page can't load Google Maps correctly" | Required API not enabled, or the Map key's domain restriction does not cover this hostname | Enable the APIs; add the hostname to the Map key's website restrictions |
 | Map loads, address search does nothing | Places API (New) not enabled, Places API not enabled, or Place key missing | Enable both Places services; fill the Place key |
-| "Unable to fetch distance" at checkout, but maps render fine | Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only | Enable Distance Matrix and allow it on the Place API Key |
+| "Unable to fetch distance" at checkout, but maps render fine | Distance Matrix not enabled, or the Place key is restricted by referrer instead of by server IP | Enable Distance Matrix; restrict the Place key by IP address |
 | "Unable to fetch distance" on OpenStreetMap | Public OSRM routing service rate-limited | Switch to Google Maps, or host your own OSRM |
+| Distance lookups failed after a server migration | Place key still restricted to the old server IP | Update the IP restriction |
 | Delivery charges wrong after switching provider | Cached config | Visit `/clear` and retest |
-| Unexpected Google bill | Unrestricted key in use elsewhere | Restrict by referrer and regenerate the key |
+| Unexpected Google bill | Unrestricted key in use elsewhere | Apply the restrictions above and regenerate the key |
 
 ## Checklist
 
@@ -142,7 +186,7 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 - [ ] If Google: billing enabled, all six APIs enabled (including Places API (New))
 - [ ] If Google: **both** Map and Place keys entered
 - [ ] Distance Matrix enabled and allowed on the Place API Key
-- [ ] Keys restricted by referrer/API
+- [ ] Map key restricted by domain; Place key restricted by server IP
 - [ ] Budget alert configured
 - [ ] Zone map draws correctly
 - [ ] Test address returns a sensible delivery charge

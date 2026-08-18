@@ -38,6 +38,146 @@ The **Payment Method Settings** master switch on the country turns online paymen
 
 Installation enables **Cash on Delivery** only. Everything else starts disabled and blank.
 
+## Getting the credentials for each gateway
+
+Every gateway names its keys differently. This section maps SnapBuy's fields to where you find each value in the provider's own dashboard.
+
+All of them follow the same shape: create an account, complete business verification (KYC), copy the test keys, test, then swap in the live keys.
+
+:::warning Verification takes time
+Most providers will not issue live keys until your business documents are approved. This commonly takes several working days. Start the account opening before you need to launch, and use test keys meanwhile.
+:::
+
+### Cash on Delivery
+
+No account and no credentials. Enable the toggle on the country and choose the COD mode:
+
+| Mode | Behaviour |
+| --- | --- |
+| **Global** | COD offered on every product |
+| **Product wise** | COD offered only on products individually marked as COD-eligible |
+
+### Razorpay (India)
+
+1. Sign up at [dashboard.razorpay.com](https://dashboard.razorpay.com/).
+2. Complete KYC under **Account & Settings → Business details**.
+3. Go to **Account & Settings → API Keys**.
+4. Select **Test Mode** or **Live Mode** using the toggle at the top of the dashboard.
+5. Click **Generate Key**. The secret is shown **once** — copy it immediately.
+
+| SnapBuy field | Razorpay value |
+| --- | --- |
+| Razorpay Key | Key ID, begins `rzp_test_` or `rzp_live_` |
+| Razorpay Secret Key | Key Secret |
+
+### Stripe (international)
+
+1. Sign up at [dashboard.stripe.com](https://dashboard.stripe.com/).
+2. Complete business activation.
+3. Go to **Developers → API keys** for the publishable and secret keys.
+4. Go to **Developers → Webhooks → Add endpoint**, enter your webhook URL, and copy the **Signing secret**.
+
+| SnapBuy field | Stripe value |
+| --- | --- |
+| Stripe Publishable Key | Publishable key, begins `pk_` |
+| Stripe Secret Key | Secret key, begins `sk_` |
+| Stripe Webhook Secret Key | Signing secret from the endpoint, begins `whsec_` |
+| Stripe Currency Code | The currency your Stripe account settles in |
+| Stripe Mode | `test` or `live` |
+
+Without the signing secret SnapBuy cannot verify that a callback genuinely came from Stripe, and will reject it.
+
+### PayPal
+
+1. Sign up at [paypal.com](https://www.paypal.com/) and upgrade to a **Business** account.
+2. Use the [Developer Dashboard](https://developer.paypal.com/) sandbox accounts for testing.
+3. Enable **Instant Payment Notification (IPN)** in **Account Settings → Notifications** and point it at your IPN URL.
+
+| SnapBuy field | PayPal value |
+| --- | --- |
+| PayPal Business Email | The email address on the Business account |
+| PayPal Currency Code | Currency your PayPal account accepts |
+| PayPal Mode | `sandbox` or `live` |
+
+### Paystack (Africa)
+
+1. Sign up at [dashboard.paystack.com](https://dashboard.paystack.com/).
+2. Complete business verification.
+3. Go to **Settings → API Keys & Webhooks**.
+
+| SnapBuy field | Paystack value |
+| --- | --- |
+| Paystack Public Key | Public key, begins `pk_test_` or `pk_live_` |
+| Paystack Secret Key | Secret key, begins `sk_test_` or `sk_live_` |
+| Paystack Currency Code | NGN, GHS, ZAR, USD as enabled on your account |
+
+### Midtrans (Indonesia)
+
+1. Sign up at [midtrans.com](https://midtrans.com/).
+2. Complete merchant verification.
+3. Go to **Settings → Access Keys**.
+4. Sandbox and Production have separate keys — take them from the matching environment.
+
+| SnapBuy field | Midtrans value |
+| --- | --- |
+| Midtrans Server Key | Server Key |
+| Midtrans Mode | `sandbox` or `production` |
+
+Set the payment notification URL in **Settings → Configuration** to your Midtrans callback URL.
+
+### PhonePe (India)
+
+1. Register as a merchant at [business.phonepe.com](https://business.phonepe.com/).
+2. Complete onboarding — PhonePe issues credentials directly to the merchant.
+3. Collect the values from the merchant dashboard or your onboarding email.
+
+| SnapBuy field | PhonePe value |
+| --- | --- |
+| PhonePe Merchant ID | Merchant ID |
+| PhonePe Client ID | Client ID |
+| PhonePe Client Version | Client version supplied during onboarding |
+| PhonePe Client Secret | Client secret |
+| PhonePe Mode | `UAT` for testing, `PROD` for live |
+
+### Cashfree (India)
+
+1. Sign up at [merchant.cashfree.com](https://merchant.cashfree.com/).
+2. Complete KYC.
+3. Go to **Developers → API Keys**.
+
+| SnapBuy field | Cashfree value |
+| --- | --- |
+| Cashfree App ID | App ID / Client ID |
+| Cashfree Secret Key | Secret Key / Client Secret |
+| Cashfree Mode | `TEST` or `PROD` |
+
+Register the callback URL under **Developers → Webhooks**.
+
+### PayTabs (Middle East)
+
+1. Sign up at [paytabs.com](https://www.paytabs.com/) for your country.
+2. Complete merchant verification.
+3. Open **Developers → Key management** in the merchant dashboard.
+
+| SnapBuy field | PayTabs value |
+| --- | --- |
+| PayTabs Profile ID | Profile ID |
+| PayTabs Secret Key | Server key |
+| PayTabs Mode | Test or live |
+
+## Where to enter them
+
+Credentials are stored **per country**, not globally:
+
+1. Open **Countries** and edit the country you sell in.
+2. Go to step 2 of the wizard, **Payment Gateways**.
+3. Turn on the gateway and fill its fields.
+4. Save.
+
+The **Payment Method Settings** master switch on the same step enables online payment for that country as a whole.
+
+Repeat for every country you sell in. A gateway configured on India is not offered to customers in the UAE.
+
 ## Test mode and live mode
 
 Most gateways carry a **Mode** field — `test`/`sandbox` or `live`.

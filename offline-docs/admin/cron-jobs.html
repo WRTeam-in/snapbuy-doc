@@ -47,27 +47,21 @@
       <thead><tr><th>Format</th><th>Use it when</th></tr></thead>
       <tbody>
         <tr><td><strong>Crontab line</strong></td><td>You have SSH and run <code>crontab -e</code> — interval included</td></tr>
-        <tr><td><strong>Command only</strong></td><td>Your hosting panel has its own interval picker (cPanel, Plesk)</td></tr>
+        <tr><td><strong>Command only</strong></td><td>Your control panel supplies its own interval picker</td></tr>
         <tr><td><strong>PHP script style</strong></td><td>The panel asks for a PHP file plus arguments</td></tr>
       </tbody>
     </table>
     </div>
 
-    <h2 id="adding-the-cron-job-in-cpanel">Adding the cron job in cPanel</h2>
-    <ol>
-      <li>Log into cPanel.</li>
-      <li>Under <strong>Advanced</strong>, open <strong>Cron Jobs</strong>.</li>
-      <li>Under <strong>Common Settings</strong>, choose <strong>Once Per Minute (* * * * *)</strong>.</li>
-      <li>Paste the <strong>Command only</strong> version from <strong>Settings → Cron Jobs</strong> into the <strong>Command</strong> box.</li>
-      <li>Click <strong>Add New Cron Job</strong>.</li>
-    </ol>
+    <h2 id="registering-the-cron-job">Registering the cron job</h2>
+    <p>Open a shell on the server and run <code>crontab -e</code>, then paste the line shown on <strong>Settings → Cron Jobs</strong>. Save and exit — the entry takes effect immediately.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Use the full path to PHP</p>
-      <p><code>php artisan schedule:run</code> often fails on shared hosting because the default <code>php</code> is an older version. Use the absolute binary path shown on the Cron Jobs page — for example <code>/usr/local/bin/ea-php83</code>. If the cron runs but nothing happens, this is usually why.</p>
+      <p>Cron runs with a minimal environment and may resolve <code>php</code> to a different version than your shell does. Use the absolute binary path shown on the Cron Jobs page — for example <code>/usr/bin/php8.3</code>. If the cron fires but nothing happens, this is usually why.</p>
     </div>
 
-    <h2 id="adding-the-cron-job-over-ssh">Adding the cron job over SSH</h2>
+    <h2 id="verifying-from-the-shell">Verifying from the shell</h2>
     <pre><code>crontab -e</code></pre>
 
     <p>Add the line, save and exit. Confirm it registered:</p>
@@ -144,7 +138,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Why <code>--stop-when-empty --max-time=55</code></p>
-      <p>A permanent queue worker is not possible on most shared hosting. Instead, SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.</p>
+      <p>SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.</p>
     </div>
 
     <h2 id="optional-a-permanent-worker-on-a-vps">Optional — a permanent worker on a VPS</h2>
@@ -188,6 +182,10 @@ sudo supervisorctl start snapbuy-worker:*</code></pre>
       <p class="admonition__title">Test without waiting</p>
       <p>Instead of waiting on the schedule, open <strong>Settings → Cron Jobs</strong> and press <strong>Run now</strong> on a task. The panel shows the exit code and output immediately, which tells you whether the task itself works — separating a broken task from a broken cron.</p>
     </div>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../installation/database-migration.html">← Database &amp; Migrations</a> · <strong>Next:</strong> <a href="../admin/setup-guide.html">Setup Guide →</a></p>
   </main>
 </div>
 

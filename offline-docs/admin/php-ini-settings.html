@@ -47,44 +47,17 @@
       <p>If <code>post_max_size</code> is smaller, PHP silently discards the whole request and the panel shows an empty error. Always keep it higher.</p>
     </div>
 
-    <h2 id="limits-enforced-by-snapbuy-itself">Limits enforced by SnapBuy itself</h2>
-    <p>Even with generous PHP limits, SnapBuy applies its own caps:</p>
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>Upload</th><th>Cap</th><th>Allowed types</th></tr></thead>
-      <tbody>
-        <tr><td>Bulk product import</td><td><strong>20 MB</strong></td><td><code>.xlsx</code>, <code>.xls</code></td></tr>
-        <tr><td>Home Builder images</td><td><strong>5 MB</strong></td><td>jpeg, jpg, png, gif, webp, svg</td></tr>
-        <tr><td>Prescription upload (customer)</td><td><strong>5 MB</strong></td><td>jpg, jpeg, png, webp, pdf, svg</td></tr>
-        <tr><td>SEO Open Graph image</td><td><strong>2 MB</strong></td><td>jpeg, png, jpg, gif, svg, webp</td></tr>
-        <tr><td>Withdrawal receipt image</td><td><strong>2 MB</strong></td><td>jpeg, png, jpg</td></tr>
-        <tr><td>System update package</td><td><strong>1 GB</strong></td><td><code>.zip</code></td></tr>
-      </tbody>
-    </table>
-    </div>
-
-    <div class="admonition admonition--danger">
-      <p class="admonition__title">System Updater needs the biggest limits</p>
-      <p>Uploading an update package through <strong>Settings → System Updater</strong> can push a file far larger than a normal upload. If your update fails part-way, raise <code>upload_max_filesize</code>, <code>post_max_size</code> and <code>max_execution_time</code> first, or apply the update manually over FTP instead.</p>
-    </div>
-
     <h2 id="where-to-change-these">Where to change these</h2>
 
-    <h3 id="cpanel">cPanel</h3>
-    <ol>
-      <li>Log into cPanel.</li>
-      <li>Open <strong>Select PHP Version</strong> (or <strong>MultiPHP INI Editor</strong>).</li>
-      <li>Switch to the <strong>Options</strong> tab.</li>
-      <li>Edit each directive from the table above.</li>
-      <li>Save. cPanel applies changes immediately.</li>
-    </ol>
-
     <h3 id="vps-dedicated-server">VPS / dedicated server</h3>
+    <p>Edit <strong>both</strong> the FPM and CLI configurations. The web installer uses FPM; Artisan commands and the queue worker use CLI, and the two have separate files.</p>
+
     <p>Find your active <code>php.ini</code>:</p>
     <pre><code>php --ini</code></pre>
 
     <p>Edit it:</p>
-    <pre><code>sudo nano /etc/php/8.3/apache2/php.ini</code></pre>
+    <pre><code>sudo nano /etc/php/8.3/fpm/php.ini
+sudo nano /etc/php/8.3/cli/php.ini</code></pre>
 
     <p>Set the values, then restart:</p>
     <pre><code># Apache
@@ -108,8 +81,8 @@ sudo systemctl restart nginx</code></pre>
       <li>Edit the values, save, and restart Apache.</li>
     </ol>
 
-    <h3 id="shared-hosting-without-ini-access">Shared hosting without INI access</h3>
-    <p>Some hosts allow a <code>.user.ini</code> file in the project root:</p>
+    <h3 id="per-site-override">Per-site override</h3>
+    <p>If you prefer not to change the global configuration, a <code>.user.ini</code> file in the project root applies to that site alone:</p>
     <pre><code class="language-ini">max_execution_time = 600
 max_input_time = 600
 memory_limit = 512M
@@ -117,7 +90,7 @@ post_max_size = 128M
 upload_max_filesize = 100M
 max_input_vars = 5000</code></pre>
 
-    <p>If that has no effect, ask your host to apply the values for you.</p>
+    <p>Directives set in <code>.user.ini</code> apply to FPM requests only, not to Artisan commands. Set the CLI values in <code>php.ini</code> as well.</p>
 
     <h2 id="verify-the-change-took-effect">Verify the change took effect</h2>
     <p>Create <code>info.php</code> in your panel's public folder:</p>
@@ -135,6 +108,10 @@ max_input_vars = 5000</code></pre>
     <pre><code>symlink, exec, proc_open, shell_exec, putenv</code></pre>
 
     <p><code>symlink</code> is the critical one — see <a href="../admin/server-requirements.html#server-functions-that-must-not-be-disabled">Server Requirements</a>.</p>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../admin/create-subdomain.html">← Domain, DNS &amp; SSL</a> · <strong>Next:</strong> <a href="../admin/server-setup.html">Panel Installation →</a></p>
   </main>
 </div>
 

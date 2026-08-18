@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Server Setup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Server Setup</h1>
+
+    <p>This page provisions a clean VPS to the point where SnapBuy's installer can run. Commands are shown for Ubuntu 22.04 / 24.04; adapt package names for other distributions.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Shared hosting will not work</p>
+      <p>SnapBuy needs long-running processes, real cron access and a Node runtime for the server-rendered storefront. Provision a VPS or dedicated server with root access. See <a href="../installation/overview.html#a-vps-is-required">Installation Overview</a>.</p>
+    </div>
+
+    <h2 id="step-1-update-the-system">Step 1 — Update the system</h2>
+
+    <pre><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></pre>
+
+    <h2 id="step-2-install-php-83">Step 2 — Install PHP 8.3</h2>
+
+    <p>SnapBuy requires <strong>PHP 8.3 or newer</strong>.</p>
+
+    <pre><code>sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+
+sudo apt install -y php8.3-fpm php8.3-cli php8.3-mysql php8.3-mbstring \
+  php8.3-xml php8.3-curl php8.3-zip php8.3-gd php8.3-bcmath \
+  php8.3-intl php8.3-sodium php8.3-tokenizer</code></pre>
+
+    <p>Verify:</p>
+
+    <pre><code>php -v
+php -m | sort | tr '\n' ' '</code></pre>
+
+    <p>Every extension listed in <a href="../admin/server-requirements.html#required-php-extensions">Server Requirements</a> must appear.</p>
+
+    <h2 id="step-3-raise-the-php-limits">Step 3 — Raise the PHP limits</h2>
+
+    <p>Edit both the FPM and CLI configuration:</p>
+
+    <pre><code>sudo nano /etc/php/8.3/fpm/php.ini
+sudo nano /etc/php/8.3/cli/php.ini</code></pre>
+
+    <p>Set at minimum:</p>
+
+    <pre><code>max_execution_time = 600
+max_input_time = 600
+memory_limit = 512M
+post_max_size = 128M
+upload_max_filesize = 100M
+max_input_vars = 5000</code></pre>
+
+    <p>Also confirm <code>disable_functions</code> does not contain <code>symlink</code>, <code>exec</code>, <code>proc_open</code>, <code>shell_exec</code> or <code>putenv</code>.</p>
+
+    <pre><code>sudo systemctl restart php8.3-fpm</code></pre>
+
+    <p>Full explanation of each value: <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
+
+    <h2 id="step-4-install-mysql">Step 4 — Install MySQL</h2>
+
+    <pre><code>sudo apt install -y mysql-server
+sudo mysql_secure_installation</code></pre>
+
+    <p>Create the database and a dedicated user:</p>
+
+    <pre><code>sudo mysql -u root -p</code></pre>
+
+    <pre><code>CREATE DATABASE snapbuy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'snapbuy'@'localhost' IDENTIFIED BY 'a-strong-password';
+GRANT ALL PRIVILEGES ON snapbuy.* TO 'snapbuy'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Use a fresh, empty database</p>
+      <p>The installer runs <code>migrate:fresh</code>, which drops every table in the database it connects to. Never point it at a database holding other data.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Password characters</p>
+      <p>Use capitals, lowercase, digits and <code>@</code> or <code>_</code>. Some other symbols break <code>.env</code> parsing and produce a "could not connect" error even when the credentials are correct.</p>
+    </div>
+
+    <h2 id="step-5-install-nginx">Step 5 — Install Nginx</h2>
+
+    <pre><code>sudo apt install -y nginx</code></pre>
+
+    <p>Create <code>/etc/nginx/sites-available/snapbuy</code>:</p>
+
+    <pre><code>server {
+    listen 80;
+    server_name admin.yourstore.com;
+    root /var/www/snapbuy/public;
+
+    index index.php;
+    charset utf-8;
+    client_max_body_size 128M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_read_timeout 600;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}</code></pre>
+
+    <p>Enable and reload:</p>
+
+    <pre><code>sudo ln -s /etc/nginx/sites-available/snapbuy /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The document root must be the <code>public/</code> folder</p>
+      <p>Pointing it at the project root exposes your <code>.env</code> file — database passwords, API keys and payment credentials — to anyone who requests it. After going live, open <code>https://admin.yourstore.com/.env</code> and confirm you get a 403 or 404.</p>
+    </div>
+
+    <h2 id="step-6-install-composer-and-node">Step 6 — Install Composer and Node</h2>
+
+    <pre><code># Composer
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+
+# Node 20 LTS
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs</code></pre>
+
+    <p>Node is needed to build front-end assets and to run the server-rendered web portal.</p>
+
+    <h2 id="step-7-install-supervisor">Step 7 — Install Supervisor</h2>
+
+    <p>Supervisor keeps background processes alive across reboots and crashes.</p>
+
+    <pre><code>sudo apt install -y supervisor
+sudo systemctl enable supervisor</code></pre>
+
+    <p>It is used for the queue worker and, if you self-host chat, the Reverb WebSocket server. Configuration is covered in <a href="../admin/cron-jobs.html">Cron Job Setup</a> and <a href="../admin/chat-settings.html">Chat Settings</a>.</p>
+
+    <h2 id="step-8-install-ssl">Step 8 — Install SSL</h2>
+
+    <pre><code>sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d admin.yourstore.com</code></pre>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Install SSL before running the installer</p>
+      <p>The installer saves whatever address you visit it on as <code>APP_URL</code>. Installing over <code>http://</code> bakes the wrong scheme into your configuration and causes mixed-content failures, broken payment callbacks and blocked web push later.</p>
+    </div>
+
+    <h2 id="step-9-firewall">Step 9 — Firewall</h2>
+
+    <pre><code>sudo ufw allow OpenSSH
+sudo ufw allow 'Nginx Full'
+sudo ufw enable</code></pre>
+
+    <p>If you run Laravel Reverb for chat on its default port:</p>
+
+    <pre><code>sudo ufw allow 9090</code></pre>
+
+    <h2 id="step-10-upload-snapbuy">Step 10 — Upload SnapBuy</h2>
+
+    <pre><code>sudo mkdir -p /var/www/snapbuy
+cd /var/www/snapbuy
+# upload the archive here, then:
+unzip snapbuy-admin.zip</code></pre>
+
+    <p>Set ownership and permissions:</p>
+
+    <pre><code>sudo chown -R www-data:www-data /var/www/snapbuy
+sudo chmod -R 755 /var/www/snapbuy
+sudo chmod -R 775 /var/www/snapbuy/storage /var/www/snapbuy/bootstrap/cache</code></pre>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Extract on the server</p>
+      <p>Uploading thousands of individual files over FTP is slow and frequently leaves files missing. Upload the single archive and extract it on the server.</p>
+    </div>
+
+    <h2 id="pre-flight-checklist">Pre-flight checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> PHP 8.3+ with every required extension</li>
+      <li class="task-item"><input type="checkbox" disabled> PHP limits raised in both FPM and CLI</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>symlink</code> and <code>exec</code> not disabled</li>
+      <li class="task-item"><input type="checkbox" disabled> Empty MySQL database and dedicated user created</li>
+      <li class="task-item"><input type="checkbox" disabled> Nginx document root points at <code>public/</code></li>
+      <li class="task-item"><input type="checkbox" disabled> Composer and Node 20 installed</li>
+      <li class="task-item"><input type="checkbox" disabled> Supervisor installed and enabled</li>
+      <li class="task-item"><input type="checkbox" disabled> SSL installed and the padlock shows</li>
+      <li class="task-item"><input type="checkbox" disabled> Firewall configured</li>
+      <li class="task-item"><input type="checkbox" disabled> Files uploaded, ownership and permissions set</li>
+    </ul>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../admin/server-requirements.html">← Server Requirements</a> · <strong>Next:</strong> <a href="../admin/create-subdomain.html">Domain, DNS &amp; SSL →</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "installation/server-preparation.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Installation Overview — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Installation Overview</h1>
+
+    <p>SnapBuy is delivered as <strong>four separate codebases</strong>. They are installed in a fixed order, because each one needs the address of the one before it.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Codebase</th><th>Technology</th><th>Where it runs</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Admin Panel / Backend</strong></td><td>Laravel 12 + Vue 3</td><td>Your VPS</td></tr>
+        <tr><td>2</td><td><strong>Web Portal</strong></td><td>Server-rendered storefront</td><td>Your VPS</td></tr>
+        <tr><td>3</td><td><strong>Customer App</strong></td><td>Flutter</td><td>Android &amp; iOS</td></tr>
+        <tr><td>4</td><td><strong>Delivery Boy App</strong></td><td>Flutter</td><td>Android &amp; iOS</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">This section covers the backend</p>
+      <p>This <strong>Installation</strong> menu sits under Admin Panel because it installs the <strong>backend</strong> — the panel and the API every other codebase talks to. The mobile apps and web portal have their own sections in the sidebar, and are set up after the panel is live.</p>
+    </div>
+
+    <h2 id="install-in-this-order">Install in this order</h2>
+
+    <p>The order is not a preference. Each step produces something the next step needs. Work straight down the <strong>Installation</strong> menu:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Step</th><th>Page</th><th>What it achieves</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><a href="../admin/server-requirements.html">Server Requirements</a></td><td>Confirm the server can run SnapBuy</td></tr>
+        <tr><td>2</td><td><a href="../installation/server-preparation.html">Server Setup</a></td><td>Install PHP, MySQL, Nginx, Node and Supervisor</td></tr>
+        <tr><td>3</td><td><a href="../admin/create-subdomain.html">Domain, DNS &amp; SSL</a></td><td>Point the hostname at the server and install a certificate</td></tr>
+        <tr><td>4</td><td><a href="../admin/php-ini-settings.html">PHP INI Settings</a></td><td>Raise the limits the installer needs</td></tr>
+        <tr><td>5</td><td><a href="../admin/server-setup.html">Panel Installation</a></td><td>Run the installation wizard — creates the schema and your Super Admin account</td></tr>
+        <tr><td>6</td><td><a href="../installation/environment-configuration.html">Environment Configuration</a></td><td>Review <code>.env</code> and add what the installer could not know</td></tr>
+        <tr><td>7</td><td><a href="../installation/database-migration.html">Database &amp; Migrations</a></td><td>Understand what was built, and how to migrate later</td></tr>
+        <tr><td>8</td><td><a href="../admin/cron-jobs.html">Cron Job Setup</a></td><td>Register the scheduler — several features do nothing without it</td></tr>
+        <tr><td>9</td><td><a href="../admin/setup-guide.html">Setup Guide</a></td><td>The nine in-panel steps that make the store usable</td></tr>
+        <tr><td>10</td><td><a href="../admin/localhost-setup.html">Localhost Setup</a></td><td>Optional — run a copy on your own machine</td></tr>
+        <tr><td>11</td><td><a href="../admin/system-updater.html#taking-a-backup">Backup Database</a> · <a href="../admin/system-updater.html#taking-a-backup">Backup Project</a></td><td>Put a backup routine in place before you go live</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Once the panel is running, the other three codebases point at it:</p>
+
+    <ul>
+      <li><strong>Web Portal</strong> — set the panel URL and deploy.</li>
+      <li><strong>Customer &amp; Delivery Boy apps</strong> — set the panel URL, change the package name, add the Firebase files, and build.</li>
+    </ul>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The panel URL is decided at step 2 and baked into everything after it</p>
+      <p>The address you install the panel on is written into the web portal configuration and compiled into both mobile apps. Changing it later means editing the portal config and rebuilding and republishing both apps. Choose it once and keep it.</p>
+    </div>
+
+    <h2 id="a-vps-is-required">A VPS is required</h2>
+
+    <p>SnapBuy does not run on budget shared hosting. This is a hard requirement, not a recommendation:</p>
+
+    <ul>
+      <li>The <strong>web portal is server-rendered</strong> so that search engines can index products. That needs a Node process running continuously.</li>
+      <li><strong>Live chat</strong> over Laravel Reverb needs a long-running process and an open port.</li>
+      <li>The <strong>queue worker and scheduler</strong> need real cron access and the ability to run background processes.</li>
+      <li>The installer runs database migrations that exceed the execution limits typical of shared plans.</li>
+    </ul>
+
+    <p>See <a href="../admin/server-requirements.html">Server Requirements</a> for exact specifications.</p>
+
+    <h2 id="what-you-need-before-starting">What you need before starting</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> A VPS or dedicated server with root access</li>
+      <li class="task-item"><input type="checkbox" disabled> A domain, with DNS pointing at the server</li>
+      <li class="task-item"><input type="checkbox" disabled> Your Envato purchase code</li>
+      <li class="task-item"><input type="checkbox" disabled> An email address for the Super Admin account</li>
+      <li class="task-item"><input type="checkbox" disabled> Accounts for any third-party services you intend to use — see <a href="../admin/third-party-costs.html">Third-Party Service Costs</a></li>
+    </ul>
+
+    <h2 id="typical-layout">Typical layout</h2>
+
+    <p>Most installations put the panel and storefront on separate hostnames:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Address</th><th>Codebase</th></tr></thead>
+      <tbody>
+        <tr><td><code>https://yourstore.com</code></td><td>Web Portal</td></tr>
+        <tr><td><code>https://admin.yourstore.com</code></td><td>Admin Panel and API</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Both can live on the same VPS. Keeping them on separate hostnames lets you update, secure and back them up independently.</p>
+
+    <hr>
+
+    <p><strong>Next:</strong> <a href="../admin/server-requirements.html">Server Requirements →</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "installation/overview.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

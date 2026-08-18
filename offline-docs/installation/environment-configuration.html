@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Environment Configuration — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Environment Configuration</h1>
+
+    <p>The <code>.env</code> file in the project root holds every environment-specific value: database credentials, application URL, mail, queue and broadcasting settings.</p>
+
+    <p>Most of it is written for you by the installation wizard. This page explains what each value does, which ones the installer cannot know, and which ones you must never change casually.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">If you installed through the wizard, most of this is already set</p>
+      <p><a href="../admin/server-setup.html">Panel Installation</a> writes the database credentials, <code>APP_URL</code>, <code>APP_ENV</code>, <code>APP_KEY</code> and the Reverb keys for you. <strong>You do not need to create or edit <code>.env</code> by hand.</strong></p>
+      <p>Editing it manually is for a <a href="../admin/localhost-setup.html">Localhost Setup</a>, or for changing a specific value later — a queue driver, a broadcast driver, a moved database. Use this page as a reference for what each key means, not as a list of steps to perform.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title"><code>.env</code> is the most sensitive file in the installation</p>
+      <p>It contains your database password and application key. It must never be reachable from a browser and must never be committed to version control. Confirm <code>https://admin.yourstore.com/.env</code> returns 403 or 404.</p>
+    </div>
+
+    <h2 id="application">Application</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>APP_NAME</code></td><td>Internal application name</td></tr>
+        <tr><td><code>APP_ENV</code></td><td><code>production</code> on a live server, <code>local</code> for development</td></tr>
+        <tr><td><code>APP_KEY</code></td><td>Encryption key, generated during installation</td></tr>
+        <tr><td><code>APP_DEBUG</code></td><td><code>false</code> in production</td></tr>
+        <tr><td><code>APP_URL</code></td><td>Full public URL of the panel, including <code>https://</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title"><code>APP_DEBUG=true</code> leaks your configuration</p>
+      <p>With debug on, any application error renders a stack trace that includes environment values — database credentials among them — to whoever triggered it. Keep it <code>false</code> on any server the public can reach.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Never regenerate <code>APP_KEY</code> on a live installation</p>
+      <p><code>APP_KEY</code> decrypts data already stored in the database, including saved payment gateway credentials. Regenerating it makes that data unreadable. It is set once during installation and left alone.</p>
+    </div>
+
+    <p><code>APP_URL</code> must exactly match the address customers and apps use. A mismatch causes redirect loops at login, broken image URLs and failed payment callbacks.</p>
+
+    <h2 id="installation-mode">Installation mode</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>INSTALL_MODE</code></td><td>Must be <code>server</code> for the installer to build the database</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">This line is mandatory and easy to miss</p>
+      <p>SnapBuy only runs migrations, seeders, Passport key generation and the storage symlink when <code>INSTALL_MODE=server</code>. Without it the wizard reports success but leaves you with an empty database and a broken panel.</p>
+      <p>Add it to <code>.env</code> <strong>before</strong> opening the installer. If the panel is already installed and working, it has served its purpose and needs no further attention.</p>
+    </div>
+
+    <h2 id="database">Database</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Typical value</th></tr></thead>
+      <tbody>
+        <tr><td><code>DB_CONNECTION</code></td><td><code>mysql</code> — the only supported driver</td></tr>
+        <tr><td><code>DB_HOST</code></td><td><code>127.0.0.1</code></td></tr>
+        <tr><td><code>DB_PORT</code></td><td><code>3306</code></td></tr>
+        <tr><td><code>DB_DATABASE</code></td><td>Your database name</td></tr>
+        <tr><td><code>DB_USERNAME</code></td><td>Your database user</td></tr>
+        <tr><td><code>DB_PASSWORD</code></td><td>That user's password</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>If the password contains spaces or <code>#</code>, wrap it in double quotes.</p>
+
+    <h2 id="queue-cache-and-session">Queue, cache and session</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Recommended</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>QUEUE_CONNECTION</code></td><td><code>database</code></td><td>Order emails, push notifications, referral credit and bulk imports all run through the queue</td></tr>
+        <tr><td><code>CACHE_DRIVER</code></td><td><code>file</code>, or <code>redis</code> at scale</td><td></td></tr>
+        <tr><td><code>SESSION_DRIVER</code></td><td><code>file</code></td><td></td></tr>
+        <tr><td><code>SESSION_LIFETIME</code></td><td><code>120</code></td><td>Minutes before an idle admin is signed out</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The queue does nothing without the scheduler</p>
+      <p>Setting <code>QUEUE_CONNECTION</code> only decides where jobs are stored. They are processed by the queue worker that the cron scheduler starts every minute. Without the cron job, jobs queue up and are never delivered while the panel reports success. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</p>
+    </div>
+
+    <h2 id="mail">Mail</h2>
+
+    <p>The panel writes SMTP settings through <strong>Settings → SMTP</strong> rather than <code>.env</code>, so <code>MAIL_*</code> values are usually left at their defaults. Configure email in the panel — see <a href="../admin/smtp-settings.html">SMTP Settings</a>.</p>
+
+    <h2 id="broadcasting-live-chat">Broadcasting — live chat</h2>
+
+    <p>Set <code>BROADCAST_DRIVER</code> to <code>reverb</code> or <code>pusher</code>.</p>
+
+    <p><strong>Reverb</strong> (self-hosted, free). The installer generates these automatically if they are empty:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>REVERB_APP_ID</code></td><td>Generated at install</td></tr>
+        <tr><td><code>REVERB_APP_KEY</code></td><td>Generated at install</td></tr>
+        <tr><td><code>REVERB_APP_SECRET</code></td><td>Generated at install</td></tr>
+        <tr><td><code>REVERB_HOST</code></td><td>Your domain</td></tr>
+        <tr><td><code>REVERB_PORT</code></td><td><code>9090</code> by default</td></tr>
+        <tr><td><code>REVERB_SCHEME</code></td><td><code>https</code> behind a proxy</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The matching <code>VITE_REVERB_*</code> values are read by the browser and must mirror the server values.</p>
+
+    <p><strong>Pusher</strong> (hosted): <code>PUSHER_APP_ID</code>, <code>PUSHER_APP_KEY</code>, <code>PUSHER_APP_SECRET</code>, <code>PUSHER_APP_CLUSTER</code>.</p>
+
+    <p>Guidance on choosing between them: <a href="../admin/chat-settings.html">Chat Settings</a>.</p>
+
+    <h2 id="file-storage">File storage</h2>
+
+    <p><code>FILESYSTEM_DRIVER</code> defaults to <code>local</code>. The <code>AWS_*</code> keys exist for S3-compatible storage and are optional.</p>
+
+    <p>Uploaded files are served through a symlink at <code>public/storage</code>. If images upload but return 404, the symlink is missing — visit <code>/linkstorage</code> once.</p>
+
+    <h2 id="keys-the-installer-cannot-set">Keys the installer cannot set</h2>
+
+    <p>Everything else is configured <strong>in the panel</strong>, not in <code>.env</code>:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Configuration</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Payment gateway credentials</td><td>Per country — <a href="../admin/payment-gateway.html">Payment Gateways</a></td></tr>
+        <tr><td>Firebase keys and service account</td><td><a href="../admin/firebase-settings.html">Firebase Settings</a></td></tr>
+        <tr><td>Google Maps keys</td><td><a href="../admin/map-api-keys.html">Map &amp; API Keys</a></td></tr>
+        <tr><td>SMS gateway credentials</td><td><a href="../admin/sms-settings.html">SMS Settings</a></td></tr>
+        <tr><td>SMTP</td><td><a href="../admin/smtp-settings.html">SMTP Settings</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>These are stored encrypted in the database, which is why <code>APP_KEY</code> must never change.</p>
+
+    <h2 id="applying-changes">Applying changes</h2>
+
+    <p>Laravel caches configuration. After editing <code>.env</code>:</p>
+
+    <pre><code>php artisan config:clear
+php artisan cache:clear</code></pre>
+
+    <p>Or open <code>https://admin.yourstore.com/clear</code> in a browser.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Changes appear to do nothing until the cache is cleared</p>
+      <p>This is the single most common cause of "I changed the setting and nothing happened".</p>
+    </div>
+
+    <h2 id="security-checklist">Security checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> <code>APP_DEBUG=false</code></li>
+      <li class="task-item"><input type="checkbox" disabled> <code>APP_ENV=production</code></li>
+      <li class="task-item"><input type="checkbox" disabled> <code>.env</code> returns 403/404 in a browser</li>
+      <li class="task-item"><input type="checkbox" disabled> File permissions <code>644</code>, owned by the web server user</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>APP_KEY</code> backed up alongside the database</li>
+      <li class="task-item"><input type="checkbox" disabled> Database user has privileges on the SnapBuy database only</li>
+    </ul>
+
+    <hr>
+
+    <p><strong>Previous:</strong> <a href="../admin/server-setup.html">← Panel Installation</a> · <strong>Next:</strong> <a href="../installation/database-migration.html">Database &amp; Migrations →</a></p>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "installation/environment-configuration.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

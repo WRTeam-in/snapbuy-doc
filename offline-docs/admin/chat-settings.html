@@ -33,8 +33,8 @@
     <table>
       <thead><tr><th>Driver</th><th>Cost</th><th>Runs where</th><th>Best for</th></tr></thead>
       <tbody>
-        <tr><td><strong>Reverb</strong></td><td>Free</td><td>Your own server, as a long-running process</td><td>VPS and dedicated servers</td></tr>
-        <tr><td><strong>Pusher</strong></td><td>Paid, with a free tier</td><td>Pusher's cloud</td><td>Shared hosting, or avoiding server admin</td></tr>
+        <tr><td><strong>Reverb</strong></td><td>Free</td><td>Your own server, as a long-running process</td><td>Most installations</td></tr>
+        <tr><td><strong>Pusher</strong></td><td>Paid, with a free tier</td><td>Pusher's cloud</td><td>Avoiding server administration</td></tr>
       </tbody>
     </table>
     </div>
@@ -42,8 +42,8 @@
     <img src="../images/panel/chat-settings-page.png" alt="Chat settings page">
 
     <div class="admonition admonition--danger">
-      <p class="admonition__title">Choose by your hosting, not by price</p>
-      <p><strong>Reverb needs a permanently running process and an open port.</strong> Most shared hosting allows neither. If you are on cPanel shared hosting, choose <strong>Pusher</strong> — Reverb will never connect no matter how correct the credentials are.</p>
+      <p class="admonition__title">Reverb is free but needs a managed process</p>
+      <p><strong>Reverb needs a permanently running process and an open port.</strong> Your VPS provides both, so Reverb is the cheaper choice for most installations. Choose Pusher if you would rather not manage a long-running service, or if your host blocks the WebSocket port.</p>
     </div>
 
     <h2 id="option-a-reverb-self-hosted">Option A — Reverb (self-hosted)</h2>
@@ -113,7 +113,7 @@ sudo supervisorctl status</code></pre>
     <h2 id="option-b-pusher-hosted">Option B — Pusher (hosted)</h2>
     <p>Nothing to run or keep alive.</p>
     <ol>
-      <li>Sign up at <a href="https://pusher.com/">pusher.com</a> and open <strong>Channels</strong>.</li>
+      <li>Sign up at pusher.com and open <strong>Channels</strong>.</li>
       <li>Create an app, choosing the cluster closest to your customers.</li>
       <li>Open <strong>App Keys</strong>.</li>
     </ol>
@@ -167,7 +167,7 @@ sudo supervisorctl status</code></pre>
         <tr><td>Works locally, not in production</td><td>Mixed content — <code>ws://</code> on an HTTPS page</td><td>Proxy through Nginx, set scheme to <code>https</code></td></tr>
         <tr><td>Connection refused</td><td>Port 9090 closed</td><td><code>sudo ufw allow 9090</code></td></tr>
         <tr><td>Pusher connects then drops</td><td>Wrong cluster</td><td>Match the cluster on the App Keys screen</td></tr>
-        <tr><td>Chat stopped after moving hosts</td><td>Reverb chosen on shared hosting</td><td>Switch to Pusher</td></tr>
+        <tr><td>Chat stopped after moving hosts</td><td>Reverb process not started on the new server</td><td>Recreate the Supervisor entry</td></tr>
         <tr><td>Messages delayed by seconds</td><td>Distant Pusher cluster</td><td>Recreate the app on a nearer cluster</td></tr>
         <tr><td>Nothing changed after saving</td><td>Cached config</td><td>Visit <code>/clear</code></td></tr>
       </tbody>

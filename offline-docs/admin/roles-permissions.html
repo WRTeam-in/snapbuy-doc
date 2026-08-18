@@ -48,51 +48,36 @@
       <p>It can read your live payment gateway secrets, change prices, and delete records. Use a strong unique password, and never share the login between people — the <a href="../admin/activity-logs.html">activity log</a> can only tell you <em>which account</em> acted, so a shared account destroys accountability.</p>
     </div>
 
-    <h2 id="permission-categories">Permission categories</h2>
-    <p>Permissions are grouped by area, and most areas offer four actions — <strong>list</strong>, <strong>create</strong>, <strong>update</strong>, <strong>delete</strong>.</p>
+    <h2 id="how-permissions-work">How permissions work</h2>
+
+    <p>Permissions are grouped by area of the panel — orders, products, customers, delivery boys, reports, settings and so on. Most areas offer four separate actions:</p>
+
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Category</th><th>Covers</th></tr></thead>
+      <thead><tr><th>Action</th><th>Allows</th></tr></thead>
       <tbody>
-        <tr><td><code>dashboard</code></td><td>The dashboard itself</td></tr>
-        <tr><td><code>order</code></td><td>Orders</td></tr>
-        <tr><td><code>product</code></td><td>Products, brands, attributes, stock</td></tr>
-        <tr><td><code>category</code></td><td>Categories</td></tr>
-        <tr><td><code>store</code></td><td><a href="../admin/stores.html">Stores</a></td></tr>
-        <tr><td><code>location</code></td><td><a href="../admin/zones.html">Zones</a>, delivery cities and areas</td></tr>
-        <tr><td><code>countries</code></td><td><a href="../admin/countries.html">Countries</a> and their policies and gateways</td></tr>
-        <tr><td><code>customer</code></td><td>Customer accounts, wallet, transactions</td></tr>
-        <tr><td><code>delivery_boy</code></td><td>Riders, cash collection, salary, settlements</td></tr>
-        <tr><td><code>withdrawal_request</code></td><td>Payout approvals</td></tr>
-        <tr><td><code>return_request</code></td><td>Returns</td></tr>
-        <tr><td><code>promo_code</code></td><td>Promo codes</td></tr>
-        <tr><td><code>home_builder</code></td><td><a href="../admin/home-builder.html">Home Builder</a></td></tr>
-        <tr><td><code>blogs</code> / <code>faq</code> / <code>popup_offer</code></td><td>Content</td></tr>
-        <tr><td><code>send_notification</code></td><td>Push and email campaigns</td></tr>
-        <tr><td><code>email_template</code></td><td>Templates</td></tr>
-        <tr><td><code>languages</code></td><td><a href="../admin/languages.html">Languages</a></td></tr>
-        <tr><td><code>report</code></td><td><a href="../admin/reports.html">Reports</a></td></tr>
-        <tr><td><code>chat</code></td><td>Live chat</td></tr>
-        <tr><td><code>settings</code></td><td><strong>Everything under Settings</strong></td></tr>
+        <tr><td><strong>List</strong></td><td>Seeing the menu and viewing records</td></tr>
+        <tr><td><strong>Create</strong></td><td>Adding new records</td></tr>
+        <tr><td><strong>Update</strong></td><td>Editing existing records</td></tr>
+        <tr><td><strong>Delete</strong></td><td>Removing records</td></tr>
       </tbody>
     </table>
+    </div>
+
+    <p>Granting <strong>List</strong> alone gives read-only access to that area — the right shape for an accountant or analyst who needs visibility but must not change anything.</p>
+
+    <p>The full set of areas is shown on the role form itself, grouped and labelled, so there is no need to memorise them.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Guard the Settings area hardest</p>
+      <p>The <strong>Settings</strong> permission covers payment gateway credentials, SMTP passwords, Firebase keys and SMS gateway tokens — all readable in plain form by anyone who has it.</p>
+      <p>Grant it only to people you would trust with your bank login. A warehouse supervisor who needs stock access does not need Settings.</p>
     </div>
 
     <h2 id="creating-a-role">Creating a role</h2>
     <p><strong>Role → Add Role</strong>, name it, then tick the permissions.</p>
 
     <img src="../images/panel/roles-permissions-edit.png" alt="Editing role permissions">
-
-    <div class="admonition admonition--danger">
-      <p class="admonition__title"><code>settings</code> is the permission to guard hardest</p>
-      <p>The settings category covers payment gateway credentials, SMTP passwords, Firebase keys and SMS gateway tokens — all readable in plain form by anyone who has it.</p>
-      <p>Grant it only to people you would trust with your bank login. A warehouse supervisor who needs stock access does not need settings.</p>
-    </div>
-
-    <div class="admonition admonition--warning">
-      <p class="admonition__title"><code>list</code> without <code>update</code> is genuinely useful</p>
-      <p>For read-only oversight — an accountant who needs to see orders and reports but must not change them — grant only the <code>list</code> permissions in those categories. This is the safest way to widen visibility.</p>
-    </div>
 
     <h2 id="suggested-role-designs">Suggested role designs</h2>
     <div class="table-wrap">

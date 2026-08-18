@@ -117,12 +117,56 @@
 
     <p>An unrestricted Maps key found in your page source can be used by anyone, billed to you.</p>
 
-    <p><strong>Map API Key</strong> — restrict by <strong>HTTP referrer</strong>:</p>
+    <p>The two keys are restricted differently, because they are called from different places:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Called from</th><th>Application restriction</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Map API Key</strong></td><td>The visitor's browser</td><td><strong>Websites (HTTP referrers)</strong> — your domain</td></tr>
+        <tr><td><strong>Place API Key</strong></td><td>Your server</td><td><strong>IP addresses</strong> — your server's IP</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h4 id="map-api-key-restrict-by-domain">Map API Key — restrict by domain</h4>
+
+    <p>This key is loaded into the page, so anyone can read it. Restricting it by referrer means it only works when requested from your own site.</p>
+
+    <p>In <strong>APIs &amp; Services → Credentials</strong>, open the key and under <strong>Application restrictions</strong> choose <strong>Websites</strong>, then add:</p>
 
     <pre><code>https://admin.yourstore.com/*
 https://yourstore.com/*</code></pre>
 
-    <p><strong>Place API Key</strong> — restrict by <strong>API</strong>, limited to Places, Places (New), Geocoding and Distance Matrix.</p>
+    <img src="../images/panel/map-key-restriction-referrer.png" alt="Map API key restricted by website domain">
+
+    <h4 id="place-api-key-restrict-by-ip-address">Place API Key — restrict by IP address</h4>
+
+    <p>SnapBuy calls Places, Geocoding and Distance Matrix <strong>from the server</strong>, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.</p>
+
+    <p>Restrict this key by <strong>IP addresses</strong> instead and enter your server's address. Modern VPS providers usually assign an <strong>IPv6</strong> address, so add that — and the IPv4 address too if your server has one.</p>
+
+    <p>In <strong>APIs &amp; Services → Credentials</strong>, open the key, choose <strong>IP addresses</strong> under <strong>Application restrictions</strong>, and add:</p>
+
+    <pre><code>2400:xxxx:xxxx:xxxx::1
+203.0.113.10</code></pre>
+
+    <img src="../images/panel/map-key-restriction-ip.png" alt="Place API key restricted by server IP address">
+
+    <p>Under <strong>API restrictions</strong>, limit it to Places, Places (New), Geocoding and Distance Matrix.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Do not restrict the Place key by referrer</p>
+      <p>It is the most common way to break delivery-charge calculation. Server-side requests carry no referrer, so the key is rejected — the map still draws, because that uses the other key, and the failure looks like a distance problem rather than a key problem.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Find your server's IP</p>
+      <p>Run this on the server:</p>
+      <pre><code>curl -6 ifconfig.co   # IPv6
+curl -4 ifconfig.co   # IPv4</code></pre>
+      <p>If your server's IP changes, the key stops working until you update the restriction. Static addressing is worth having here.</p>
+    </div>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Restrict, but test afterwards</p>
@@ -175,12 +219,13 @@ https://yourstore.com/*</code></pre>
       <tbody>
         <tr><td>Setup Guide Map step stays red</td><td>Provider is Google but only one key filled</td><td>Fill both Map and Place keys</td></tr>
         <tr><td>Grey map with a watermark</td><td>Billing not enabled on the Google project</td><td>Enable billing</td></tr>
-        <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or key restricted too tightly</td><td>Enable the APIs; check referrer restrictions</td></tr>
+        <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or the Map key's domain restriction does not cover this hostname</td><td>Enable the APIs; add the hostname to the Map key's website restrictions</td></tr>
         <tr><td>Map loads, address search does nothing</td><td>Places API (New) not enabled, Places API not enabled, or Place key missing</td><td>Enable both Places services; fill the Place key</td></tr>
-        <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted to Places/Geocoding only</td><td>Enable Distance Matrix and allow it on the Place API Key</td></tr>
+        <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted by referrer instead of by server IP</td><td>Enable Distance Matrix; restrict the Place key by IP address</td></tr>
         <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
+        <tr><td>Distance lookups failed after a server migration</td><td>Place key still restricted to the old server IP</td><td>Update the IP restriction</td></tr>
         <tr><td>Delivery charges wrong after switching provider</td><td>Cached config</td><td>Visit <code>/clear</code> and retest</td></tr>
-        <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Restrict by referrer and regenerate the key</td></tr>
+        <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Apply the restrictions above and regenerate the key</td></tr>
       </tbody>
     </table>
     </div>
@@ -192,7 +237,7 @@ https://yourstore.com/*</code></pre>
       <li class="task-item"><input type="checkbox" disabled> If Google: billing enabled, all six APIs enabled (including Places API (New))</li>
       <li class="task-item"><input type="checkbox" disabled> If Google: <strong>both</strong> Map and Place keys entered</li>
       <li class="task-item"><input type="checkbox" disabled> Distance Matrix enabled and allowed on the Place API Key</li>
-      <li class="task-item"><input type="checkbox" disabled> Keys restricted by referrer/API</li>
+      <li class="task-item"><input type="checkbox" disabled> Map key restricted by domain; Place key restricted by server IP</li>
       <li class="task-item"><input type="checkbox" disabled> Budget alert configured</li>
       <li class="task-item"><input type="checkbox" disabled> Zone map draws correctly</li>
       <li class="task-item"><input type="checkbox" disabled> Test address returns a sensible delivery charge</li>

@@ -16,18 +16,27 @@ const sidebars = {
         id: "admin/overview",
       },
       items: [
+        "admin/demo-instructions",
+        "admin/third-party-costs",
         {
           type: "category",
           label: "Installation",
+          link: {
+            type: "doc",
+            id: "installation/installation-overview",
+          },
           collapsed: false,
           items: [
             "admin/server-requirements",
+            "installation/server-preparation",
             "admin/create-subdomain",
             "admin/php-ini-settings",
-            "admin/localhost-setup",
             "admin/server-setup",
+            "installation/environment-configuration",
+            "installation/database-migration",
             "admin/cron-jobs",
             "admin/setup-guide",
+            "admin/localhost-setup",
           ],
         },
         {
@@ -68,12 +77,6 @@ const sidebars = {
             "admin/system-updater",
             "admin/activity-logs",
           ],
-        },
-        {
-          type: "category",
-          label: "Backup & Restore",
-          collapsed: true,
-          items: ["installation/backup-database", "installation/backup-project"],
         },
         {
           type: "category",
