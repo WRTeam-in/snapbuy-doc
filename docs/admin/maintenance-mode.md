@@ -70,7 +70,7 @@ Check your order [reports](/docs/admin/reports) for the genuinely lowest-volume 
 Before starting:
 
 - [ ] Confirm no orders are out for delivery, if the rider app is involved
-- [ ] Take a database backup — see [Taking a backup](/docs/admin/system-updater#taking-a-backup)
+- [ ] Take a database backup — see [Routine backups](/docs/installation/database-migration#routine-backups)
 - [ ] Write a clear remark with an expected return time
 - [ ] Confirm the cron heartbeat is green if using a schedule
 - [ ] Have a way to verify the site yourself once it is back

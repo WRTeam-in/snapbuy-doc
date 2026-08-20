@@ -123,7 +123,22 @@ Every item must be green. If something fails:
 
 Fix the issue, then click **Try again** — you do not need to restart the wizard.
 
-## Step 7 — Database and admin account
+## Step 7 — Purchase code
+
+Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
+
+![Installer purchase code step](/images/panel/server-installer-purchase-code.png)
+
+
+:::warning "Invalid code supplied!"
+This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:
+
+```bash
+curl -I https://api.envato.com
+```
+:::
+
+## Step 8 — Database and admin account
 
 ![Installer database step](/images/panel/server-installer-database.png)
 
@@ -152,24 +167,9 @@ When you continue, SnapBuy:
 Migrations and seeders run inside a single request. On a slow shared host this can take a minute or more. Do not refresh or navigate away. If it times out, raise `max_execution_time` — see [PHP INI Settings](/docs/admin/php-ini-settings).
 :::
 
-## Step 8 — Purchase code
-
-Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
-
-![Installer purchase code step](/images/panel/server-installer-purchase-code.png)
-
-
-:::warning "Invalid code supplied!"
-This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:
-
-```bash
-curl -I https://api.envato.com
-```
-:::
-
 ## Step 9 — Finish
 
-The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 7.
+The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 8.
 
 ![SnapBuy admin login screen after installation](/images/panel/server-installer-finish.png)
 

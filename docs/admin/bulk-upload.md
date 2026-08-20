@@ -112,7 +112,7 @@ A blank cell can clear a value, and a mistyped price applies immediately to ever
 
 Before any bulk update:
 
-1. Take a [database backup](/docs/admin/system-updater#taking-a-backup)
+1. Take a [database backup](/docs/installation/database-migration#routine-backups)
 2. Export the current data as your rollback copy
 3. Change only the columns you intend to change
 :::

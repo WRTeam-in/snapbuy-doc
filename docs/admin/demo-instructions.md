@@ -16,6 +16,16 @@ Use the live demo to explore SnapBuy before installing it, or to check how a fea
 | **Email** | `admin@gmail.com` |
 | **Password** | `123456` |
 
+## Store panel
+
+Store managers sign in through their own portal and see only their own store's orders, stock and products.
+
+| | |
+| --- | --- |
+| **URL** | [https://admin-snapbuy.wrteam.me/store/login](https://admin-snapbuy.wrteam.me/store/login) |
+| **Email** | `mumbai@store.com` |
+| **Password** | `Mumbai@1` |
+
 ## Delivery boy portal
 
 Delivery partners sign in through a separate portal on the same installation.

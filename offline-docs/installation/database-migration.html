@@ -113,7 +113,7 @@ php artisan cache:clear</code></pre>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Back up before every migration</p>
-      <p>Migrations alter live tables and cannot be rolled back reliably once data has been written. Take a database backup first, every time — including for updates you expect to be trivial. See <a href="../admin/system-updater.html#taking-a-backup">Backup Database</a>.</p>
+      <p>Migrations alter live tables and cannot be rolled back reliably once data has been written. Take a database backup first, every time — including for updates you expect to be trivial. See <a href="#routine-backups">Routine backups</a>.</p>
     </div>
 
     <div class="admonition admonition--warning">
@@ -152,7 +152,6 @@ php artisan cache:clear</code></pre>
 
     <p>Add it to the server's crontab and keep copies off the server. A backup stored only on the machine it protects is not a backup.</p>
 
-    <p>Detailed procedures: <a href="../admin/system-updater.html#taking-a-backup">Backup Database</a> and <a href="../admin/system-updater.html#taking-a-backup">Backup Project</a>.</p>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
 
