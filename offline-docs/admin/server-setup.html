@@ -123,7 +123,18 @@ sudo chmod 644 .env</code></pre>
 
     <p>Fix the issue, then click <strong>Try again</strong> — you do not need to restart the wizard.</p>
 
-    <h2>Step 7 — Database and admin account</h2>
+    <h2>Step 7 — Purchase code</h2>
+    <p>Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.</p>
+
+    <img src="../images/panel/server-installer-purchase-code.png" alt="Installer purchase code step">
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">"Invalid code supplied!"</p>
+      <p>This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:</p>
+      <pre><code>curl -I https://api.envato.com</code></pre>
+    </div>
+
+    <h2>Step 8 — Database and admin account</h2>
 
     <img src="../images/panel/server-installer-database.png" alt="Installer database step">
 
@@ -159,19 +170,8 @@ sudo chmod 644 .env</code></pre>
       <p>Migrations and seeders run inside a single request. On a slow shared host this can take a minute or more. Do not refresh or navigate away. If it times out, raise <code>max_execution_time</code> — see <a href="../admin/php-ini-settings.html">PHP INI Settings</a>.</p>
     </div>
 
-    <h2>Step 8 — Purchase code</h2>
-    <p>Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.</p>
-
-    <img src="../images/panel/server-installer-purchase-code.png" alt="Installer purchase code step">
-
-    <div class="admonition admonition--warning">
-      <p class="admonition__title">"Invalid code supplied!"</p>
-      <p>This message means one of three things: the code was mistyped, the code belongs to a different product, or your server cannot reach the licence server. Test outbound access with:</p>
-      <pre><code>curl -I https://api.envato.com</code></pre>
-    </div>
-
     <h2>Step 9 — Finish</h2>
-    <p>The wizard confirms the installation and sends you to the login page at <code>https://admin.yourstore.com</code>. Sign in with the admin email and password from Step 7.</p>
+    <p>The wizard confirms the installation and sends you to the login page at <code>https://admin.yourstore.com</code>. Sign in with the admin email and password from Step 8.</p>
 
     <img src="../images/panel/server-installer-finish.png" alt="SnapBuy admin login screen after installation">
 

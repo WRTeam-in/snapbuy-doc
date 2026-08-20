@@ -35,7 +35,7 @@ The order is not a preference. Each step produces something the next step needs.
 | 8 | **[Cron Job Setup](/docs/admin/cron-jobs)** | Register the scheduler — several features do nothing without it |
 | 9 | **[Setup Guide](/docs/admin/setup-guide)** | The nine in-panel steps that make the store usable |
 | 10 | **[Localhost Setup](/docs/admin/localhost-setup)** | Optional — run a copy on your own machine |
-| 11 | **[Backups](/docs/admin/system-updater#taking-a-backup)** | Put a backup routine in place before you go live |
+| 11 | **[Routine backups](/docs/installation/database-migration#routine-backups)** | Put a backup routine in place before you go live |
 
 Once the panel is running, the other three codebases point at it:
 
