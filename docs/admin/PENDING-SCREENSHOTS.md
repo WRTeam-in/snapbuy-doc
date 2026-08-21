@@ -55,7 +55,7 @@ Take them in this order — it matches the wizard:
 | 7 | `server-installer-finish` | admin/server-setup.md | Finish step / first login screen |
 | 8 | `installation-migrate-output` | installation/database-migration.md | Terminal output of `php artisan migrate --force` |
 | 9 | `installation-env-file` | installation/environment-configuration.md | The `.env` file open in an editor |
-| 10 | `installation-vps-nginx` | installation/server-preparation.md | The Nginx site config |
+| 10 | `installation-vps-nginx` | installation/server-setup.md | The Nginx site config |
 
 Localhost equivalents, if you also want them:
 

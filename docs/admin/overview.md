@@ -46,7 +46,7 @@ Follow these pages in order. Each one assumes the previous is done.
 2. **[Domain, DNS & SSL](/docs/admin/create-subdomain)** — where the panel will live.
 3. **[PHP INI Settings](/docs/admin/php-ini-settings)** — limits that must be raised before installing.
 4. **[Localhost Setup](/docs/admin/localhost-setup)** — for testing on your own machine.
-5. **[Panel Installation](/docs/admin/server-setup)** — the live installation wizard.
+5. **[Panel Installation](/docs/admin/panel-installation)** — the live installation wizard.
 6. **[Cron Job Setup](/docs/admin/cron-jobs)** — without this, several features silently stop working.
 7. **[Setup Guide](/docs/admin/setup-guide)** — the nine in-panel steps that make the store usable.
 

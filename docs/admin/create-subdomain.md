@@ -136,4 +136,4 @@ Load `https://admin.yourstore.com` and confirm the padlock appears **before** yo
 
 ---
 
-**Previous:** [← Server Setup](/docs/installation/server-preparation) · **Next:** [PHP INI Settings →](/docs/admin/php-ini-settings)
+**Previous:** [← Deployment Guide](/docs/installation/server-setup) · **Next:** [PHP INI Settings →](/docs/admin/php-ini-settings)

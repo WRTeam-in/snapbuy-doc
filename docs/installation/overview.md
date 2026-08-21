@@ -26,10 +26,10 @@ The order is not a preference. Each step produces something the next step needs.
 | Step | Page | What it achieves |
 | --- | --- | --- |
 | 1 | **[Server Requirements](/docs/admin/server-requirements)** | Confirm the server can run SnapBuy |
-| 2 | **[Server Setup](/docs/installation/server-preparation)** | Install PHP, MySQL, Nginx, Node and Supervisor |
+| 2 | **[Deployment Guide](/docs/installation/server-setup)** | Install PHP, MySQL, Nginx, Node and Supervisor |
 | 3 | **[Domain, DNS & SSL](/docs/admin/create-subdomain)** | Point the hostname at the server and install a certificate |
 | 4 | **[PHP INI Settings](/docs/admin/php-ini-settings)** | Raise the limits the installer needs |
-| 5 | **[Panel Installation](/docs/admin/server-setup)** | Run the installation wizard — creates the schema and your Super Admin account |
+| 5 | **[Panel Installation](/docs/admin/panel-installation)** | Run the installation wizard — creates the schema and your Super Admin account |
 | 6 | **[Environment Configuration](/docs/installation/environment-configuration)** | Review `.env` and add what the installer could not know |
 | 7 | **[Database & Migrations](/docs/installation/database-migration)** | Understand what was built, and how to migrate later |
 | 8 | **[Cron Job Setup](/docs/admin/cron-jobs)** | Register the scheduler — several features do nothing without it |

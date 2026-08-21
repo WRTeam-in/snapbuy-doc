@@ -9,7 +9,7 @@ sidebar_position: 4
 SnapBuy builds its own schema. You never create tables by hand and no SQL dump is shipped — the installer runs Laravel migrations and seeders.
 
 :::info If you installed through the wizard, this is already done
-Running [Panel Installation](/docs/admin/server-setup) creates the whole schema and seeds the default data for you. **You do not need to run any command on this page.**
+Running [Panel Installation](/docs/admin/panel-installation) creates the whole schema and seeds the default data for you. **You do not need to run any command on this page.**
 
 The manual commands below are for a [Localhost Setup](/docs/admin/localhost-setup), or for the rare case where the web installer times out on a slow server. Read the rest of this page as reference — what the installer built, and how to migrate when you update later.
 :::
@@ -107,7 +107,7 @@ Replace the address with your own. The log viewer in particular can reveal file 
 ## Moving to another server
 
 1. Back up the database and the project files, including `.env`.
-2. Prepare the new server — see [Server Setup](/docs/installation/server-preparation).
+2. Prepare the new server — see [Deployment Guide](/docs/installation/server-setup).
 3. Restore the files and import the database dump.
 4. Update `APP_URL` and the `DB_*` values in `.env`.
 5. Keep the **same `APP_KEY`** — encrypted values such as payment credentials cannot be decrypted without it.
