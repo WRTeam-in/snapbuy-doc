@@ -1,10 +1,11 @@
 ---
 id: server-setup
-title: Server Setup
+title: Deployment Guide / Server Setup
+sidebar_label: Deployment Guide
 sidebar_position: 2
 ---
 
-# Server Setup
+# Deployment Guide / Server Setup
 
 This page provisions a clean VPS to the point where SnapBuy's installer can run. Commands are shown for Ubuntu 22.04 / 24.04; adapt package names for other distributions.
 

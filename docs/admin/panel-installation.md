@@ -80,7 +80,7 @@ npm install
 npm run build
 ```
 
-This writes `public/build/`. Node 20 LTS or newer is required — see [Server Setup](/docs/installation/server-setup#step-6--install-composer-and-node).
+This writes `public/build/`. Node 20 LTS or newer is required — see [Deployment Guide](/docs/installation/server-setup#step-6--install-composer-and-node).
 
 :::danger A blank panel after installing usually means the assets were never built
 If the page loads with no styling, or stays empty with console errors about missing asset files, `public/build` is absent or incomplete. Run `npm run build` and reload.
@@ -92,7 +92,7 @@ Once `npm run build` has produced `public/build/`, the panel is served entirely 
 
 ## Step 3 — Create the database and user
 
-If you followed [Server Setup](/docs/installation/server-setup) this is already done. Otherwise:
+If you followed [Deployment Guide](/docs/installation/server-setup) this is already done. Otherwise:
 
 ```bash
 sudo mysql -u root -p

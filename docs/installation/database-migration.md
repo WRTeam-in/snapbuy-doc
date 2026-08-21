@@ -107,7 +107,7 @@ Replace the address with your own. The log viewer in particular can reveal file 
 ## Moving to another server
 
 1. Back up the database and the project files, including `.env`.
-2. Prepare the new server — see [Server Setup](/docs/installation/server-setup).
+2. Prepare the new server — see [Deployment Guide](/docs/installation/server-setup).
 3. Restore the files and import the database dump.
 4. Update `APP_URL` and the `DB_*` values in `.env`.
 5. Keep the **same `APP_KEY`** — encrypted values such as payment credentials cannot be decrypted without it.

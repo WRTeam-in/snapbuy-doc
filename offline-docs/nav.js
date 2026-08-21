@@ -32,7 +32,7 @@
           items: [
             ["Installation Overview", "installation/overview.html"],
             ["Server Requirements", "admin/server-requirements.html"],
-            ["Server Setup", "installation/server-setup.html"],
+            ["Deployment Guide", "installation/server-setup.html"],
             ["Domain, DNS & SSL", "admin/create-subdomain.html"],
             ["PHP INI Settings", "admin/php-ini-settings.html"],
             ["Panel Installation", "admin/panel-installation.html"],
