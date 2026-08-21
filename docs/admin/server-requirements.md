@@ -22,7 +22,7 @@ SnapBuy requires a **VPS, cloud instance or dedicated server with root access**.
 :::danger Entry-level shared hosting will not run SnapBuy
 Plans that offer only PHP and MySQL — with no shell access, no persistent processes and no Node runtime — cannot run the storefront's server-side rendering or the queue worker. SEO and notifications will not work.
 
-Provision a VPS. See [Server Setup](/docs/installation/server-preparation) for a step-by-step build.
+Provision a VPS. See [Server Setup](/docs/installation/server-setup) for a step-by-step build.
 :::
 
 ### Suggested sizing
@@ -157,4 +157,4 @@ Full walkthrough: **[Localhost Setup](/docs/admin/localhost-setup)**.
 
 ---
 
-**Next:** [Server Setup →](/docs/installation/server-preparation)
+**Next:** [Server Setup →](/docs/installation/server-setup)

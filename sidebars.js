@@ -28,10 +28,10 @@ const sidebars = {
           collapsed: false,
           items: [
             "admin/server-requirements",
-            "installation/server-preparation",
+            "installation/server-setup",
             "admin/create-subdomain",
             "admin/php-ini-settings",
-            "admin/server-setup",
+            "admin/panel-installation",
             "installation/environment-configuration",
             "installation/database-migration",
             "admin/cron-jobs",

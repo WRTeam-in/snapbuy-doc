@@ -32,10 +32,10 @@
           items: [
             ["Installation Overview", "installation/overview.html"],
             ["Server Requirements", "admin/server-requirements.html"],
-            ["Server Setup", "installation/server-preparation.html"],
+            ["Server Setup", "installation/server-setup.html"],
             ["Domain, DNS & SSL", "admin/create-subdomain.html"],
             ["PHP INI Settings", "admin/php-ini-settings.html"],
-            ["Panel Installation", "admin/server-setup.html"],
+            ["Panel Installation", "admin/panel-installation.html"],
             ["Environment Configuration", "installation/environment-configuration.html"],
             ["Database & Migrations", "installation/database-migration.html"],
             ["Cron Job Setup", "admin/cron-jobs.html"],

@@ -11,7 +11,7 @@ The `.env` file in the project root holds every environment-specific value: data
 Most of it is written for you by the installation wizard. This page explains what each value does, which ones the installer cannot know, and which ones you must never change casually.
 
 :::info If you installed through the wizard, most of this is already set
-[Panel Installation](/docs/admin/server-setup) writes the database credentials, `APP_URL`, `APP_ENV`, `APP_KEY` and the Reverb keys for you. **You do not need to create or edit `.env` by hand.**
+[Panel Installation](/docs/admin/panel-installation) writes the database credentials, `APP_URL`, `APP_ENV`, `APP_KEY` and the Reverb keys for you. **You do not need to create or edit `.env` by hand.**
 
 Editing it manually is for a [Localhost Setup](/docs/admin/localhost-setup), or for changing a specific value later — a queue driver, a broadcast driver, a moved database. Use this page as a reference for what each key means, not as a list of steps to perform.
 :::
@@ -149,4 +149,4 @@ This is the single most common cause of "I changed the setting and nothing happe
 
 ---
 
-**Previous:** [← Panel Installation](/docs/admin/server-setup) · **Next:** [Database & Migrations →](/docs/installation/database-migration)
+**Previous:** [← Panel Installation](/docs/admin/panel-installation) · **Next:** [Database & Migrations →](/docs/installation/database-migration)

@@ -28,7 +28,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">If you installed through the wizard, this is already done</p>
-      <p>Running <a href="../admin/server-setup.html">Panel Installation</a> creates the whole schema and seeds the default data for you. <strong>You do not need to run any command on this page.</strong></p>
+      <p>Running <a href="../admin/panel-installation.html">Panel Installation</a> creates the whole schema and seeds the default data for you. <strong>You do not need to run any command on this page.</strong></p>
       <p>The manual commands below are for a <a href="../admin/localhost-setup.html">Localhost Setup</a>, or for the rare case where the web installer times out on a slow server. Read the rest of this page as reference — what the installer built, and how to migrate when you update later.</p>
     </div>
 
@@ -130,7 +130,7 @@ php artisan cache:clear</code></pre>
 
     <ol>
       <li>Back up the database and the project files, including <code>.env</code>.</li>
-      <li>Prepare the new server — see <a href="../installation/server-preparation.html">Server Setup</a>.</li>
+      <li>Prepare the new server — see <a href="../installation/server-setup.html">Server Setup</a>.</li>
       <li>Restore the files and import the database dump.</li>
       <li>Update <code>APP_URL</code> and the <code>DB_*</code> values in <code>.env</code>.</li>
       <li>Keep the <strong>same <code>APP_KEY</code></strong> — encrypted values such as payment credentials cannot be decrypted without it.</li>

@@ -1,5 +1,5 @@
 ---
-id: server-preparation
+id: server-setup
 title: Server Setup
 sidebar_position: 2
 ---

@@ -1,5 +1,5 @@
 ---
-id: server-setup
+id: panel-installation
 title: Panel Installation
 sidebar_position: 6
 ---
@@ -39,9 +39,60 @@ scp snapbuy-admin.zip user@your-server:/var/www/snapbuy/
 Uploading thousands of individual files over FTP is slow and often leaves files missing. Always upload the single archive and extract it on the server.
 :::
 
-## Step 2 — Create the database and user
+## Step 2 — Install dependencies
 
-If you followed [Server Setup](/docs/installation/server-preparation) this is already done. Otherwise:
+SnapBuy ships with its PHP dependencies and compiled front-end assets already included, so most installations can skip straight to the next step.
+
+Check whether both are present:
+
+```bash
+cd /var/www/snapbuy
+
+# PHP dependencies
+[ -d vendor ] && echo "vendor OK" || echo "vendor MISSING"
+
+# compiled panel assets
+[ -f public/build/manifest.json ] && echo "build OK" || echo "build MISSING"
+```
+
+### If `vendor` is missing
+
+```bash
+composer install --no-dev --optimize-autoloader
+```
+
+`--no-dev` skips development-only packages, and `--optimize-autoloader` generates a class map that makes every request faster. Both matter on a production server.
+
+:::warning Composer may run out of memory
+On a small VPS Composer can exhaust the CLI memory limit part-way through. If it dies with an allocation error:
+
+```bash
+COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader
+```
+:::
+
+### If `public/build/manifest.json` is missing
+
+The admin panel is a Vue application compiled by Vite. Without the build output, the panel loads a blank page.
+
+```bash
+npm install
+npm run build
+```
+
+This writes `public/build/`. Node 20 LTS or newer is required — see [Server Setup](/docs/installation/server-setup#step-6--install-composer-and-node).
+
+:::danger A blank panel after installing usually means the assets were never built
+If the page loads with no styling, or stays empty with console errors about missing asset files, `public/build` is absent or incomplete. Run `npm run build` and reload.
+:::
+
+:::tip You only need Node to build, not to run
+Once `npm run build` has produced `public/build/`, the panel is served entirely by PHP. Node is not needed at runtime for the admin panel — only for the web portal, which is server-rendered.
+:::
+
+## Step 3 — Create the database and user
+
+If you followed [Server Setup](/docs/installation/server-setup) this is already done. Otherwise:
 
 ```bash
 sudo mysql -u root -p
@@ -62,7 +113,7 @@ Record the database name, username and password — the installer asks for all t
 Use a password made of capitals, lowercase letters, numbers and `@` or `_`. Some other symbols break the `.env` parser and cause a "could not connect" error even when the credentials are correct. If a connection fails and you are certain the details are right, regenerate the password without exotic symbols.
 :::
 
-## Step 3 — Set file permissions
+## Step 4 — Set file permissions
 
 The installer checks four paths. Set them before you start:
 
@@ -76,7 +127,7 @@ sudo chmod 644 .env
 
 Replace `www-data` with `apache` on AlmaLinux / RHEL.
 
-## Step 4 — Prepare `.env`
+## Step 5 — Prepare `.env`
 
 Copy `.env.example` to `.env`, then add this line:
 
@@ -88,7 +139,7 @@ INSTALL_MODE=server
 SnapBuy only runs the migrations, seeders, Passport key generation and the storage symlink when `INSTALL_MODE=server`. Without it, the wizard reports success but leaves you with an empty database and a broken panel.
 :::
 
-## Step 5 — Open the installer
+## Step 6 — Open the installer
 
 Visit your panel over **HTTPS**:
 
@@ -105,7 +156,7 @@ You are redirected to the installation wizard.
 The installer saves whatever address you visit it on as `APP_URL`. Installing over `http://` bakes the wrong scheme into your configuration and causes mixed-content and callback failures later.
 :::
 
-## Step 6 — Requirements check
+## Step 7 — Requirements check
 
 The wizard verifies your PHP version, all seventeen extensions, and the four writable paths.
 
@@ -123,7 +174,7 @@ Every item must be green. If something fails:
 
 Fix the issue, then click **Try again** — you do not need to restart the wizard.
 
-## Step 7 — Purchase code
+## Step 8 — Purchase code
 
 Enter the Envato purchase code for your SnapBuy licence. It is validated online, so your server must be able to make outbound HTTPS requests.
 
@@ -138,7 +189,7 @@ curl -I https://api.envato.com
 ```
 :::
 
-## Step 8 — Database and admin account
+## Step 9 — Database and admin account
 
 ![Installer database step](/images/panel/server-installer-database.png)
 
@@ -167,9 +218,9 @@ When you continue, SnapBuy:
 Migrations and seeders run inside a single request. On a slow shared host this can take a minute or more. Do not refresh or navigate away. If it times out, raise `max_execution_time` — see [PHP INI Settings](/docs/admin/php-ini-settings).
 :::
 
-## Step 9 — Finish
+## Step 10 — Finish
 
-The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 8.
+The wizard confirms the installation and sends you to the login page at `https://admin.yourstore.com`. Sign in with the admin email and password from Step 9.
 
 ![SnapBuy admin login screen after installation](/images/panel/server-installer-finish.png)
 
