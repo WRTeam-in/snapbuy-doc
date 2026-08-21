@@ -28,73 +28,61 @@
 
     <h2 id="overview">Overview</h2>
 
-    <p>The project ships with <strong>three environments</strong>: <code>dev</code>, <code>stage</code>, and <code>demo</code>. Each environment has its own JSON file under <code>env/</code> holding the API base URL and deeplink config. A single sync script propagates those JSON values into the Dart code and the native Android / iOS config files.</p>
-
-    <div class="admonition admonition--info">
-      <p class="admonition__title">Info</p>
-      <p>Most clients won't need multiple environments — they push directly to a single production server. In that case, <strong>just edit <code>env/demo.json</code></strong> and ignore the <code>dev</code> and <code>stage</code> files. The <code>demo</code> environment is the default and is what your end users will run.</p>
-    </div>
+    <p>All backend API and deeplink config lives directly in <code>lib/core/configs/app_config.dart</code> as Dart constants — no <code>env/</code> JSON files involved. Edit the file, then run the sync script to propagate values into the native Android / iOS config.</p>
 
     <h2 id="config-keys">Config Keys</h2>
 
-    <p>Each <code>env/&lt;name&gt;.json</code> file contains the following keys:</p>
+    <p><code>lib/core/configs/app_config.dart</code>:</p>
 
     <div class="table-wrap">
     <table>
       <thead>
-        <tr><th>Key</th><th>Meaning</th></tr>
+        <tr><th>Constant</th><th>Meaning</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>BASE_URL</code></td><td>Backend API root for all network calls</td></tr>
-        <tr><td><code>WEB_URL</code></td><td>Web app URL</td></tr>
-        <tr><td><code>SOCKET_BASE_URL</code></td><td>Socket server URL used for real-time connections</td></tr>
-        <tr><td><code>DEEPLINK_SCHEME</code></td><td>Custom URL scheme (e.g. <code>snapbuy</code> → <code>snapbuy://product/123</code>)</td></tr>
-        <tr><td><code>DEEPLINK_HOST</code></td><td>Universal / App Link host — must match the web app host (e.g. <code>snapbuy.wrteam.me</code>)</td></tr>
+        <tr><td><code>baseUrl</code></td><td>Backend API root for all network calls</td></tr>
+        <tr><td><code>webUrl</code></td><td>Web app URL</td></tr>
+        <tr><td><code>socketBaseUrl</code></td><td>Socket server URL used for real-time connections</td></tr>
+        <tr><td><code>deeplinkScheme</code></td><td>Custom URL scheme (e.g. <code>snapbuy</code> → <code>snapbuy://product/123</code>)</td></tr>
+        <tr><td><code>deeplinkHost</code></td><td>Universal / App Link host — must match the web app host (e.g. <code>snapbuy.wrteam.me</code>)</td></tr>
       </tbody>
     </table>
     </div>
 
-    <p><strong>Example</strong> — <code>env/demo.json</code>:</p>
+    <p><strong>Example</strong> — <code>lib/core/configs/app_config.dart</code>:</p>
 
-    <pre><code class="language-json">{
-  "BASE_URL": "https://admin-snapbuy.wrteam.me/customer/",
-  "WEB_URL": "https://snapbuy.wrteam.me",
-  "SOCKET_BASE_URL": "wss://admin-snapbuy.wrteam.me:8080/app/w73uw1egonunwexdhebg",
-  "DEEPLINK_SCHEME": "snapbuy",
-  "DEEPLINK_HOST": "snapbuy.wrteam.me"
+    <pre><code class="language-dart">abstract final class AppConfig {
+  static const String baseUrl = 'https://admin-snapbuy.wrteam.me/customer/';
+  static const String webUrl = 'https://snapbuy.wrteam.me';
+  static const String socketBaseUrl =
+      'wss://admin-snapbuy.wrteam.me:8080/app/w73uw1egonunwexdhebg';
+
+  static const String deeplinkScheme = 'snapbuy';
+  static const String deeplinkHost = 'snapbuy.wrteam.me';
 }</code></pre>
 
     <img src="../images/app/customer/deeplink.png" alt="Deeplink Scheme">
 
     <h2 id="how-to-change-values">How to Change Values</h2>
 
-    <h3 id="step-1-pick-environment">Step 1 — Pick Environment</h3>
+    <h3 id="step-1-edit-app-config">Step 1 — Edit app_config.dart</h3>
 
-    <p>Open <code>lib/core/configs/app_config.dart</code> and set the active environment:</p>
+    <p>Open <code>lib/core/configs/app_config.dart</code> and update <code>baseUrl</code>, <code>webUrl</code>, <code>socketBaseUrl</code>, <code>deeplinkScheme</code>, and <code>deeplinkHost</code> directly.</p>
 
-    <pre><code class="language-dart">static const String environment = 'demo'; // or 'dev' / 'stage'</code></pre>
-
-    <p>Most clients leave this on <code>'demo'</code> and edit only <code>env/demo.json</code> (single production server, no multi-env workflow needed).</p>
-
-    <h3 id="step-2-edit-matching-json">Step 2 — Edit Matching JSON</h3>
-
-    <p>Open the matching file under <code>env/</code> (e.g. <code>env/demo.json</code>) and update <code>BASE_URL</code>, <code>DEEPLINK_SCHEME</code>, and <code>DEEPLINK_HOST</code> to your values.</p>
-
-    <h3 id="step-3-run-sync-script">Step 3 — Run Sync Script</h3>
+    <h3 id="step-2-run-sync-script">Step 2 — Run Sync Script</h3>
 
     <p>From the project root:</p>
 
     <pre><code class="language-bash">dart run tool/apply_config.dart</code></pre>
 
-    <p>The script automatically patches:</p>
+    <p>The script reads <code>app_config.dart</code> and patches:</p>
     <ul>
-      <li><code>baseUrl</code>, <code>deeplinkScheme</code>, <code>deeplinkHost</code> constants in <code>app_config.dart</code></li>
       <li>Android <code>&lt;data&gt;</code> intent-filter tags in <code>AndroidManifest.xml</code> (scheme + host; <code>pathPattern</code> is preserved)</li>
       <li>iOS <code>CFBundleURLSchemes</code> first entry in <code>Info.plist</code> (the Google Sign-In reverse-client-ID below is left untouched)</li>
       <li>iOS <code>applinks:&lt;host&gt;</code> entry in <code>Runner.entitlements</code></li>
     </ul>
 
-    <h3 id="step-4-rebuild">Step 4 — Rebuild</h3>
+    <h3 id="step-3-rebuild">Step 3 — Rebuild</h3>
 
     <pre><code class="language-bash">flutter clean && flutter run</code></pre>
 
@@ -106,9 +94,8 @@
         <tr><th>File</th><th>Purpose</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>lib/core/configs/app_config.dart</code></td><td>Dart-side config consumed by the app</td></tr>
-        <tr><td><code>env/dev.json</code> · <code>env/stage.json</code> · <code>env/demo.json</code></td><td>Source of truth per environment</td></tr>
-        <tr><td><code>tool/apply_config.dart</code></td><td>Sync script</td></tr>
+        <tr><td><code>lib/core/configs/app_config.dart</code></td><td>Source of truth — edit this directly</td></tr>
+        <tr><td><code>tool/apply_config.dart</code></td><td>Sync script — propagates <code>app_config.dart</code> to native config</td></tr>
         <tr><td><code>android/app/src/main/AndroidManifest.xml</code></td><td>Android deeplink intent filters</td></tr>
         <tr><td><code>ios/Runner/Info.plist</code></td><td>iOS URL scheme</td></tr>
         <tr><td><code>ios/Runner/Runner.entitlements</code></td><td>iOS Universal Links</td></tr>
@@ -121,16 +108,15 @@
     <div class="admonition admonition--warning">
       <p class="admonition__title">Warning</p>
       <ul>
-        <li><strong>Never edit the constants in <code>app_config.dart</code> by hand</strong> — the sync script overwrites them. Edit the JSON instead.</li>
-        <li><code>DEEPLINK_HOST</code> <strong>must match the web app domain</strong> for iOS Universal Links and Android App Links to work.</li>
-        <li><code>DEEPLINK_SCHEME</code> is the scheme value used for deeplinking. and it must be same in app settings and in web app. (dont change unless you want)</li>
-        <li><code>WEB_URL</code> <strong>must match the <code>DEEPLINK_HOST</code></strong> domain (e.g. <code>https://&lt;DEEPLINK_HOST&gt;</code>).</li>
+        <li><code>deeplinkHost</code> <strong>must match the web app domain</strong> for iOS Universal Links and Android App Links to work.</li>
+        <li><code>deeplinkScheme</code> is the scheme value used for deeplinking, and it must be same in app settings and in web app. (dont change unless you want)</li>
+        <li><code>webUrl</code> <strong>must match the <code>deeplinkHost</code></strong> domain (e.g. <code>https://&lt;deeplinkHost&gt;</code>).</li>
       </ul>
     </div>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Tip</p>
-      <p>You can switch environments at any time: change the <code>environment</code> constant → rerun the sync script → rebuild the app.</p>
+      <p>After changing any value in <code>app_config.dart</code>, rerun the sync script → rebuild the app.</p>
     </div>
 
     <h2 id="panel-side-deeplink">Panel-Side Deeplink Setting</h2>
@@ -151,7 +137,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Keep the scheme identical everywhere</p>
-      <p>The <code>DEEPLINK_SCHEME</code> value in <code>env/demo.json</code>, the Admin Panel's Deeplink Schema field, and the compiled Android/iOS apps must all match exactly. A mismatch breaks deeplinks silently — taps simply do nothing.</p>
+      <p>The <code>deeplinkScheme</code> value in <code>app_config.dart</code>, the Admin Panel's Deeplink Schema field, and the compiled Android/iOS apps must all match exactly. A mismatch breaks deeplinks silently — taps simply do nothing.</p>
     </div>
   </main>
 </div>
