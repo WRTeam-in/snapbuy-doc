@@ -67,29 +67,42 @@ On the quick channel, delivery charge is calculated from the **store pin** to th
 Saving without a pin fails with *"Please select store location on map."*
 :::
 
-### Contact
+### Contact and store login
 
 | Field | Used for |
 | --- | --- |
 | **Contact Number** | Shown to customers and delivery boys for that outlet |
-| **Email** | Store-level notifications |
+| **Email** | Store-level notifications **and the store's login username** |
+| **Password** | The store's login password |
+
+The email and password you set here are the credentials the store manager uses to sign in at:
+
+```
+https://admin.yourstore.com/store/login
+```
+
+:::warning The email must be unique across all panel accounts
+It is checked against every existing admin and store account. If the address is already in use, saving fails — use a different one.
+:::
+
+:::info Store permissions are set from the Stores list
+You can assign permissions to each store from the **Stores** listing. The store then sees only the modules you have allowed, and nothing else.
+:::
 
 ### Operating hours
 
-Set open and close times per day of the week, and mark days closed.
+Set open and close times per day of the week, with an optional break, and mark days closed.
 
 ![Store operating hours](/images/panel/stores-operating-hours.png)
 
-:::warning Hours are read in the country's timezone
-Operating hours are evaluated against the timezone set on the store's zone's [country](/docs/admin/countries) — not the server clock. A wrong country timezone makes the store appear closed while it is open.
+:::warning Operating hours apply to quick commerce only
+They govern **quick-commerce** orders. eCommerce orders are scheduled shipments and are accepted regardless of whether the outlet is currently open.
+
+Leaving the opening and closing times empty means the store is treated as open all day.
 :::
 
-## Multi-language
-
-Store **name**, **provider** and **address** are translatable.
-
-:::info Create in the default language first
-SnapBuy rejects creating a store in a secondary language with *"Please create store in default language first."* Create the record in your default language, then switch language and add translations. See [Manage Languages](/docs/admin/languages).
+:::warning Hours are read in the country's timezone
+Operating hours are evaluated against the timezone set on the store's zone's [country](/docs/admin/countries) — not the server clock. A wrong country timezone makes the store appear closed while it is open.
 :::
 
 ## Per-store stock and pricing
@@ -142,9 +155,11 @@ Deleting a store is a soft delete, but it frees the zone so another store can cl
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | "Zone already assigned to another store" | That zone already has a store | Create a new zone for the new outlet |
+| Store cannot sign in | Wrong email, or password never set | Re-enter the password on the store record |
+| Store sees fewer menus than expected | Its permissions do not cover those modules | Update the store's permissions from the Stores list |
 | "Selected zone does not support this fulfillment type" | Store channel is wider than the zone's | Change the store type, or set the zone to `Both` |
 | "Please select store location on map" | No pin dropped | Click the map to place the pin |
-| "Please create store in default language first" | Creating in a secondary language | Switch to the default language, create, then translate |
+| "Please create store in default language first" | Creating in a secondary language | Create it in the default language first — see [Manage Languages](/docs/admin/languages) |
 | Delivery charges are wrong for every order | Store pin in the wrong place | Re-drop the pin at the real address |
 | Store shows closed during business hours | Country timezone wrong | Fix the timezone on the [country](/docs/admin/countries) |
 | Product missing for some customers only | Not listed at that zone's store | List it on that store |
@@ -155,7 +170,8 @@ Deleting a store is a soft delete, but it frees the zone so another store can cl
 - [ ] Fulfillment type is compatible with the zone's sales channel
 - [ ] Map pin dropped on the actual building
 - [ ] Operating hours set for all seven days
-- [ ] Contact number and email filled
-- [ ] Name, provider and address translated into every active language
+- [ ] Contact number filled
+- [ ] Login email and password set, and the email not already used by another account
+- [ ] Store permissions assigned from the Stores list
 - [ ] Products listed and priced at this store
 - [ ] Status Active

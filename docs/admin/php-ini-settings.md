@@ -112,4 +112,4 @@ symlink, exec, proc_open, shell_exec, putenv
 
 ---
 
-**Previous:** [← Domain, DNS & SSL](/docs/admin/create-subdomain) · **Next:** [Panel Installation](/docs/admin/server-setup)
+**Previous:** [← Domain, DNS & SSL](/docs/admin/create-subdomain) · **Next:** [Panel Installation →](/docs/admin/server-setup)

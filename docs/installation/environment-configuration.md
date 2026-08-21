@@ -149,4 +149,4 @@ This is the single most common cause of "I changed the setting and nothing happe
 
 ---
 
-**Previous:** [Panel Installation](/docs/admin/server-setup) · **Next:** [Database & Migrations →](/docs/installation/database-migration)
+**Previous:** [← Panel Installation](/docs/admin/server-setup) · **Next:** [Database & Migrations →](/docs/installation/database-migration)

@@ -14,13 +14,14 @@ SnapBuy uses role-based access control. A **role** is a bundle of permissions; a
 
 ## The seeded roles
 
-Installation creates three:
+Installation creates four:
 
-| Role | Purpose |
-| --- | --- |
-| **Super Admin** | Every permission. Created by the installer as your account. |
-| **Admin** | Broad management access |
-| **Delivery Boy** | The rider's own portal — not a panel administrator |
+| Role | Purpose | Signs in at |
+| --- | --- | --- |
+| **Super Admin** | Every permission. Created by the installer as your account. | `/login` |
+| **Admin** | Broad management access | `/login` |
+| **Store** | A store manager, scoped to their own outlet | `/store/login` |
+| **Delivery Boy** | The rider's own portal — not a panel administrator | `/delivery_boy/login` |
 
 :::danger Protect the Super Admin account
 It can read your live payment gateway secrets, change prices, and delete records. Use a strong unique password, and never share the login between people — the [activity log](/docs/admin/activity-logs) can only tell you *which account* acted, so a shared account destroys accountability.

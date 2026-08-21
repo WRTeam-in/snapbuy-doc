@@ -88,7 +88,7 @@ php artisan cache:clear
 If you cannot reach the command line, the panel exposes browser equivalents at `/migration` and `/clear`.
 
 :::danger Back up before every migration
-Migrations alter live tables and cannot be rolled back reliably once data has been written. Take a database backup first, every time — including for updates you expect to be trivial. See [Taking a backup](/docs/admin/system-updater#taking-a-backup).
+Migrations alter live tables and cannot be rolled back reliably once data has been written. Take a database backup first, every time — including for updates you expect to be trivial. See [Routine backups](#routine-backups) below.
 :::
 
 :::warning Restrict the maintenance URLs
@@ -129,7 +129,7 @@ mysqldump -u snapbuy -p snapbuy | gzip > /backups/snapbuy-$(date +\%F).sql.gz
 
 Add it to the server's crontab and keep copies off the server. A backup stored only on the machine it protects is not a backup.
 
-Detailed procedures: [Taking a backup](/docs/admin/system-updater#taking-a-backup).
+
 
 ## Troubleshooting
 

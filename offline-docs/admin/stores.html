@@ -97,36 +97,48 @@
       <p>Saving without a pin fails with <em>"Please select store location on map."</em></p>
     </div>
 
-    <h3 id="contact">Contact</h3>
+    <h3 id="contact-and-store-login">Contact and store login</h3>
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>Field</th><th>Used for</th></tr></thead>
       <tbody>
         <tr><td><strong>Contact Number</strong></td><td>Shown to customers and delivery boys for that outlet</td></tr>
-        <tr><td><strong>Email</strong></td><td>Store-level notifications</td></tr>
+        <tr><td><strong>Email</strong></td><td>Store-level notifications <strong>and the store's login username</strong></td></tr>
+        <tr><td><strong>Password</strong></td><td>The store's login password</td></tr>
       </tbody>
     </table>
     </div>
 
+    <p>The email and password you set here are the credentials the store manager uses to sign in at:</p>
+
+    <pre><code>https://admin.yourstore.com/store/login</code></pre>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The email must be unique across all panel accounts</p>
+      <p>It is checked against every existing admin and store account. If the address is already in use, saving fails — use a different one.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Store permissions are set from the Stores list</p>
+      <p>You can assign permissions to each store from the <strong>Stores</strong> listing. The store then sees only the modules you have allowed, and nothing else.</p>
+    </div>
+
     <h3 id="operating-hours">Operating hours</h3>
 
-    <p>Set open and close times per day of the week, and mark days closed.</p>
+    <p>Set open and close times per day of the week, with an optional break, and mark days closed.</p>
 
     <img src="../images/panel/stores-operating-hours.png" alt="Store operating hours">
 
     <div class="admonition admonition--warning">
-      <p class="admonition__title">Hours are read in the country's timezone</p>
-      <p>Operating hours are evaluated against the timezone set on the store's zone's <a href="countries.html">country</a> — not the server clock. A wrong country timezone makes the store appear closed while it is open.</p>
+      <p class="admonition__title">Operating hours apply to quick commerce only</p>
+      <p>They govern <strong>quick-commerce</strong> orders. eCommerce orders are scheduled shipments and are accepted regardless of whether the outlet is currently open.</p>
+      <p>Leaving the opening and closing times empty means the store is treated as open all day.</p>
     </div>
 
-    <h2 id="multi-language">Multi-language</h2>
-
-    <p>Store <strong>name</strong>, <strong>provider</strong> and <strong>address</strong> are translatable.</p>
-
-    <div class="admonition admonition--info">
-      <p class="admonition__title">Create in the default language first</p>
-      <p>SnapBuy rejects creating a store in a secondary language with <em>"Please create store in default language first."</em> Create the record in your default language, then switch language and add translations. See <a href="languages.html">Manage Languages</a>.</p>
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Hours are read in the country's timezone</p>
+      <p>Operating hours are evaluated against the timezone set on the store's zone's <a href="countries.html">country</a> — not the server clock. A wrong country timezone makes the store appear closed while it is open.</p>
     </div>
 
     <h2 id="per-store-stock-and-pricing">Per-store stock and pricing</h2>
@@ -190,9 +202,11 @@
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>"Zone already assigned to another store"</td><td>That zone already has a store</td><td>Create a new zone for the new outlet</td></tr>
+        <tr><td>Store cannot sign in</td><td>Wrong email, or password never set</td><td>Re-enter the password on the store record</td></tr>
+        <tr><td>Store sees fewer menus than expected</td><td>Its permissions do not cover those modules</td><td>Update the store's permissions from the Stores list</td></tr>
         <tr><td>"Selected zone does not support this fulfillment type"</td><td>Store channel is wider than the zone's</td><td>Change the store type, or set the zone to <code>Both</code></td></tr>
         <tr><td>"Please select store location on map"</td><td>No pin dropped</td><td>Click the map to place the pin</td></tr>
-        <tr><td>"Please create store in default language first"</td><td>Creating in a secondary language</td><td>Switch to the default language, create, then translate</td></tr>
+        <tr><td>"Please create store in default language first"</td><td>Creating in a secondary language</td><td>Create it in the default language first — see <a href="languages.html">Manage Languages</a></td></tr>
         <tr><td>Delivery charges are wrong for every order</td><td>Store pin in the wrong place</td><td>Re-drop the pin at the real address</td></tr>
         <tr><td>Store shows closed during business hours</td><td>Country timezone wrong</td><td>Fix the timezone on the <a href="countries.html">country</a></td></tr>
         <tr><td>Product missing for some customers only</td><td>Not listed at that zone's store</td><td>List it on that store</td></tr>
@@ -207,8 +221,9 @@
       <li class="task-item"><input type="checkbox" disabled> Fulfillment type is compatible with the zone's sales channel</li>
       <li class="task-item"><input type="checkbox" disabled> Map pin dropped on the actual building</li>
       <li class="task-item"><input type="checkbox" disabled> Operating hours set for all seven days</li>
-      <li class="task-item"><input type="checkbox" disabled> Contact number and email filled</li>
-      <li class="task-item"><input type="checkbox" disabled> Name, provider and address translated into every active language</li>
+      <li class="task-item"><input type="checkbox" disabled> Contact number filled</li>
+      <li class="task-item"><input type="checkbox" disabled> Login email and password set, and the email not already used by another account</li>
+      <li class="task-item"><input type="checkbox" disabled> Store permissions assigned from the Stores list</li>
       <li class="task-item"><input type="checkbox" disabled> Products listed and priced at this store</li>
       <li class="task-item"><input type="checkbox" disabled> Status Active</li>
     </ul>
