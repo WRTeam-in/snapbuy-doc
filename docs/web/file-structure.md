@@ -14,18 +14,19 @@ How the SnapBuy Web Portal is organised, and where to look when you need to chan
 | Layer | Choice |
 | --- | --- |
 | Framework | Next.js 16 (**App Router**) |
+| Language | TypeScript |
 | UI | React 19 |
 | Styling | Tailwind CSS + `src/styles/globals.css` |
 | Global state | Redux Toolkit + redux-persist |
 | Server state | TanStack Query (React Query) |
-| HTTP | Axios (`src/api/axiosMiddleware.js`) |
+| HTTP | Axios (`src/api/axiosMiddleware.ts`) |
 | Components | shadcn/ui primitives in `src/components/ui` |
 | Push | Firebase Cloud Messaging |
 | Maps | Google Maps + OpenStreetMap fallback |
 
 :::note
 
-This project uses the **App Router** (`src/app/**`), so routing lives in `src/app`, not `src/pages`. There is no `pages/` directory.
+This project uses the **App Router** (`src/app/**`), so routing lives in `src/app`, not `src/pages`. There is no `pages/` directory, and there is no `middleware.ts` — zone and language routing are handled by the `[lang]`/`[zone]` route segments themselves, not by a rewrite layer.
 
 :::
 
@@ -34,55 +35,73 @@ This project uses the **App Router** (`src/app/**`), so routing lives in `src/ap
 ```
 snapbuy-web/
 ├── public/                   # Served as-is
-│   └── firebase-messaging-sw.js   # Background push handler
-├── scripts/
-│   ├── generator.js          # Pre-build config generation (static export)
-│   └── copy-htaccess.js      # Copies .htaccess into the export output
+├── scripts/                  # Build helpers
 ├── src/
 │   ├── api/                  # All backend communication
+│   ├── app/                  # Routes (App Router)
 │   ├── assets/               # Imported images, SVGs, Lottie JSON
-│   ├── checkauth/            # Route guard for authenticated pages
 │   ├── components/           # Everything visual
-│   ├── HOC/                  # Higher-order components
+│   ├── constants/            # Shared constant values
 │   ├── hooks/                # Reusable logic
 │   ├── lib/                  # Chat websocket + small helpers
-│   ├── app/                  # Routes (App Router)
 │   ├── redux/                # Global state
+│   │   └── thunk/            # Async actions
 │   ├── styles/               # Global CSS
-│   ├── utils/                # Pure helpers + translation JSON
-│   └── middleware.js         # Zone/language URL rewriting
+│   ├── types/                # Shared TypeScript types
+│   │   └── api/              # API response/request types
+│   └── utils/                # Pure helpers + translation JSON
 ├── docs/                     # This documentation
 ├── .env                      # Configuration (never commit)
 ├── .htaccess                 # Apache → Node proxy for VPS deploys
 ├── next.config.mjs           # Image hosts, SEO/export switch
 ├── server.js                 # Custom Node server used by `npm start`
+├── tsconfig.json             # The `@/` path alias → `src/`
 └── tailwind.config.js
 ```
 
 ## `src/app` — routes
 
-Folder-based routing; each route segment is a folder, with `page.jsx` marking the URL and `layout.jsx` marking a shared shell.
+Folder-based routing; each route segment is a folder, with `page.tsx` marking the URL and `layout.tsx` marking a shared shell. Every route sits under a single `[lang]` segment, then splits into two route groups:
 
 ```
 app/
-├── layout.jsx                 # Root layout — providers: Redux, React Query, PersistGate
-├── page.jsx                   # Home page
-├── not-found.jsx               # Custom not-found page
-├── sitemap.js                  # Dynamic sitemap (SEO builds)
-├── product/                    # Product detail
-├── products/                   # Product listing + filters
-├── categories/
-│   ├── page.jsx
-│   └── [slug]/                 # Category listing
-├── cart/  checkout/  order-detail/
-├── profile/                    # Account dashboard
-├── blog/  blogs/               # Blog detail + index
-├── brands/  sellers/  countries/
-├── web-payment-status/         # Payment gateway return URL
-└── about-us/ contact-us/ faqs/ privacy-policy/ …   # Static content pages
+├── layout.tsx                 # Root layout — providers: Redux, React Query, PersistGate
+├── not-found.tsx               # Custom not-found page
+├── manifest.ts                 # PWA manifest
+├── robots.ts                   # robots.txt
+├── sitemap.xml/route.ts        # Dynamic sitemap (SEO builds)
+├── getQueryClient.ts           # Server-side React Query client factory
+├── AppContent.tsx  Providers.tsx  AppErrorBoundary.tsx   # App shell wiring
+├── SsrZoneProvider.tsx  LanguageCodesSeed.tsx  NavigationEvents.tsx  FontAwesomeLoader.tsx
+├── _shared/                    # Logic shared across routes (not a route itself)
+│   ├── homePageLogic.tsx
+│   ├── categoriesPageLogic.tsx
+│   └── categoryPageLogic.tsx
+└── [lang]/
+    ├── (plain)/                 # Zone-agnostic pages — one per language, no zone context
+    │   ├── page.tsx             # Home
+    │   ├── categories/  categories/[slug]/
+    │   ├── cart/  checkout/  order-detail/[orderid]/
+    │   ├── profile/             # Account dashboard (activeorders, address, orderhistory, wallet, wishlist, …)
+    │   ├── blog/  blogs/  brands/  sellers/  countries/
+    │   ├── web-payment-status/
+    │   └── about-us/ contact-us/ faqs/ privacy-policy/ shipping-policy/ …
+    └── (zoned)/[zone]/          # Zone-scoped pages — catalogue depends on delivery zone
+        ├── page.tsx             # Zone home
+        ├── categories/  categories/[slug]/
+        ├── product/  product/[slug]/
+        └── products/
 ```
 
-The root `layout.jsx` is where the provider stack lives. Note the two deliberate choices carried over from the migration: `PersistGate` uses the **function-child** form so pages still server-render, and there is **no `<Suspense>`** around the app content — a boundary there would write the fallback into the server HTML and break hydration.
+Route groups (`(plain)`, `(zoned)`) don't appear in the URL — they only let two branches of the tree share the `[lang]` prefix while diverging on whether a `[zone]` segment follows. A page under `(zoned)` re-renders per zone; the same route under `(plain)` is zone-independent.
+
+The root `layout.tsx` is where the provider stack lives (`Providers.tsx`). Note the two deliberate choices carried over from the migration: `PersistGate` uses the **function-child** form so pages still server-render, and there is **no `<Suspense>`** around the app content — a boundary there would write the fallback into the server HTML and break hydration.
+
+:::note
+
+The project migrated to TypeScript. File names below may now carry `.ts`/`.tsx` extensions rather than `.js`/`.jsx` — verify against the actual repo before relying on an exact filename.
+
+:::
 
 ## `src/api` — backend layer
 
@@ -200,9 +219,9 @@ Pure helpers with no React dependency.
 
 :::
 
-## `src/middleware.js`
+## Zone and language routing
 
-Runs at the edge before a page renders. It rewrites zone- and language-prefixed URLs (`/bhuj-quick`, `/ur/products`) onto the underlying route, which is why the zone slug survives only in `router.asPath` and not in the query.
+Zone (`bhuj-quick`) and language (`ur`) are now real route segments — `[lang]` wraps every route, and `(zoned)/[zone]` wraps the zone-scoped subset — instead of a middleware rewrite layer. There is no `middleware.ts` in this project.
 
 ## Configuration files
 
@@ -212,13 +231,13 @@ Runs at the edge before a page renders. It rewrites zone- and language-prefixed 
 | `server.js` | Custom server; reads `NODE_PORT`, serves `/.well-known` for cert renewal |
 | `.htaccess` | Apache → Node proxy (see the [Deployment Guide](/docs/web/deployment)) |
 | `tailwind.config.js` | Theme, container widths, custom animations |
-| `jsconfig.json` | The `@/` path alias → `src/` |
+| `tsconfig.json` | The `@/` path alias → `src/` |
 
 ## Conventions
 
-- **Components** — PascalCase (`ProductCard.jsx`)
-- **Hooks** — `use` prefix, camelCase (`useZoneHref.js`)
-- **Redux slices** — camelCase + `Slice` suffix (`cartSlice.js`)
-- **Utils** — camelCase (`helperFunction.js`)
+- **Components** — PascalCase (`ProductCard.tsx`)
+- **Hooks** — `use` prefix, camelCase (`useZoneHref.ts`)
+- **Redux slices** — camelCase + `Slice` suffix (`cartSlice.ts`)
+- **Utils** — camelCase (`helperFunction.ts`)
 - **Imports** — use the `@/` alias (`@/components/...`), not deep relative paths
 - **Theming** — colours come from CSS variables (`--primary-color`) set from the API. This is a white-label template: never hardcode a brand colour or an image host.
