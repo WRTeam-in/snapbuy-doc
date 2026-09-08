@@ -13,7 +13,7 @@ How the SnapBuy Web Portal is organised, and where to look when you need to chan
 
 | Layer | Choice |
 | --- | --- |
-| Framework | Next.js 16 (**Pages Router**, not App Router) |
+| Framework | Next.js 16 (**App Router**) |
 | UI | React 19 |
 | Styling | Tailwind CSS + `src/styles/globals.css` |
 | Global state | Redux Toolkit + redux-persist |
@@ -25,7 +25,7 @@ How the SnapBuy Web Portal is organised, and where to look when you need to chan
 
 :::note
 
-This project uses the **Pages Router** (`src/pages/**`), so routing lives in `src/pages`, not `src/app`. There is no `app/` directory.
+This project uses the **App Router** (`src/app/**`), so routing lives in `src/app`, not `src/pages`. There is no `pages/` directory.
 
 :::
 
@@ -46,7 +46,7 @@ snapbuy-web/
 │   ├── HOC/                  # Higher-order components
 │   ├── hooks/                # Reusable logic
 │   ├── lib/                  # Chat websocket + small helpers
-│   ├── pages/                # Routes (Pages Router)
+│   ├── app/                  # Routes (App Router)
 │   ├── redux/                # Global state
 │   ├── styles/               # Global CSS
 │   ├── utils/                # Pure helpers + translation JSON
@@ -59,31 +59,30 @@ snapbuy-web/
 └── tailwind.config.js
 ```
 
-## `src/pages` — routes
+## `src/app` — routes
 
-File-based routing; each file or folder becomes a URL.
+Folder-based routing; each route segment is a folder, with `page.jsx` marking the URL and `layout.jsx` marking a shared shell.
 
 ```
-pages/
-├── _app.js                   # Providers: Redux, React Query, PersistGate
-├── _document.js              # <html>/<body> shell
-├── index.js                  # Home page
-├── 404.js                    # Custom not-found page
-├── sitemap.xml.js            # Dynamic sitemap (SEO builds)
-├── product/                  # Product detail
-├── products/                 # Product listing + filters
+app/
+├── layout.jsx                 # Root layout — providers: Redux, React Query, PersistGate
+├── page.jsx                   # Home page
+├── not-found.jsx               # Custom not-found page
+├── sitemap.js                  # Dynamic sitemap (SEO builds)
+├── product/                    # Product detail
+├── products/                   # Product listing + filters
 ├── categories/
-│   ├── index.jsx
-│   └── [slug]/               # Category listing
+│   ├── page.jsx
+│   └── [slug]/                 # Category listing
 ├── cart/  checkout/  order-detail/
-├── profile/                  # Account dashboard
-├── blog/  blogs/             # Blog detail + index
+├── profile/                    # Account dashboard
+├── blog/  blogs/               # Blog detail + index
 ├── brands/  sellers/  countries/
-├── web-payment-status/       # Payment gateway return URL
+├── web-payment-status/         # Payment gateway return URL
 └── about-us/ contact-us/ faqs/ privacy-policy/ …   # Static content pages
 ```
 
-`_app.js` is where the provider stack lives. Note the two deliberate choices documented in-file: `PersistGate` uses the **function-child** form so pages still server-render, and there is **no `<Suspense>`** around the app content — a boundary there would write the fallback into the server HTML and break hydration.
+The root `layout.jsx` is where the provider stack lives. Note the two deliberate choices carried over from the migration: `PersistGate` uses the **function-child** form so pages still server-render, and there is **no `<Suspense>`** around the app content — a boundary there would write the fallback into the server HTML and break hydration.
 
 ## `src/api` — backend layer
 
@@ -92,11 +91,11 @@ pages/
 | `apiEndpoints.js` | Endpoint path constants (`categories`, `products`, …) |
 | `apiRoutes.js` | One function per API call; builds params/FormData |
 | `axiosMiddleware.js` | Axios instance, base URL, auth + language headers |
-| `serverApi.js` | Server-side fetches for `getServerSideProps` (SSR/SEO) |
+| `serverApi.js` | Server-side fetches used by server components (SSR/SEO) |
 | `languageResolver.js` | Resolves the active language server-side |
 | `zoneResolver.js` | Resolves a zone slug to coordinates server-side |
 
-`serverApi.js` exists because SSR cannot read the Redux store — it takes headers as arguments instead. It is deliberately anonymous (no auth header): server rendering produces the logged-out view for crawlers, and user state hydrates on the client.
+`serverApi.js` exists because server components cannot read the Redux store — it takes headers as arguments instead. It is deliberately anonymous (no auth header): server rendering produces the logged-out view for crawlers, and user state hydrates on the client.
 
 ## `src/components`
 

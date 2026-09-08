@@ -33,7 +33,7 @@ Also supported: prescription uploads, refer-and-earn, shop-by-country, maintenan
 
 | Layer | Technology |
 | --- | --- |
-| Framework | Next.js 16 — **Pages Router** |
+| Framework | Next.js 16 — **App Router** |
 | UI | React 19 |
 | Styling | Tailwind CSS + CSS custom properties |
 | Global state | Redux Toolkit + redux-persist |
@@ -47,7 +47,7 @@ Also supported: prescription uploads, refer-and-earn, shop-by-country, maintenan
 
 :::note
 
-The project uses the **Pages Router** (`src/pages/**`). There is no `app/` directory — App Router conventions do not apply here.
+The project uses the **App Router** (`src/app/**`). Routes migrated from `src/pages/**` — see the [File Structure](/docs/web/file-structure) guide for the new layout.
 
 :::
 
@@ -63,7 +63,7 @@ It selects the build mode: `true` produces a server build (SSR, live `sitemap.xm
 | --- | --- |
 | Zone URLs (`/bhuj-quick/...`) | `src/middleware.js` rewrites them onto the real routes. **Middleware does not run in a static export** — Next.js ignores it, so every zone-prefixed URL 404s. |
 | Language URLs (`/ur/...`) | Same middleware, same outcome. |
-| Per-page SEO + `sitemap.xml` | The ~16 pages with `getServerSideProps` guard it behind this flag (`if (process.env.NEXT_PUBLIC_SEO == "true")`) so the export can build at all. With it off they export `null`, meta/JSON-LD fall back to the env defaults, and `sitemap.xml` is never generated. |
+| Per-page SEO + `sitemap.xml` | The ~16 server-rendered routes guard their metadata generation behind this flag (`if (process.env.NEXT_PUBLIC_SEO == "true")`) so the export can build at all. With it off, meta/JSON-LD fall back to the env defaults, and `sitemap.xml` is never generated. |
 
 A static build still *compiles* and the Web Portal still loads — the failure is silent, which is what makes it dangerous. Zone routing is core to this app, so `false` is effectively a legacy path from before zones existed.
 
