@@ -35,7 +35,27 @@ Grouped by area. The same underlying event often exists separately per audience 
 | `order_item_status_customer` | Customer — item status changed |
 | `order_item_cancelled_customer` | Customer — item cancelled |
 | `order_item_returned_customer` | Customer — return processed |
+| `order_item_delivery_estimate_customer` | Customer — the promised delivery date changed |
 | `payment_failed_customer` | Customer — payment failed |
+
+#### Estimated delivery date
+
+`order_item_delivery_estimate_customer` tells a customer that the delivery date promised for one item has moved.
+
+The first estimate is set automatically when the order is placed: **order date + the zone's eCommerce Delivery Days**. If that field is `0`, the item carries no estimate.
+
+You revise it from **Orders → open the order → the item's Estimated delivery date → Save**.
+
+| Behaviour | Detail |
+| --- | --- |
+| Applies to | **eCommerce** orders only — quick-commerce orders are delivered within the hour |
+| Editable until | The item is delivered, cancelled or returned |
+| Sends when | The saved date actually differs from the previous one — re-saving the same date sends nothing |
+| Carries | Both dates, as `{estimated_delivery_date}` and `{previous_delivery_date}` |
+
+:::tip Say what changed, not just what is new
+The template has the old date as well as the new one. "Now expected by 18 Mar, was 14 Mar" reads as an honest update; "Expected by 18 Mar" on its own reads as a fresh promise and generates support tickets.
+:::
 
 ### Wallet and money
 

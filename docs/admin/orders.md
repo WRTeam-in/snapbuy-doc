@@ -109,6 +109,20 @@ Status is tracked at **item** level, not only for the order as a whole. A single
 Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.
 :::
 
+## Estimated delivery date
+
+eCommerce items carry a promised delivery date, set when the order is placed from the zone's **eCommerce Delivery Days**.
+
+To change it: open the order, find the item, pick a new date in **Estimated delivery date** and save.
+
+| Rule | Detail |
+| --- | --- |
+| Available on | eCommerce orders only |
+| Editable until | The item is delivered, cancelled or returned |
+| Notifies the customer | Only when the date actually changes |
+
+The message sent is `order_item_delivery_estimate_customer` — see [Notification Settings](/docs/admin/notification-settings) and [Templates](/docs/admin/notification-templates).
+
 ## Invoices
 
 Invoices are generated as PDFs, numbered with the prefix from [General Settings](/docs/admin/general-settings#number-prefixes).

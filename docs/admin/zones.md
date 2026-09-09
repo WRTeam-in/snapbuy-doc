@@ -151,6 +151,14 @@ The same, but at the finer **delivery area** level within a city.
 If the customer's city or area has no row, the **Default Delivery Charge** applies. Set that to a sensible value rather than `0` — otherwise unlisted locations ship free.
 :::
 
+### eCommerce Delivery Days
+
+Transit time for the zone, in whole days. Every item ordered here is given an **estimated delivery date** of *order date + this many days*, shown to the customer on the order.
+
+Set `0` to give no estimate at all.
+
+You can revise the date on an individual item later from the order detail. Doing so notifies the customer — see [Notification Settings](/docs/admin/notification-settings).
+
 ### Zone-wide free threshold
 
 **Free Delivery Threshold** applies across **all four** strategies. If the subtotal reaches it, delivery is free regardless of slab, city or area rules. Set `0` to disable.

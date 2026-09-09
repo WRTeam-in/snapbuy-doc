@@ -206,6 +206,14 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
       <p>If the customer's city or area has no row, the <strong>Default Delivery Charge</strong> applies. Set that to a sensible value rather than <code>0</code> — otherwise unlisted locations ship free.</p>
     </div>
 
+    <h3>eCommerce Delivery Days</h3>
+
+    <p>Transit time for the zone, in whole days. Every item ordered here is given an <strong>estimated delivery date</strong> of <em>order date + this many days</em>, shown to the customer on the order.</p>
+
+    <p>Set <code>0</code> to give no estimate at all.</p>
+
+    <p>You can revise the date on an individual item later from the order detail. Doing so notifies the customer — see <a href="../admin/notification-settings.html">Notification Settings</a>.</p>
+
     <h3>Zone-wide free threshold</h3>
 
     <p><strong>Free Delivery Threshold</strong> applies across <strong>all four</strong> strategies. If the subtotal reaches it, delivery is free regardless of slab, city or area rules. Set <code>0</code> to disable.</p>

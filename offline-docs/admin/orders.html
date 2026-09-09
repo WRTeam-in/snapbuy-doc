@@ -135,6 +135,25 @@
       <p>Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.</p>
     </div>
 
+    <h2 id="estimated-delivery-date">Estimated delivery date</h2>
+
+    <p>eCommerce items carry a promised delivery date, set when the order is placed from the zone's <strong>eCommerce Delivery Days</strong>.</p>
+
+    <p>To change it: open the order, find the item, pick a new date in <strong>Estimated delivery date</strong> and save.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Available on</td><td>eCommerce orders only</td></tr>
+        <tr><td>Editable until</td><td>The item is delivered, cancelled or returned</td></tr>
+        <tr><td>Notifies the customer</td><td>Only when the date actually changes</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The message sent is <code>order_item_delivery_estimate_customer</code> — see <a href="../admin/notification-settings.html">Notification Settings</a> and <a href="../admin/notification-templates.html">Templates</a>.</p>
+
     <h2 id="invoices">Invoices</h2>
 
     <p>Invoices are generated as PDFs, numbered with the prefix from <a href="../admin/general-settings.html#number-prefixes">General Settings</a>.</p>
