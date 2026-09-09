@@ -210,6 +210,23 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
 
     <p><strong>Free Delivery Threshold</strong> applies across <strong>all four</strong> strategies. If the subtotal reaches it, delivery is free regardless of slab, city or area rules. Set <code>0</code> to disable.</p>
 
+    <h3>Tax on the delivery charge</h3>
+
+    <p>The zone also carries three tax controls for its delivery charge:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Control</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Is taxable</strong></td><td>Turn tax on for the delivery charge</td></tr>
+        <tr><td><strong>Tax category</strong></td><td>Which category — and therefore which rate — applies</td></tr>
+        <tr><td><strong>Tax included in amount</strong></td><td>Whether the charge you typed already contains the tax</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Both the switch and a category are required. See <a href="../admin/tax-settings.html">Tax Settings</a>.</p>
+
     <h2>Surge pricing</h2>
 
     <p>Surge slots add a charge during specific times of day — evening rush, weekend peaks, late night.</p>
@@ -222,6 +239,7 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
         <tr><td><strong>Charge</strong></td><td>Amount added while the slot is active</td></tr>
         <tr><td><strong>Label</strong></td><td>Shown to the customer — "Peak hour fee". Translatable per language.</td></tr>
         <tr><td><strong>Refundable</strong></td><td>Whether this amount is returned when an order is cancelled or refunded</td></tr>
+        <tr><td><strong>Is taxable</strong></td><td>Turn tax on for this charge — then pick a tax category and say whether the amount already includes tax. See <a href="../admin/tax-settings.html">Tax Settings</a>.</td></tr>
       </tbody>
     </table>
     </div>
@@ -254,6 +272,7 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
         <tr><td><strong>Name</strong></td><td>Shown on the bill. Translatable per language.</td></tr>
         <tr><td><strong>Amount</strong></td><td>Flat amount added</td></tr>
         <tr><td><strong>Refundable</strong></td><td>Whether it is returned on cancellation or refund</td></tr>
+        <tr><td><strong>Is taxable</strong></td><td>Turn tax on for this charge — then pick a tax category and say whether the amount already includes tax. See <a href="../admin/tax-settings.html">Tax Settings</a>.</td></tr>
       </tbody>
     </table>
     </div>
