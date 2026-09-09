@@ -64,6 +64,7 @@
             ["Website Settings", "admin/website-settings.html"],
             ["Login Settings", "admin/login-settings.html"],
             ["Payment Gateways", "admin/payment-gateway.html"],
+            ["Tax Settings", "admin/tax-settings.html"],
             ["Cart Settings", "admin/cart-settings.html"],
             ["SMS Settings", "admin/sms-settings.html"],
             ["Notification Settings", "admin/notification-settings.html"],

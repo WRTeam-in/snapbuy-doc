@@ -29,7 +29,7 @@ The **Payment Method Settings** master switch on the country turns online paymen
 | **Cash on Delivery** | None — just enable it |
 | **Razorpay** | Key, Secret Key |
 | **Stripe** | Publishable Key, Secret Key, Webhook Secret, Currency Code, Mode |
-| **PayPal** | Business Email, Currency Code, Mode |
+| **PayPal** | Client ID, Client Secret, Webhook ID, Currency Code, Mode |
 | **Paystack** | Public Key, Secret Key, Currency Code |
 | **Midtrans** | Server Key, Mode |
 | **PhonePe** | Merchant ID, Client ID, Client Version, Client Secret, Mode |
@@ -89,15 +89,33 @@ Without the signing secret SnapBuy cannot verify that a callback genuinely came 
 
 ### PayPal
 
+PayPal now uses **REST API credentials** rather than a business email address.
+
 1. Sign up at [paypal.com](https://www.paypal.com/) and upgrade to a **Business** account.
-2. Use the [Developer Dashboard](https://developer.paypal.com/) sandbox accounts for testing.
-3. Enable **Instant Payment Notification (IPN)** in **Account Settings → Notifications** and point it at your IPN URL.
+2. Open the [Developer Dashboard](https://developer.paypal.com/) and go to **Apps & Credentials**.
+3. Switch between **Sandbox** and **Live** with the toggle at the top, then **Create App**.
+4. The app screen shows the **Client ID** and, behind *Show*, the **Secret**.
+5. Still on the app screen, scroll to **Webhooks** and click **Add Webhook**.
+6. Paste the webhook URL that SnapBuy shows on the country's Payment Gateways step, subscribe to the payment events, and save.
+7. PayPal then displays a **Webhook ID** — copy that back into SnapBuy.
 
 | SnapBuy field | PayPal value |
 | --- | --- |
-| PayPal Business Email | The email address on the Business account |
+| PayPal Client ID | Client ID from the app |
+| PayPal Client Secret | Secret from the app |
+| PayPal Webhook ID | The ID PayPal assigns after you create the webhook |
 | PayPal Currency Code | Currency your PayPal account accepts |
 | PayPal Mode | `sandbox` or `live` |
+
+:::danger The Webhook ID is not the webhook URL
+They are two different values and are easy to confuse. The **URL** is what you paste into PayPal; the **Webhook ID** is what PayPal gives back afterwards and what you paste into SnapBuy.
+
+Without the correct Webhook ID, SnapBuy cannot verify that a callback genuinely came from PayPal and will reject it — the customer pays, and the order stays unpaid.
+:::
+
+:::warning Sandbox and live credentials are separate apps
+Creating an app in Sandbox gives you sandbox-only credentials. When you go live, create the app again with the dashboard set to **Live** and replace all three values, including the Webhook ID.
+:::
 
 ### Paystack (Africa)
 
@@ -206,7 +224,7 @@ Several gateways confirm payment by calling **your server** rather than the cust
 
 | Gateway | Webhook / callback URL |
 | --- | --- |
-| PayPal (IPN) | `https://admin.yourstore.com/ipn` |
+| PayPal | `https://admin.yourstore.com/webhook/paypal` |
 | Stripe | `https://admin.yourstore.com/webhook/stripe` |
 | Razorpay | `https://admin.yourstore.com/webhook/razorpay` |
 | PhonePe | `https://admin.yourstore.com/phonepe/callback` |

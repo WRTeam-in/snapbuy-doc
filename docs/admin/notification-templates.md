@@ -37,6 +37,9 @@ Templates contain placeholders in curly braces, replaced at send time with real 
 | `{expiry_date}` | Promo code expiry |
 | `{blog_title}`, `{blog_url}` | Blog post details |
 | `{created_at}` | Timestamp |
+| `{product_name}` | The order item the message is about |
+| `{estimated_delivery_date}` | The new promised delivery date |
+| `{previous_delivery_date}` | The date it was promised for before |
 | `{otp}` | One-time password (SMS) |
 
 

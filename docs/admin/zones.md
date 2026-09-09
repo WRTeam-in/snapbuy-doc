@@ -151,9 +151,30 @@ The same, but at the finer **delivery area** level within a city.
 If the customer's city or area has no row, the **Default Delivery Charge** applies. Set that to a sensible value rather than `0` — otherwise unlisted locations ship free.
 :::
 
+### eCommerce Delivery Days
+
+Transit time for the zone, in whole days. Every item ordered here is given an **estimated delivery date** of *order date + this many days*, shown to the customer on the order.
+
+Set `0` to give no estimate at all.
+
+You can revise the date on an individual item later from the order detail. Doing so notifies the customer — see [Notification Settings](/docs/admin/notification-settings).
+
 ### Zone-wide free threshold
 
 **Free Delivery Threshold** applies across **all four** strategies. If the subtotal reaches it, delivery is free regardless of slab, city or area rules. Set `0` to disable.
+
+
+### Tax on the delivery charge
+
+The zone also carries three tax controls for its delivery charge:
+
+| Control | Meaning |
+| --- | --- |
+| **Is taxable** | Turn tax on for the delivery charge |
+| **Tax category** | Which category — and therefore which rate — applies |
+| **Tax included in amount** | Whether the charge you typed already contains the tax |
+
+Both the switch and a category are required. See [Tax Settings](/docs/admin/tax-settings).
 
 ## Surge pricing
 
@@ -165,6 +186,7 @@ Surge slots add a charge during specific times of day — evening rush, weekend 
 | **Charge** | Amount added while the slot is active |
 | **Label** | Shown to the customer — "Peak hour fee". Translatable per language. |
 | **Refundable** | Whether this amount is returned when an order is cancelled or refunded |
+| **Is taxable** | Turn tax on for this charge — then pick a tax category and say whether the amount already includes tax. See [Tax Settings](/docs/admin/tax-settings). |
 
 ![Configuring surge slots](/images/panel/zones-surge-slots.png)
 
@@ -189,6 +211,7 @@ Flat fees added to every order in the zone — packaging, handling, small-order 
 | **Name** | Shown on the bill. Translatable per language. |
 | **Amount** | Flat amount added |
 | **Refundable** | Whether it is returned on cancellation or refund |
+| **Is taxable** | Turn tax on for this charge — then pick a tax category and say whether the amount already includes tax. See [Tax Settings](/docs/admin/tax-settings). |
 
 Rows with an amount of `0` are ignored.
 

@@ -64,6 +64,7 @@ const sidebars = {
             "admin/website-settings",
             "admin/login-settings",
             "admin/payment-gateway",
+            "admin/tax-settings",
             "admin/cart-settings",
             "admin/sms-settings",
             "admin/notification-settings",

@@ -49,7 +49,7 @@
         <tr><td><strong>Cash on Delivery</strong></td><td>None — just enable it</td></tr>
         <tr><td><strong>Razorpay</strong></td><td>Key, Secret Key</td></tr>
         <tr><td><strong>Stripe</strong></td><td>Publishable Key, Secret Key, Webhook Secret, Currency Code, Mode</td></tr>
-        <tr><td><strong>PayPal</strong></td><td>Business Email, Currency Code, Mode</td></tr>
+        <tr><td><strong>PayPal</strong></td><td>Client ID, Client Secret, Webhook ID, Currency Code, Mode</td></tr>
         <tr><td><strong>Paystack</strong></td><td>Public Key, Secret Key, Currency Code</td></tr>
         <tr><td><strong>Midtrans</strong></td><td>Server Key, Mode</td></tr>
         <tr><td><strong>PhonePe</strong></td><td>Merchant ID, Client ID, Client Version, Client Secret, Mode</td></tr>
@@ -132,21 +132,40 @@
 
     <h3 id="paypal">PayPal</h3>
 
+    <p>PayPal now uses <strong>REST API credentials</strong> rather than a business email address.</p>
+
     <ol>
       <li>Sign up at paypal.com and upgrade to a <strong>Business</strong> account.</li>
-      <li>Use the Developer Dashboard sandbox accounts for testing.</li>
-      <li>Enable <strong>Instant Payment Notification (IPN)</strong> in <strong>Account Settings → Notifications</strong> and point it at your IPN URL.</li>
+      <li>Open the PayPal Developer Dashboard and go to <strong>Apps &amp; Credentials</strong>.</li>
+      <li>Switch between <strong>Sandbox</strong> and <strong>Live</strong> with the toggle at the top, then <strong>Create App</strong>.</li>
+      <li>The app screen shows the <strong>Client ID</strong> and, behind <em>Show</em>, the <strong>Secret</strong>.</li>
+      <li>Still on the app screen, scroll to <strong>Webhooks</strong> and click <strong>Add Webhook</strong>.</li>
+      <li>Paste the webhook URL that SnapBuy shows on the country's Payment Gateways step, subscribe to the payment events, and save.</li>
+      <li>PayPal then displays a <strong>Webhook ID</strong> — copy that back into SnapBuy.</li>
     </ol>
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>SnapBuy field</th><th>PayPal value</th></tr></thead>
       <tbody>
-        <tr><td>PayPal Business Email</td><td>The email address on the Business account</td></tr>
+        <tr><td>PayPal Client ID</td><td>Client ID from the app</td></tr>
+        <tr><td>PayPal Client Secret</td><td>Secret from the app</td></tr>
+        <tr><td>PayPal Webhook ID</td><td>The ID PayPal assigns after you create the webhook</td></tr>
         <tr><td>PayPal Currency Code</td><td>Currency your PayPal account accepts</td></tr>
         <tr><td>PayPal Mode</td><td><code>sandbox</code> or <code>live</code></td></tr>
       </tbody>
     </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The Webhook ID is not the webhook URL</p>
+      <p>They are two different values and are easy to confuse. The <strong>URL</strong> is what you paste into PayPal; the <strong>Webhook ID</strong> is what PayPal gives back afterwards and what you paste into SnapBuy.</p>
+      <p>Without the correct Webhook ID, SnapBuy cannot verify that a callback genuinely came from PayPal and will reject it — the customer pays, and the order stays unpaid.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Sandbox and live credentials are separate apps</p>
+      <p>Creating an app in Sandbox gives you sandbox-only credentials. When you go live, create the app again with the dashboard set to <strong>Live</strong> and replace all three values, including the Webhook ID.</p>
     </div>
 
     <h3 id="paystack">Paystack (Africa)</h3>
@@ -297,7 +316,7 @@
     <table>
       <thead><tr><th>Gateway</th><th>Webhook / callback URL</th></tr></thead>
       <tbody>
-        <tr><td>PayPal (IPN)</td><td><code>https://admin.yourstore.com/ipn</code></td></tr>
+        <tr><td>PayPal</td><td><code>https://admin.yourstore.com/webhook/paypal</code></td></tr>
         <tr><td>Stripe</td><td><code>https://admin.yourstore.com/webhook/stripe</code></td></tr>
         <tr><td>Razorpay</td><td><code>https://admin.yourstore.com/webhook/razorpay</code></td></tr>
         <tr><td>PhonePe</td><td><code>https://admin.yourstore.com/phonepe/callback</code></td></tr>

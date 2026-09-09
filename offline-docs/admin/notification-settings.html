@@ -60,9 +60,35 @@
         <tr><td><code>order_item_status_customer</code></td><td>Customer — item status changed</td></tr>
         <tr><td><code>order_item_cancelled_customer</code></td><td>Customer — item cancelled</td></tr>
         <tr><td><code>order_item_returned_customer</code></td><td>Customer — return processed</td></tr>
+        <tr><td><code>order_item_delivery_estimate_customer</code></td><td>Customer — the promised delivery date changed</td></tr>
         <tr><td><code>payment_failed_customer</code></td><td>Customer — payment failed</td></tr>
       </tbody>
     </table>
+    </div>
+
+    <h4 id="estimated-delivery-date">Estimated delivery date</h4>
+
+    <p><code>order_item_delivery_estimate_customer</code> tells a customer that the delivery date promised for one item has moved.</p>
+
+    <p>The first estimate is set automatically when the order is placed: <strong>order date + the zone's eCommerce Delivery Days</strong>. If that field is <code>0</code>, the item carries no estimate.</p>
+
+    <p>You revise it from <strong>Orders → open the order → the item's Estimated delivery date → Save</strong>.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Behaviour</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Applies to</td><td><strong>eCommerce</strong> orders only — quick-commerce orders are delivered within the hour</td></tr>
+        <tr><td>Editable until</td><td>The item is delivered, cancelled or returned</td></tr>
+        <tr><td>Sends when</td><td>The saved date actually differs from the previous one — re-saving the same date sends nothing</td></tr>
+        <tr><td>Carries</td><td>Both dates, as <code>{estimated_delivery_date}</code> and <code>{previous_delivery_date}</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Say what changed, not just what is new</p>
+      <p>The template has the old date as well as the new one. "Now expected by 18 Mar, was 14 Mar" reads as an honest update; "Expected by 18 Mar" on its own reads as a fresh promise and generates support tickets.</p>
     </div>
 
     <h3 id="wallet-and-money">Wallet and money</h3>
