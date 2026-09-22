@@ -22,7 +22,7 @@ Track all updates, improvements, and fixes released for SnapBuy.
 ### v1.3.0
 
 - [Added] Spin wheel feature. (Admin, App, Web)
-- [Added] Specific page for redirection. (Admin)
+- [Added] Specific page for redirection in homebuilder. (Admin, App, Web)
 - [Added] Self pickup from store. (Admin, App, Web)
 - [Added] Product tab section for products in Home Builder. (Admin, App, Web)
 - [Added] Notify product feature for out-of-stock products. (Admin, App, Web)
