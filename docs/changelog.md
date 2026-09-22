@@ -12,11 +12,22 @@ Track all updates, improvements, and fixes released for SnapBuy.
 
 | Product Version | Flutter Version | Kotlin Version | AGP Version | distributionUrl (Gradle) | JDK Version |
 |---|---|---|---|---|---|
+| 1.3.0 | 3.44.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.2.0 | 3.44.8 | 2.2.20 | 8.11.1 | 9.5.11 | 21 |
 | 1.1.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 | 1.0.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 
 ## Version History
+
+### v1.3.0
+
+- [Added] Spin wheel feature. (Admin, App, Web)
+- [Added] Specific page for redirection. (Admin)
+- [Added] Self pickup from store. (Admin, App, Web)
+- [Added] Product tab section for products in Home Builder. (Admin, App, Web)
+- [Added] Notify product feature for out-of-stock products. (Admin, App, Web)
+- [Improved] Delivery Boy version toggle in settings. (Admin)
+- [Fix] UI improvements and minor fixes. (Admin, App, Web)
 
 ### v1.2.0
 
