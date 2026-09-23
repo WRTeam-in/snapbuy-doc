@@ -126,7 +126,7 @@ Pusher's free tier covers a limited number of daily messages and concurrent conn
 
 ## Verify chat works
 
-1. Save the settings, then visit `/clear`.
+1. Save the settings.
 2. Open **Chat** in the panel.
 3. From the customer app or web portal, send a message on an order.
 4. It should appear in the panel **without refreshing**.
@@ -148,7 +148,6 @@ The message was stored but not broadcast — the WebSocket connection is down. F
 | Pusher connects then drops | Wrong cluster | Match the cluster on the App Keys screen |
 | Chat stopped after moving hosts | Reverb process not started on the new server | Recreate the Supervisor entry |
 | Messages delayed by seconds | Distant Pusher cluster | Recreate the app on a nearer cluster |
-| Nothing changed after saving | Cached config | Visit `/clear` |
 
 ## Checklist
 

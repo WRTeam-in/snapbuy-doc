@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Self Pickup — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Self Pickup</h1>
+
+    <p>Menu path: <strong>Orders → Self Pickup</strong></p>
+
+    <p>Lets a customer order in the app and collect at the store instead of paying for delivery. Nothing is dispatched, no rider is involved, and the order is closed when the customer walks out with it.</p>
+
+    <img src="../images/panel/self-pickup-orders.png" alt="Self pickup orders list">
+
+    <h2 id="turning-it-on">Turning it on</h2>
+
+    <p>Pickup is a <strong>per-store</strong> setting, because it is the store counter that hands the goods over.</p>
+
+    <p><strong>Stores → edit a store → Fulfillment</strong></p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Service Modes</strong></td><td><code>Home delivery only</code>, <code>Self pickup only</code>, or <code>Delivery and pickup</code></td></tr>
+        <tr><td><strong>Pickup Channels</strong></td><td>Which channels may collect — <code>Quick</code>, <code>eCommerce</code> or <code>Both</code>. Only shown when the store serves both channels.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/stores-service-modes.png" alt="Service modes on a store">
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The store address is what the customer drives to</p>
+      <p>Pickup shows the customer the store's address, map position, phone number, preparation time and opening hours. Fix a wrong address before you switch pickup on — see <a href="../admin/stores.html">Stores</a>.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A pickup-only store never receives delivery orders</p>
+      <p>Setting <strong>Self pickup only</strong> removes the store from home delivery in its zone. If it is the only store in that zone, delivery stops there entirely.</p>
+    </div>
+
+    <h2 id="what-the-customer-pays">What the customer pays</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Charge</th><th>On a pickup order</th></tr></thead>
+      <tbody>
+        <tr><td>Delivery charge</td><td><strong>Not charged</strong></td></tr>
+        <tr><td>Surge charge</td><td><strong>Not charged</strong></td></tr>
+        <tr><td>Additional charges</td><td>Charged when the charge is marked for pickup</td></tr>
+        <tr><td>Free-delivery coupons</td><td>Not offered — there is nothing to deliver</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Each additional charge on a <a href="../admin/zones.html">zone</a> carries an <strong>Applies to</strong> setting:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Applies to</th><th>Billed on</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delivery</strong></td><td>Home delivery orders only</td></tr>
+        <tr><td><strong>Pickup</strong></td><td>Self pickup orders only</td></tr>
+        <tr><td><strong>Both</strong></td><td>Every order in the zone</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Use "Pickup" for a counter or packing fee</p>
+      <p>A packing fee that only makes sense when someone collects — or a handling fee you charge only on delivery — is what the <strong>Applies to</strong> switch is for. A charge left on <strong>Both</strong> is billed to everyone.</p>
+    </div>
+
+    <h2 id="the-pickup-order-flow">The pickup order flow</h2>
+
+    <p>A pickup order walks a shorter route than a delivery, on <strong>both</strong> channels:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Payment Pending <em>(online payment only)</em></td></tr>
+        <tr><td>2</td><td>Received</td></tr>
+        <tr><td>3</td><td>Preparing</td></tr>
+        <tr><td>4</td><td>Ready for Pickup</td></tr>
+        <tr><td>5</td><td>Delivered — shown to the customer as <strong>Collected</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Cancelled is available throughout. There is no Shipped, no Out for Delivery and no Picked Up — those are rider steps.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Status is set order-wise, not item-wise</p>
+      <p>An eCommerce delivery order moves item by item. A pickup order is one store, one hand-over, so the whole order moves together — the panel refuses item-wise updates on a pickup order.</p>
+    </div>
+
+    <h3 id="not-available-on-pickup">What is not available on a pickup order</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Assigning a delivery boy</td><td>Nobody delivers it</td></tr>
+        <tr><td>Courier tracking</td><td>There is no shipment</td></tr>
+        <tr><td>Estimated delivery date</td><td>The store's preparation time is the wait</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A billing address is still required</p>
+      <p>Even though nothing is shipped, a pickup order needs a billing address — invoices and tax depend on it.</p>
+    </div>
+
+    <h2 id="cash-on-collection">Cash on collection</h2>
+
+    <p>A COD pickup order is paid at the counter when it is collected. The payment is recorded against the order the moment you mark it collected; no rider cash-collection ledger is involved.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Mark it collected only after the customer has it</p>
+      <p>Marking collected closes the money on a COD order. Do it at hand-over, not when the bag is packed — that is what <strong>Ready for Pickup</strong> is for.</p>
+    </div>
+
+    <h2 id="working-the-list">Working the list</h2>
+
+    <p><strong>Orders → Self Pickup</strong> shows only pickup orders; <strong>Orders</strong> shows only home delivery. The two pages otherwise behave the same way — see <a href="../admin/orders.html">Orders</a>.</p>
+
+    <p>On a pickup order the location column shows the <strong>store</strong> rather than the customer's city, because that is where the order is waiting.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Notify the customer at "Ready for Pickup"</p>
+      <p>The <code>order_status_ready_for_pickup_customer</code> notification is what tells someone their order is waiting at the counter. Make sure it is enabled in <a href="../admin/notification-settings.html">Notification Settings</a>, or customers will keep phoning the store.</p>
+    </div>
+
+    <h2 id="permissions">Permissions</h2>
+
+    <p>Self pickup has its own permissions, separate from delivery orders, so counter staff can be given pickup and nothing else:</p>
+
+    <p><code>self_pickup_order_list</code>, <code>self_pickup_order_update</code>, <code>self_pickup_order_delete</code></p>
+
+    <p>See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Pickup not offered in the app</td><td>Store's service mode is delivery only</td><td>Set <strong>Delivery and pickup</strong> or <strong>Self pickup only</strong></td></tr>
+        <tr><td>Pickup offered on the wrong channel</td><td><strong>Pickup Channels</strong> is set to one channel</td><td>Change it to Both</td></tr>
+        <tr><td>Customer charged for delivery</td><td>The order is a delivery order, not pickup</td><td>Check the order's mode chip in the list</td></tr>
+        <tr><td>An extra fee appears on pickup orders</td><td>An additional charge is set to <strong>Both</strong></td><td>Set its <strong>Applies to</strong> to Delivery</td></tr>
+        <tr><td>Cannot assign a delivery boy</td><td>Correct — pickup orders have no rider</td><td>Move the order through Preparing → Ready for Pickup</td></tr>
+        <tr><td>Cannot update one item's status</td><td>Pickup orders move order-wise</td><td>Update the whole order</td></tr>
+        <tr><td>Customer never told it was ready</td><td>The Ready for Pickup notification is off</td><td>Enable it in Notification Settings</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Store's service mode set, with the right pickup channels</li>
+      <li class="task-item"><input type="checkbox" disabled> Store address, map pin, phone and opening hours correct</li>
+      <li class="task-item"><input type="checkbox" disabled> Preparation time set on the store</li>
+      <li class="task-item"><input type="checkbox" disabled> Additional charges reviewed for <strong>Applies to</strong></li>
+      <li class="task-item"><input type="checkbox" disabled> Ready for Pickup notification enabled</li>
+      <li class="task-item"><input type="checkbox" disabled> Counter staff given the self-pickup permissions</li>
+      <li class="task-item"><input type="checkbox" disabled> One test pickup order taken through to Collected</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/self-pickup.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

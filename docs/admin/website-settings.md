@@ -87,5 +87,5 @@ The rest of the storefront is configured elsewhere:
 | Email links point to the wrong domain | Website URL wrong or missing scheme | Enter the full `https://` URL |
 | Shared product links 404 | Website URL points at the panel | Point it at the storefront |
 | Download banner leads to a dead page | App not published, or wrong URL | Disable the banner or correct the URL |
-| Colour change not visible | Browser cache | Hard-refresh; visit `/clear` |
+| Colour change not visible | Browser cache | Hard-refresh the browser |
 | Consent banner missing | Setting disabled | Enable cookie consent |

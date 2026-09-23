@@ -104,7 +104,7 @@ It changes what riders see in their own app, and can expose customer or financia
 | --- | --- | --- |
 | Menu item missing for a staff member | Role lacks that `list` permission | Grant it |
 | "Unauthorized" on save | Has `list` but not `update` | Grant `update` |
-| Permission changes not taking effect | Cached permissions | Visit `/clear`; have the user sign out and back in |
+| Permission changes not taking effect | The user's session still holds the old role | Have them sign out and back in |
 | Staff can see payment credentials | Role has `settings` | Remove it |
 | Cannot tell who made a change | Shared account | Give each person their own |
 | Permission list looks incomplete | Seeder not fully run | Re-run the permission seeders after a backup |

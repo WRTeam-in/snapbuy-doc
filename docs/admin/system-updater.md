@@ -73,13 +73,27 @@ A large package can exceed the defaults and fail part-way — which is the worst
 3. Go to **Settings → System Updater**.
 4. Upload the `.zip` exactly as you received it, and enter your purchase code.
 5. Wait — do not refresh or navigate away.
-6. Visit `/clear` once it completes.
+6. Clear the cache with the **Clear Cache** button on this page once it completes.
 7. Test before turning maintenance off.
 
 ![Uploading an update package](/images/panel/system-updater-upload.png)
 
 :::warning Do not interrupt an update in progress
 Refreshing mid-copy can leave a half-updated file set — some files new, some old — which usually produces fatal errors. If it appears to hang, wait it out, then check `storage/logs/laravel.log` before doing anything else.
+:::
+
+## Clear Cache
+
+The second card on this page clears SnapBuy's caches — `cache`, `config`, `route` and `view` — in one click.
+
+Use it whenever a change you saved does not appear: settings that still read the old value, a logo or colour that will not update, permissions that have not taken effect, or a panel that errors right after an update.
+
+:::tip This is the answer to "I changed it and nothing happened"
+Laravel caches configuration, routes and views. After any update, any manual `.env` edit, or a settings change that seems to have been ignored, press **Clear Cache** before investigating anything else.
+:::
+
+:::info The command-line equivalent
+With SSH access, `php artisan optimize:clear` in the project folder does the same thing — useful when the panel itself is erroring and you cannot reach this page.
 :::
 
 ## Troubleshooting
@@ -90,7 +104,7 @@ Refreshing mid-copy can leave a half-updated file set — some files new, some o
 | "Please upload a valid zip file" | Wrong file type, renamed or re-zipped file, or a corrupt download | Upload the original package under its supplied name; re-download if needed |
 | "PHP zip extension is required" | `zip` not enabled | Enable it and restart the web server |
 | Upload fails on a large file | PHP limits too low | Raise them — see [PHP INI Settings](/docs/admin/php-ini-settings) |
-| Update completes, panel errors | Stale caches | Visit `/clear` |
+| Update completes, panel errors | Stale caches | Use **Clear Cache** on this page |
 | Images gone after updating | Symlink lost | Visit `/linkstorage` |
 | Customisations disappeared | Overwritten by the package | Restore from your file backup |
 | Update hung part-way | Execution timeout | Restore from backup and retry with higher limits |

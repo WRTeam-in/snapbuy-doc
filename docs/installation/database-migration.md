@@ -85,14 +85,14 @@ php artisan config:clear
 php artisan cache:clear
 ```
 
-If you cannot reach the command line, the panel exposes browser equivalents at `/migration` and `/clear`.
+If you cannot reach the command line, the panel exposes a browser equivalent for migrations at `/migration`, and a **Clear Cache** button under **Settings → System Updater**.
 
 :::danger Back up before every migration
 Migrations alter live tables and cannot be rolled back reliably once data has been written. Take a database backup first, every time — including for updates you expect to be trivial. See [Routine backups](#routine-backups) below.
 :::
 
 :::warning Restrict the maintenance URLs
-`/migration`, `/migrate`, `/clear`, `/generate_key`, `/linkstorage` and `/logs` are not behind a login. In production, restrict them by IP in your Nginx configuration:
+`/migration`, `/linkstorage` and `/logs` are not behind a login. In production, restrict them by IP in your Nginx configuration:
 
 ```nginx
 location ~ ^/(logs|migrate|migration|generate_key|get_path) {

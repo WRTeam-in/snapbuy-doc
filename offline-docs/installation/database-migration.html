@@ -109,7 +109,7 @@ php artisan storage:link</code></pre>
 php artisan config:clear
 php artisan cache:clear</code></pre>
 
-    <p>If you cannot reach the command line, the panel exposes browser equivalents at <code>/migration</code> and <code>/clear</code>.</p>
+    <p>If you cannot reach the command line, the panel exposes a browser equivalent for migrations at <code>/migration</code>, and a <strong>Clear Cache</strong> button under <strong>Settings → System Updater</strong>.</p>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Back up before every migration</p>
@@ -118,7 +118,7 @@ php artisan cache:clear</code></pre>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Restrict the maintenance URLs</p>
-      <p><code>/migration</code>, <code>/migrate</code>, <code>/clear</code>, <code>/generate_key</code>, <code>/linkstorage</code> and <code>/logs</code> are not behind a login. In production, restrict them by IP in your Nginx configuration:</p>
+      <p><code>/migration</code>, <code>/linkstorage</code> and <code>/logs</code> are not behind a login. In production, restrict them by IP in your Nginx configuration:</p>
       <pre><code>location ~ ^/(logs|migrate|migration|generate_key|get_path) {
     allow 203.0.113.10;
     deny all;

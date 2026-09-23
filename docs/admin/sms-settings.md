@@ -89,7 +89,7 @@ Mitigations: set a spending cap in your provider's dashboard, enable alerts, and
 
 ## Testing
 
-1. Save the credentials and visit `/clear`.
+1. Save the credentials.
 2. Set phone login to use the custom SMS gateway in [Login Settings](/docs/admin/login-settings).
 3. Sign up with a real number on a real device.
 4. Confirm the OTP arrives and works.

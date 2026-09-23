@@ -81,6 +81,22 @@ Store approvals do not land at the same time. Forcing both to a version only rel
 
 The same fields as the customer app, applied to the Delivery Boy App: **Play Store URL**, **App Store URL**, **Light Mode Color**, **Dark Mode Color**.
 
+### Version control for the rider app
+
+The Delivery Boy App has its own version switches, independent of the customer app, for Android and iOS separately:
+
+| Field | What it does |
+| --- | --- |
+| **Android / iOS Version System Status** | Enables version checking for the rider app |
+| **Required Force Update** | Whether the update is mandatory. Shown once the version system is on. |
+| **Current Version** | The rider-app version you consider current |
+
+They combine exactly as the customer-app switches do — off, optional prompt, or blocking screen.
+
+:::danger A forced rider update stops deliveries, not just browsing
+A customer locked out of an old build cannot shop. A **rider** locked out cannot deliver the orders already assigned to them. Raise the rider app's **Current Version** only after the new build is genuinely live on both stores, and prefer doing it outside your delivery hours.
+:::
+
 ### Delivery boy bonus
 
 Rewards riders on top of their normal earnings.

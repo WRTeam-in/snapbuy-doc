@@ -15,26 +15,66 @@ Get this right before anything else — zones, stores and prices all hang off it
 ![Countries list](/images/panel/countries-list.png)
 
 :::info India already exists
-Installation seeds one default country — **India**, with COD enabled. That means the Setup Guide's Country step is already ticked when you first log in.
+Installation seeds one default country — **India**, with its states and COD enabled. That means the Setup Guide's Country step is already ticked when you first log in.
 
-Do not take that as "done". Open it and correct the currency, timezone, formats and policies, or delete it and create your own.
+Do not take that as "done". Open it and correct the currency, timezone, formats and policies before you launch.
 :::
 
-## Adding a country
+## Importing a country
 
-Go to **Countries → Add Country**.
+Countries are **imported**, not typed in by hand. SnapBuy ships a dataset of every country with its dial code, ISO code and subdivisions, so you pick from a list instead of filling a blank form.
 
-![Add country form](/images/panel/countries-add-form.png)
+Go to **Countries → Import**.
 
-### Basic details
+![Importing countries](/images/panel/countries-import.png)
+
+1. Search for the country by name or code.
+2. Tick one or more. Countries already in your panel are greyed out and marked **Imported**.
+3. Click **Import**.
+
+| What you get | Detail |
+| --- | --- |
+| Name, dial code, ISO code | Taken from the dataset |
+| Flag | Downloaded automatically |
+| States / regions | Imported with the country — you do not add them separately |
+| Status | **Inactive** |
+
+:::danger An imported country arrives switched off
+It has no currency, no payment gateway and no policies yet, so SnapBuy leaves it **inactive** on purpose. Configure it first, then set its status to Active — otherwise customers see a country they cannot order from.
+:::
+
+:::warning Flags need outbound internet access
+Flags are fetched from a public flag service at import time. On a server that blocks outbound HTTPS the country still imports, but with no flag — upload one yourself on the country's edit form.
+:::
+
+:::info There is no "Add Country" button
+Everything the old blank form asked for is already in the dataset. If a country you need is genuinely missing, import the closest match and correct its details on the edit form.
+:::
+
+## Configuring a country
+
+Open a country from the list and work through the five steps of the form.
+
+| Step | Covers |
+| --- | --- |
+| **Country Details** | Name, dial code, code, mobile length, formats, timezone, flag, status |
+| **Payment Gateways** | Currency, plus which gateways are offered here |
+| **Refer & Earn** | Referral credit values |
+| **Customer Policies** | The five customer-facing legal documents |
+| **Delivery Boy Policies** | The two rider-facing documents |
+
+### Country details
+
+![Country details](/images/panel/countries-add-form.png)
 
 | Field | What it does |
 | --- | --- |
-| **Name** | Shown in the country switcher and in address forms |
+| **Name** | Shown in the country switcher and in address forms. Translatable per language. |
 | **Country Code** | Two-letter ISO code — `IN`, `US`, `AE`. Used for flags and matching. |
-| **Logo / Flag** | Icon shown beside the country in the apps |
+| **Flag** | Icon shown beside the country in the apps |
 | **Status** | Inactive countries disappear from the apps immediately |
-| **Default** | The country pre-selected for new customers |
+
+The **Default** country — the one pre-selected for new customers — is set from the country **list**, not this form. Switch the toggle on against another country to move the default; you cannot switch the current default off, and only an active country can take its place.
 
 ### Phone number rules
 
@@ -51,6 +91,8 @@ For India set both min and max to `10`. For countries with variable-length numbe
 :::
 
 ### Currency
+
+Set on the **Payment Gateways** step, alongside the gateways that will charge in it.
 
 | Field | What it does |
 | --- | --- |
@@ -123,11 +165,40 @@ App stores reject submissions that show placeholder legal text, and in many regi
 
 Each policy is editable **per language** — see [Manage Languages](/docs/admin/languages). Customers see the policy for their selected language, falling back to the default language when a translation is missing.
 
+## Regions (states)
+
+Each country holds a list of **regions** — states, provinces or emirates. Open them from the country row's **Regions** action.
+
+They are imported with the country, so the list is normally already populated.
+
+![Regions of a country](/images/panel/countries-regions.png)
+
+| Field | What it does |
+| --- | --- |
+| **Name** | The state or province name |
+| **Subdivision Code** | ISO code, e.g. `IN-MH` |
+| **Tax Code** | The jurisdiction's own code — India's GST state code, for example. Printed on invoices as the place of supply. |
+| **Type** | `state`, `province`, `union_territory` and so on |
+| **Status** | Inactive regions stop being offered |
+
+Two ways to add more:
+
+- **Import** — pick from the shipped dataset, exactly as the country import works. Regions already present are greyed out.
+- **Add** — a manual entry, for anything the dataset does not carry.
+
+:::info Regions are what region-wise tax rules attach to
+A tax rule can apply to a whole country or to one state. The state list it offers comes from here, and its **tax code** is what appears on the invoice. See [Tax Settings](/docs/admin/tax-settings).
+:::
+
+:::tip Zones inherit their region from the country
+A zone carries the country and region it sits in, and that is how SnapBuy works out the seller's jurisdiction for tax. Missing or wrong regions show up as the wrong tax rate, not as an error message.
+:::
+
 ## Multiple countries
 
-Adding more than one country lets you sell across regions with separate currencies, gateways, policies and referral rules.
+Importing more than one country lets you sell across regions with separate currencies, gateways, policies and referral rules.
 
-Things that are **per country**: currency, phone rules, timezone, formats, gateways, referral values, policies, zones.
+Things that are **per country**: currency, phone rules, timezone, formats, gateways, referral values, policies, regions, zones.
 
 Things that are **global**: languages, Firebase, SMTP, chat, catalogue attributes, most items under Settings.
 
@@ -149,4 +220,6 @@ Every zone carries a `country_id`. Create the country first, then draw zones ins
 - [ ] At least one payment gateway enabled on the country
 - [ ] All seven policies rewritten, placeholders removed
 - [ ] Referral values set, or zeroed to disable
-- [ ] One country marked as default
+- [ ] Regions present and correct, with tax codes where your tax authority uses them
+- [ ] One country marked as default in the list
+- [ ] Imported countries switched to Active once configured
