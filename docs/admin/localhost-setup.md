@@ -187,12 +187,12 @@ npm run dev        # dev server with hot reload
 | Blank white page | PHP version too old, or a missing extension | `php -v`, then re-check Step 1 |
 | `could not find driver` | `pdo_mysql` disabled | Uncomment it in `php.ini`, restart Apache |
 | Images upload but never display | Storage symlink missing | Visit `http://localhost/snapbuy/public/linkstorage` |
-| `500` right after install | App key not generated | Run `php artisan key:generate`, then visit `/clear` |
-| Login page loops back to itself | `APP_URL` does not match the address you are using | Correct `APP_URL` in `.env`, then visit `/clear` |
+| `500` right after install | App key not generated | Run `php artisan key:generate`, then `php artisan optimize:clear` |
+| Login page loops back to itself | `APP_URL` does not match the address you are using | Correct `APP_URL` in `.env`, then run `php artisan optimize:clear` |
 | Installer finishes but panel is broken | `INSTALL_MODE=server` was missing | Add it, empty the database, run the installer again |
 
 :::tip Clearing the cache
-SnapBuy exposes `http://localhost/snapbuy/public/clear`, which clears the config, route, view and application caches in one request. Use it after any manual `.env` change.
+Run `php artisan optimize:clear` in the project folder after any manual `.env` change — it clears the config, route, view and application caches in one go. Inside the panel, the same thing is a button: **Settings → System Updater → Clear Cache**.
 :::
 
 ---

@@ -144,4 +144,3 @@ Transactional email — order confirmations, password resets — is also queued.
 | Test mail succeeds, order emails never arrive | Queue not processed | Set up the [cron job](/docs/admin/cron-jobs) |
 | Emails land in spam | Missing SPF/DKIM, or From on a domain you do not control | Add DNS records; send from your own domain |
 | Emails show raw HTML tags | Content type set to `Text` | Set it to `HTML` |
-| Nothing sends after changing settings | Cached config | Visit `/clear` once |

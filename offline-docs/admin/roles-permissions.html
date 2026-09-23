@@ -138,7 +138,7 @@
       <tbody>
         <tr><td>Menu item missing for a staff member</td><td>Role lacks that <code>list</code> permission</td><td>Grant it</td></tr>
         <tr><td>"Unauthorized" on save</td><td>Has <code>list</code> but not <code>update</code></td><td>Grant <code>update</code></td></tr>
-        <tr><td>Permission changes not taking effect</td><td>Cached permissions</td><td>Visit <code>/clear</code>; have the user sign out and back in</td></tr>
+        <tr><td>Permission changes not taking effect</td><td>The user's session still holds the old role</td><td>Have them sign out and back in</td></tr>
         <tr><td>Staff can see payment credentials</td><td>Role has <code>settings</code></td><td>Remove it</td></tr>
         <tr><td>Cannot tell who made a change</td><td>Shared account</td><td>Give each person their own</td></tr>
         <tr><td>Permission list looks incomplete</td><td>Seeder not fully run</td><td>Re-run the permission seeders after a backup</td></tr>

@@ -34,30 +34,85 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">India already exists</p>
-      <p>Installation seeds one default country — <strong>India</strong>, with COD enabled. That means the Setup Guide's Country step is already ticked when you first log in.</p>
-      <p>Do not take that as "done". Open it and correct the currency, timezone, formats and policies, or delete it and create your own.</p>
+      <p>Installation seeds one default country — <strong>India</strong>, with its states and COD enabled. That means the Setup Guide's Country step is already ticked when you first log in.</p>
+      <p>Do not take that as "done". Open it and correct the currency, timezone, formats and policies before you launch.</p>
     </div>
 
-    <h2 id="adding-a-country">Adding a country</h2>
+    <h2 id="importing-a-country">Importing a country</h2>
 
-    <p>Go to <strong>Countries → Add Country</strong>.</p>
+    <p>Countries are <strong>imported</strong>, not typed in by hand. SnapBuy ships a dataset of every country with its dial code, ISO code and subdivisions, so you pick from a list instead of filling a blank form.</p>
 
-    <img src="../images/panel/countries-add-form.png" alt="Add country form">
+    <p>Go to <strong>Countries → Import</strong>.</p>
 
-    <h3 id="basic-details">Basic details</h3>
+    <img src="../images/panel/countries-import.png" alt="Importing countries">
+
+    <ol>
+      <li>Search for the country by name or code.</li>
+      <li>Tick one or more. Countries already in your panel are greyed out and marked <strong>Imported</strong>.</li>
+      <li>Click <strong>Import</strong>.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What you get</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Name, dial code, ISO code</td><td>Taken from the dataset</td></tr>
+        <tr><td>Flag</td><td>Downloaded automatically</td></tr>
+        <tr><td>States / regions</td><td>Imported with the country — you do not add them separately</td></tr>
+        <tr><td>Status</td><td><strong>Inactive</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">An imported country arrives switched off</p>
+      <p>It has no currency, no payment gateway and no policies yet, so SnapBuy leaves it <strong>inactive</strong> on purpose. Configure it first, then set its status to Active — otherwise customers see a country they cannot order from.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Flags need outbound internet access</p>
+      <p>Flags are fetched from a public flag service at import time. On a server that blocks outbound HTTPS the country still imports, but with no flag — upload one yourself on the country's edit form.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">There is no "Add Country" button</p>
+      <p>Everything the old blank form asked for is already in the dataset. If a country you need is genuinely missing, import the closest match and correct its details on the edit form.</p>
+    </div>
+
+    <h2 id="configuring-a-country">Configuring a country</h2>
+
+    <p>Open a country from the list and work through the five steps of the form.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Step</th><th>Covers</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Country Details</strong></td><td>Name, dial code, code, mobile length, formats, timezone, flag, status</td></tr>
+        <tr><td><strong>Payment Gateways</strong></td><td>Currency, plus which gateways are offered here</td></tr>
+        <tr><td><strong>Refer &amp; Earn</strong></td><td>Referral credit values</td></tr>
+        <tr><td><strong>Customer Policies</strong></td><td>The five customer-facing legal documents</td></tr>
+        <tr><td><strong>Delivery Boy Policies</strong></td><td>The two rider-facing documents</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="country-details">Country details</h3>
+
+    <img src="../images/panel/countries-add-form.png" alt="Country details">
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>Field</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td><strong>Name</strong></td><td>Shown in the country switcher and in address forms</td></tr>
+        <tr><td><strong>Name</strong></td><td>Shown in the country switcher and in address forms. Translatable per language.</td></tr>
         <tr><td><strong>Country Code</strong></td><td>Two-letter ISO code — <code>IN</code>, <code>US</code>, <code>AE</code>. Used for flags and matching.</td></tr>
-        <tr><td><strong>Logo / Flag</strong></td><td>Icon shown beside the country in the apps</td></tr>
+        <tr><td><strong>Flag</strong></td><td>Icon shown beside the country in the apps</td></tr>
         <tr><td><strong>Status</strong></td><td>Inactive countries disappear from the apps immediately</td></tr>
-        <tr><td><strong>Default</strong></td><td>The country pre-selected for new customers</td></tr>
       </tbody>
     </table>
     </div>
+
+    <p>The <strong>Default</strong> country — the one pre-selected for new customers — is set from the country <strong>list</strong>, not this form. Switch the toggle on against another country to move the default; you cannot switch the current default off, and only an active country can take its place.</p>
 
     <h3 id="phone-number-rules">Phone number rules</h3>
 
@@ -79,6 +134,8 @@
     </div>
 
     <h3 id="currency">Currency</h3>
+
+    <p>Set on the <strong>Payment Gateways</strong> step, alongside the gateways that will charge in it.</p>
 
     <div class="table-wrap">
     <table>
@@ -174,11 +231,49 @@
 
     <p>Each policy is editable <strong>per language</strong> — see <a href="../admin/languages.html">Manage Languages</a>. Customers see the policy for their selected language, falling back to the default language when a translation is missing.</p>
 
+    <h2 id="regions">Regions (states)</h2>
+
+    <p>Each country holds a list of <strong>regions</strong> — states, provinces or emirates. Open them from the country row's <strong>Regions</strong> action.</p>
+
+    <p>They are imported with the country, so the list is normally already populated.</p>
+
+    <img src="../images/panel/countries-regions.png" alt="Regions of a country">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>The state or province name</td></tr>
+        <tr><td><strong>Subdivision Code</strong></td><td>ISO code, e.g. <code>IN-MH</code></td></tr>
+        <tr><td><strong>Tax Code</strong></td><td>The jurisdiction's own code — India's GST state code, for example. Printed on invoices as the place of supply.</td></tr>
+        <tr><td><strong>Type</strong></td><td><code>state</code>, <code>province</code>, <code>union_territory</code> and so on</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive regions stop being offered</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Two ways to add more:</p>
+
+    <ul>
+      <li><strong>Import</strong> — pick from the shipped dataset, exactly as the country import works. Regions already present are greyed out.</li>
+      <li><strong>Add</strong> — a manual entry, for anything the dataset does not carry.</li>
+    </ul>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Regions are what region-wise tax rules attach to</p>
+      <p>A tax rule can apply to a whole country or to one state. The state list it offers comes from here, and its <strong>tax code</strong> is what appears on the invoice. See <a href="../admin/tax-settings.html">Tax Settings</a>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Zones inherit their region from the country</p>
+      <p>A zone carries the country and region it sits in, and that is how SnapBuy works out the seller's jurisdiction for tax. Missing or wrong regions show up as the wrong tax rate, not as an error message.</p>
+    </div>
+
     <h2 id="multiple-countries">Multiple countries</h2>
 
     <p>Adding more than one country lets you sell across regions with separate currencies, gateways, policies and referral rules.</p>
 
-    <p>Things that are <strong>per country</strong>: currency, phone rules, timezone, formats, gateways, referral values, policies, zones.</p>
+    <p>Things that are <strong>per country</strong>: currency, phone rules, timezone, formats, gateways, referral values, policies, regions, zones.</p>
 
     <p>Things that are <strong>global</strong>: languages, Firebase, SMTP, chat, catalogue attributes, most items under Settings.</p>
 
@@ -204,7 +299,9 @@
       <li class="task-item"><input type="checkbox" disabled> At least one payment gateway enabled on the country</li>
       <li class="task-item"><input type="checkbox" disabled> All seven policies rewritten, placeholders removed</li>
       <li class="task-item"><input type="checkbox" disabled> Referral values set, or zeroed to disable</li>
-      <li class="task-item"><input type="checkbox" disabled> One country marked as default</li>
+      <li class="task-item"><input type="checkbox" disabled> Regions present and correct, with tax codes where your tax authority uses them</li>
+      <li class="task-item"><input type="checkbox" disabled> One country marked as default in the list</li>
+      <li class="task-item"><input type="checkbox" disabled> Imported countries switched to Active once configured</li>
     </ul>
   </main>
 </div>

@@ -26,11 +26,11 @@
 
     <p>Menu path: <strong>Reports</strong></p>
 
-    <p>Ten reports covering sales, operations and customers.</p>
+    <p>Twelve reports covering sales, operations, customers and tax.</p>
 
     <img src="../images/panel/reports-page.png" alt="Reports overview">
 
-    <h2 id="the-ten-reports">The ten reports</h2>
+    <h2 id="the-twelve-reports">The twelve reports</h2>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Report</th><th>Answers</th></tr></thead>
@@ -45,6 +45,8 @@
         <tr><td><strong>Delivery</strong></td><td>How are riders and delivery performing?</td></tr>
         <tr><td><strong>Payment</strong></td><td>Which payment methods are used, and what succeeds?</td></tr>
         <tr><td><strong>Promo</strong></td><td>Are discount campaigns working?</td></tr>
+        <tr><td><strong>Tax</strong></td><td>How much tax did I collect, at what rate, on what?</td></tr>
+        <tr><td><strong>Order-wise Tax</strong></td><td>What tax did each individual order carry?</td></tr>
       </tbody>
     </table>
     </div>
@@ -102,6 +104,86 @@
       <p>A discount code will almost always increase order volume. The question is whether the extra orders covered the discount given, and whether they went to customers who would have bought anyway. Revenue alone flatters every campaign.</p>
     </div>
 
+    <h3 id="tax">Tax</h3>
+
+    <p>Two reports, meant to be read together: <strong>Tax</strong> is the accounting summary, <strong>Order-wise Tax</strong> is the evidence behind any line of it.</p>
+
+    <h4 id="tax-report">Tax Report</h4>
+
+    <p>One row per <strong>what was taxed × rate</strong>, with every tax head as its own column — CGST and SGST for an Indian order, VAT for a UAE one. The columns build themselves from your <a href="../admin/tax-settings.html">tax rules</a>, so you see the heads you actually charge.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Shows</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Taxed on</strong></td><td>Items, Delivery charge, Surge charges or Additional charges</td></tr>
+        <tr><td><strong>Rate</strong></td><td>The rate that applied</td></tr>
+        <tr><td><strong>Taxable value</strong></td><td>The amount the tax was charged on</td></tr>
+        <tr><td><em>(one per tax head)</em></td><td>e.g. CGST, SGST, IGST, VAT</td></tr>
+        <tr><td><strong>Total tax</strong></td><td>The row's tax across all heads</td></tr>
+        <tr><td><strong>Orders</strong></td><td>How many orders contributed</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The cards above the table give the figures a filing needs:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Card</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Taxable value</strong></td><td>Total value taxed in the period</td></tr>
+        <tr><td><strong>Tax collected</strong></td><td>Tax charged on orders placed</td></tr>
+        <tr><td><strong>Tax reversed</strong></td><td>Tax given back through cancellations and returns</td></tr>
+        <tr><td><strong>Net tax payable</strong></td><td>Collected − reversed. This is the number you file.</td></tr>
+        <tr><td><strong>Tax on goods</strong></td><td>The items portion</td></tr>
+        <tr><td><strong>Tax on charges</strong></td><td>The delivery, surge and additional-charge portion</td></tr>
+        <tr><td><strong>Effective tax rate</strong></td><td>Net tax as a percentage of taxable value</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Click any row to drill into <strong>Order-wise Tax</strong>, already filtered to that source and rate.</p>
+
+    <h4 id="order-wise-tax-report">Order-wise Tax Report</h4>
+
+    <p>One row per order, with the tax split by what produced it.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Shows</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Order ID</strong>, <strong>Date</strong>, <strong>Channel</strong></td><td>Which order</td></tr>
+        <tr><td><strong>Place of supply</strong></td><td>The jurisdiction recorded on the order</td></tr>
+        <tr><td><strong>Taxable value</strong></td><td>The order's taxed amount</td></tr>
+        <tr><td><strong>Items / Delivery charge / Surge charges / Additional charges</strong></td><td>Tax from each source</td></tr>
+        <tr><td><strong>Tax reversed</strong></td><td>Tax returned on that order</td></tr>
+        <tr><td><strong>Total tax</strong></td><td>Net tax for the order</td></tr>
+        <tr><td><strong>Status</strong></td><td>The order's current status</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Tax figures are frozen at the moment of the order</p>
+      <p>Every tax line is written once, when the order is placed, and is never recalculated. Changing a <a href="../admin/tax-settings.html">tax rule</a> today cannot move a figure you already filed last month — which is exactly what an audit needs.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">File the net figure, not the collected one</p>
+      <p><strong>Tax collected</strong> ignores money you gave back. Cancellations and returns write a reversal line, and <strong>Net tax payable</strong> is collected minus those reversals. Filing the collected figure means paying tax on refunded orders out of your own pocket.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Tax on charges is easy to forget</p>
+      <p>Delivery, surge and additional charges are taxed separately from the goods and appear as their own rows. If <strong>Tax on charges</strong> reads zero while you do charge for delivery, the charge is probably not marked taxable — see <a href="../admin/tax-settings.html#step-4--tax-your-charges">Tax Settings</a>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Filter to one country before filing</p>
+      <p>Tax is a per-jurisdiction obligation. Reading a multi-country total mixes rates and currencies into a figure no tax authority wants. Filter by country — and by zone where you file separately — then export.</p>
+    </div>
+
     <h3 id="returns">Returns</h3>
 
     <div class="admonition admonition--tip">
@@ -143,6 +225,9 @@
         <tr><td>Inventory looks wrong</td><td>Reading totals across stores</td><td>Filter by store</td></tr>
         <tr><td>Export times out</td><td>Range too large</td><td>Export in smaller periods</td></tr>
         <tr><td>Staff cannot open reports</td><td><code>report</code> permission not granted</td><td>Grant <code>list</code> in that category</td></tr>
+        <tr><td>Tax report empty</td><td>No orders carried tax in the range, or no product has a tax category</td><td>Check <a href="../admin/tax-settings.html">Tax Settings</a></td></tr>
+        <tr><td>Tax report shows no delivery tax</td><td>The delivery charge is not marked taxable</td><td>Enable <strong>Is taxable</strong> on the <a href="../admin/zones.html">zone</a></td></tr>
+        <tr><td>A tax head column is missing</td><td>No rule in the period used that component</td><td>Expected — the columns follow what was actually charged</td></tr>
       </tbody>
     </table>
     </div>

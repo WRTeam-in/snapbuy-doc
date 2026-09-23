@@ -173,7 +173,6 @@ sudo supervisorctl start snapbuy-worker:*</code></pre>
         <tr><td>Emails and notifications never arrive</td><td>Queue not being processed</td><td>Check <strong>Pending jobs</strong> — if it only grows, cron is not running</td></tr>
         <tr><td>Everything arrives roughly a minute late</td><td>Normal</td><td>The scheduler runs once per minute; use Supervisor for instant processing</td></tr>
         <tr><td><strong>Failed jobs</strong> count rising</td><td>A job errors every time</td><td>Check <code>storage/logs/laravel.log</code>, or the <code>/logs</code> viewer</td></tr>
-        <tr><td>Cron runs but tasks do nothing</td><td>Cache holds stale config</td><td>Visit <code>/clear</code> once, then wait two minutes</td></tr>
       </tbody>
     </table>
     </div>

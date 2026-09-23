@@ -1,6 +1,6 @@
 ---
 id: cart-settings
-title: Cart Settings (Abandoned Cart Reminders)
+title: Cart Settings
 sidebar_position: 22
 ---
 

@@ -210,6 +210,7 @@ Flat fees added to every order in the zone — packaging, handling, small-order 
 | --- | --- |
 | **Name** | Shown on the bill. Translatable per language. |
 | **Amount** | Flat amount added |
+| **Applies to** | Which orders pay it — `Delivery`, `Pickup` or `Both`. See [Self Pickup](/docs/admin/self-pickup). |
 | **Refundable** | Whether it is returned on cancellation or refund |
 | **Is taxable** | Turn tax on for this charge — then pick a tax category and say whether the amount already includes tax. See [Tax Settings](/docs/admin/tax-settings). |
 

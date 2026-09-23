@@ -119,7 +119,7 @@ They fall back to the default language on their next launch. If you support a la
 | `{amount}` appears literally | Placeholder altered in translation | Restore the exact placeholder |
 | Some text still in English | Those keys untranslated | Fill them in the JSON editor |
 | Cannot save a record in a second language | Record does not exist in the default language yet | Create it in the default language first |
-| Changes not visible | Cached language file | Visit `/clear`; restart the app |
+| Changes not visible | The app is holding the old language file | Restart the app |
 
 ## Checklist
 

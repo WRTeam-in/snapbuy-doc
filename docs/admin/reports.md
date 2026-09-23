@@ -8,11 +8,11 @@ sidebar_position: 40
 
 Menu path: **Reports**
 
-Ten reports covering sales, operations and customers.
+Twelve reports covering sales, operations, customers and tax.
 
 ![Reports overview](/images/panel/reports-page.png)
 
-## The ten reports
+## The twelve reports
 
 | Report | Answers |
 | --- | --- |
@@ -26,6 +26,8 @@ Ten reports covering sales, operations and customers.
 | **Delivery** | How are riders and delivery performing? |
 | **Payment** | Which payment methods are used, and what succeeds? |
 | **Promo** | Are discount campaigns working? |
+| **Tax** | How much tax did I collect, at what rate, on what? |
+| **Order-wise Tax** | What tax did each individual order carry? |
 
 ## Reading them well
 
@@ -77,6 +79,67 @@ Payment failures are silent lost revenue — the customer rarely tells you, they
 A discount code will almost always increase order volume. The question is whether the extra orders covered the discount given, and whether they went to customers who would have bought anyway. Revenue alone flatters every campaign.
 :::
 
+### Tax
+
+Two reports, meant to be read together: **Tax** is the accounting summary, **Order-wise Tax** is the evidence behind any line of it.
+
+#### Tax Report
+
+One row per **what was taxed × rate**, with every tax head as its own column — CGST and SGST for an Indian order, VAT for a UAE one. The columns build themselves from your [tax rules](/docs/admin/tax-settings), so you see the heads you actually charge.
+
+| Column | Shows |
+| --- | --- |
+| **Taxed on** | Items, Delivery charge, Surge charges or Additional charges |
+| **Rate** | The rate that applied |
+| **Taxable value** | The amount the tax was charged on |
+| *(one per tax head)* | e.g. CGST, SGST, IGST, VAT |
+| **Total tax** | The row's tax across all heads |
+| **Orders** | How many orders contributed |
+
+The cards above the table give the figures a filing needs:
+
+| Card | Meaning |
+| --- | --- |
+| **Taxable value** | Total value taxed in the period |
+| **Tax collected** | Tax charged on orders placed |
+| **Tax reversed** | Tax given back through cancellations and returns |
+| **Net tax payable** | Collected − reversed. This is the number you file. |
+| **Tax on goods** | The items portion |
+| **Tax on charges** | The delivery, surge and additional-charge portion |
+| **Effective tax rate** | Net tax as a percentage of taxable value |
+
+Click any row to drill into **Order-wise Tax**, already filtered to that source and rate.
+
+#### Order-wise Tax Report
+
+One row per order, with the tax split by what produced it.
+
+| Column | Shows |
+| --- | --- |
+| **Order ID**, **Date**, **Channel** | Which order |
+| **Place of supply** | The jurisdiction recorded on the order |
+| **Taxable value** | The order's taxed amount |
+| **Items / Delivery charge / Surge charges / Additional charges** | Tax from each source |
+| **Tax reversed** | Tax returned on that order |
+| **Total tax** | Net tax for the order |
+| **Status** | The order's current status |
+
+:::info Tax figures are frozen at the moment of the order
+Every tax line is written once, when the order is placed, and is never recalculated. Changing a [tax rule](/docs/admin/tax-settings) today cannot move a figure you already filed last month — which is exactly what an audit needs.
+:::
+
+:::danger File the net figure, not the collected one
+**Tax collected** ignores money you gave back. Cancellations and returns write a reversal line, and **Net tax payable** is collected minus those reversals. Filing the collected figure means paying tax on refunded orders out of your own pocket.
+:::
+
+:::warning Tax on charges is easy to forget
+Delivery, surge and additional charges are taxed separately from the goods and appear as their own rows. If **Tax on charges** reads zero while you do charge for delivery, the charge is probably not marked taxable — see [Tax Settings](/docs/admin/tax-settings#step-4--tax-your-charges).
+:::
+
+:::tip Filter to one country before filing
+Tax is a per-jurisdiction obligation. Reading a multi-country total mixes rates and currencies into a figure no tax authority wants. Filter by country — and by zone where you file separately — then export.
+:::
+
 ### Returns
 
 :::tip Returns clustered on one product are a product problem
@@ -115,3 +178,6 @@ Once downloaded, a file containing customer details and revenue can be forwarded
 | Inventory looks wrong | Reading totals across stores | Filter by store |
 | Export times out | Range too large | Export in smaller periods |
 | Staff cannot open reports | `report` permission not granted | Grant `list` in that category |
+| Tax report empty | No orders carried tax in the range, or no product has a tax category | Check [Tax Settings](/docs/admin/tax-settings) |
+| Tax report shows no delivery tax | The delivery charge is not marked taxable | Enable **Is taxable** on the [zone](/docs/admin/zones) |
+| A tax head column is missing | No rule in the period used that component | Expected — the columns follow what was actually charged |

@@ -159,7 +159,7 @@ Browsers refuse to register a service worker over plain HTTP. Web push will not 
 
 ## Testing
 
-1. Save the settings and visit `/clear` once.
+1. Save the settings.
 2. Open **Notifications → Send Notification** and send a test to yourself.
 3. Check delivery on a real device — emulators are unreliable for push.
 

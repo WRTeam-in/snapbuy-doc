@@ -61,6 +61,7 @@
         <tr><td><code>order_item_cancelled_customer</code></td><td>Customer — item cancelled</td></tr>
         <tr><td><code>order_item_returned_customer</code></td><td>Customer — return processed</td></tr>
         <tr><td><code>order_item_delivery_estimate_customer</code></td><td>Customer — the promised delivery date changed</td></tr>
+        <tr><td><code>order_status_ready_for_pickup_customer</code></td><td>Customer — a <a href="../admin/self-pickup.html">self pickup</a> order is waiting at the store</td></tr>
         <tr><td><code>payment_failed_customer</code></td><td>Customer — payment failed</td></tr>
       </tbody>
     </table>
@@ -110,6 +111,17 @@
         <tr><td><code>received_from_customer</code></td><td>Cash collected</td></tr>
         <tr><td><code>withdrawal_request_admin</code></td><td>Admin — a rider requested a payout</td></tr>
         <tr><td><code>withdrawal_status_delivery_boy</code></td><td>Delivery boy — request approved or rejected</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="products">Products</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Event</th><th>Audience</th></tr></thead>
+      <tbody>
+        <tr><td><code>back_in_stock_customer</code></td><td>Customer — an out-of-stock product they asked to be told about is orderable again</td></tr>
       </tbody>
     </table>
     </div>

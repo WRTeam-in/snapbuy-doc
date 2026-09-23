@@ -66,6 +66,8 @@
         <tr><td><strong>Provider</strong></td><td>Optional operator or brand label for the outlet</td></tr>
         <tr><td><strong>Fulfillment Type</strong></td><td><code>Quick</code>, <code>eCommerce</code> or <code>Both</code></td></tr>
         <tr><td><strong>Zone</strong></td><td>The one zone this store serves</td></tr>
+        <tr><td><strong>Service Modes</strong></td><td><code>Home delivery only</code>, <code>Self pickup only</code> or <code>Delivery and pickup</code></td></tr>
+        <tr><td><strong>Pickup Channels</strong></td><td>Which channels may collect — <code>Quick</code>, <code>eCommerce</code> or <code>Both</code>. Only shown when the store serves both channels and offers pickup.</td></tr>
         <tr><td><strong>Status</strong></td><td>Inactive stores stop receiving orders</td></tr>
       </tbody>
     </table>
@@ -75,6 +77,11 @@
       <p class="admonition__title">Fulfillment type must match the zone's sales channel</p>
       <p>A store set to <strong>Quick</strong> cannot be attached to a zone whose sales channel is <strong>eCommerce</strong> only. SnapBuy rejects it with <em>"Selected zone does not support this fulfillment type."</em></p>
       <p>The zone declares which channels it serves; the store must be a subset of that. A store set to <strong>Both</strong> requires a zone set to <strong>Both</strong>.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Service modes decide whether customers can collect</p>
+      <p>Set <strong>Self pickup only</strong> and the store stops taking home delivery in its zone; set <strong>Delivery and pickup</strong> and customers choose at checkout. Pickup shows them this store's address, map pin, phone number, preparation time and opening hours — so get those right first. See <a href="../admin/self-pickup.html">Self Pickup</a>.</p>
     </div>
 
     <h3 id="location">Location</h3>

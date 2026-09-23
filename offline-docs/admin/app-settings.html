@@ -116,6 +116,28 @@
     <h3 id="store-urls-and-colours">Store URLs and colours</h3>
     <p>The same fields as the customer app, applied to the Delivery Boy App: <strong>Play Store URL</strong>, <strong>App Store URL</strong>, <strong>Light Mode Color</strong>, <strong>Dark Mode Color</strong>.</p>
 
+    <h3 id="version-control-for-the-rider-app">Version control for the rider app</h3>
+
+    <p>The Delivery Boy App has its own version switches, independent of the customer app, for Android and iOS separately:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Android / iOS Version System Status</strong></td><td>Enables version checking for the rider app</td></tr>
+        <tr><td><strong>Required Force Update</strong></td><td>Whether the update is mandatory. Shown once the version system is on.</td></tr>
+        <tr><td><strong>Current Version</strong></td><td>The rider-app version you consider current</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>They combine exactly as the customer-app switches do — off, optional prompt, or blocking screen.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A forced rider update stops deliveries, not just browsing</p>
+      <p>A customer locked out of an old build cannot shop. A <strong>rider</strong> locked out cannot deliver the orders already assigned to them. Raise the rider app's <strong>Current Version</strong> only after the new build is genuinely live on both stores, and prefer doing it outside your delivery hours.</p>
+    </div>
+
     <h3 id="delivery-boy-bonus">Delivery boy bonus</h3>
     <p>Rewards riders on top of their normal earnings.</p>
     <div class="table-wrap">

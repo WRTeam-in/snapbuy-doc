@@ -66,6 +66,45 @@
 
     <p><code>APP_URL</code> must exactly match the address customers and apps use. A mismatch causes redirect loops at login, broken image URLs and failed payment callbacks.</p>
 
+    <h2 id="behind-a-proxy">Behind a proxy, load balancer or Cloudflare</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>TRUSTED_PROXIES</code></td><td>Which proxies SnapBuy trusts to report the real visitor. Empty by default.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>If your panel sits behind Cloudflare, a load balancer, or an Nginx reverse proxy on another machine, every request reaches PHP from the <strong>proxy's</strong> address, over plain HTTP. Left empty, Laravel ignores the forwarded headers and works from that — so stored IPs are all the proxy's, rate limiting counts every visitor as the same one, and generated links can come out <code>http://</code>.</p>
+
+    <p>Set it to the proxy addresses you trust:</p>
+
+    <pre><code># Cloudflare, or a load balancer whose address is not fixed
+TRUSTED_PROXIES=*
+
+# Or a comma-separated list of proxy IPs / CIDRs
+TRUSTED_PROXIES=10.0.0.5,192.168.1.0/24
+</code></pre>
+
+    <p>Accepted forwarded headers are <code>X-Forwarded-For</code>, <code>-Host</code>, <code>-Port</code>, <code>-Proto</code> and the AWS ELB header, so with this set <code>https</code> and the visitor's address are both resolved correctly.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Not set = wrong IPs and mixed-content links</p>
+      <p>The symptoms are recognisable: activity logs and order records all showing one or two addresses, throttling blocking everyone at once, and assets loading over <code>http://</code> on an HTTPS site. All three come from the same cause.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Only trust proxies that are actually in front of you</p>
+      <p><code>TRUSTED_PROXIES=*</code> tells SnapBuy to believe the forwarded headers on <strong>every</strong> request. That is correct when nothing can reach the server except through Cloudflare or your load balancer — lock the origin down with a firewall so it is true. If the server is directly reachable on its public IP, list your proxy addresses instead, or anyone can spoof their IP by sending a header.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Leave it empty when there is no proxy</p>
+      <p>A single VPS running Nginx and PHP-FPM on the same machine has no proxy in front of it. Leave <code>TRUSTED_PROXIES</code> blank — that is the safe default.</p>
+    </div>
+
     <h2 id="installation-mode">Installation mode</h2>
 
     <div class="table-wrap">
@@ -182,7 +221,7 @@
     <pre><code>php artisan config:clear
 php artisan cache:clear</code></pre>
 
-    <p>Or open <code>https://admin.yourstore.com/clear</code> in a browser.</p>
+    <p>Inside the panel, the same thing is a button: <strong>Settings → System Updater → Clear Cache</strong>.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Changes appear to do nothing until the cache is cleared</p>
@@ -198,6 +237,7 @@ php artisan cache:clear</code></pre>
       <li class="task-item"><input type="checkbox" disabled> File permissions <code>644</code>, owned by the web server user</li>
       <li class="task-item"><input type="checkbox" disabled> <code>APP_KEY</code> backed up alongside the database</li>
       <li class="task-item"><input type="checkbox" disabled> Database user has privileges on the SnapBuy database only</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>TRUSTED_PROXIES</code> set only if a proxy is genuinely in front of the server</li>
     </ul>
 
     <hr>
