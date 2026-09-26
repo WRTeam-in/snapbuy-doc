@@ -131,7 +131,7 @@ The message sent is `order_item_delivery_estimate_customer` — see [Notificatio
 
 ## Invoices
 
-Invoices are generated as PDFs, numbered with the prefix from [General Settings](/docs/admin/general-settings#number-prefixes).
+Invoices are generated as PDFs, numbered with the prefix from [General Settings](/docs/admin/general-settings#number-prefixes). Paper size, logo, notes and the tax summary are set in [Invoice Settings](/docs/admin/invoice-settings), which also covers the delivery receipt printed for riders.
 
 :::warning Invoice numbering is set at creation
 Changing the prefix later does not renumber existing invoices. Set it during initial setup.

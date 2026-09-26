@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invoice Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Invoice Settings</h1>
+
+    <p>Menu path: <strong>Settings → Invoice Settings</strong></p>
+
+    <p>Controls how two printed documents look: the <strong>customer invoice</strong> and the <strong>delivery receipt</strong> riders carry. Paper size, fonts, logo, signature and the notes that print on them.</p>
+
+    <img src="../images/panel/invoice-settings-page.png" alt="Invoice settings page">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">This page is about paper, not numbering</p>
+      <p>The invoice <strong>prefix</strong> and numbering live in <a href="../admin/general-settings.html#number-prefixes">General Settings</a>. This page changes how the sheet is laid out and printed.</p>
+    </div>
+
+    <h2 id="live-preview">Live preview</h2>
+
+    <p>The right-hand panel renders the actual document from the values in the form, on a sample order — no real customer's details appear in it. It refreshes shortly after each change, so you can see the paper before you save.</p>
+
+    <p>Switch it between <strong>Invoice</strong> and <strong>Delivery Receipt</strong>, or click <strong>Open PDF</strong> to get the real thing in a new tab.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">The preview is the whole point of this page</p>
+      <p>Paper settings are hard to judge from a form. Change the size or the font, watch the preview reflow, and only then save. It is the same template the PDF uses, at the real paper width.</p>
+    </div>
+
+    <h2 id="invoice">Invoice</h2>
+
+    <h3 id="paper-and-type">Paper and type</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Paper Size</strong></td><td><code>A4</code>, <code>A5</code>, <code>Letter</code>, <code>80 mm roll</code>, <code>58 mm roll</code> or <code>Custom</code></td></tr>
+        <tr><td><strong>Width / Height (mm)</strong></td><td>Only for <strong>Custom</strong> — 40–400 mm wide, 50–1200 mm tall</td></tr>
+        <tr><td><strong>Font Size (px)</strong></td><td>6–20</td></tr>
+        <tr><td><strong>Colors</strong></td><td><code>Theme color</code> or <code>Black and white</code></td></tr>
+        <tr><td><strong>Bold Text</strong></td><td>Heavier text throughout</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Narrow paper switches to a different layout</p>
+      <p>The 58 mm and 80 mm rolls — and any custom width under 100 mm — print a single-column thermal layout instead of the full invoice. That is automatic; you do not choose a template.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Match the size to the printer you actually own</p>
+      <p>A4 on a thermal roll comes out unreadable, and an 80 mm layout on A4 wastes most of the sheet. If you print invoices from a counter receipt printer, pick the roll; if they are emailed or filed, pick A4.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Black and white saves money on a colour printer</p>
+      <p><code>Black and white</code> drops the accent colour so the sheet prints on any printer without eating colour toner. Worth it if you print every order.</p>
+    </div>
+
+    <h3 id="logo">Logo</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Show Logo</strong></td><td>Whether a logo prints at all</td></tr>
+        <tr><td><strong>Invoice Logo</strong></td><td>A logo just for invoices</td></tr>
+        <tr><td><strong>Logo Height (px)</strong></td><td>10–120</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The logo falls back on its own</p>
+      <p>Leave <strong>Invoice Logo</strong> empty and the invoice uses your store logo from <a href="../admin/general-settings.html">General Settings</a>. Upload one here only when you want the printed sheet to differ — a higher-contrast mark that survives a cheap printer, for example.</p>
+    </div>
+
+    <h3 id="notes-and-totals">Notes and totals</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Header Note</strong></td><td>One line under the header, up to 120 characters</td></tr>
+        <tr><td><strong>Footer Note</strong></td><td>Up to 300 characters at the bottom. Defaults to a "computer-generated invoice" line.</td></tr>
+        <tr><td><strong>Show Tax Summary</strong></td><td>Prints the tax breakdown block — the rate-wise summary</td></tr>
+        <tr><td><strong>Show Thank You Note</strong></td><td>Whether a closing line prints</td></tr>
+        <tr><td><strong>Thank You Note</strong></td><td>The line itself, up to 120 characters</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Keep the tax summary on where tax is filed</p>
+      <p><strong>Show Tax Summary</strong> prints the rate-wise breakdown a customer — and your accountant — needs to claim input credit. Turning it off on a GST or VAT invoice makes the document incomplete for that purpose. Only switch it off if you do not charge tax at all. See <a href="../admin/tax-settings.html">Tax Settings</a>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">The header note is the place for registration details</p>
+      <p>A GSTIN, VAT number, FSSAI licence or a returns-window line all belong here rather than squeezed into the footer.</p>
+    </div>
+
+    <h3 id="signature">Signature</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Show Signature</strong></td><td>Whether a signature block prints</td></tr>
+        <tr><td><strong>Signature Image</strong></td><td>A scanned signature</td></tr>
+        <tr><td><strong>Signature Label</strong></td><td>Caption under it. Defaults to <code>Authorised Signatory</code>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A signature image is a signature</p>
+      <p>Anyone who can reach the invoice PDF gets a clean copy of it. Use a signature you are willing to have circulated, and leave this off unless your paperwork genuinely needs it — the default footer already says the invoice needs no signature.</p>
+    </div>
+
+    <h2 id="delivery-receipt">Delivery Receipt</h2>
+
+    <p>The slip that travels with the parcel, printed from the order.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Default Paper Size</strong></td><td><code>A4</code>, <code>A5</code>, <code>4 × 6 in label</code>, <code>80 mm roll</code> or <code>58 mm roll</code></td></tr>
+        <tr><td><strong>Font Size (px)</strong></td><td>6–20</td></tr>
+        <tr><td><strong>Bold Text</strong></td><td>Heavier text throughout</td></tr>
+        <tr><td><strong>Show Logo</strong></td><td>Whether your logo prints on the slip</td></tr>
+        <tr><td><strong>Show Products</strong></td><td>Whether the item list prints</td></tr>
+        <tr><td><strong>Show Prices</strong></td><td><code>Only when cash to collect</code>, <code>Always</code> or <code>Never</code></td></tr>
+        <tr><td><strong>Show Signature</strong></td><td>A line for the customer to sign on delivery</td></tr>
+        <tr><td><strong>Signature Label</strong></td><td>Caption. Defaults to <code>Received by</code>.</td></tr>
+        <tr><td><strong>Footer Note</strong></td><td>One line at the bottom, up to 200 characters</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">"Only when cash to collect" is the safe default for prices</p>
+      <p>On a prepaid order the rider does not need the amount, and a price on the outside of a parcel tells anyone handling it what is inside and what it is worth. The default prints prices only on COD orders, where the rider has to collect. Set <strong>Always</strong> only if you have a reason.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Use the 4 × 6 label size for a label printer</p>
+      <p>That is the standard shipping-label stock. The rolls suit a counter receipt printer; A5 suits an office printer where you cut or fold the sheet.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Turning products off makes a returns dispute harder</p>
+      <p>The item list on the slip is what a customer and a rider check against at the door. Hiding it saves paper and loses the one piece of evidence that both sides saw at hand-over.</p>
+    </div>
+
+    <h2 id="where-printed">Where these documents are printed</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Document</th><th>Printed from</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Invoice</strong></td><td><a href="../admin/orders.html">Orders</a> → open an order → <strong>View / Download Invoice</strong></td></tr>
+        <tr><td><strong>Delivery Receipt</strong></td><td>The same panel → <strong>Print Delivery Receipt</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="defaults">Defaults</h2>
+
+    <p>Nothing here is required. A fresh installation prints with sensible defaults — A4, 11 px, colour, logo on, tax summary on, thank-you line on, signature off — so invoices work before anyone opens this page.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Invoice prints tiny or cut off</td><td>Paper size does not match the printer</td><td>Set the size to the paper actually loaded</td></tr>
+        <tr><td>Layout is a single narrow column</td><td>A roll size, or a custom width under 100 mm, is selected</td><td>Choose A4/A5/Letter for the full layout</td></tr>
+        <tr><td>Logo missing on the PDF</td><td><strong>Show Logo</strong> off, or no logo uploaded here or in General Settings</td><td>Upload one, or switch it on</td></tr>
+        <tr><td>Tax block missing from the invoice</td><td><strong>Show Tax Summary</strong> off, or the order carried no tax</td><td>Switch it on; check <a href="../admin/tax-settings.html">Tax Settings</a></td></tr>
+        <tr><td>Prices missing from the receipt</td><td><strong>Show Prices</strong> is on <code>Only when cash to collect</code> and the order is prepaid</td><td>Expected — set <code>Always</code> to override</td></tr>
+        <tr><td>Preview does not update</td><td>The change has not settled yet, or the value is out of range</td><td>Wait a moment; check the field is inside its allowed range</td></tr>
+        <tr><td>Custom size ignored</td><td>Width or height outside 40–400 mm / 50–1200 mm</td><td>Values outside the range fall back to the default</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Paper size matches the printer you will use</li>
+      <li class="task-item"><input type="checkbox" disabled> Preview checked for both documents</li>
+      <li class="task-item"><input type="checkbox" disabled> Logo set, or deliberately off</li>
+      <li class="task-item"><input type="checkbox" disabled> Header note carries your registration details</li>
+      <li class="task-item"><input type="checkbox" disabled> Tax summary on if you charge tax</li>
+      <li class="task-item"><input type="checkbox" disabled> Receipt price mode decided</li>
+      <li class="task-item"><input type="checkbox" disabled> One real invoice and one receipt printed and read on paper</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/invoice-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
