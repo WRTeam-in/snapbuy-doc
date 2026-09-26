@@ -236,8 +236,8 @@ sudo chmod 644 .env</code></pre>
         <tr><td>"Could not connect" with correct details</td><td><code>symlink</code> or <code>proc_open</code> disabled</td><td>Remove them from <code>disable_functions</code> in <code>php.ini</code></td></tr>
         <tr><td>Blank page after the database step</td><td>PHP timeout mid-migration</td><td>Raise <code>max_execution_time</code> and <code>memory_limit</code>, empty the database, re-run</td></tr>
         <tr><td>Panel loads but every image is 404</td><td>Storage symlink missing</td><td>Visit <code>https://admin.yourstore.com/linkstorage</code> once</td></tr>
-        <tr><td><code>500</code> on first login</td><td>Caches hold stale config</td><td>Visit <code>https://admin.yourstore.com/clear</code></td></tr>
-        <tr><td>Redirect loop at login</td><td><code>APP_URL</code> scheme or host is wrong</td><td>Fix <code>APP_URL</code> in <code>.env</code>, then visit <code>/clear</code></td></tr>
+        <tr><td><code>500</code> on first login</td><td>Caches hold stale config</td><td>Run <code>php artisan optimize:clear</code> in the project folder</td></tr>
+        <tr><td>Redirect loop at login</td><td><code>APP_URL</code> scheme or host is wrong</td><td>Fix <code>APP_URL</code> in <code>.env</code>, then run <code>php artisan optimize:clear</code></td></tr>
         <tr><td>Installer reappears after installing</td><td><code>storage/installed</code> missing or storage not writable</td><td><code>chmod -R 755 storage</code> and re-run the installer</td></tr>
       </tbody>
     </table>

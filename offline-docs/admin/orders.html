@@ -135,6 +135,12 @@
       <p>Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.</p>
     </div>
 
+    <h2 id="self-pickup-orders">Self pickup orders</h2>
+
+    <p>A self-pickup order is collected by the customer at the store, so it walks a shorter flow and has no rider: <strong>Received → Preparing → Ready for Pickup → Collected</strong>. They are listed on their own page, <strong>Orders → Self Pickup</strong>.</p>
+
+    <p>Full detail: <a href="../admin/self-pickup.html">Self Pickup</a>.</p>
+
     <h2 id="estimated-delivery-date">Estimated delivery date</h2>
 
     <p>eCommerce items carry a promised delivery date, set when the order is placed from the zone's <strong>eCommerce Delivery Days</strong>.</p>
@@ -145,7 +151,7 @@
     <table>
       <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
       <tbody>
-        <tr><td>Available on</td><td>eCommerce orders only</td></tr>
+        <tr><td>Available on</td><td>eCommerce <strong>delivery</strong> orders only — not self pickup</td></tr>
         <tr><td>Editable until</td><td>The item is delivered, cancelled or returned</td></tr>
         <tr><td>Notifies the customer</td><td>Only when the date actually changes</td></tr>
       </tbody>

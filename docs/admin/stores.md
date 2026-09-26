@@ -44,12 +44,18 @@ Go to **Stores → Add Store**.
 | **Provider** | Optional operator or brand label for the outlet |
 | **Fulfillment Type** | `Quick`, `eCommerce` or `Both` |
 | **Zone** | The one zone this store serves |
+| **Service Modes** | `Home delivery only`, `Self pickup only` or `Delivery and pickup` |
+| **Pickup Channels** | Which channels may collect — `Quick`, `eCommerce` or `Both`. Only shown when the store serves both channels and offers pickup. |
 | **Status** | Inactive stores stop receiving orders |
 
 :::danger Fulfillment type must match the zone's sales channel
 A store set to **Quick** cannot be attached to a zone whose sales channel is **eCommerce** only. SnapBuy rejects it with *"Selected zone does not support this fulfillment type."*
 
 The zone declares which channels it serves; the store must be a subset of that. A store set to **Both** requires a zone set to **Both**.
+:::
+
+:::info Service modes decide whether customers can collect
+Set **Self pickup only** and the store stops taking home delivery in its zone; set **Delivery and pickup** and customers choose at checkout. Pickup shows them this store's address, map pin, phone number, preparation time and opening hours — so get those right first. See [Self Pickup](/docs/admin/self-pickup).
 :::
 
 ### Location

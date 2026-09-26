@@ -98,7 +98,7 @@
       <li>Go to <strong>Settings → System Updater</strong>.</li>
       <li>Upload the <code>.zip</code> exactly as you received it, and enter your purchase code.</li>
       <li>Wait — do not refresh or navigate away.</li>
-      <li>Visit <code>/clear</code> once it completes.</li>
+      <li>Clear the cache with the <strong>Clear Cache</strong> button on this page once it completes.</li>
       <li>Test before turning maintenance off.</li>
     </ol>
 
@@ -108,6 +108,22 @@
     <div class="admonition admonition--warning">
       <p class="admonition__title">Do not interrupt an update in progress</p>
       <p>Refreshing mid-copy can leave a half-updated file set — some files new, some old — which usually produces fatal errors. If it appears to hang, wait it out, then check <code>storage/logs/laravel.log</code> before doing anything else.</p>
+    </div>
+
+    <h2 id="clear-cache">Clear Cache</h2>
+
+    <p>The second card on this page clears SnapBuy's caches — <code>cache</code>, <code>config</code>, <code>route</code> and <code>view</code> — in one click.</p>
+
+    <p>Use it whenever a change you saved does not appear: settings that still read the old value, a logo or colour that will not update, permissions that have not taken effect, or a panel that errors right after an update.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">This is the answer to "I changed it and nothing happened"</p>
+      <p>Laravel caches configuration, routes and views. After any update, any manual <code>.env</code> edit, or a settings change that seems to have been ignored, press <strong>Clear Cache</strong> before investigating anything else.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The command-line equivalent</p>
+      <p>With SSH access, <code>php artisan optimize:clear</code> in the project folder does the same thing — useful when the panel itself is erroring and you cannot reach this page.</p>
     </div>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
@@ -120,7 +136,7 @@
         <tr><td>"Please upload a valid zip file"</td><td>Wrong file type, renamed or re-zipped file, or a corrupt download</td><td>Upload the original package under its supplied name; re-download if needed</td></tr>
         <tr><td>"PHP zip extension is required"</td><td><code>zip</code> not enabled</td><td>Enable it and restart the web server</td></tr>
         <tr><td>Upload fails on a large file</td><td>PHP limits too low</td><td>Raise them — see <a href="php-ini-settings.html">PHP INI Settings</a></td></tr>
-        <tr><td>Update completes, panel errors</td><td>Stale caches</td><td>Visit <code>/clear</code></td></tr>
+        <tr><td>Update completes, panel errors</td><td>Stale caches</td><td>Use <strong>Clear Cache</strong> on this page</td></tr>
         <tr><td>Images gone after updating</td><td>Symlink lost</td><td>Visit <code>/linkstorage</code></td></tr>
         <tr><td>Customisations disappeared</td><td>Overwritten by the package</td><td>Restore from your file backup</td></tr>
         <tr><td>Update hung part-way</td><td>Execution timeout</td><td>Restore from backup and retry with higher limits</td></tr>

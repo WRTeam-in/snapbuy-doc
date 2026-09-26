@@ -144,7 +144,7 @@ sudo supervisorctl status</code></pre>
 
     <h2 id="verify-chat-works">Verify chat works</h2>
     <ol>
-      <li>Save the settings, then visit <code>/clear</code>.</li>
+      <li>Save the settings.</li>
       <li>Open <strong>Chat</strong> in the panel.</li>
       <li>From the customer app or web portal, send a message on an order.</li>
       <li>It should appear in the panel <strong>without refreshing</strong>.</li>
@@ -169,7 +169,6 @@ sudo supervisorctl status</code></pre>
         <tr><td>Pusher connects then drops</td><td>Wrong cluster</td><td>Match the cluster on the App Keys screen</td></tr>
         <tr><td>Chat stopped after moving hosts</td><td>Reverb process not started on the new server</td><td>Recreate the Supervisor entry</td></tr>
         <tr><td>Messages delayed by seconds</td><td>Distant Pusher cluster</td><td>Recreate the app on a nearer cluster</td></tr>
-        <tr><td>Nothing changed after saving</td><td>Cached config</td><td>Visit <code>/clear</code></td></tr>
       </tbody>
     </table>
     </div>

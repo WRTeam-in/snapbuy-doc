@@ -83,13 +83,14 @@ For **Category-wise**, pick which categories become tabs. **Category Scope** dec
 
 ## Section types
 
-Seven section types are available.
+Eight section types are available.
 
 | Section | What it renders |
 | --- | --- |
 | **Banner Slider** | Swipeable full-width promotional banners |
 | **Category Section** | Grid or row of categories |
 | **Product Slider** | A horizontal row of products |
+| **Tabbed Products** | A tab strip, each tab showing its own set of products |
 | **Top Brands** | Brand logos |
 | **Grid Banner** | Several banners in a fixed grid |
 | **Title Image** | A single image with a heading |
@@ -132,8 +133,15 @@ Every banner and grid tile can carry a **redirect** — where the customer lands
 - A product
 - A category
 - A brand
+- **A page built in [Page Builder](/docs/admin/page-builder)**
 - An external URL
 - Nothing (decorative)
+
+![Redirecting a banner to a page](/images/panel/home-builder-redirect-page.png)
+
+:::info Redirecting to a landing page
+Choose **Redirect Type → Page Builder** to send the tap to a page you built yourself — a sale page, a brand showcase — instead of a single product or category. The picker marks a page `(draft)` or `(inactive)` when it is not live; those links go nowhere.
+:::
 
 
 :::warning Check redirects after catalogue changes

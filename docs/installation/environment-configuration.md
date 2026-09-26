@@ -40,6 +40,48 @@ With debug on, any application error renders a stack trace that includes environ
 
 `APP_URL` must exactly match the address customers and apps use. A mismatch causes redirect loops at login, broken image URLs and failed payment callbacks.
 
+## Behind a proxy, load balancer or Cloudflare
+
+| Key | Meaning |
+| --- | --- |
+| `TRUSTED_PROXIES` | Which proxies SnapBuy trusts to report the real visitor. Empty by default. |
+
+If your panel sits behind Cloudflare, a load balancer, or an Nginx reverse proxy on another
+machine, every request reaches PHP from the **proxy's** address, over plain HTTP. Left empty,
+Laravel ignores the forwarded headers and works from that — so stored IPs are all the proxy's,
+rate limiting counts every visitor as the same one, and generated links can come out `http://`.
+
+Set it to the proxy addresses you trust:
+
+```ini
+# Cloudflare, or a load balancer whose address is not fixed
+TRUSTED_PROXIES=*
+
+# Or a comma-separated list of proxy IPs / CIDRs
+TRUSTED_PROXIES=10.0.0.5,192.168.1.0/24
+```
+
+Accepted forwarded headers are `X-Forwarded-For`, `-Host`, `-Port`, `-Proto` and the AWS ELB
+header, so with this set `https` and the visitor's address are both resolved correctly.
+
+:::warning Not set = wrong IPs and mixed-content links
+The symptoms are recognisable: activity logs and order records all showing one or two
+addresses, throttling blocking everyone at once, and assets loading over `http://` on an
+HTTPS site. All three come from the same cause.
+:::
+
+:::danger Only trust proxies that are actually in front of you
+`TRUSTED_PROXIES=*` tells SnapBuy to believe the forwarded headers on **every** request. That
+is correct when nothing can reach the server except through Cloudflare or your load balancer —
+lock the origin down with a firewall so it is true. If the server is directly reachable on its
+public IP, list your proxy addresses instead, or anyone can spoof their IP by sending a header.
+:::
+
+:::info Leave it empty when there is no proxy
+A single VPS running Nginx and PHP-FPM on the same machine has no proxy in front of it. Leave
+`TRUSTED_PROXIES` blank — that is the safe default.
+:::
+
 ## Installation mode
 
 | Key | Meaning |
@@ -132,7 +174,7 @@ php artisan config:clear
 php artisan cache:clear
 ```
 
-Or open `https://admin.yourstore.com/clear` in a browser.
+Inside the panel, the same thing is a button: **Settings → System Updater → Clear Cache**.
 
 :::warning Changes appear to do nothing until the cache is cleared
 This is the single most common cause of "I changed the setting and nothing happened".
@@ -146,6 +188,7 @@ This is the single most common cause of "I changed the setting and nothing happe
 - [ ] File permissions `644`, owned by the web server user
 - [ ] `APP_KEY` backed up alongside the database
 - [ ] Database user has privileges on the SnapBuy database only
+- [ ] `TRUSTED_PROXIES` set only if a proxy is genuinely in front of the server
 
 ---
 

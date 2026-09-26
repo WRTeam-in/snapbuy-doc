@@ -109,6 +109,12 @@ Status is tracked at **item** level, not only for the order as a whole. A single
 Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.
 :::
 
+## Self pickup orders
+
+A self-pickup order is collected by the customer at the store, so it walks a shorter flow and has no rider: **Received → Preparing → Ready for Pickup → Collected**. They are listed on their own page, **Orders → Self Pickup**.
+
+Full detail: [Self Pickup](/docs/admin/self-pickup).
+
 ## Estimated delivery date
 
 eCommerce items carry a promised delivery date, set when the order is placed from the zone's **eCommerce Delivery Days**.
@@ -117,7 +123,7 @@ To change it: open the order, find the item, pick a new date in **Estimated deli
 
 | Rule | Detail |
 | --- | --- |
-| Available on | eCommerce orders only |
+| Available on | eCommerce **delivery** orders only — not self pickup |
 | Editable until | The item is delivered, cancelled or returned |
 | Notifies the customer | Only when the date actually changes |
 

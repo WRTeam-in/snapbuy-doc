@@ -154,7 +154,6 @@ Keep the `schedule:run` cron job as well — the scheduler still drives cart rem
 | Emails and notifications never arrive | Queue not being processed | Check **Pending jobs** — if it only grows, cron is not running |
 | Everything arrives roughly a minute late | Normal | The scheduler runs once per minute; use Supervisor for instant processing |
 | **Failed jobs** count rising | A job errors every time | Check `storage/logs/laravel.log`, or the `/logs` viewer |
-| Cron runs but tasks do nothing | Cache holds stale config | Visit `/clear` once, then wait two minutes |
 
 :::tip Test without waiting
 Instead of waiting on the schedule, open **Settings → Cron Jobs** and press **Run now** on a task. The panel shows the exit code and output immediately, which tells you whether the task itself works — separating a broken task from a broken cron.

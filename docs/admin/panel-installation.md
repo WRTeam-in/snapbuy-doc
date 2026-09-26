@@ -240,8 +240,8 @@ Two things must be done before the store is usable:
 | "Could not connect" with correct details | `symlink` or `proc_open` disabled | Remove them from `disable_functions` in `php.ini` |
 | Blank page after the database step | PHP timeout mid-migration | Raise `max_execution_time` and `memory_limit`, empty the database, re-run |
 | Panel loads but every image is 404 | Storage symlink missing | Visit `https://admin.yourstore.com/linkstorage` once |
-| `500` on first login | Caches hold stale config | Visit `https://admin.yourstore.com/clear` |
-| Redirect loop at login | `APP_URL` scheme or host is wrong | Fix `APP_URL` in `.env`, then visit `/clear` |
+| `500` on first login | Caches hold stale config | Run `php artisan optimize:clear` in the project folder |
+| Redirect loop at login | `APP_URL` scheme or host is wrong | Fix `APP_URL` in `.env`, then run `php artisan optimize:clear` |
 | Installer reappears after installing | `storage/installed` missing or storage not writable | `chmod -R 755 storage` and re-run the installer |
 
 ---

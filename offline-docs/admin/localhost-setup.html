@@ -200,8 +200,8 @@ npm run dev        # dev server with hot reload</code></pre>
         <tr><td>Blank white page</td><td>PHP version too old, or a missing extension</td><td><code>php -v</code>, then re-check Step 1</td></tr>
         <tr><td><code>could not find driver</code></td><td><code>pdo_mysql</code> disabled</td><td>Uncomment it in <code>php.ini</code>, restart Apache</td></tr>
         <tr><td>Images upload but never display</td><td>Storage symlink missing</td><td>Visit <code>http://localhost/snapbuy/public/linkstorage</code></td></tr>
-        <tr><td><code>500</code> right after install</td><td>App key not generated</td><td>Run <code>php artisan key:generate</code>, then visit <code>/clear</code></td></tr>
-        <tr><td>Login page loops back to itself</td><td><code>APP_URL</code> does not match the address you are using</td><td>Correct <code>APP_URL</code> in <code>.env</code>, then visit <code>/clear</code></td></tr>
+        <tr><td><code>500</code> right after install</td><td>App key not generated</td><td>Run <code>php artisan key:generate</code>, then <code>php artisan optimize:clear</code></td></tr>
+        <tr><td>Login page loops back to itself</td><td><code>APP_URL</code> does not match the address you are using</td><td>Correct <code>APP_URL</code> in <code>.env</code>, then run <code>php artisan optimize:clear</code></td></tr>
         <tr><td>Installer finishes but panel is broken</td><td><code>INSTALL_MODE=server</code> was missing</td><td>Add it, empty the database, run the installer again</td></tr>
       </tbody>
     </table>
@@ -209,7 +209,7 @@ npm run dev        # dev server with hot reload</code></pre>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Clearing the cache</p>
-      <p>SnapBuy exposes <code>http://localhost/snapbuy/public/clear</code>, which clears the config, route, view and application caches in one request. Use it after any manual <code>.env</code> change.</p>
+      <p>Run <code>php artisan optimize:clear</code> in the project folder after any manual <code>.env</code> change — it clears the config, route, view and application caches in one go. Inside the panel, the same thing is a button: <strong>Settings → System Updater → Clear Cache</strong>.</p>
     </div>
 
     <hr>

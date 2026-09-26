@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spin Wheel — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Spin Wheel</h1>
+
+    <p>Menu path: <strong>Spin Wheel → Manage Spin Wheel</strong> and <strong>Spin Wheel → Spin History</strong></p>
+
+    <p>A prize wheel your customers spin in the app. Each wedge is a reward — a coupon, wallet money, free delivery, or nothing — and you control the odds, the limits and the look.</p>
+
+    <img src="../images/panel/spin-wheel-list.png" alt="Spin wheel campaigns list">
+
+    <h2 id="how-it-works">How it works in one paragraph</h2>
+
+    <p>You build a <strong>campaign</strong>: a named wheel made of <strong>segments</strong>. Every segment carries a win chance, and the chances must total 100%. When a customer spins, SnapBuy draws a segment using those chances, issues the reward immediately — a coupon in their account, or a wallet credit — and records the spin. The odds themselves are never sent to the app.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Only one campaign is live at a time</p>
+      <p>Activating a campaign deactivates every other one. The panel warns you when you switch a campaign on.</p>
+    </div>
+
+    <h2 id="step-1--create-the-campaign">Step 1 — Create the campaign</h2>
+
+    <p><strong>Spin Wheel → Manage Spin Wheel → Add</strong>, then open the <strong>Campaign</strong> panel.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Campaign Name</strong></td><td>Shown above the wheel in the app. Max 15 characters, translatable per language.</td></tr>
+        <tr><td><strong>Coupon Code Prefix</strong></td><td>Prefix for every coupon this wheel issues, e.g. <code>SPIN</code> → <code>SPINA4K29X</code></td></tr>
+        <tr><td><strong>Status</strong></td><td>Activate or deactivate. Activating switches the others off.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="spin-rules">Spin rules</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Spins Per Day</strong></td><td>How many times one customer may spin in a day. Minimum <code>1</code>.</td></tr>
+        <tr><td><strong>Max Spins Per User</strong></td><td>Lifetime cap for this campaign. <code>0</code> = unlimited.</td></tr>
+        <tr><td><strong>Min Delivered Orders</strong></td><td>The customer must have this many <strong>delivered</strong> orders before the wheel unlocks. <code>0</code> = open to everyone.</td></tr>
+        <tr><td><strong>Start Date / End Date</strong></td><td>The campaign window. Leave the end blank for no limit.</td></tr>
+        <tr><td><strong>Activate On Start Date</strong></td><td>Queue the campaign — the scheduler switches it on when the start time arrives, and switches off whichever campaign was live.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Delivered, not placed</p>
+      <p><strong>Min Delivered Orders</strong> counts delivered orders only. An abandoned or unpaid order does not unlock the wheel, which is what stops people from farming spins with orders they never complete.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The daily allowance resets in the country's timezone</p>
+      <p>"Today" is measured in the customer's country timezone, set on the <a href="../admin/countries.html">country</a> record — not on your server clock.</p>
+    </div>
+
+    <h2 id="step-2--build-the-segments">Step 2 — Build the segments</h2>
+
+    <p>Add a wedge with <strong>Segments → Add</strong>. The list order is the order on the wheel, and you can drag to reorder, clone or delete.</p>
+
+    <img src="../images/panel/spin-wheel-segment.png" alt="Editing a wheel segment">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Label</strong></td><td>The text on the wedge. Translatable.</td></tr>
+        <tr><td><strong>Reward Type</strong></td><td>Promo Code, Wallet Amount, Free Delivery or No Luck</td></tr>
+        <tr><td><strong>Win Chance (%)</strong></td><td>The odds for this wedge. All wedges must total 100%.</td></tr>
+        <tr><td><strong>Winner Limit</strong></td><td>Stop awarding this wedge after N wins. <code>0</code> = unlimited.</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive wedges are not drawn and not shown</td></tr>
+        <tr><td><strong>Segment Colour / Label Colour</strong></td><td>The wedge's own colours</td></tr>
+        <tr><td><strong>Display Mode</strong></td><td>Name and icon, name only, or icon only</td></tr>
+        <tr><td><strong>Segment Icon</strong></td><td>Shown when the display mode includes an icon</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="the-four-reward-types">The four reward types</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Type</th><th>What the customer gets</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Promo Code</strong></td><td>A coupon issued to that customer only, usable for a set number of days</td></tr>
+        <tr><td><strong>Wallet Amount</strong></td><td>Money credited to their wallet immediately</td></tr>
+        <tr><td><strong>Free Delivery</strong></td><td>A free-delivery coupon, with an optional minimum order value</td></tr>
+        <tr><td><strong>No Luck</strong></td><td>Nothing — the "better luck next time" wedge</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="coupon-settings">Coupon settings (Promo Code)</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Discount Type</strong></td><td><code>Percentage</code> or <code>Flat</code></td></tr>
+        <tr><td><strong>Discount Apply Type</strong></td><td><code>Instant discount</code> — taken off the bill at checkout; <code>Wallet cashback</code> — credited after the order is delivered</td></tr>
+        <tr><td><strong>Discount Percentage</strong></td><td>The rate, for percentage coupons</td></tr>
+        <tr><td><strong>Validity Days</strong></td><td>How many days the coupon lives after it is won</td></tr>
+        <tr><td><strong>Apply To</strong></td><td>All products, specific categories, or specific brands</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Won coupons are private</p>
+      <p>A coupon issued by the wheel is bound to the customer who won it and to the country they spun in. It is not offered to anyone else, and it expires on its own after the validity days.</p>
+    </div>
+
+    <h3 id="prize-amounts-are-per-country">Prize amounts are per country</h3>
+
+    <p>Money differs by market, so each segment carries one row per <a href="../admin/countries.html">country</a>, in that country's currency:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Reward type</th><th>Amount fields</th></tr></thead>
+      <tbody>
+        <tr><td>Wallet Amount</td><td>Wallet amount</td></tr>
+        <tr><td>Promo Code — flat</td><td>Discount amount, Minimum order amount</td></tr>
+        <tr><td>Promo Code — percentage</td><td>Minimum order amount, Maximum discount amount</td></tr>
+        <tr><td>Free Delivery</td><td>Minimum order amount</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A blank country means the wedge is not offered there</p>
+      <p>Leave a country's amount empty and that wedge is hidden from customers in that country — the preview dims it and lists it under "not offered in this country". The chance it would have used goes to the <strong>No Luck</strong> wedge, or is spread over the remaining wedges if there is none.</p>
+    </div>
+
+    <h2 id="step-3--style-the-wheel">Step 3 — Style the wheel</h2>
+
+    <p>The <strong>Theme</strong> panel controls how the wheel is drawn, and the preview updates as you type.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>Controls</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Background Colour</strong></td><td>The card behind the wheel</td></tr>
+        <tr><td><strong>Title Colour / Second Line</strong></td><td>The campaign title</td></tr>
+        <tr><td><strong>Pointer Colour</strong></td><td>The marker at the top</td></tr>
+        <tr><td><strong>Rim Colour / Border Colour</strong></td><td>The outer ring and the lines between wedges</td></tr>
+        <tr><td><strong>Spin Button Colour / Text / Text Colour</strong></td><td>The button in the middle</td></tr>
+        <tr><td><strong>Light Colour</strong></td><td>The bulbs around the rim</td></tr>
+        <tr><td><strong>Segment Fill</strong></td><td><code>Flat colour</code> or <code>Glossy gradient</code></td></tr>
+        <tr><td><strong>Centre Icon</strong></td><td>An image at the hub</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/spin-wheel-editor.png" alt="Spin wheel editor">
+
+    <h2 id="how-a-spin-is-decided">How a spin is decided</h2>
+
+    <ol>
+      <li>The customer's quota is checked — spins today, lifetime cap, and the delivered-order requirement.</li>
+      <li>Wedges not offered in their country, switched off, or already at their winner limit are set aside.</li>
+      <li>A wedge is drawn using the win chances.</li>
+      <li>The reward is issued: a coupon is created, or the wallet is credited.</li>
+      <li>The spin is written to <strong>Spin History</strong>.</li>
+    </ol>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Win chances must total 100%</p>
+      <p>The editor warns you while they do not. A wheel that does not add up is refused on save.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Winner limits are enforced under a lock</p>
+      <p>Two customers spinning at the same moment cannot both take the last prize of a limited wedge. The one that loses the race is sent to the No Luck wedge, or the wheel is redrawn without the exhausted wedge.</p>
+    </div>
+
+    <h2 id="spin-history">Spin History</h2>
+
+    <p><strong>Spin Wheel → Spin History</strong> lists every spin, with totals across the current filter.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Shows</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Date</strong></td><td>When the spin happened</td></tr>
+        <tr><td><strong>Customer</strong></td><td>Name and mobile number</td></tr>
+        <tr><td><strong>Campaign</strong></td><td>Which wheel</td></tr>
+        <tr><td><strong>Reward</strong></td><td>The reward type won</td></tr>
+        <tr><td><strong>Amount</strong></td><td>Wallet credit or discount value</td></tr>
+        <tr><td><strong>Promo Code</strong></td><td>The coupon issued, if any</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The cards at the top total <strong>spins</strong>, <strong>wins</strong>, <strong>wallet credited</strong>, <strong>coupons issued</strong> and <strong>free deliveries</strong> for whatever country, campaign, reward type, date range or search term is applied.</p>
+
+    <img src="../images/panel/spin-history.png" alt="Spin history">
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Use the totals to price the campaign</p>
+      <p>Filter to one country and one month, and the wallet-credited figure is what the wheel cost you there. If it is running hotter than you planned, lower the win chances of the expensive wedges rather than removing them.</p>
+    </div>
+
+    <h2 id="scheduling-and-expiry">Scheduling and expiry</h2>
+
+    <p>Two scheduled jobs support the wheel, and both run from the standard <a href="../admin/cron-jobs.html">cron job</a>:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Job</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>Campaign scheduler</td><td>Activates a queued campaign at its start time, and retires one past its end time</td></tr>
+        <tr><td>Coupon expiry</td><td>Deactivates spin-wheel coupons past their validity date each night</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">No cron, no schedule</p>
+      <p>Without the cron entry, a campaign set to "activate on start date" never turns on and expired campaigns keep running. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</p>
+    </div>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Wheel does not appear in the app</td><td>No campaign is active, or the window has passed</td><td>Activate one; check the start and end dates</td></tr>
+        <tr><td>Customer cannot spin</td><td>Daily or lifetime limit reached, or too few delivered orders</td><td>Check the campaign's spin rules</td></tr>
+        <tr><td>A wedge never comes up</td><td>Win chance is <code>0</code>, the wedge is inactive, or its winner limit is used up</td><td>Check the segment</td></tr>
+        <tr><td>A wedge is missing in one country</td><td>No amount entered for that country</td><td>Fill the country's amount row</td></tr>
+        <tr><td>Cannot save the campaign</td><td>Chances do not total 100%</td><td>Adjust the wedges</td></tr>
+        <tr><td>Coupon won but rejected at checkout</td><td>It expired, or the cart does not match its Apply To rule</td><td>Check validity days and applicability</td></tr>
+        <tr><td>Scheduled campaign never activated</td><td>Cron not running</td><td>See <a href="../admin/cron-jobs.html">Cron Job Setup</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Campaign name and coupon prefix set</li>
+      <li class="task-item"><input type="checkbox" disabled> Spins per day, lifetime cap and minimum delivered orders decided</li>
+      <li class="task-item"><input type="checkbox" disabled> Win chances total 100%</li>
+      <li class="task-item"><input type="checkbox" disabled> Every segment has an amount for every country you sell in</li>
+      <li class="task-item"><input type="checkbox" disabled> Winner limits set on the expensive wedges</li>
+      <li class="task-item"><input type="checkbox" disabled> A No Luck wedge exists</li>
+      <li class="task-item"><input type="checkbox" disabled> Theme matches your brand, checked in the preview</li>
+      <li class="task-item"><input type="checkbox" disabled> Cron job running</li>
+      <li class="task-item"><input type="checkbox" disabled> One test spin completed and visible in Spin History</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/spin-wheel.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

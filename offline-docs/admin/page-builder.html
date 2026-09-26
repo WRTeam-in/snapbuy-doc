@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page Builder — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Page Builder</h1>
+
+    <p>Menu path: <strong>Home Builder → Page Builder</strong></p>
+
+    <p>Builds standalone landing pages out of the same sections the <a href="../admin/home-builder.html">Home Builder</a> uses — a Diwali sale page, a new-arrivals page, a brand showcase. You then point a banner, a grid tile or any other redirect at the page.</p>
+
+    <img src="../images/panel/page-builder-list.png" alt="Page Builder list">
+
+    <h2 id="page-builder-vs-home-builder">Page Builder vs Home Builder</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Home Builder</th><th>Page Builder</th></tr></thead>
+      <tbody>
+        <tr><td>What it lays out</td><td>The <strong>home screen</strong> of a zone</td><td>A <strong>separate page</strong> customers open from a link</td></tr>
+        <tr><td>How many are live</td><td>One layout per zone and channel</td><td>As many pages as you like</td></tr>
+        <tr><td>How customers reach it</td><td>It is the home screen</td><td>A banner, tile or section redirect pointing at the page</td></tr>
+        <tr><td>Section types</td><td>The same eight</td><td>The same eight</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="creating-a-page">Creating a page</h2>
+
+    <ol>
+      <li><strong>New Page</strong> — give it a name. Everything else is set in the editor.</li>
+      <li>The editor opens with <strong>Page Settings</strong> selected.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Internal name — what you see in the page list and in redirect pickers</td></tr>
+        <tr><td><strong>Slug</strong></td><td>The page's address, e.g. <code>diwali-sale</code>. Use the refresh button to generate it from the name.</td></tr>
+        <tr><td><strong>Page Title</strong></td><td>The heading customers see. Translatable per language.</td></tr>
+        <tr><td><strong>Active</strong></td><td>Whether a published page is being served. Only a published page can be activated.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Change the slug before you advertise the page</p>
+      <p>The slug is how the page is looked up. Changing it after a campaign is live breaks every link already pointing at the old one.</p>
+    </div>
+
+    <h2 id="adding-sections">Adding sections</h2>
+
+    <p><strong>Sections → Add</strong> offers the same section types as the Home Builder — Banner Slider, Category Section, Product Slider, Tabbed Products, Top Brands, Grid Banner, Title Image, Heading / Text — and the same per-section controls: drag to reorder, clone, activate, and choose which platforms it appears on.</p>
+
+    <img src="../images/panel/page-builder-editor.png" alt="Page Builder editor">
+
+    <p>Section configuration is identical to the Home Builder, so see <a href="../admin/home-builder.html">Home Builder</a> for data sources, images, platforms and multi-language text.</p>
+
+    <h2 id="draft-and-published">Draft and published</h2>
+
+    <p>A page has a <strong>draft</strong> and a <strong>published</strong> copy, exactly like a home layout.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Button</th><th>Does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Save Draft</strong></td><td>Stores your edits without changing what customers see</td></tr>
+        <tr><td><strong>Publish</strong></td><td>Promotes the draft to live</td></tr>
+        <tr><td><strong>Edit Draft / Edit Published</strong></td><td>Switches which copy you are editing</td></tr>
+        <tr><td><strong>Publish Changes</strong></td><td>Pushes edits made directly on the published copy</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A published page is not live until it is also Active</p>
+      <p>Publishing builds the live copy; the <strong>Active</strong> switch decides whether it is served. A published-but-inactive page returns nothing to the app, and the redirect picker labels it <em>(inactive)</em>.</p>
+    </div>
+
+    <h2 id="pointing-customers-at-a-page">Pointing customers at a page</h2>
+
+    <p>Anywhere the panel offers a redirect — a banner, a grid tile, a title image, a text section — choose <strong>Redirect Type → Page Builder</strong> and pick the page.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Label in the picker</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Page name</td><td>Published and active — will open</td></tr>
+        <tr><td><code>(draft)</code></td><td>Never published — the link goes nowhere</td></tr>
+        <tr><td><code>(inactive)</code></td><td>Published but switched off</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>See <a href="../admin/home-builder.html#banners-and-redirects">Home Builder → Banners and redirects</a>.</p>
+
+    <h2 id="cloning">Cloning</h2>
+
+    <p><strong>Clone</strong> copies a page with all its sections. Use it to build next month's campaign from last month's, then change the artwork and the products.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Banner opens an empty page</td><td>The page is a draft, or inactive</td><td>Publish it, then switch <strong>Active</strong> on</td></tr>
+        <tr><td>Page shows old content</td><td>Edits were saved to the draft only</td><td>Publish</td></tr>
+        <tr><td>Page missing on one platform</td><td>The sections are switched off for that platform</td><td>Check the platform toggles on each section</td></tr>
+        <tr><td>Cannot switch <strong>Active</strong> on</td><td>The page has never been published</td><td>Publish first</td></tr>
+        <tr><td>A link stopped working</td><td>The slug was changed</td><td>Restore the old slug, or update the links</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Name and slug final before the page is advertised</li>
+      <li class="task-item"><input type="checkbox" disabled> Page title filled in for every language</li>
+      <li class="task-item"><input type="checkbox" disabled> Sections built and ordered</li>
+      <li class="task-item"><input type="checkbox" disabled> Platforms checked for each section</li>
+      <li class="task-item"><input type="checkbox" disabled> Page published <strong>and</strong> active</li>
+      <li class="task-item"><input type="checkbox" disabled> The banner or tile that points at it tested on a real device</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/page-builder.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
