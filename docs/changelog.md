@@ -12,13 +12,25 @@ Track all updates, improvements, and fixes released for SnapBuy.
 
 | Product Version | Flutter Version | Kotlin Version | AGP Version | distributionUrl (Gradle) | JDK Version |
 |---|---|---|---|---|---|
-| 1.3.1 | 3.44.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
+| 1.4.0 | 3.47.7 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
+| 1.3.1 | 3.47.4 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.3.0 | 3.44.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.2.0 | 3.44.8 | 2.2.20 | 8.11.1 | 9.5.11 | 21 |
 | 1.1.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 | 1.0.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 
 ## Version History
+
+### v1.4.0
+
+- [Added] Plugin Shiprocket.(Admin, App, Web)
+- [Added] Plugin PayU Payment.(Admin, App, Web)
+- [Added] Two-factor authentication for admin login, with its own email template. (Admin)
+- [Added] Product bulk import: CSV upload with sales-channel and product slab pricing. (Admin)
+- [Added] Shipments: a dispatch screen grouping orders by what they are waiting for. (Admin)
+- [Added] Manual courier tracking in return request orders. (Admin)
+- [Added] Delivery methods per zone: choose delivery boy, courier or manual tracking for each zone. (Admin)
+- [Improved] Improvements and fixes. (Admin, App, Web)
 
 ### v1.3.1
 
