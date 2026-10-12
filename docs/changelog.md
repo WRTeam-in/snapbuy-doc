@@ -30,6 +30,7 @@ Track all updates, improvements, and fixes released for SnapBuy.
 - [Added] Shipments: a dispatch screen grouping orders by what they are waiting for. (Admin)
 - [Added] Manual courier tracking in return request orders. (Admin)
 - [Added] Delivery methods per zone: choose delivery boy, courier or manual tracking for each zone. (Admin)
+- [Added] Facebook App Event Tracking Integration. (Customer App, Delivery Boy App)
 - [Improved] Improvements and fixes. (Admin, App, Web)
 
 ### v1.3.1
