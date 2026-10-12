@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shipments — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Shipments</h1>
+
+    <p>Menu path: <strong>Shipments</strong></p>
+
+    <p>The dispatch desk. The order drawer decides how <em>one</em> order ships; this page answers <strong>what goes out today</strong> — every parcel across every order, in one list, with the printing and tracking actions applied to as many as you select.</p>
+
+    <img src="../images/panel/shipments-page.png" alt="Shipments page">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">It works with no courier plugin installed</p>
+      <p>A store handing parcels to its own rider still needs a stack of delivery receipts, so this page is part of core. With a shipping plugin added — see <a href="../admin/shiprocket-addon.html">Shiprocket</a> — the courier columns, labels, manifests and pickups come alive on the same rows.</p>
+    </div>
+
+    <h2 id="what-appears-here">What appears here</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Included</th><th>Excluded</th></tr></thead>
+      <tbody>
+        <tr><td><strong>eCommerce</strong> orders going out for <strong>delivery</strong></td><td>Quick-commerce orders — they are delivered within the hour</td></tr>
+        <tr><td>Items with a rider, a waybill, a booked parcel, or nothing yet</td><td><a href="../admin/self-pickup.html">Self pickup</a> orders — the customer collects</td></tr>
+        <tr><td></td><td>Cancelled items, and orders still at Payment Pending</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="one-row-is-one-parcel">One row is one parcel, not one item</h2>
+
+    <p>Lines are grouped into a <strong>consignment</strong> — the items that would physically go in one box. A row is one order, from one store, under one waybill or one booked shipment, with one rider.</p>
+
+    <p>So an order whose three items ship together is a single row; split that order across two parcels and you get two rows.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Shows</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Order No</strong></td><td>The order. Click it to open the order drawer right here.</td></tr>
+        <tr><td><strong>Item</strong></td><td>The first product, with the count of the rest. Expand the row to see every line.</td></tr>
+        <tr><td><strong>Customer</strong></td><td>Name, city and pincode</td></tr>
+        <tr><td><strong>Store</strong></td><td>Which outlet is shipping it</td></tr>
+        <tr><td><strong>Courier</strong></td><td>The carrier and its waybill, once there is one</td></tr>
+        <tr><td><strong>Status</strong></td><td>The parcel's state — see below</td></tr>
+        <tr><td><strong>Amount</strong></td><td>The consignment's total</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Clicking an order number keeps your place</p>
+      <p>The order drawer opens over the list, so the dispatch queue underneath keeps its filters, its tab and its page. Close the drawer and carry on where you were.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The least advanced line sets the parcel's status</p>
+      <p>A parcel counts as delivered only when every item in it is, and a failed delivery on any one line makes the whole parcel a problem. A row whose lines disagree is flagged as mixed.</p>
+    </div>
+
+    <h2 id="the-state-tabs">The state tabs</h2>
+
+    <p>Each tab carries a count, and <strong>To Dispatch</strong> is where the page opens.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tab</th><th>Holds</th></tr></thead>
+      <tbody>
+        <tr><td><strong>To Dispatch</strong></td><td>Not handed to anyone yet — this is your work queue</td></tr>
+        <tr><td><strong>Awaiting Waybill</strong></td><td>Booked with the courier, waiting for a tracking number</td></tr>
+        <tr><td><strong>Ready to Ship</strong></td><td>Has a waybill, not collected yet</td></tr>
+        <tr><td><strong>In Transit</strong></td><td>On its way</td></tr>
+        <tr><td><strong>Delivered</strong></td><td>Done</td></tr>
+        <tr><td><strong>Needs Attention</strong></td><td>A delivery attempt failed</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Two tabs belong to the courier</p>
+      <p><strong>Awaiting Waybill</strong> and <strong>Needs Attention</strong> can only be filled by a shipping plugin, so they are hidden on an installation that has none — unless they still hold rows from a plugin that was removed.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Work the tabs in order each morning</p>
+      <p><strong>Needs Attention</strong> first (someone is waiting on an answer), then <strong>Awaiting Waybill</strong> (parcels stuck before they moved), then <strong>To Dispatch</strong>. In Transit and Delivered are there to look things up, not to work through.</p>
+    </div>
+
+    <h2 id="finding-a-parcel">Finding a parcel</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Filter</th><th>Matches</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Search</strong></td><td>Order number, pincode, waybill, product name or customer name</td></tr>
+        <tr><td><strong>Store</strong></td><td>One outlet</td></tr>
+        <tr><td><strong>Date range</strong></td><td>When the order was placed</td></tr>
+        <tr><td><strong>Reset</strong></td><td>Clears all of them</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">A store user only ever sees their own store</p>
+      <p>The store filter is applied automatically for a store login, so a branch cannot read another branch's dispatch queue. See <a href="../admin/stores.html">Stores</a>.</p>
+    </div>
+
+    <h2 id="acting-on-a-selection">Acting on a selection</h2>
+
+    <p>Tick the rows you want — the toolbar then shows how many parcels and how many items are selected — and choose an action. Every action applies to the whole consignment, not one line of it.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Action</th><th>Needs</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Print Delivery Receipts</strong></td><td>Nothing</td><td>One receipt per parcel, in the order you selected them. Works with or without a courier.</td></tr>
+        <tr><td><strong>Print Labels</strong></td><td>A waybill</td><td>The carrier's label sheet for the selected parcels</td></tr>
+        <tr><td><strong>Print Manifest</strong></td><td>A waybill</td><td>The handover sheet the courier signs when collecting</td></tr>
+        <tr><td><strong>Schedule Pickup</strong></td><td>A waybill</td><td>Asks the carrier to collect</td></tr>
+        <tr><td><strong>Refresh Tracking</strong></td><td>A waybill</td><td>Pulls the latest scan now instead of waiting for the next update</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Paper size, logo and notes on the delivery receipt come from <a href="../admin/invoice-settings.html">Invoice Settings</a>.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">The print actions are why this page exists</p>
+      <p>Printing twenty labels one order at a time is the slow way to run a dispatch desk. Filter to <strong>Ready to Ship</strong>, select the page, print labels and the manifest together, and hand the lot over in one go.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">An action on a parcel with no waybill is refused</p>
+      <p>You will see <em>"this item has no shipment yet"</em>. Labels, manifests, pickups and tracking all need the carrier to have issued a waybill first — book the parcel from the order drawer, or check the <strong>Awaiting Waybill</strong> tab.</p>
+    </div>
+
+    <h2 id="the-courier-balance">The courier balance</h2>
+
+    <p>With a courier plugin that reports it, your prepaid balance is shown at the top of the page.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">An empty carrier wallet stops waybills</p>
+      <p>It is the most common reason a booking produces no tracking number, and the carrier's own error rarely says so. If parcels are piling up in <strong>Awaiting Waybill</strong>, read this figure first.</p>
+    </div>
+
+    <h2 id="where-each-thing-is-done">Where each thing is done</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Task</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Decide how one order ships, book a parcel, answer a failed delivery</td><td><a href="../admin/orders.html">Orders</a> → the order drawer</td></tr>
+        <tr><td>Print, collect and track in bulk</td><td><strong>This page</strong></td></tr>
+        <tr><td>Carrier credentials and automation</td><td><a href="../admin/shiprocket-addon.html">Shiprocket</a></td></tr>
+        <tr><td>Which methods a zone may use</td><td><a href="../admin/zones.html">Zones</a></td></tr>
+        <tr><td>Receipt and label paper</td><td><a href="../admin/invoice-settings.html">Invoice Settings</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="permissions">Permissions</h2>
+
+    <p>The page uses the existing <code>order_list</code> permission — anyone who can see orders can work the dispatch desk. See <a href="../admin/roles-permissions.html">Roles &amp; Permissions</a>.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>An order is missing from the list</td><td>It is quick-commerce, self pickup, cancelled, or still unpaid</td><td>Those never appear here</td></tr>
+        <tr><td>A row covers items you wanted apart</td><td>They share an order, store, waybill and rider</td><td>Book them as separate parcels from the order drawer</td></tr>
+        <tr><td>Two tabs are missing</td><td>No shipping plugin installed</td><td>Expected — see <a href="../admin/plugins.html">Plugins</a></td></tr>
+        <tr><td>Labels or manifest refused</td><td>The selection has no waybill</td><td>Assign one first</td></tr>
+        <tr><td>Nothing happens on <strong>Refresh Tracking</strong></td><td>The parcel has no waybill, or the carrier has no new scan</td><td>Check the waybill</td></tr>
+        <tr><td>Parcels stuck in Awaiting Waybill</td><td>Carrier wallet empty, or waybill assignment failed</td><td>Top up the carrier account and retry from the order</td></tr>
+        <tr><td>Counts look wrong</td><td>A filter or date range is still applied</td><td>Use <strong>Reset</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Work <strong>Needs Attention</strong> and <strong>Awaiting Waybill</strong> before <strong>To Dispatch</strong></li>
+      <li class="task-item"><input type="checkbox" disabled> Filter to one store when a desk packs for one outlet</li>
+      <li class="task-item"><input type="checkbox" disabled> Labels and manifest printed together before the courier arrives</li>
+      <li class="task-item"><input type="checkbox" disabled> Delivery receipts printed for rider handovers</li>
+      <li class="task-item"><input type="checkbox" disabled> Carrier balance watched</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/shipments.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

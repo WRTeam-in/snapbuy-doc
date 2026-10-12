@@ -110,7 +110,7 @@ Road distance is fetched live from OpenStreetMap/OSRM or Google. If the provider
 
 ## eCommerce channel pricing
 
-Choose one of four **pricing strategies**.
+Choose one of five **pricing strategies**. The fifth, **Courier**, only appears once a shipping plugin is installed — see below.
 
 ![eCommerce pricing strategy selector](/images/panel/zones-ecommerce-pricing.png)
 
@@ -149,6 +149,69 @@ The same, but at the finer **delivery area** level within a city.
 
 :::info Unmatched city or area
 If the customer's city or area has no row, the **Default Delivery Charge** applies. Set that to a sensible value rather than `0` — otherwise unlisted locations ship free.
+:::
+
+### Courier — live rates from the shipping plugin
+
+Delivery is priced from a **live quote** for the customer's pincode, taken from the carrier at the moment the cart is costed, plus whatever markup you add.
+
+:::danger This option is hidden until Shiprocket is installed
+**Courier** is listed in the Pricing Strategy dropdown only when **both** are true:
+
+1. A shipping plugin — [Shiprocket](/docs/admin/shiprocket-addon) — is installed, enabled and configured for this zone's country, and
+2. **Courier** is ticked under *How this zone delivers* on this same zone.
+
+Untick the courier door, or move the zone to a country the carrier does not serve, and the zone drops straight back to its flat rule. Nothing is lost — the markup values stay saved for when you tick it again.
+:::
+
+#### Courier markup
+
+What the zone adds to the carrier's own rate before the customer sees it.
+
+| Field | Meaning |
+| --- | --- |
+| **Markup Type** | `No markup`, `Percentage of the rate`, or `Fixed amount` |
+| **Value** | The percentage, or the amount in the zone's currency. Hidden when the type is `No markup`. |
+| **Round Up To** | Rounds the final charge up to a multiple of this. `5` turns 43.20 into 45. `0` = no rounding. |
+| **Minimum Delivery Charge** | The customer never pays less than this for a courier delivery. `0` = no floor. |
+
+:::tip Markup is what protects your margin
+Carriers reprice periodically. A percentage markup rides those changes; a flat charge you set once does not, and quietly becomes a loss the next time the carrier puts its rates up.
+:::
+
+#### Fallback Flat Pricing
+
+With **Courier** selected, the flat block stays on screen — renamed **Fallback Flat Pricing** — and is charged whenever no carrier answers:
+
+- no shipping plugin reachable,
+- the pincode is not serviceable,
+- the carrier is down or the account is unusable.
+
+| Field | Meaning |
+| --- | --- |
+| **Delivery Charge** | Charged when there is no live quote |
+| **Free Delivery Above** | Subtotal at which that fallback drops to zero. `0` disables it. |
+
+:::danger Leave the fallback at a real figure, not zero
+A carrier outage must never block checkout, so SnapBuy charges this instead of failing. Left at `0`, every order placed during an outage ships free — and nothing on the screen tells you it happened.
+:::
+
+:::warning Courier pricing needs weight on your products
+A quote is calculated from the parcel. A variant with no **Shipping Weight** cannot be quoted, so the cart falls back to the flat rule for that order. See [Shiprocket](/docs/admin/shiprocket-addon).
+:::
+
+### How this zone delivers
+
+Available once a shipping plugin is installed. Tick the doors this zone may use — untick one and it disappears from that zone's orders.
+
+| Method | Means |
+| --- | --- |
+| **Courier** | Book parcels through a shipping plugin, e.g. [Shiprocket](/docs/admin/shiprocket-addon) |
+| **Delivery boy** | Your own rider |
+| **Manual tracking** | Enter another courier's tracking number by hand |
+
+:::danger Courier on its own also refuses pincodes
+When the courier is the zone's **only** method, a pincode it cannot serve cannot be ordered to — nobody else could deliver it. With the other doors ticked, an unserviceable pincode stays orderable.
 :::
 
 ### eCommerce Delivery Days
@@ -254,6 +317,8 @@ If your eCommerce zones use flat or slab pricing, you can skip cities and areas 
 | --- | --- | --- |
 | "Delivery not available at this location" | Address outside every polygon | Widen the boundary, or check the zone is Active |
 | Delivery charge always zero | A free-delivery threshold is set too low, or is `0` where it should be blank | Review free-above fields on the zone and on the matched pricing row |
+| **Courier** missing from Pricing Strategy | No shipping plugin installed or configured for this country, or **Courier** is unticked under *How this zone delivers* | Install and configure [Shiprocket](/docs/admin/shiprocket-addon), then tick the courier door |
+| Courier pricing set, but customers see the flat charge | No live quote — unserviceable pincode, carrier unreachable, or a product with no shipping weight | That is the fallback doing its job; check the pincode and the variant's weight |
 | "Unable to fetch distance" | Map provider misconfigured or key invalid | See [Map & API Keys](/docs/admin/map-api-keys) |
 | Wrong charge on some orders | Slab gap, or unlisted city/area falling back to default | Make slabs continuous; add the missing city/area row |
 | Surge applies at wrong hours | Country timezone incorrect | Fix the timezone on the [country](/docs/admin/countries) |

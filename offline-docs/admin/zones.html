@@ -153,7 +153,7 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
 
     <h2>eCommerce channel pricing</h2>
 
-    <p>Choose one of four <strong>pricing strategies</strong>.</p>
+    <p>Choose one of five <strong>pricing strategies</strong>. The fifth, <strong>Courier</strong>, only appears once a shipping plugin is installed — see below.</p>
 
     <img src="../images/panel/zones-ecommerce-pricing.png" alt="eCommerce pricing strategy selector">
 
@@ -204,6 +204,91 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
     <div class="admonition admonition--info">
       <p class="admonition__title">Unmatched city or area</p>
       <p>If the customer's city or area has no row, the <strong>Default Delivery Charge</strong> applies. Set that to a sensible value rather than <code>0</code> — otherwise unlisted locations ship free.</p>
+    </div>
+
+    <h3 id="courier-live-rates">Courier — live rates from the shipping plugin</h3>
+
+    <p>Delivery is priced from a <strong>live quote</strong> for the customer's pincode, taken from the carrier at the moment the cart is costed, plus whatever markup you add.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">This option is hidden until Shiprocket is installed</p>
+      <p><strong>Courier</strong> is listed in the Pricing Strategy dropdown only when <strong>both</strong> are true:</p>
+      <ol>
+        <li>A shipping plugin — <a href="../admin/shiprocket-addon.html">Shiprocket</a> — is installed, enabled and configured for this zone's country, and</li>
+        <li><strong>Courier</strong> is ticked under <em>How this zone delivers</em> on this same zone.</li>
+      </ol>
+      <p>Untick the courier door, or move the zone to a country the carrier does not serve, and the zone drops straight back to its flat rule. Nothing is lost — the markup values stay saved for when you tick it again.</p>
+    </div>
+
+    <h4 id="courier-markup">Courier markup</h4>
+
+    <p>What the zone adds to the carrier's own rate before the customer sees it.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Markup Type</strong></td><td><code>No markup</code>, <code>Percentage of the rate</code>, or <code>Fixed amount</code></td></tr>
+        <tr><td><strong>Value</strong></td><td>The percentage, or the amount in the zone's currency. Hidden when the type is <code>No markup</code>.</td></tr>
+        <tr><td><strong>Round Up To</strong></td><td>Rounds the final charge up to a multiple of this. <code>5</code> turns 43.20 into 45. <code>0</code> = no rounding.</td></tr>
+        <tr><td><strong>Minimum Delivery Charge</strong></td><td>The customer never pays less than this for a courier delivery. <code>0</code> = no floor.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Markup is what protects your margin</p>
+      <p>Carriers reprice periodically. A percentage markup rides those changes; a flat charge you set once does not, and quietly becomes a loss the next time the carrier puts its rates up.</p>
+    </div>
+
+    <h4 id="fallback-flat-pricing">Fallback Flat Pricing</h4>
+
+    <p>With <strong>Courier</strong> selected, the flat block stays on screen — renamed <strong>Fallback Flat Pricing</strong> — and is charged whenever no carrier answers:</p>
+
+    <ul>
+      <li>no shipping plugin reachable,</li>
+      <li>the pincode is not serviceable,</li>
+      <li>the carrier is down or the account is unusable.</li>
+    </ul>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delivery Charge</strong></td><td>Charged when there is no live quote</td></tr>
+        <tr><td><strong>Free Delivery Above</strong></td><td>Subtotal at which that fallback drops to zero. <code>0</code> disables it.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Leave the fallback at a real figure, not zero</p>
+      <p>A carrier outage must never block checkout, so SnapBuy charges this instead of failing. Left at <code>0</code>, every order placed during an outage ships free — and nothing on the screen tells you it happened.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Courier pricing needs weight on your products</p>
+      <p>A quote is calculated from the parcel. A variant with no <strong>Shipping Weight</strong> cannot be quoted, so the cart falls back to the flat rule for that order. See <a href="../admin/shiprocket-addon.html">Shiprocket</a>.</p>
+    </div>
+
+    <h3 id="how-this-zone-delivers">How this zone delivers</h3>
+
+    <p>Available once a shipping plugin is installed. Tick the doors this zone may use — untick one and it disappears from that zone's orders.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Method</th><th>Means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Courier</strong></td><td>Book parcels through a shipping plugin, e.g. <a href="../admin/shiprocket-addon.html">Shiprocket</a></td></tr>
+        <tr><td><strong>Delivery boy</strong></td><td>Your own rider</td></tr>
+        <tr><td><strong>Manual tracking</strong></td><td>Enter another courier's tracking number by hand</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Courier on its own also refuses pincodes</p>
+      <p>When the courier is the zone's <strong>only</strong> method, a pincode it cannot serve cannot be ordered to — nobody else could deliver it. With the other doors ticked, an unserviceable pincode stays orderable.</p>
     </div>
 
     <h3>eCommerce Delivery Days</h3>
@@ -338,6 +423,8 @@ if free_delivery_above &gt; 0 and order_subtotal &gt;= free_delivery_above:
       <tbody>
         <tr><td>"Delivery not available at this location"</td><td>Address outside every polygon</td><td>Widen the boundary, or check the zone is Active</td></tr>
         <tr><td>Delivery charge always zero</td><td>A free-delivery threshold is set too low, or is <code>0</code> where it should be blank</td><td>Review free-above fields on the zone and on the matched pricing row</td></tr>
+        <tr><td><strong>Courier</strong> missing from Pricing Strategy</td><td>No shipping plugin installed or configured for this country, or <strong>Courier</strong> is unticked under <em>How this zone delivers</em></td><td>Install and configure <a href="../admin/shiprocket-addon.html">Shiprocket</a>, then tick the courier door</td></tr>
+        <tr><td>Courier pricing set, but customers see the flat charge</td><td>No live quote — unserviceable pincode, carrier unreachable, or a product with no shipping weight</td><td>That is the fallback doing its job; check the pincode and the variant's weight</td></tr>
         <tr><td>"Unable to fetch distance"</td><td>Map provider misconfigured or key invalid</td><td>See <a href="map-api-keys.html">Map &amp; API Keys</a></td></tr>
         <tr><td>Wrong charge on some orders</td><td>Slab gap, or unlisted city/area falling back to default</td><td>Make slabs continuous; add the missing city/area row</td></tr>
         <tr><td>Surge applies at wrong hours</td><td>Country timezone incorrect</td><td>Fix the timezone on the <a href="countries.html">country</a></td></tr>

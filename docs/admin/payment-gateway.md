@@ -38,6 +38,10 @@ The **Payment Method Settings** master switch on the country turns online paymen
 
 Installation enables **Cash on Delivery** only. Everything else starts disabled and blank.
 
+:::info Plugins add more gateways to this same step
+A payment [plugin](/docs/admin/plugins) — [PayU India](/docs/admin/payu-addon), for instance — adds its own card to a country's Payment Gateways step, with its own switch and credential fields. It is configured here, per country, not on the plugin's own page.
+:::
+
 ## Getting the credentials for each gateway
 
 Every gateway names its keys differently. This section maps SnapBuy's fields to where you find each value in the provider's own dashboard.

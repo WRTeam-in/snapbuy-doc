@@ -123,6 +123,7 @@
       <tbody>
         <tr><td><strong>Max Cart Items Count</strong></td><td>Largest number of items a customer may place in one cart</td></tr>
         <tr><td><strong>Product Rating</strong></td><td>Whether customers can rate and review products</td></tr>
+        <tr><td><strong>Pincode Delivery Check</strong></td><td>Lets shoppers check whether their pincode is deliverable before ordering</td></tr>
       </tbody>
     </table>
     </div>
@@ -130,6 +131,11 @@
     <div class="admonition admonition--warning">
       <p class="admonition__title">Max cart items blocks checkout when reached</p>
       <p>Customers hitting the limit are stopped at the cart with a validation message. Set it high enough for a genuine bulk order — a grocery basket can easily exceed a low limit.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Pincode Delivery Check appears only with a courier installed</p>
+      <p>Only a courier can answer "do you deliver to my pincode?", so the switch is hidden until a shipping plugin is installed and configured — see <a href="../admin/shiprocket-addon.html">Shiprocket</a>. A saved value is remembered if the plugin is later switched off.</p>
     </div>
 
     <div class="admonition admonition--info">

@@ -85,9 +85,14 @@ Two-to-four characters is plenty. Use different prefixes for orders, invoices an
 | --- | --- |
 | **Max Cart Items Count** | Largest number of items a customer may place in one cart |
 | **Product Rating** | Whether customers can rate and review products |
+| **Pincode Delivery Check** | Lets shoppers check whether their pincode is deliverable before ordering |
 
 :::warning Max cart items blocks checkout when reached
 Customers hitting the limit are stopped at the cart with a validation message. Set it high enough for a genuine bulk order — a grocery basket can easily exceed a low limit.
+:::
+
+:::info Pincode Delivery Check appears only with a courier installed
+Only a courier can answer "do you deliver to my pincode?", so the switch is hidden until a shipping plugin is installed and configured — see [Shiprocket](/docs/admin/shiprocket-addon). A saved value is remembered if the plugin is later switched off.
 :::
 
 :::info Currency, formats and timezone are not set here
