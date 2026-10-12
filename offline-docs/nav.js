@@ -87,6 +87,7 @@
             ["Roles & Permissions", "admin/roles-permissions.html"],
             ["Orders Workflow", "admin/orders.html"],
             ["Self Pickup", "admin/self-pickup.html"],
+            ["Shipments", "admin/shipments.html"],
             ["Return Requests", "admin/return-requests.html"],
             ["Wallet, Withdrawals & Settlements", "admin/wallet-withdrawals.html"],
             ["Delivery Boys & Their Portal", "admin/delivery-boy-portal.html"],
@@ -94,6 +95,14 @@
             ["Bulk Upload & Update", "admin/bulk-upload.html"],
             ["Reports", "admin/reports.html"],
             ["Send Notifications & Emails", "admin/send-notifications.html"],
+          ],
+        },
+        {
+          label: "Plugins",
+          items: [
+            ["Plugins", "admin/plugins.html"],
+            ["Shiprocket", "admin/shiprocket-addon.html"],
+            ["PayU India", "admin/payu-addon.html"],
           ],
         },
       ],

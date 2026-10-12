@@ -108,6 +108,19 @@ The template has the old date as well as the new one. "Now expected by 18 Mar, w
 | `chat_message_delivery_boy` | Delivery boy |
 | `chat_message_admin` | Admin |
 
+## Courier updates
+
+Two extra controls appear at the top of this page once a shipping plugin is installed:
+
+| Setting | Options | What it decides |
+| --- | --- | --- |
+| **Customer Notifications for Courier Updates** | `On delivery only` (default), `On every courier update`, `Never` | Whether SnapBuy messages the customer while a parcel travels |
+| **Parcels the courier brings back** | `Settle the line` (default), `Only flag it for staff` | What happens to an item whose parcel came back undelivered |
+
+:::warning The courier already messages your customer
+Leave the first on **delivery only** unless you have switched the carrier's own SMS off, or customers hear about the same scan twice. The second moves money: **settle** returns the stock, reverses the tax and refunds a prepaid customer. See [Shiprocket](/docs/admin/shiprocket-addon).
+:::
+
 ## What to leave on
 
 :::danger Never disable order status notifications

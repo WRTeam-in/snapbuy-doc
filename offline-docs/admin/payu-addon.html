@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PayU India — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>PayU India</h1>
+
+    <p>Plugin type: <strong>Payment</strong> · Configured at <strong>Countries → edit a country → Payment Gateways</strong></p>
+
+    <p>Adds PayU as a payment method for Indian customers. It uses PayU's <strong>Payment Links</strong> product: SnapBuy asks PayU for a hosted checkout URL and the customer pays on PayU's own page, so no card details ever reach your server.</p>
+
+    <p>Install it the way every plugin installs — see <a href="../admin/plugins.html">Plugins</a>.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">PayU is configured on the country, not on the plugin</p>
+      <p>Gateway credentials are per country in SnapBuy, exactly like Stripe and Razorpay. The Plugins page shows <strong>no Settings button</strong> for PayU, and its settings page tells you the same. Open <strong>Countries → edit the country → Payment Gateways</strong>.</p>
+    </div>
+
+    <h2 id="before-you-start">Before you start</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>You need</th><th>Where from</th></tr></thead>
+      <tbody>
+        <tr><td>A PayU India merchant account</td><td><a href="https://www.payu.in/">payu.in</a></td></tr>
+        <tr><td><strong>Client ID</strong> and <strong>Client Secret</strong></td><td>PayU dashboard — the API credentials used to get an access token</td></tr>
+        <tr><td><strong>Merchant ID</strong></td><td>PayU dashboard</td></tr>
+        <tr><td>Test credentials first</td><td>PayU's UAT environment is a separate set of keys</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Business verification takes time</p>
+      <p>PayU will not issue live credentials until your documents are approved. Start the account early and rehearse on test keys.</p>
+    </div>
+
+    <h2 id="settings">Settings</h2>
+
+    <img src="../images/panel/payu-country-gateway.png" alt="PayU on a country's Payment Gateways step">
+
+    <p>The card appears among the other gateways once the plugin is installed and enabled. The switch on its header is the per-country on/off.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PayU India</strong> switch</td><td>Toggle</td><td>Offers the method in this country. Off and checkout refuses it.</td></tr>
+        <tr><td><strong>Client ID</strong></td><td>Text</td><td>From the PayU dashboard. Used to fetch an access token.</td></tr>
+        <tr><td><strong>Client Secret</strong></td><td>Password</td><td>The matching secret. Never shown again after saving, and hidden in demo mode.</td></tr>
+        <tr><td><strong>Merchant ID</strong></td><td>Text</td><td>Sent with every Payment Links call.</td></tr>
+        <tr><td><strong>Mode</strong></td><td>Select</td><td><code>Test</code> uses PayU's UAT endpoints; <code>Live</code> takes real money.</td></tr>
+        <tr><td><strong>Transaction Currency</strong></td><td>Text</td><td>ISO 4217 code — <code>INR</code>. Defaults to <code>INR</code> if left blank.</td></tr>
+        <tr><td><strong>Notification URL</strong></td><td>Read-only</td><td>The address PayU reports back to. Copy it into your PayU dashboard.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Test and live credentials are not interchangeable</p>
+      <p>Each mode talks to a different PayU host. Live keys in Test mode — or the reverse — fail at the token step with an authentication error, which reads like a wrong password. Check the mode matches the keys you pasted.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Enable the gateway on every country you sell in</p>
+      <p>The switch is per country. A gateway configured on India and nowhere else simply does not appear to a customer shopping in another country — see <a href="../admin/payment-gateway.html">Payment Gateways</a>.</p>
+    </div>
+
+    <h2 id="how-a-payment-flows">How a payment flows</h2>
+
+    <ol>
+      <li>The customer picks PayU at checkout.</li>
+      <li>SnapBuy asks PayU for a payment link and sends the customer to PayU's hosted page.</li>
+      <li>The customer pays there.</li>
+      <li>PayU reports back to SnapBuy, which <strong>re-confirms the payment with PayU</strong> before marking the order paid.</li>
+      <li>The customer is returned to your storefront.</li>
+    </ol>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The order is settled on the server, not in the app</p>
+      <p>Whatever the app or the browser does after payment — a lost signal, a force-close, a closed tab — SnapBuy confirms the payment with PayU and settles the order. The front end is where a human pays; it is never the proof that they did.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Every payment is verified against PayU before an order moves</p>
+      <p>SnapBuy does not trust the message that arrives. It reads the payment back from PayU and compares the amount collected against the amount due, so a tampered or replayed callback cannot produce a paid order. A status PayU does not document is treated as <strong>pending</strong>, never as paid.</p>
+    </div>
+
+    <h2 id="what-install-adds">What install adds</h2>
+
+    <p><strong>No tables and no migrations.</strong> Transactions already live on SnapBuy's own tables; the plugin only needs the country's credentials. Uninstalling it leaves your payment history untouched.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>On a PayU order</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Payment method</td><td><code>payu-india-payment-gateway</code></td></tr>
+        <tr><td>Transaction label</td><td><strong>PayU India</strong></td></tr>
+        <tr><td>Transaction id</td><td>PayU's own payment reference — which is what makes a repeated callback harmless</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Paid PayU orders appear in <a href="../admin/orders.html">Orders</a>, in the customer's transactions, and in the <strong>Payment</strong> <a href="../admin/reports.html">report</a> alongside every other gateway.</p>
+
+    <h2 id="the-apps-need-one-release">The apps need one release</h2>
+
+    <p>The plugin ships <strong>no app code</strong>. Installing it makes PayU available through the API; the Customer App and web portal need PayU's own checkout opened once in their build.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Install it and the method appears — but only where the app can open it</p>
+      <p>If your app build predates PayU support, the method is returned by the API and the app has nothing to open. Ship the app update alongside enabling the gateway.</p>
+    </div>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>PayU not offered at checkout</td><td>The switch is off on that country, or the plugin is disabled</td><td>Check the country card and the Plugins page</td></tr>
+        <tr><td>Payment method not configured</td><td>The switch is on but Client ID, Secret or Merchant ID is blank</td><td>Fill all three</td></tr>
+        <tr><td>PayU authentication failed</td><td>Wrong Client ID/Secret, or keys from the other mode</td><td>Re-paste the credentials; check <strong>Mode</strong></td></tr>
+        <tr><td>PayU Merchant ID is missing</td><td>Only the ID is blank</td><td>Fill it in</td></tr>
+        <tr><td>No payment link returned</td><td>PayU refused the request — usually credentials or an unapproved account</td><td>Check the panel logs and your PayU dashboard</td></tr>
+        <tr><td>Customer paid but the order says pending</td><td>PayU has not confirmed collection yet, or the notification URL is not set</td><td>Paste the Notification URL into PayU; refresh the order shortly</td></tr>
+        <tr><td>Wrong currency charged</td><td><strong>Transaction Currency</strong> does not match the country</td><td>Set it to the country's ISO code</td></tr>
+        <tr><td>Works in testing, fails live</td><td>Still in <strong>Test</strong> mode, or live keys not yet issued</td><td>Switch mode once live keys are approved</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul>
+      <li class="task-item"><input type="checkbox" disabled> Plugin installed, enabled, licence valid</li>
+      <li class="task-item"><input type="checkbox" disabled> Client ID, Client Secret and Merchant ID saved on the country</li>
+      <li class="task-item"><input type="checkbox" disabled> Mode matches the keys — Test to rehearse, Live to take money</li>
+      <li class="task-item"><input type="checkbox" disabled> Transaction currency set to the country's code</li>
+      <li class="task-item"><input type="checkbox" disabled> Notification URL pasted into the PayU dashboard</li>
+      <li class="task-item"><input type="checkbox" disabled> The switch on for every country that should offer it</li>
+      <li class="task-item"><input type="checkbox" disabled> App and web builds updated to open PayU checkout</li>
+      <li class="task-item"><input type="checkbox" disabled> One test payment completed, and one deliberately failed</li>
+      <li class="task-item"><input type="checkbox" disabled> One real live payment taken and refunded before launch</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/payu-addon.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

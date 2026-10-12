@@ -54,6 +54,10 @@ A store set to **Quick** cannot be attached to a zone whose sales channel is **e
 The zone declares which channels it serves; the store must be a subset of that. A store set to **Both** requires a zone set to **Both**.
 :::
 
+:::info Pincode, and connecting the store to a courier
+With a shipping plugin installed the Location block also carries a **Pincode** — the pickup end of every courier quote — a **Check Pickup** button, and a one-click **Register with Shiprocket**. A store that is not registered cannot ship. See [Shiprocket](/docs/admin/shiprocket-addon).
+:::
+
 :::info Service modes decide whether customers can collect
 Set **Self pickup only** and the store stops taking home delivery in its zone; set **Delivery and pickup** and customers choose at checkout. Pickup shows them this store's address, map pin, phone number, preparation time and opening hours — so get those right first. See [Self Pickup](/docs/admin/self-pickup).
 :::

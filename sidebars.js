@@ -89,6 +89,7 @@ const sidebars = {
             "admin/roles-permissions",
             "admin/orders",
             "admin/self-pickup",
+            "admin/shipments",
             "admin/return-requests",
             "admin/wallet-withdrawals",
             "admin/delivery-boy-portal",
@@ -96,6 +97,19 @@ const sidebars = {
             "admin/bulk-upload",
             "admin/reports",
             "admin/send-notifications",
+          ],
+        },
+        {
+          type: "category",
+          label: "Plugins",
+          link: {
+            type: "doc",
+            id: "admin/plugins",
+          },
+          collapsed: true,
+          items: [
+            "admin/shiprocket-addon",
+            "admin/payu-addon",
           ],
         },
       ],

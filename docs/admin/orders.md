@@ -109,6 +109,14 @@ Status is tracked at **item** level, not only for the order as a whole. A single
 Because items carry their own status, you can cancel or return one line without disturbing the rest of the order.
 :::
 
+## Shipping an item with a courier
+
+With a shipping plugin installed, each eCommerce item offers three fulfilment doors — your own rider, **ship with the courier**, or a manually entered tracking number — according to what its [zone](/docs/admin/zones) allows. A booked item shows its waybill, label, pickup, tracking and failed-delivery actions, and its status then follows the carrier's own scans.
+
+Every parcel across every order is also listed on its own page — see **[Shipments](/docs/admin/shipments)**, the dispatch desk, for bulk labels, manifests, pickups, tracking refresh and delivery receipts.
+
+Full detail: [Shiprocket](/docs/admin/shiprocket-addon).
+
 ## Self pickup orders
 
 A self-pickup order is collected by the customer at the store, so it walks a shorter flow and has no rider: **Received → Preparing → Ready for Pickup → Collected**. They are listed on their own page, **Orders → Self Pickup**.
