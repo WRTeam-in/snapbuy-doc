@@ -26,7 +26,7 @@
 
     <p>Menu path: <strong>Settings → Login Settings</strong></p>
 
-    <p>Decides how customers sign in, and the password rules they must meet.</p>
+    <p>Decides how customers sign in, how <strong>admins and store users</strong> sign in to this panel, and the password rules everyone must meet.</p>
 
     <img src="../images/panel/login-settings-page.png" alt="Login settings page">
 
@@ -115,6 +115,63 @@
       <p>No password to forget and no reset flow to support. It is what most delivery apps use. Password mode makes sense if customers share a household number and you want a second factor.</p>
     </div>
 
+    <h2 id="two-factor-authentication-for-the-panel">Two-factor authentication for the panel</h2>
+
+    <p><strong>Panel Login Settings</strong> protects the admin panel itself, not the shop. With it on, a correct password is no longer enough: a six-digit code is emailed to the user&rsquo;s own address, and only that code finishes the login.</p>
+
+    <img src="../images/panel/login-panel-two-factor.png" alt="Panel two-factor settings">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Two-Factor Authentication (Email OTP)</strong></td><td>Master switch for panel logins</td></tr>
+        <tr><td><strong>Also apply to store panel users</strong></td><td>On by default. Turn it off to require the code from admins only, leaving store users on a one-step login.</td></tr>
+        <tr><td><strong>Code validity (minutes)</strong></td><td>How long an emailed code stays usable. Between <code>1</code> and <code>60</code>; <code>10</code> when left empty.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Delivery boys are always exempt</p>
+      <p>A rider&rsquo;s app is built against the one-step login and reads a reply with no access token as a failure. Riders are skipped whatever these switches say &mdash; turning 2FA on cannot lock your fleet out.</p>
+    </div>
+
+    <h3 id="what-the-user-sees">What the user sees</h3>
+
+    <ol>
+      <li>Email and password as usual.</li>
+      <li>The panel asks for a <strong>6-digit code</strong> instead of signing them in.</li>
+      <li>The code arrives by email from your SMTP server, worded by the <code>two_factor_code_admin</code> template.</li>
+      <li>Typing it correctly completes the login and issues the session.</li>
+    </ol>
+
+    <h3 id="limits-built-into-the-challenge">Limits built into the challenge</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Limit</th><th>Value</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Wrong codes allowed</td><td><strong>5</strong></td><td>The sixth wrong code burns the challenge &mdash; the password must be entered again</td></tr>
+        <tr><td>Emails per login attempt</td><td><strong>3</strong>, the first included</td><td>A resend button cannot be used to flood an inbox</td></tr>
+        <tr><td>Wait between resends</td><td><strong>60 seconds</strong></td><td>Same reason</td></tr>
+        <tr><td>Requests per IP</td><td><strong>20 per minute</strong> on verify and resend</td><td>Six digits is a small space; the counter alone is not enough</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Every code is single-use, and asking for a new one immediately kills the old one &mdash; a code glimpsed over someone&rsquo;s shoulder but never used cannot be revived by pressing resend. A resend also restarts the validity clock, so a late code never arrives already expired.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">SMTP must work before you can turn this on</p>
+      <p>Saving with the switch on runs a live SMTP check first. If mail cannot be sent the page refuses to save: <em>&ldquo;Two-factor could not be enabled because the login code cannot be emailed.&rdquo;</em> Configure <a href="../admin/smtp-settings.html">SMTP Mail Settings</a> and send a test mail first &mdash; this check is what stops you locking yourself out of your own panel.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Leave yourself a way back in</p>
+      <p>Before enabling it, confirm the super admin account&rsquo;s email address is one you can actually read. Recovering from a wrong address means editing the <code>settings</code> table (<code>panel_two_factor</code>) directly in the database.</p>
+    </div>
+
     <h2 id="password-policy">Password policy</h2>
 
     <p>Applies wherever customers set a password.</p>
@@ -182,6 +239,11 @@
         <tr><td>Apple sign-in fails on iOS</td><td>Service ID or capability missing</td><td>Complete the Apple Developer setup</td></tr>
         <tr><td>Real numbers rejected</td><td>Country min/max mobile length wrong</td><td>Fix it on the <a href="../admin/countries.html">country</a></td></tr>
         <tr><td>Customers cannot set a password</td><td>Policy too strict</td><td>Relax the requirements</td></tr>
+        <tr><td>Cannot enable panel 2FA</td><td>The SMTP check failed</td><td>Fix <a href="../admin/smtp-settings.html">SMTP Mail Settings</a>, then save again</td></tr>
+        <tr><td>Admin never gets the login code</td><td>Mail queued but not sent, or wrong address on the account</td><td>Check the cron is running (<a href="../admin/cron-jobs.html">Cron Jobs</a>) and the address on <strong>System Users</strong></td></tr>
+        <tr><td><em>&ldquo;Resend limit reached. Please sign in again.&rdquo;</em></td><td>Three codes already emailed for this attempt</td><td>Start the login over from the password screen</td></tr>
+        <tr><td><em>&ldquo;Too many incorrect codes. Please sign in again.&rdquo;</em></td><td>Five wrong codes</td><td>Start over; nothing is locked permanently</td></tr>
+        <tr><td>Delivery boys asked for a code</td><td>Not possible &mdash; riders are exempt by design</td><td>Look elsewhere: an app build or token problem</td></tr>
       </tbody>
     </table>
     </div>
@@ -195,6 +257,7 @@
       <li class="task-item"><input type="checkbox" disabled> Country mobile length range correct</li>
       <li class="task-item"><input type="checkbox" disabled> Password policy achievable</li>
       <li class="task-item"><input type="checkbox" disabled> Signed in successfully with every enabled method on a real device</li>
+      <li class="task-item"><input type="checkbox" disabled> If panel 2FA is on: SMTP tested, and the super admin&rsquo;s email address is one you can read</li>
     </ul>
   </main>
 </div>

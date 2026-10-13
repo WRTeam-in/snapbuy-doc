@@ -92,7 +92,7 @@ Tick the doors this zone may use. Untick one and it disappears from that zone's 
 
 | Method | Means |
 | --- | --- |
-| **Courier** | Book parcels through an installed shipping plugin |
+| **Shiprocket** | Book parcels through the shipping plugin. The door carries the installed plugin's own name. |
 | **Delivery boy** | Your own rider |
 | **Manual tracking** | Type another courier's tracking number in by hand |
 
