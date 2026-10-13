@@ -8,7 +8,7 @@ sidebar_position: 20
 
 Menu path: **Settings → Login Settings**
 
-Decides how customers sign in, and the password rules they must meet.
+Decides how customers sign in, how **admins and store users** sign in to this panel, and the password rules everyone must meet.
 
 ![Login settings page](/images/panel/login-settings-page.png)
 
@@ -72,6 +72,48 @@ If you disable Firebase Authentication, configure [SMS Settings](/docs/admin/sms
 No password to forget and no reset flow to support. It is what most delivery apps use. Password mode makes sense if customers share a household number and you want a second factor.
 :::
 
+## Two-factor authentication for the panel
+
+**Panel Login Settings** protects the admin panel itself, not the shop. With it on, a correct password is no longer enough: a six-digit code is emailed to the user's own address, and only that code finishes the login.
+
+![Panel two-factor settings](/images/panel/login-panel-two-factor.png)
+
+| Field | Meaning |
+| --- | --- |
+| **Two-Factor Authentication (Email OTP)** | Master switch for panel logins |
+| **Also apply to store panel users** | On by default. Turn it off to require the code from admins only, leaving store users on a one-step login. |
+| **Code validity (minutes)** | How long an emailed code stays usable. Between `1` and `60`; `10` when left empty. |
+
+:::warning Delivery boys are always exempt
+A rider's app is built against the one-step login and reads a reply with no access token as a failure. Riders are skipped whatever these switches say — turning 2FA on cannot lock your fleet out.
+:::
+
+### What the user sees
+
+1. Email and password as usual.
+2. The panel asks for a **6-digit code** instead of signing them in.
+3. The code arrives by email from your SMTP server, worded by the `two_factor_code_admin` template.
+4. Typing it correctly completes the login and issues the session.
+
+### Limits built into the challenge
+
+| Limit | Value | Why |
+| --- | --- | --- |
+| Wrong codes allowed | **5** | The sixth wrong code burns the challenge — the password must be entered again |
+| Emails per login attempt | **3**, the first included | A resend button cannot be used to flood an inbox |
+| Wait between resends | **60 seconds** | Same reason |
+| Requests per IP | **20 per minute** on verify and resend | Six digits is a small space; the counter alone is not enough |
+
+Every code is single-use, and asking for a new one immediately kills the old one — a code glimpsed over someone's shoulder but never used cannot be revived by pressing resend. A resend also restarts the validity clock, so a late code never arrives already expired.
+
+:::danger SMTP must work before you can turn this on
+Saving with the switch on runs a live SMTP check first. If mail cannot be sent the page refuses to save: *"Two-factor could not be enabled because the login code cannot be emailed."* Configure [SMTP Mail Settings](/docs/admin/smtp-settings) and send a test mail first — this check is what stops you locking yourself out of your own panel.
+:::
+
+:::tip Leave yourself a way back in
+Before enabling it, confirm the super admin account's email address is one you can actually read. Recovering from a wrong address means editing the `settings` table (`panel_two_factor`) directly in the database.
+:::
+
 ## Password policy
 
 Applies wherever customers set a password.
@@ -124,6 +166,11 @@ Enabling a toggle here does not configure the provider — it only exposes the b
 | Apple sign-in fails on iOS | Service ID or capability missing | Complete the Apple Developer setup |
 | Real numbers rejected | Country min/max mobile length wrong | Fix it on the [country](/docs/admin/countries) |
 | Customers cannot set a password | Policy too strict | Relax the requirements |
+| Cannot enable panel 2FA | The SMTP check failed | Fix [SMTP Mail Settings](/docs/admin/smtp-settings), then save again |
+| Admin never gets the login code | Mail queued but not sent, or wrong address on the account | Check the cron is running ([Cron Jobs](/docs/admin/cron-jobs)) and the address on **System Users** |
+| *"Resend limit reached. Please sign in again."* | Three codes already emailed for this attempt | Start the login over from the password screen |
+| *"Too many incorrect codes. Please sign in again."* | Five wrong codes | Start over; nothing is locked permanently |
+| Delivery boys asked for a code | Not possible — riders are exempt by design | Look elsewhere: an app build or token problem |
 
 ## Checklist
 
@@ -133,3 +180,4 @@ Enabling a toggle here does not configure the provider — it only exposes the b
 - [ ] Country mobile length range correct
 - [ ] Password policy achievable
 - [ ] Signed in successfully with every enabled method on a real device
+- [ ] If panel 2FA is on: SMTP tested, and the super admin's email address is one you can read

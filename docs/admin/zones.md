@@ -159,7 +159,7 @@ Delivery is priced from a **live quote** for the customer's pincode, taken from 
 **Courier** is listed in the Pricing Strategy dropdown only when **both** are true:
 
 1. A shipping plugin — [Shiprocket](/docs/admin/shiprocket-addon) — is installed, enabled and configured for this zone's country, and
-2. **Courier** is ticked under *How this zone delivers* on this same zone.
+2. The courier door — listed under the plugin's own name, e.g. **Shiprocket** — is ticked under *How this zone delivers* on this same zone.
 
 Untick the courier door, or move the zone to a country the carrier does not serve, and the zone drops straight back to its flat rule. Nothing is lost — the markup values stay saved for when you tick it again.
 :::
@@ -206,7 +206,7 @@ Available once a shipping plugin is installed. Tick the doors this zone may use 
 
 | Method | Means |
 | --- | --- |
-| **Courier** | Book parcels through a shipping plugin, e.g. [Shiprocket](/docs/admin/shiprocket-addon) |
+| **Courier** — shown under the plugin's own name, e.g. **Shiprocket** | Book parcels through a shipping plugin, e.g. [Shiprocket](/docs/admin/shiprocket-addon) |
 | **Delivery boy** | Your own rider |
 | **Manual tracking** | Enter another courier's tracking number by hand |
 
