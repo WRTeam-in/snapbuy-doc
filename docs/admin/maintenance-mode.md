@@ -8,7 +8,7 @@ sidebar_position: 29
 
 Menu path: **Settings → Maintenance**
 
-Takes a surface offline temporarily, showing customers a message instead of a broken store — for stock takes, migrations or upgrades.
+Takes a surface offline temporarily, showing customers a message instead of a broken branch — for stock takes, migrations or upgrades.
 
 ![Maintenance settings page](/images/panel/maintenance-page.png)
 
@@ -85,7 +85,7 @@ If a window turned maintenance on and the cron is not running, nothing will turn
 
 ## The admin panel is never affected
 
-Maintenance applies to the customer-facing surfaces only. You can always sign in and administer the store while everything else is down.
+Maintenance applies to the customer-facing surfaces only. You can always sign in and administer the branch while everything else is down.
 
 ## Troubleshooting
 
@@ -94,6 +94,6 @@ Maintenance applies to the customer-facing surfaces only. You can always sign in
 | Scheduled window did not start | Cron job not running | See [Cron Job Setup](/docs/admin/cron-jobs) |
 | Maintenance will not turn off | Cron missing, window never consumed | Toggle it off manually |
 | Window fired at the wrong time | Timezone mismatch | Check the country timezone |
-| Customers still see the store | Cached pages or app state | Wait for the app to refresh; clear the storefront cache |
+| Customers still see the branch | Cached pages or app state | Wait for the app to refresh; clear the storefront cache |
 | Riders cannot complete deliveries | Delivery Boy App in maintenance | Turn that surface back on |
 | No message shown, just an error | Remark left blank | Write a remark |

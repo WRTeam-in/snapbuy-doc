@@ -227,10 +227,10 @@ The wizard confirms the installation and sends you to the login page at `https:/
 
 ## Immediately after installing
 
-Two things must be done before the store is usable:
+Two things must be done before the branch is usable:
 
 1. **[Set up the cron job](/docs/admin/cron-jobs)** — cart reminders, maintenance windows, scheduled home layouts and every queued job depend on it. Nothing warns you if this is missing.
-2. **Work through the [Setup Guide](/docs/admin/setup-guide)** — nine steps covering Country, Zone, Store, Home Builder, SMTP, Firebase, Map, Chat and Cron.
+2. **Work through the [Setup Guide](/docs/admin/setup-guide)** — nine steps covering Country, Zone, Branch, Home Builder, SMTP, Firebase, Map, Chat and Cron.
 
 ## Troubleshooting
 

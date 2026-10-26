@@ -11,7 +11,7 @@ SnapBuy is a one-time purchase. The **external services it connects to are not i
 Nothing on this page is charged by us. Every account below is opened in your own name, with your own billing details, and you keep full control of it.
 
 :::info Read this before you launch
-Most services have a free allowance that comfortably covers development and a small store. Costs begin when order volume grows. Knowing which meter is running — and where the free tier ends — avoids an unexpected bill in month two.
+Most services have a free allowance that comfortably covers development and a small branch. Costs begin when order volume grows. Knowing which meter is running — and where the free tier ends — avoids an unexpected bill in month two.
 :::
 
 ## What is optional and what is not
@@ -74,7 +74,7 @@ In **Billing → Budgets & alerts**, create a budget with email notifications. I
 :::danger Phone OTP requires the paid Blaze plan
 Since September 2024 Google requires a Blaze plan with a billing account for SMS verification. This is the Firebase cost that surprises people: push notifications are genuinely free, but every OTP sent during signup is billed.
 
-A store with heavy signup traffic — or one being probed by automated signups — can run up a real bill here. If your market is India, an Indian SMS gateway is usually cheaper and delivers more reliably. See [SMS Settings](/docs/admin/sms-settings).
+A branch with heavy signup traffic — or one being probed by automated signups — can run up a real bill here. If your market is India, an Indian SMS gateway is usually cheaper and delivers more reliably. See [SMS Settings](/docs/admin/sms-settings).
 :::
 
 ## SMS gateways
@@ -111,7 +111,7 @@ SnapBuy uses the **Generative Language API** with the `gemini-2.5-flash` model.
 | **Paid output** | About $2.50 per 1M tokens |
 
 :::tip Token cost in practice
-A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most stores never leave the free tier.
+A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most branches never leave the free tier.
 :::
 
 :::warning Restrict the key

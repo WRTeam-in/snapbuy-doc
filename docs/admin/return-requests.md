@@ -29,11 +29,11 @@ Or **Rejected** at the review stage.
 | **Delivery Boy Assigned** | A rider will collect | Admin |
 | **Out For Pickup** | Rider is on the way | Rider |
 | **Received From Customer** | Rider has the item | Rider |
-| **Return to Store** | Item is back at the store | Rider / store |
+| **Return to Branch** | Item is back at the branch | Rider / branch |
 | **Refund Completed** | Money returned | Admin |
 
 :::info The return is a collection, run in reverse
-Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the [store](/docs/admin/stores). It is not a courier drop-off.
+Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the [branch](/docs/admin/branches). It is not a courier drop-off.
 :::
 
 ## Reviewing a request
@@ -50,7 +50,7 @@ An unlimited window is unmanageable; three days is often too short for a custome
 
 ## Assigning a rider for pickup
 
-Once accepted, assign a delivery boy to collect. The rider then moves the request through *Out For Pickup → Received From Customer → Return to Store* from their [portal](/docs/admin/delivery-boy-portal).
+Once accepted, assign a delivery boy to collect. The rider then moves the request through *Out For Pickup → Received From Customer → Return to Branch* from their [portal](/docs/admin/delivery-boy-portal).
 
 :::warning Riders see a restricted set of return statuses too
 Just as with orders, riders can only advance the pickup-related statuses. Acceptance, rejection and refunds are admin-only.
@@ -63,7 +63,7 @@ Just as with orders, riders can only advance the pickup-related statuses. Accept
 | Route | Notes |
 | --- | --- |
 | Back to the original payment method | Through the [gateway](/docs/admin/payment-gateway) used for the order |
-| To the customer's [wallet](/docs/admin/wallet-withdrawals) | Instant, and keeps the value in your store |
+| To the customer's [wallet](/docs/admin/wallet-withdrawals) | Instant, and keeps the value in your branch |
 
 :::danger Do not mark Refund Completed before the money moves
 The status is a record, not an action. Marking it complete without issuing the refund leaves the customer out of pocket with your own system saying they were paid — an easy way to turn a return into a chargeback.
@@ -75,10 +75,10 @@ Refunding through a gateway requires the credentials that took the payment to st
 
 ## Stock
 
-When a returned item comes back to the store, decide whether it re-enters sellable stock.
+When a returned item comes back to the branch, decide whether it re-enters sellable stock.
 
 :::warning Returned stock is not automatically resellable
-Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the [store](/docs/admin/stores#per-store-stock-and-pricing) — an automatic return to shelf will eventually send a customer something they should never have received.
+Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the [branch](/docs/admin/branches#per-branch-stock-and-pricing) — an automatic return to shelf will eventually send a customer something they should never have received.
 :::
 
 ## Customer notifications

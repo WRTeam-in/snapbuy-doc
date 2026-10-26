@@ -87,8 +87,8 @@ This is what makes split taxes work, and it compares the **seller's** region wit
 
 | Value | Applies when |
 | --- | --- |
-| **Intra-state** | Buyer is in the same region as the store |
-| **Inter-state** | Buyer is in a different region from the store |
+| **Intra-state** | Buyer is in the same region as the branch |
+| **Inter-state** | Buyer is in a different region from the branch |
 | **Any** | Either case — use this where the distinction does not exist |
 
 The classic Indian setup is two rules over the same category:
@@ -114,7 +114,7 @@ A region also carries a **tax code**, used on invoices where the jurisdiction re
 
 ## How a rule is chosen
 
-When SnapBuy needs a rate, it works out the **seller's jurisdiction from the store** — the store belongs to a zone, and the zone carries the country and region. Tax here is **origin-based**: the store's location narrows the rule, not the customer's.
+When SnapBuy needs a rate, it works out the **seller's jurisdiction from the branch** — the branch belongs to a zone, and the zone carries the country and region. Tax here is **origin-based**: the branch's location narrows the rule, not the customer's.
 
 It then scores every rule for that country and category, and picks the highest:
 
@@ -135,7 +135,7 @@ Because rules are scored rather than filtered, you can set one national rule and
 
 On the product form, set **Tax Category**. Leave it as **No tax** for anything exempt.
 
-Whether the price you typed already includes tax is a separate switch, set **per store** on the variant:
+Whether the price you typed already includes tax is a separate switch, set **per branch** on the variant:
 
 | Setting | Meaning |
 | --- | --- |
@@ -143,7 +143,7 @@ Whether the price you typed already includes tax is a separate switch, set **per
 | **Price includes tax** OFF | Tax is added on top of the price at checkout |
 
 :::info Inclusive pricing is a property of the price, not the rule
-Two stores can sell the same product with the same tax category, one quoting tax-inclusive and the other tax-exclusive. That is why the switch sits on the store's price row and not on the tax rule.
+Two branches can sell the same product with the same tax category, one quoting tax-inclusive and the other tax-exclusive. That is why the switch sits on the branch's price row and not on the tax rule.
 :::
 
 Bulk assignment of tax categories is available through [Bulk Upload & Update](/docs/admin/bulk-upload).
@@ -170,10 +170,10 @@ Turning **Is taxable** on but leaving the tax category empty results in no tax a
 
 ## Seller tax registration
 
-Each [store](/docs/admin/stores) can hold its own **tax number** and **registration type** — a GSTIN, VAT number or equivalent. These are printed on invoices for the store that fulfilled the order.
+Each [branch](/docs/admin/branches) can hold its own **tax number** and **registration type** — a GSTIN, VAT number or equivalent. These are printed on invoices for the branch that fulfilled the order.
 
-:::tip Set it per store, not globally
-The store is the seller for tax purposes. An installation with outlets in two states needs a different registration number on each, and putting it on the store is what makes that work.
+:::tip Set it per branch, not globally
+The branch is the seller for tax purposes. An installation with outlets in two states needs a different registration number on each, and putting it on the branch is what makes that work.
 :::
 
 ## Worked example — India
@@ -185,7 +185,7 @@ The store is the seller for tax purposes. An installation with outlets in two st
 3. **Products**: set Tax Category to `Standard 18`
 4. **Delivery charge**: Is taxable ON, Tax category `Standard 18`
 
-A customer in the same state as the store is charged CGST 9% + SGST 9%. A customer in another state is charged IGST 18%. Both totals are 18%, so the cart figure never changes at checkout.
+A customer in the same state as the branch is charged CGST 9% + SGST 9%. A customer in another state is charged IGST 18%. Both totals are 18%, so the cart figure never changes at checkout.
 
 ## Troubleshooting
 
@@ -195,7 +195,7 @@ A customer in the same state as the store is charged CGST 9% + SGST 9%. A custom
 | No tax on delivery | Charge not marked taxable, or no category on it | Enable **Is taxable** and pick a category |
 | Tax changes between cart and checkout | Intra and inter rules total different percentages | Make both add up to the same rate |
 | Wrong rate applied | A more specific regional rule exists, or two rules tie | Check the region and place of supply on each rule |
-| Tax appears twice in the price | Price marked inclusive but tax also added | Check **Price includes tax** on the store's price row |
+| Tax appears twice in the price | Price marked inclusive but tax also added | Check **Price includes tax** on the branch's price row |
 | Rule saved but never used | Rule inactive, or its category is inactive | Activate both |
 | Correct rate, wrong split | Components do not match the jurisdiction | Edit the rule's component rows |
 
@@ -206,7 +206,7 @@ A customer in the same state as the store is charged CGST 9% + SGST 9%. A custom
 - [ ] Intra and inter rules total the same percentage
 - [ ] Regions added where a state-level rate differs
 - [ ] Every taxable product has a tax category
-- [ ] **Price includes tax** set correctly per store
+- [ ] **Price includes tax** set correctly per branch
 - [ ] Delivery, surge and additional charges marked taxable and categorised
-- [ ] Store tax number and registration type filled in
+- [ ] Branch tax number and registration type filled in
 - [ ] A test order shows the expected tax lines

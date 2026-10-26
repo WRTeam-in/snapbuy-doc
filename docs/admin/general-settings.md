@@ -8,19 +8,19 @@ sidebar_position: 17
 
 Menu path: **Settings → General Settings**
 
-Store identity and the numbering rules used across orders, invoices and returns.
+Branch identity and the numbering rules used across orders, invoices and returns.
 
 ![General settings page](/images/panel/general-settings-page.png)
 
-## Store identity
+## Branch identity
 
 | Field | What it does |
 | --- | --- |
-| **App Name** | Your store name. Appears in the panel, app headers, email subjects and notification titles. |
+| **App Name** | Your branch name. Appears in the panel, app headers, email subjects and notification titles. |
 | **Support Number** | Shown to customers in the apps and on the web portal |
 | **Support Email** | Where customer enquiries are directed |
 | **Copyright Details** | Footer text on the web portal |
-| **Address** | Your store address, shown on invoices and the contact page. Translatable per language. |
+| **Address** | Your branch address, shown on invoices and the contact page. Translatable per language. |
 | **Map Location Link** | A Google Maps link to the exact spot, opened when a customer taps the address |
 | **Logo** | Displayed in the panel, on invoices and in emails |
 | **Favicon** | Browser tab icon |
@@ -32,7 +32,7 @@ It is substituted into notification and email templates through the `{app_name}`
 :::
 
 :::info The address here is not your fulfilment location
-Delivery distance is measured from the **[store](/docs/admin/stores)** pin, not from this address. This one is for display — invoices, the contact page and the apps' "about" screens.
+Delivery distance is measured from the **[branch](/docs/admin/branches)** pin, not from this address. This one is for display — invoices, the contact page and the apps' "about" screens.
 :::
 
 ### Map Location Link
@@ -41,7 +41,7 @@ The address above is only text. This field is the link behind it, so a customer 
 
 To get it:
 
-1. Open [Google Maps](https://www.google.com/maps) and find your store.
+1. Open [Google Maps](https://www.google.com/maps) and find your branch.
 2. Click **Share → Copy link**.
 3. Paste it here and save.
 

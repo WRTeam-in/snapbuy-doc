@@ -61,7 +61,7 @@ SnapBuy's built-in [email templates](/docs/admin/notification-templates) are HTM
 :::danger Gmail requires an App Password
 Google blocks normal account passwords over SMTP. Enable 2-Step Verification on the account, then generate an **App Password** at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) and use that 16-character value.
 
-Free Gmail also caps sending at roughly 500 messages a day. It is fine for testing and unsuitable for a live store running campaigns.
+Free Gmail also caps sending at roughly 500 messages a day. It is fine for testing and unsuitable for a live branch running campaigns.
 :::
 
 ### SendGrid

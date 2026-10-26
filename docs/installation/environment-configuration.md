@@ -112,12 +112,15 @@ If the password contains spaces or `#`, wrap it in double quotes.
 | Key | Recommended | Notes |
 | --- | --- | --- |
 | `QUEUE_CONNECTION` | `database` | Order emails, push notifications, referral credit and bulk imports all run through the queue |
+| `QUEUE_SCHEDULER_FALLBACK` | `false` | Supervisor available on your server → `false`. No Supervisor → `true`, and the minute cron drains the queue instead. See [the queue worker](/docs/admin/cron-jobs#the-queue-worker). |
 | `CACHE_DRIVER` | `file`, or `redis` at scale | |
 | `SESSION_DRIVER` | `file` | |
 | `SESSION_LIFETIME` | `120` | Minutes before an idle admin is signed out |
 
-:::danger The queue does nothing without the scheduler
-Setting `QUEUE_CONNECTION` only decides where jobs are stored. They are processed by the queue worker that the cron scheduler starts every minute. Without the cron job, jobs queue up and are never delivered while the panel reports success. See [Cron Job Setup](/docs/admin/cron-jobs).
+:::danger The queue does nothing without a worker
+Setting `QUEUE_CONNECTION` only decides where jobs are stored. Something still has to run them, and that is a **queue worker** kept alive by Supervisor — not the cron scheduler. With no worker, jobs pile up and are never delivered while the panel reports success.
+
+**Settings → Cron Jobs** prints the worker command and a ready-made Supervisor block for your server. See [Cron Job Setup](/docs/admin/cron-jobs#the-queue-worker).
 :::
 
 ## Mail

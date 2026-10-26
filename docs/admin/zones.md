@@ -13,7 +13,7 @@ A **zone** is the area you deliver to, drawn as a polygon on a map. It also deci
 Zones are the heart of SnapBuy's delivery logic. Everything else depends on them:
 
 - A customer's address must fall inside a zone polygon, or they cannot order at all.
-- Every store belongs to exactly one zone.
+- Every branch belongs to exactly one zone.
 - Delivery charges, surge pricing and extra fees are all configured per zone.
 
 ![Zones list](/images/panel/zones-list.png)
@@ -24,14 +24,14 @@ Before drawing anything, understand the channel model — it shapes the entire f
 
 | Channel | Meaning | Pricing model |
 | --- | --- | --- |
-| **Quick** | Fast local delivery from a nearby store | Distance-based: base charge + per-km |
+| **Quick** | Fast local delivery from a nearby branch | Distance-based: base charge + per-km |
 | **eCommerce** | Standard shipping over a wider area | Fixed rules: flat, slab, city or area |
 | **Both** | One zone serving both | Both pricing sets, each drawn separately |
 
 You choose this with the zone's **Sales Channel** field.
 
 :::info Why a zone can hold two boundaries
-Quick delivery usually covers a few kilometres; eCommerce shipping can cover a whole state. Rather than forcing two separate zones, a zone set to **Both** stores **two polygons** — one per channel — and applies the matching price rules to each.
+Quick delivery usually covers a few kilometres; eCommerce shipping can cover a whole state. Rather than forcing two separate zones, a zone set to **Both** branches **two polygons** — one per channel — and applies the matching price rules to each.
 
 If you draw only one of the two, SnapBuy falls back to the boundary that *has* been drawn, so a half-configured zone still resolves rather than silently rejecting every address.
 :::
@@ -73,7 +73,7 @@ An address that falls a few metres outside the polygon is rejected outright with
 
 ## Quick channel pricing
 
-Distance-based. SnapBuy measures the **road distance** from the store to the customer using your map provider, then:
+Distance-based. SnapBuy measures the **road distance** from the branch to the customer using your map provider, then:
 
 ```
 charge = base_delivery_charge

@@ -131,7 +131,7 @@ For OTP login:
 
 
 :::warning Firebase phone auth is billed beyond the free tier
-Phone OTP verification has a monthly free allowance; past it, Google charges per verification and requires the **Blaze** plan. A store with heavy signup traffic will hit this.
+Phone OTP verification has a monthly free allowance; past it, Google charges per verification and requires the **Blaze** plan. A branch with heavy signup traffic will hit this.
 
 The alternative is OTP over your own SMS gateway — see [SMS Settings](/docs/admin/sms-settings). SnapBuy requires **one** of the two when phone login is enabled: if you turn off Firebase Authentication, you must enable a custom SMS gateway, or saving fails with a validation error.
 :::

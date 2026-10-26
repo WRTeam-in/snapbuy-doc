@@ -13,7 +13,7 @@ The dispatch desk. The order drawer decides how *one* order ships; this page ans
 ![Shipments page](/images/panel/shipments-page.png)
 
 :::info It works with no courier plugin installed
-A store handing parcels to its own rider still needs a stack of delivery receipts, so this page is part of core. With a shipping plugin added — see [Shiprocket](/docs/admin/shiprocket-addon) — the courier columns, labels, manifests and pickups come alive on the same rows.
+A branch handing parcels to its own rider still needs a stack of delivery receipts, so this page is part of core. With a shipping plugin added — see [Shiprocket](/docs/admin/shiprocket-addon) — the courier columns, labels, manifests and pickups come alive on the same rows.
 :::
 
 ## What appears here
@@ -26,7 +26,7 @@ A store handing parcels to its own rider still needs a stack of delivery receipt
 
 ## One row is one parcel, not one item
 
-Lines are grouped into a **consignment** — the items that would physically go in one box. A row is one order, from one store, under one waybill or one booked shipment, with one rider.
+Lines are grouped into a **consignment** — the items that would physically go in one box. A row is one order, from one branch, under one waybill or one booked shipment, with one rider.
 
 So an order whose three items ship together is a single row; split that order across two parcels and you get two rows.
 
@@ -35,7 +35,7 @@ So an order whose three items ship together is a single row; split that order ac
 | **Order No** | The order. Click it to open the order drawer right here. |
 | **Item** | The first product, with the count of the rest. Expand the row to see every line. |
 | **Customer** | Name, city and pincode |
-| **Store** | Which outlet is shipping it |
+| **Branch** | Which outlet is shipping it |
 | **Courier** | The carrier and its waybill, once there is one |
 | **Status** | The parcel's state — see below |
 | **Amount** | The consignment's total |
@@ -74,12 +74,12 @@ Each tab carries a count, and **To Dispatch** is where the page opens.
 | Filter | Matches |
 | --- | --- |
 | **Search** | Order number, pincode, waybill, product name or customer name |
-| **Store** | One outlet |
+| **Branch** | One outlet |
 | **Date range** | When the order was placed |
 | **Reset** | Clears all of them |
 
-:::info A store user only ever sees their own store
-The store filter is applied automatically for a store login, so a branch cannot read another branch's dispatch queue. See [Stores](/docs/admin/stores).
+:::info A branch user only ever sees their own branch
+The branch filter is applied automatically for a branch login, so a branch cannot read another branch's dispatch queue. See [Branches](/docs/admin/branches).
 :::
 
 ## Acting on a selection
@@ -131,7 +131,7 @@ The page uses the existing `order_list` permission — anyone who can see orders
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | An order is missing from the list | It is quick-commerce, self pickup, cancelled, or still unpaid | Those never appear here |
-| A row covers items you wanted apart | They share an order, store, waybill and rider | Book them as separate parcels from the order drawer |
+| A row covers items you wanted apart | They share an order, branch, waybill and rider | Book them as separate parcels from the order drawer |
 | Two tabs are missing | No shipping plugin installed | Expected — see [Plugins](/docs/admin/plugins) |
 | Labels or manifest refused | The selection has no waybill | Assign one first |
 | Nothing happens on **Refresh Tracking** | The parcel has no waybill, or the carrier has no new scan | Check the waybill |
@@ -141,7 +141,7 @@ The page uses the existing `order_list` permission — anyone who can see orders
 ## Checklist
 
 - [ ] Work **Needs Attention** and **Awaiting Waybill** before **To Dispatch**
-- [ ] Filter to one store when a desk packs for one outlet
+- [ ] Filter to one branch when a desk packs for one outlet
 - [ ] Labels and manifest printed together before the courier arrives
 - [ ] Delivery receipts printed for rider handovers
 - [ ] Carrier balance watched

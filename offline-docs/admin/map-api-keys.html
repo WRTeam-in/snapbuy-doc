@@ -31,8 +31,8 @@
     <ul>
       <li>Customers pick their delivery address on a map</li>
       <li>You draw <a href="../admin/zones.html">zone</a> polygons on a map</li>
-      <li>You drop the <a href="../admin/stores.html">store</a> pin on a map</li>
-      <li><strong>Road distance between store and customer sets the quick-channel delivery charge</strong></li>
+      <li>You drop the <a href="../admin/branches.html">branch</a> pin on a map</li>
+      <li><strong>Road distance between branch and customer sets the quick-channel delivery charge</strong></li>
     </ul>
 
     <img src="../images/panel/map-api-page.png" alt="API credentials page">
@@ -58,7 +58,7 @@
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">OpenStreetMap uses a shared public routing service</p>
-      <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a store doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
+      <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a branch doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
     </div>
 
     <h2 id="using-google-maps">Using Google Maps</h2>
@@ -69,8 +69,8 @@
     <table>
       <thead><tr><th>SnapBuy field</th><th>Google API</th><th>Used for</th></tr></thead>
       <tbody>
-        <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning stores</td></tr>
-        <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge</td></tr>
+        <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning branches</td></tr>
+        <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the branch-to-customer distance that sets the quick-channel delivery charge</td></tr>
       </tbody>
     </table>
     </div>
@@ -110,7 +110,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Billing must be enabled</p>
-      <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.</p>
+      <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small shops, but the account must still exist.</p>
     </div>
 
     <h3 id="restrict-the-keys">Restrict the keys</h3>
@@ -170,7 +170,7 @@ curl -4 ifconfig.co   # IPv4</code></pre>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Restrict, but test afterwards</p>
-      <p>Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — <strong>then place a test order to an address a few kilometres from the store</strong> and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.</p>
+      <p>Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — <strong>then place a test order to an address a few kilometres from the branch</strong> and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.</p>
       <p>Restriction changes can take a few minutes to take effect.</p>
     </div>
 

@@ -31,6 +31,27 @@ Wrong: `yourstore.com`, `http://yourstore.com` on an HTTPS site
 The panel's own address is `APP_URL` in `.env`, set during installation. This field points at the customer-facing site, which may be a different domain entirely.
 :::
 
+## Logos and fallback images
+
+**Header Settings** carries the four images the storefront leans on.
+
+| Field | What it does |
+| --- | --- |
+| **Web Logo** | Your logo in the site header. Recommended 512×512px. |
+| **Favicon Icon** | The little icon in the browser tab. Recommended 64×64px. |
+| **Placeholder Image** | Shown while a real image is still loading, and for a product that has no picture at all |
+| **Broken Image** | Shown when a picture exists but cannot be fetched — a deleted file, a dead CDN URL, a failed upload |
+
+![Placeholder and broken image uploads](/images/panel/website-settings-broken-image.png)
+
+:::info Placeholder and Broken Image are not the same thing
+**Placeholder** stands in for *no image yet* — it is the neutral grey box a customer sees for a second while the catalogue loads. **Broken Image** is the apology for *this image should have been here and is not*. Giving them different artwork makes a genuine problem visible instead of hiding it behind a loading state.
+:::
+
+:::tip Use something unmistakable for Broken Image
+A plain grey square makes broken pictures look like slow ones, and nobody reports them. A small icon with your brand mark tells you at a glance which products need their images re-uploaded.
+:::
+
 ## Theme colours
 
 | Field | Applies to |
@@ -56,7 +77,7 @@ The panel, the apps and the website each have their own colour setting. Using th
 ![App download banner settings](/images/panel/website-app-banners.png)
 
 :::warning Do not advertise an app that is not published yet
-Turning the banner on before the store listing is live sends customers to a 404 and makes the store look broken. Enable each platform only once its listing is public.
+Turning the banner on before the store listing is live sends customers to a 404 and makes the app look broken. Enable each platform only once its listing is public.
 :::
 
 ## Cookie consent

@@ -44,7 +44,7 @@ This is the most consequential section on the page. Android and iOS are configur
 
 | Field | What it does |
 | --- | --- |
-| **Version System On** | Enables version checking |
+| **Version System On** | Enables version checking. The whole block sits under **Version Management** on the page. |
 | **Required Force Update** | Whether the update is mandatory |
 | **Current Version** | The version you consider current |
 
@@ -59,11 +59,11 @@ How the two switches combine:
 ![Version and force update settings](/images/panel/app-settings-version.png)
 
 :::danger Forced update locks out every customer on an older build
-Turning on **Required Force Update** with a **Current Version** higher than what is live on the stores blocks your entire customer base immediately — including customers mid-order.
+Turning on **Required Force Update** with a **Current Version** higher than what is live on the app stores blocks your entire customer base immediately — including customers mid-order.
 
 The safe sequence:
 
-1. Submit the new build to the store.
+1. Submit the new build to the app store.
 2. **Wait for it to be approved and actually live** — Apple review can take days.
 3. Confirm you can download the new version yourself.
 4. Only then raise **Current Version** and enable the force flag.
@@ -72,7 +72,30 @@ Never raise it in anticipation of approval.
 :::
 
 :::warning Set Android and iOS independently
-Store approvals do not land at the same time. Forcing both to a version only released on Android locks out every iOS customer. Configure each platform to the version genuinely live on that store.
+App store approvals do not land at the same time. Forcing both to a version only released on Android locks out every iOS customer. Configure each platform to the version genuinely live on that store.
+:::
+
+### Telling users a new version is out
+
+Both apps carry a **Notify users when the version changes** switch under **Version Management**.
+
+With it on, saving the page announces the new build by **push, email and SMS** to the users of that app — customers for the customer app, riders for the delivery boy app.
+
+| Behaviour | Detail |
+| --- | --- |
+| **When it fires** | Only when the version number actually changes on save. Re-saving the page with the same number sends nothing. |
+| **Who it reaches** | Only the platform you changed. Bump Android alone and iOS users are not messaged. |
+| **Channels** | Push, email and SMS, each respecting whatever is enabled under [Notification Settings](/docs/admin/notification-settings) |
+| **Wording** | The **App Version Update** templates, under Settings → Notification Settings → App |
+
+![Version Management and the update notification](/images/panel/app-settings-version-management.png)
+
+:::warning Switch it on only when the build is really live
+The notification goes out the moment you save, not when the store finishes its review. Telling customers to update to a build the store has not published yet sends them to a listing that still shows the old version.
+:::
+
+:::tip Silent bumps are possible
+Leave the switch off to raise **Current Version** quietly — useful when you are correcting a typo in the number, or staging a forced update you will announce yourself later.
 :::
 
 ## Delivery boy app
@@ -94,7 +117,7 @@ The Delivery Boy App has its own version switches, independent of the customer a
 They combine exactly as the customer-app switches do — off, optional prompt, or blocking screen.
 
 :::danger A forced rider update stops deliveries, not just browsing
-A customer locked out of an old build cannot shop. A **rider** locked out cannot deliver the orders already assigned to them. Raise the rider app's **Current Version** only after the new build is genuinely live on both stores, and prefer doing it outside your delivery hours.
+A customer locked out of an old build cannot shop. A **rider** locked out cannot deliver the orders already assigned to them. Raise the rider app's **Current Version** only after the new build is genuinely live on both app stores, and prefer doing it outside your delivery hours.
 :::
 
 ### Delivery boy bonus
@@ -131,7 +154,7 @@ It is the simplest proof-of-delivery you have, and it settles most "I never rece
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Customers locked out after a release | Force update enabled before the store build went live | Lower **Current Version** or disable the force flag — takes effect immediately |
+| Customers locked out after a release | Force update enabled before the branch build went live | Lower **Current Version** or disable the force flag — takes effect immediately |
 | Update prompt leads nowhere | Store URL blank or wrong | Fill the correct store URLs |
 | iOS customers blocked, Android fine | iOS version raised before Apple approval | Set the iOS version to what is actually live |
 | Theme colour unchanged in the app | App reads it at launch | Fully close and reopen the app |

@@ -41,7 +41,7 @@
         <tr><td>An <strong>API user</strong> — Shiprocket → Settings → API → Configure</td><td>Its email and password are what SnapBuy signs in with</td></tr>
         <tr><td>Money in the Shiprocket wallet</td><td>An empty wallet is the most common reason a waybill is refused</td></tr>
         <tr><td><strong>Weight</strong> on your product variants</td><td>A parcel with no weight cannot be quoted</td></tr>
-        <tr><td>A <strong>pincode</strong> on each store</td><td>It is the pickup end of every quote</td></tr>
+        <tr><td>A <strong>pincode</strong> on each branch</td><td>It is the pickup end of every quote</td></tr>
       </tbody>
     </table>
     </div>
@@ -90,33 +90,33 @@
       <p>A post without a matching token is rejected. Use a long random string, not a word.</p>
     </div>
 
-    <h2 id="connecting-each-store">Connecting each store</h2>
+    <h2 id="connecting-each-branch">Connecting each branch</h2>
 
-    <p>Shiprocket identifies a pickup point by a <strong>nickname registered on your account</strong>, not by an address — so each store has to be matched to one before it can ship.</p>
+    <p>Shiprocket identifies a pickup point by a <strong>nickname registered on your account</strong>, not by an address — so each branch has to be matched to one before it can ship.</p>
 
-    <p><strong>Stores → edit a store → Location</strong></p>
+    <p><strong>Branches → edit a branch → Location</strong></p>
 
-    <img src="../images/panel/shiprocket-store-pickup.png" alt="Store pickup pincode and registration">
+    <img src="../images/panel/shiprocket-branch-pickup.png" alt="Branch pickup pincode and registration">
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>Control</th><th>What it does</th></tr></thead>
       <tbody>
         <tr><td><strong>Pincode</strong></td><td>The pickup pincode a courier quotes from. Required for booking.</td></tr>
-        <tr><td><strong>Check Pickup</strong></td><td>Asks Shiprocket whether it collects from this pincode, and whether this store is already matched to one of your pickup addresses</td></tr>
-        <tr><td><strong>Register with Shiprocket</strong></td><td>Appears when the store is not matched yet. One click sends this store's own address up to Shiprocket under a name derived from the store, so the two sides cannot drift apart.</td></tr>
+        <tr><td><strong>Check Pickup</strong></td><td>Asks Shiprocket whether it collects from this pincode, and whether this branch is already matched to one of your pickup addresses</td></tr>
+        <tr><td><strong>Register with Shiprocket</strong></td><td>Appears when the branch is not matched yet. One click sends this branch's own address up to Shiprocket under a name derived from the branch, so the two sides cannot drift apart.</td></tr>
       </tbody>
     </table>
     </div>
 
     <div class="admonition admonition--danger">
-      <p class="admonition__title">Booking is refused until a store is connected</p>
-      <p>You will see <em>"This store is not connected to Shiprocket yet"</em>. That is deliberate — the alternative is a courier arriving at whichever warehouse happened to be first in the list. Fill in the store's address and pincode, then use <strong>Register with Shiprocket</strong>.</p>
+      <p class="admonition__title">Booking is refused until a branch is connected</p>
+      <p>You will see <em>"This branch is not connected to Shiprocket yet"</em>. That is deliberate — the alternative is a courier arriving at whichever warehouse happened to be first in the list. Fill in the branch's address and pincode, then use <strong>Register with Shiprocket</strong>.</p>
     </div>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Shiprocket verifies a new pickup address before it can ship</p>
-      <p>Right after registering you may see <em>"waiting for their verification"</em>. That is Shiprocket's own check, not SnapBuy's. It also needs a ten-digit contact number on the store.</p>
+      <p>Right after registering you may see <em>"waiting for their verification"</em>. That is Shiprocket's own check, not SnapBuy's. It also needs a ten-digit contact number on the branch.</p>
     </div>
 
     <h2 id="telling-a-zone-it-may-use-the-courier">Telling a zone it may use the courier</h2>
@@ -220,7 +220,7 @@
       <thead><tr><th>Message</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Add weight to these products first</td><td>Set <strong>Shipping Weight</strong> on the named variants</td></tr>
-        <tr><td>Store pickup pincode is missing</td><td>Fill the store's pincode</td></tr>
+        <tr><td>Branch pickup pincode is missing</td><td>Fill the branch's pincode</td></tr>
         <tr><td>Customer pincode is missing</td><td>The order has no destination pincode</td></tr>
         <tr><td>Customer city or state is missing</td><td>Couriers reject an address with no town</td></tr>
         <tr><td>This zone does not ship by courier</td><td>Tick <strong>Courier</strong> on the zone</td></tr>
@@ -275,7 +275,7 @@
     </table>
     </div>
 
-    <p>Filter by date range and store, search by order, waybill, product or customer, then select rows for the bulk actions: <strong>print labels</strong>, <strong>print manifest</strong>, <strong>schedule pickup</strong>, <strong>refresh tracking</strong> and <strong>print delivery receipts</strong>. Your Shiprocket balance is shown at the top.</p>
+    <p>Filter by date range and branch, search by order, waybill, product or customer, then select rows for the bulk actions: <strong>print labels</strong>, <strong>print manifest</strong>, <strong>schedule pickup</strong>, <strong>refresh tracking</strong> and <strong>print delivery receipts</strong>. Your Shiprocket balance is shown at the top.</p>
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Two tabs belong to the courier</p>
@@ -326,7 +326,7 @@
       <thead><tr><th>Point</th><th>Detail</th></tr></thead>
       <tbody>
         <tr><td><strong>When</strong></td><td>Once the return is Accepted and nobody else has it</td></tr>
-        <tr><td><strong>Addresses</strong></td><td>Reversed — the customer is the pickup, the store is the drop</td></tr>
+        <tr><td><strong>Addresses</strong></td><td>Reversed — the customer is the pickup, the branch is the drop</td></tr>
         <tr><td><strong>No label or manifest</strong></td><td>Shiprocket needs neither for a collection; the collecting rider brings the paperwork</td></tr>
         <tr><td><strong>Parcel figures</strong></td><td>Prefilled from the returned product, editable before booking</td></tr>
         <tr><td><strong>Cancellation</strong></td><td>Allowed until the parcel is collected</td></tr>
@@ -335,7 +335,7 @@
     </table>
     </div>
 
-    <p>Carrier scans move the request along: Out for Pickup → Received from Customer → Return to Store. <strong>Refund Completed</strong> is never set by a courier.</p>
+    <p>Carrier scans move the request along: Out for Pickup → Received from Customer → Return to Branch. <strong>Refund Completed</strong> is never set by a courier.</p>
 
     <h2 id="what-installing-it-adds">What installing it adds</h2>
 
@@ -346,7 +346,7 @@
         <tr><td>Three tables — shipments, shipment items, pickup locations</td><td>The plugin's own records, so a parcel stays trackable and cancellable</td></tr>
         <tr><td>Its language strings</td><td>Field labels, hints and carrier messages</td></tr>
         <tr><td>A tracking webhook action</td><td>The URL shown on its settings form</td></tr>
-        <tr><td>Courier rows on the panel</td><td>Ship dialog, Shipments tabs, zone pricing, store pickup check, return pickup</td></tr>
+        <tr><td>Courier rows on the panel</td><td>Ship dialog, Shipments tabs, zone pricing, branch pickup check, return pickup</td></tr>
       </tbody>
     </table>
     </div>
@@ -360,8 +360,8 @@
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>Shiprocket rejected the email or password</td><td>Wrong API user, or the password changed</td><td>Re-enter them on the settings form</td></tr>
-        <tr><td>This store is not connected to Shiprocket yet</td><td>No pickup address matched</td><td>Use <strong>Register with Shiprocket</strong> on the store</td></tr>
-        <tr><td>Shiprocket does not collect from this pincode</td><td>The pickup pincode is outside their network</td><td>Check the store's pincode</td></tr>
+        <tr><td>This branch is not connected to Shiprocket yet</td><td>No pickup address matched</td><td>Use <strong>Register with Shiprocket</strong> on the branch</td></tr>
+        <tr><td>Shiprocket does not collect from this pincode</td><td>The pickup pincode is outside their network</td><td>Check the branch's pincode</td></tr>
         <tr><td>No courier will carry this parcel</td><td>Nothing serves that pincode pair, or the parcel is too heavy</td><td>Try another courier or deliver by rider</td></tr>
         <tr><td>No waybill was returned</td><td>Usually an empty wallet</td><td>Top up the Shiprocket wallet and retry</td></tr>
         <tr><td>Label is not ready</td><td>Shiprocket has not generated it yet</td><td>Try again shortly</td></tr>
@@ -380,7 +380,7 @@
       <li class="task-item"><input type="checkbox" disabled> API user created in Shiprocket, email and password saved</li>
       <li class="task-item"><input type="checkbox" disabled> Mode set — Sandbox to rehearse, Live to ship</li>
       <li class="task-item"><input type="checkbox" disabled> Webhook token set and pasted into Shiprocket with the URL</li>
-      <li class="task-item"><input type="checkbox" disabled> Every store has a pincode and is registered with Shiprocket</li>
+      <li class="task-item"><input type="checkbox" disabled> Every branch has a pincode and is registered with Shiprocket</li>
       <li class="task-item"><input type="checkbox" disabled> Shipping weight on every variant you sell</li>
       <li class="task-item"><input type="checkbox" disabled> Zone's delivery methods ticked, pricing strategy and markup decided</li>
       <li class="task-item"><input type="checkbox" disabled> Fallback flat pricing set to something sensible</li>

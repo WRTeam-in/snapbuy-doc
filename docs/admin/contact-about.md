@@ -39,7 +39,7 @@ Your story, what you sell and why customers should trust you. Worth including:
 - Any certifications or licences relevant to what you sell
 
 :::tip Write it for a customer deciding whether to order
-This page is most often read by someone about to spend money with a store they have never used. Concrete facts — years trading, areas served, licences held — do more than adjectives.
+This page is most often read by someone about to spend money with a business they have never used. Concrete facts — years trading, areas served, licences held — do more than adjectives.
 :::
 
 ## The editor

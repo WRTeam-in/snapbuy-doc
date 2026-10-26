@@ -48,7 +48,7 @@
           items: [
             ["Countries & Currency", "admin/countries.html"],
             ["Delivery Zones", "admin/zones.html"],
-            ["Stores", "admin/stores.html"],
+            ["Branches", "admin/branches.html"],
             ["Home Builder", "admin/home-builder.html"],
             ["Page Builder", "admin/page-builder.html"],
             ["SMTP / Email Settings", "admin/smtp-settings.html"],
@@ -92,6 +92,8 @@
             ["Wallet, Withdrawals & Settlements", "admin/wallet-withdrawals.html"],
             ["Delivery Boys & Their Portal", "admin/delivery-boy-portal.html"],
             ["Spin Wheel", "admin/spin-wheel.html"],
+            ["Products", "admin/products.html"],
+            ["Food Items & Addons", "admin/food-items-addons.html"],
             ["Bulk Upload & Update", "admin/bulk-upload.html"],
             ["Reports", "admin/reports.html"],
             ["Send Notifications & Emails", "admin/send-notifications.html"],

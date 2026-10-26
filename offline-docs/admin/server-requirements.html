@@ -35,7 +35,7 @@
       <thead><tr><th>Requirement</th><th>Why a VPS is necessary</th></tr></thead>
       <tbody>
         <tr><td>Server-rendered storefront</td><td>The web portal renders pages on the server so search engines can index your products. That needs a continuously running Node process.</td></tr>
-        <tr><td>Background processing</td><td>Order emails, push notifications, referral credit and bulk imports run on a queue worker started by the scheduler.</td></tr>
+        <tr><td>Background processing</td><td>Order emails, push notifications, referral credit and bulk imports run on a queue worker kept alive by Supervisor, separate from the cron scheduler.</td></tr>
         <tr><td>Real-time chat</td><td>Laravel Reverb runs as a long-lived WebSocket process on its own port.</td></tr>
         <tr><td>Installation</td><td>The installer runs the full migration and seeding in one request, beyond the execution limits of most entry-level plans.</td></tr>
       </tbody>
@@ -52,10 +52,10 @@
 
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Store size</th><th>vCPU</th><th>RAM</th><th>Disk</th></tr></thead>
+      <thead><tr><th>Branch size</th><th>vCPU</th><th>RAM</th><th>Disk</th></tr></thead>
       <tbody>
         <tr><td>Launch / small catalogue</td><td>2</td><td>4 GB</td><td>50 GB SSD</td></tr>
-        <tr><td>Established store</td><td>4</td><td>8 GB</td><td>100 GB SSD</td></tr>
+        <tr><td>Established branch</td><td>4</td><td>8 GB</td><td>100 GB SSD</td></tr>
         <tr><td>High volume</td><td>8+</td><td>16 GB+</td><td>200 GB+ SSD</td></tr>
       </tbody>
     </table>
@@ -67,6 +67,7 @@
       <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td><strong>Minimum PHP version</strong></td><td><strong>8.3.0</strong></td></tr>
+        <tr><td><strong>Tested PHP versions</strong></td><td><strong>8.3, 8.4 and 8.5</strong></td></tr>
       </tbody>
     </table>
     </div>
@@ -175,7 +176,7 @@ sudo chmod -R 755 storage bootstrap/cache</code></pre>
     <table>
       <thead><tr><th>Need</th><th>Why</th></tr></thead>
       <tbody>
-        <tr><td><strong>Cron access</strong></td><td>Cart reminders, maintenance windows, scheduled home layouts and queued jobs all depend on it. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</td></tr>
+        <tr><td><strong>Cron access</strong></td><td>Cart reminders, maintenance windows and scheduled home layouts depend on it. Background jobs need a queue worker as well. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</td></tr>
         <tr><td><strong>Outbound HTTPS</strong></td><td>The panel calls Firebase, Twilio, payment gateways and the licence server. Hosts that block outbound connections will break these.</td></tr>
         <tr><td><strong>SSL certificate</strong></td><td>Required in production. Firebase web push, several payment gateways and the mobile apps refuse plain HTTP.</td></tr>
         <tr><td><strong>A WebSocket port</strong> (optional)</td><td>Only if you run <strong>Laravel Reverb</strong> for chat instead of Pusher. Default <code>9090</code>. See <a href="../admin/chat-settings.html">Chat Settings</a>.</td></tr>

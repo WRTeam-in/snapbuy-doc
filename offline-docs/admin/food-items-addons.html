@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Food Items &amp; Addons — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Food Items &amp; Addons</h1>
+
+    <p>Menu path: <strong>Products → edit a product → Product Details</strong></p>
+
+    <p>A <strong>food item</strong> is something made to order &mdash; a pizza, a burger, a thali. Instead of going straight into the cart, it asks the customer questions first: which crust, which toppings, which drink. Those questions are its <strong>addons</strong>.</p>
+
+    <img src="../images/panel/product-food-item.png" alt="Food item and addon questions on the product form">
+
+    <h2 id="the-two-flags">The two flags</h2>
+
+    <p>Every product carries two independent answers on <strong>Product Details</strong>.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Question</th><th>Yes means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Is this a food item?</strong></td><td>Made to order. The customer is asked to choose options before it reaches the cart. The <strong>Addons</strong> button appears beside it.</td></tr>
+        <tr><td><strong>Is this sold only as an addon?</strong></td><td>Sold only alongside something else &mdash; a 50 ml dip, a sachet of mayo. It can still be attached to a dish, but customers never find it on its own in listings, search or the home screen.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">These two are opposites, not a pair</p>
+      <p>A <strong>food item</strong> is the dish that asks the questions. An <strong>addon-only item</strong> is one of the answers, and is usually not food at all &mdash; a bottled drink, for example. A product can be neither, either, or in rare cases both.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Food is a separate flag from Product Type</p>
+      <p>A food item is still veg or non-veg, so the two cannot share one field. Set <strong>Product Type</strong> as you always would; the food answer sits beside it.</p>
+    </div>
+
+    <h2 id="opening-the-addon-editor">Opening the addon editor</h2>
+
+    <p>The <strong>Addons</strong> button only appears once <strong>Is this a food item?</strong> is <strong>Yes</strong>, and it needs a product that already exists &mdash; addons hang off a saved product.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Save the product first</p>
+      <p>On a brand-new product the button stays disabled until a category and a product name are filled in, with the tooltip <em>&ldquo;Choose a category and enter a product name first, then you can set up addons.&rdquo;</em> Save the draft, then open Addons.</p>
+    </div>
+
+    <p>The editor opens over the product form, so nothing unsaved on the product is lost. It has its own <strong>Save</strong> &mdash; a menu can be edited without re-saving the whole product.</p>
+
+    <img src="../images/panel/product-addons-editor.png" alt="The addon editor">
+
+    <h2 id="groups--the-questions">Groups &mdash; the questions</h2>
+
+    <p>Each <strong>group</strong> is one question put to the customer.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Group name</strong></td><td>What the customer is asked &mdash; <em>Choose your crust</em>, <em>Extra toppings</em></td></tr>
+        <tr><td><strong>Choice type</strong></td><td><strong>Pick one</strong> (radio) or <strong>Pick several</strong> (checkboxes)</td></tr>
+        <tr><td><strong>Is required</strong></td><td>Yes: the group must be answered before the dish can go in the cart</td></tr>
+        <tr><td><strong>Minimum choices</strong></td><td>Fewest the customer must pick. <code>0</code> lets them skip the group.</td></tr>
+        <tr><td><strong>Maximum choices</strong></td><td>Most they may pick. <code>0</code> means as many as they like.</td></tr>
+        <tr><td><strong>Max per option</strong></td><td>How many times one choice may be taken. <code>1</code> is a plain tick; above <code>1</code> the app shows a quantity stepper on every option in the group, so a customer can ask for two portions of cheese. Highest allowed is <strong>50</strong>.</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive groups are not asked</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The order of groups in the editor is the order the customer sees. Drag to reorder.</p>
+
+    <h3 id="what-customers-will-see">What customers will see</h3>
+
+    <p>The editor prints the rule it is about to apply under each group, so you never have to work the combination out yourself:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Settings</th><th>Customers will see</th></tr></thead>
+      <tbody>
+        <tr><td>Required, pick one</td><td><em>Select any 1 option</em></td></tr>
+        <tr><td>Min 2, max 2</td><td><em>Select 2 options</em></td></tr>
+        <tr><td>Min 1, max 3</td><td><em>Select 1 to 3 options</em></td></tr>
+        <tr><td>Max 3, not required</td><td><em>Select up to 3 options</em></td></tr>
+        <tr><td>Min 2, no maximum</td><td><em>Select at least 2 options</em></td></tr>
+        <tr><td>No limits</td><td><em>Select as many as you like</em></td></tr>
+        <tr><td>Max per option 2</td><td><em>Up to 2 of each</em></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="options--the-answers">Options &mdash; the answers</h2>
+
+    <p>Each <strong>option</strong> is one answer inside a group.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Option type</strong></td><td><strong>Custom</strong> &mdash; a choice you name yourself, like <em>Extra cheese</em>. <strong>A product</strong> &mdash; something already in your catalogue, like a Coke.</td></tr>
+        <tr><td><strong>Option name / Product</strong></td><td>The label, or the catalogue product it points at</td></tr>
+        <tr><td><strong>Image</strong></td><td>Optional picture. A linked option takes the picture from its product.</td></tr>
+        <tr><td><strong>Pricing</strong></td><td><strong>Paid</strong> with an amount, or <strong>Free</strong></td></tr>
+        <tr><td><strong>Price from</strong></td><td>Only for linked options &mdash; <strong>Set here</strong> charges this dish&rsquo;s own amount, <strong>Follow the product</strong> keeps using that product&rsquo;s price at each branch, so you maintain it in one place</td></tr>
+        <tr><td><strong>Offered</strong></td><td>Per branch &mdash; an option is only sold where you price it</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">A linked option uses real stock</p>
+      <p>Point an option at a product and it uses that product&rsquo;s own price and its real stock. The stock goes down when the dish is ordered, exactly as if the product had been bought on its own.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A linked product with a different tax category</p>
+      <p>The whole line is taxed at the <strong>dish&rsquo;s</strong> rate, not the linked product&rsquo;s. The editor warns you when the two differ &mdash; <em>&ldquo;This product has a different tax category.&rdquo;</em></p>
+    </div>
+
+    <h2 id="pricing-per-branch">Pricing per branch</h2>
+
+    <p>Addon prices are <strong>per branch</strong>, in that branch&rsquo;s own currency, exactly like product pricing. Pick a branch at the top of the editor and fill in its prices.</p>
+
+    <p>An option is offered only at the branches you price it at. Leave a branch blank and that branch simply does not offer the choice.</p>
+
+    <p><strong>Copy this branch&rsquo;s prices to all</strong> fills every other branch from the one you are on.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Check the branches that price in another currency</p>
+      <p>The copy is a straight number copy &mdash; <code>50</code> becomes <code>50</code> everywhere, whether that branch charges in ₹ or $. Review any branch on a different currency afterwards.</p>
+    </div>
+
+    <h2 id="reusing-a-menu">Reusing a menu</h2>
+
+    <p>Two buttons at the top of the editor save retyping a whole menu:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Button</th><th>Does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Copy from another product</strong></td><td>Pulls a whole addon setup from a different food product into this one</td></tr>
+        <tr><td><strong>Apply to other products</strong></td><td>Pushes this product&rsquo;s setup onto the food products you pick</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Both offer <strong>Replace what is already there</strong>. Leave it off to add alongside the existing groups; tick it to wipe the target&rsquo;s setup first.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Only food products appear in these pickers</p>
+      <p>Addons are only asked on products marked as a food item, so only those products are offered as a source or a target. If the copy list is empty, no other food product has an addon setup yet.</p>
+    </div>
+
+    <h2 id="rules-the-panel-enforces">Rules the panel enforces</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Message</th><th>Means</th></tr></thead>
+      <tbody>
+        <tr><td><em>Every addon group needs at least one option.</em></td><td>An empty question cannot be asked</td></tr>
+        <tr><td><em>Every option needs a price at at least one branch.</em></td><td>An option nobody can buy is not saved</td></tr>
+        <tr><td><em>A branch is listed twice for the same option.</em></td><td>Duplicate branch row</td></tr>
+        <tr><td><em>A product cannot be attached as its own addon.</em></td><td>A dish cannot be its own topping</td></tr>
+        <tr><td><em>Choose a product before taking the price from the catalogue.</em></td><td><strong>Follow the product</strong> with no product chosen</td></tr>
+        <tr><td><em>Minimum choices cannot be more than maximum choices.</em></td><td>Check the two numbers</td></tr>
+        <tr><td><em>Minimum / Maximum choices cannot be more than the number of options.</em></td><td>A rule the group can never satisfy</td></tr>
+        <tr><td><em>Addons can only be set up on a product marked as a food item.</em></td><td>Set the food flag first</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="what-the-customer-hits-at-checkout">What the customer hits at checkout</h2>
+
+    <p>The same rules are re-checked when the item goes into the cart and again when the order is placed, so a menu edited mid-session cannot slip a stale choice through:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Customer sees</th><th>Cause</th></tr></thead>
+      <tbody>
+        <tr><td><em>One of the selected options is no longer available.</em></td><td>The option was deactivated or deleted</td></tr>
+        <tr><td><em>One of the selected options is not available at this branch.</em></td><td>Not priced at the branch serving that order</td></tr>
+        <tr><td><em>One of the selected options does not have enough stock.</em></td><td>A linked product ran out</td></tr>
+        <tr><td><em>Please choose an option for &lt;group&gt;.</em></td><td>A required group left unanswered</td></tr>
+        <tr><td><em>Only one option can be chosen in this group.</em></td><td>Pick-one group</td></tr>
+        <tr><td><em>You have chosen more / fewer options than this group allows.</em></td><td>Min or max breached</td></tr>
+        <tr><td><em>You have chosen more of one option than this group allows.</em></td><td>Max per option breached</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Chosen addons travel with the order line and are printed on the <strong>invoice</strong>, the <strong>thermal invoice</strong> and the <strong>delivery receipt</strong>, so the kitchen and the rider both see them.</p>
+
+    <h2 id="bulk-editing">Bulk editing</h2>
+
+    <p>A whole menu can be uploaded instead of typed. The product bulk sheet carries a second <strong>Addons</strong> tab &mdash; one row per option &mdash; covered under <a href="../admin/bulk-upload.html#addons-sheet">Bulk Upload</a>.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Addons</strong> button missing</td><td><strong>Is this a food item?</strong> is No</td><td>Set it to Yes</td></tr>
+        <tr><td><strong>Addons</strong> button disabled</td><td>The product has never been saved</td><td>Fill in category and name, save the draft, reopen</td></tr>
+        <tr><td>Addon not offered to customers</td><td>Not priced at the branch serving that zone</td><td>Price it on that branch, or tick <strong>Offered</strong></td></tr>
+        <tr><td>Option sold out unexpectedly</td><td>It is a linked product and that product&rsquo;s stock ran out</td><td>Restock the product, or switch the option to <strong>Custom</strong></td></tr>
+        <tr><td>An addon-only product shows in search</td><td><strong>Is this sold only as an addon?</strong> is still No</td><td>Set it to Yes</td></tr>
+        <tr><td>Prices look wrong at one branch</td><td><strong>Copy this branch&rsquo;s prices to all</strong> carried numbers across currencies</td><td>Re-enter that branch&rsquo;s prices</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul class="contains-task-list">
+      <li class="task-item"><input type="checkbox" disabled> Dish marked <strong>Is this a food item? → Yes</strong></li>
+      <li class="task-item"><input type="checkbox" disabled> Products that are only ever toppings marked <strong>sold only as an addon</strong></li>
+      <li class="task-item"><input type="checkbox" disabled> Every group has at least one option</li>
+      <li class="task-item"><input type="checkbox" disabled> Required groups have a sensible minimum</li>
+      <li class="task-item"><input type="checkbox" disabled> <strong>Max per option</strong> set where a customer may want two of something</li>
+      <li class="task-item"><input type="checkbox" disabled> Every option priced at every branch that sells the dish</li>
+      <li class="task-item"><input type="checkbox" disabled> Linked options point at products that are actually stocked</li>
+      <li class="task-item"><input type="checkbox" disabled> Ordered the dish once on a real device and checked the invoice shows the choices</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/food-items-addons.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

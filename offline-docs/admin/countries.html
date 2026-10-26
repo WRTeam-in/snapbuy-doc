@@ -28,7 +28,7 @@
 
     <p>A country in SnapBuy is far more than a name in a dropdown. It is the container for your <strong>currency</strong>, <strong>phone number rules</strong>, <strong>timezone</strong>, <strong>date formats</strong>, <strong>which payment gateways are offered</strong>, your <strong>referral programme</strong>, and every <strong>legal policy</strong> the apps display.</p>
 
-    <p>Get this right before anything else — zones, stores and prices all hang off it.</p>
+    <p>Get this right before anything else — zones, branches and prices all hang off it.</p>
 
     <img src="../images/panel/countries-list.png" alt="Countries list">
 
@@ -133,6 +133,47 @@
       <p>For India set both min and max to <code>10</code>. For countries with variable-length numbers, widen the range rather than guessing.</p>
     </div>
 
+    <h3 id="buyer-tax-number">Buyer Tax Number</h3>
+
+    <p>A business buying from you needs its own registration number on the invoice before it can claim the purchase back. This block, on <strong>Country Details</strong>, decides whether this country&rsquo;s customers are asked for one.</p>
+
+    <img src="../images/panel/countries-buyer-tax-number.png" alt="Buyer tax number settings on a country">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Buyer Tax Number</strong></td><td>Off: <em>Not asked</em>. On: <em>Asked at checkout</em> &mdash; the field appears on the address form for this country.</td></tr>
+        <tr><td><strong>Field Label</strong></td><td>What this country calls the number &mdash; <code>GSTIN</code>, <code>VAT Number</code>, <code>TRN</code>, <code>ABN</code>. Up to 48 characters.</td></tr>
+        <tr><td><strong>Format Pattern</strong></td><td>A regular expression used to catch a typo. Leave blank to accept any value.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>With it on, the buyer may also give a <strong>Business Name</strong>. Whatever they enter is copied onto the order and printed on the invoice under your label, so a GSTIN shows as <em>GSTIN:</em> and a TRN as <em>TRN:</em>.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Always optional for the buyer</p>
+      <p>Switching this on adds the field; it never makes it mandatory. A private customer leaves it blank and checks out as before.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Anchor the pattern, and test it</p>
+      <p>An unanchored expression matches anything that merely <em>contains</em> a valid-looking number, so <code>12ABCDE1234F1Z5xxxx</code> passes. The form warns you when the pattern has no <code>^ … $</code>, flags an expression that will not compile at all, and gives you a <strong>try a number</strong> box right underneath &mdash; type a real registration number and confirm it is accepted before you save.</p>
+      <p>A broken pattern turns away every number a buyer types, with nothing on the checkout screen to say why.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">A worked example</p>
+      <p>India, GSTIN: label <code>GSTIN</code>, pattern <code>^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$</code>. Leave the pattern blank for countries whose formats you are unsure of &mdash; catching typos is worth less than rejecting valid numbers.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">This is the buyer&rsquo;s number, not yours</p>
+      <p>Your own registration number is set per <a href="../admin/branches.html">branch</a> and appears on the invoice as the seller&rsquo;s. This field is the number the <em>customer</em> supplies.</p>
+    </div>
+
+
     <h3 id="currency">Currency</h3>
 
     <p>Set on the <strong>Payment Gateways</strong> step, alongside the gateways that will charge in it.</p>
@@ -169,7 +210,7 @@
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Timezone drives scheduling, not just display</p>
-      <p>Zone surge slots, store operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and stores appear closed when they are open.</p>
+      <p>Zone surge slots, branch operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and branches appear closed when they are open.</p>
     </div>
 
     <h3 id="payment-gateways-per-country">Payment gateways per country</h3>
@@ -226,7 +267,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Replace the placeholder policies before going live</p>
-      <p>App stores reject submissions that show placeholder legal text, and in many regions publishing a store without a real privacy policy is a compliance problem. Rewrite all seven before you publish.</p>
+      <p>App stores reject submissions that show placeholder legal text, and in many regions publishing an app without a real privacy policy is a compliance problem. Rewrite all seven before you publish.</p>
     </div>
 
     <p>Each policy is editable <strong>per language</strong> — see <a href="../admin/languages.html">Manage Languages</a>. Customers see the policy for their selected language, falling back to the default language when a translation is missing.</p>
@@ -286,7 +327,7 @@
 
     <ul>
       <li><strong>Set status inactive</strong> to hide a country from the apps while keeping its orders and customers intact. This is the safe option.</li>
-      <li><strong>Deleting</strong> a country whose zones, stores and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.</li>
+      <li><strong>Deleting</strong> a country whose zones, branches and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.</li>
     </ul>
 
     <h2 id="checklist">Checklist</h2>

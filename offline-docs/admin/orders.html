@@ -51,7 +51,7 @@
       <thead><tr><th>Status</th><th style="text-align:center">Quick</th><th style="text-align:center">eCommerce</th><th>Meaning</th></tr></thead>
       <tbody>
         <tr><td>Payment Pending</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Awaiting payment confirmation</td></tr>
-        <tr><td>Received</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Accepted by the store</td></tr>
+        <tr><td>Received</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Accepted by the branch</td></tr>
         <tr><td><strong>Preparing</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Being picked and packed</td></tr>
         <tr><td><strong>Ready for Pickup</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Waiting for the rider</td></tr>
         <tr><td><strong>Picked Up</strong></td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td>Rider has collected it</td></tr>
@@ -67,7 +67,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Why quick has three extra statuses</p>
-      <p>Quick commerce is fulfilled from a nearby <a href="../admin/stores.html">store</a> with a rider who physically collects the order, so <em>Preparing / Ready for Pickup / Picked Up</em> give the store and the rider a shared view of the handover. eCommerce goes through packing and shipping instead.</p>
+      <p>Quick commerce is fulfilled from a nearby <a href="../admin/branches.html">branch</a> with a rider who physically collects the order, so <em>Preparing / Ready for Pickup / Picked Up</em> give the branch and the rider a shared view of the handover. eCommerce goes through packing and shipping instead.</p>
     </div>
 
     <div class="admonition admonition--warning">
@@ -100,7 +100,7 @@
     <div class="admonition admonition--warning">
       <p class="admonition__title">Riders only see a restricted set of statuses</p>
       <p>In their own portal, a rider can move a <strong>quick</strong> order through <em>Ready for Pickup → Picked Up → Out For Delivery → Delivered</em>, and an <strong>eCommerce</strong> order only between <em>Out For Delivery</em> and <em>Delivered</em>.</p>
-      <p>Everything earlier in the flow is the store's job, done from this panel. A rider cannot mark an order Received or Preparing.</p>
+      <p>Everything earlier in the flow is the branch's job, done from this panel. A rider cannot mark an order Received or Preparing.</p>
     </div>
 
     <div class="admonition admonition--danger">
@@ -123,7 +123,7 @@
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Cancelling releases reserved stock</p>
-      <p>Stock held against the order returns to available at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.</p>
+      <p>Stock held against the order returns to available at the <a href="../admin/branches.html#per-branch-stock-and-pricing">branch</a> it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.</p>
     </div>
 
     <h2 id="per-item-status">Per-item status</h2>
@@ -145,7 +145,7 @@
 
     <h2 id="self-pickup-orders">Self pickup orders</h2>
 
-    <p>A self-pickup order is collected by the customer at the store, so it walks a shorter flow and has no rider: <strong>Received → Preparing → Ready for Pickup → Collected</strong>. They are listed on their own page, <strong>Orders → Self Pickup</strong>.</p>
+    <p>A self-pickup order is collected by the customer at the branch, so it walks a shorter flow and has no rider: <strong>Received → Preparing → Ready for Pickup → Collected</strong>. They are listed on their own page, <strong>Orders → Self Pickup</strong>.</p>
 
     <p>Full detail: <a href="../admin/self-pickup.html">Self Pickup</a>.</p>
 
@@ -188,7 +188,7 @@
         <tr><td>Expected status missing</td><td>Wrong channel's flow</td><td>Quick and eCommerce use different statuses</td></tr>
         <tr><td>Rider cannot advance the status</td><td>Riders only get a restricted set</td><td>Move it from the panel</td></tr>
         <tr><td>Customer not notified of status changes</td><td><code>order_item_status_customer</code> disabled</td><td>Enable it in <a href="../admin/notification-settings.html">Notification Settings</a></td></tr>
-        <tr><td>Stock wrong after cancellations</td><td>Reserved stock released</td><td>Verify at the store's variant record</td></tr>
+        <tr><td>Stock wrong after cancellations</td><td>Reserved stock released</td><td>Verify at the branch's variant record</td></tr>
         <tr><td>Cannot mark delivered</td><td>Delivery OTP required and not entered</td><td>Get the code from the customer, or disable OTP</td></tr>
       </tbody>
     </table>

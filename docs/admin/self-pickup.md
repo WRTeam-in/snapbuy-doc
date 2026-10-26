@@ -8,29 +8,29 @@ sidebar_position: 33
 
 Menu path: **Orders → Self Pickup**
 
-Lets a customer order in the app and collect at the store instead of paying for delivery. Nothing is dispatched, no rider is involved, and the order is closed when the customer walks out with it.
+Lets a customer order in the app and collect at the branch instead of paying for delivery. Nothing is dispatched, no rider is involved, and the order is closed when the customer walks out with it.
 
 ![Self pickup orders list](/images/panel/self-pickup-orders.png)
 
 ## Turning it on
 
-Pickup is a **per-store** setting, because it is the store counter that hands the goods over.
+Pickup is a **per-branch** setting, because it is the branch counter that hands the goods over.
 
-**Stores → edit a store → Fulfillment**
+**Branches → edit a branch → Fulfillment**
 
 | Field | Meaning |
 | --- | --- |
 | **Service Modes** | `Home delivery only`, `Self pickup only`, or `Delivery and pickup` |
-| **Pickup Channels** | Which channels may collect — `Quick`, `eCommerce` or `Both`. Only shown when the store serves both channels. |
+| **Pickup Channels** | Which channels may collect — `Quick`, `eCommerce` or `Both`. Only shown when the branch serves both channels. |
 
-![Service modes on a store](/images/panel/stores-service-modes.png)
+![Service modes on a branch](/images/panel/branches-service-modes.png)
 
-:::danger The store address is what the customer drives to
-Pickup shows the customer the store's address, map position, phone number, preparation time and opening hours. Fix a wrong address before you switch pickup on — see [Stores](/docs/admin/stores).
+:::danger The branch address is what the customer drives to
+Pickup shows the customer the branch's address, map position, phone number, preparation time and opening hours. Fix a wrong address before you switch pickup on — see [Branches](/docs/admin/branches).
 :::
 
-:::warning A pickup-only store never receives delivery orders
-Setting **Self pickup only** removes the store from home delivery in its zone. If it is the only store in that zone, delivery stops there entirely.
+:::warning A pickup-only branch never receives delivery orders
+Setting **Self pickup only** removes the branch from home delivery in its zone. If it is the only branch in that zone, delivery stops there entirely.
 :::
 
 ## What the customer pays
@@ -69,7 +69,7 @@ A pickup order walks a shorter route than a delivery, on **both** channels:
 Cancelled is available throughout. There is no Shipped, no Out for Delivery and no Picked Up — those are rider steps.
 
 :::info Status is set order-wise, not item-wise
-An eCommerce delivery order moves item by item. A pickup order is one store, one hand-over, so the whole order moves together — the panel refuses item-wise updates on a pickup order.
+An eCommerce delivery order moves item by item. A pickup order is one branch, one hand-over, so the whole order moves together — the panel refuses item-wise updates on a pickup order.
 :::
 
 ### What is not available on a pickup order
@@ -78,7 +78,7 @@ An eCommerce delivery order moves item by item. A pickup order is one store, one
 | --- | --- |
 | Assigning a delivery boy | Nobody delivers it |
 | Courier tracking | There is no shipment |
-| Estimated delivery date | The store's preparation time is the wait |
+| Estimated delivery date | The branch's preparation time is the wait |
 
 :::warning A billing address is still required
 Even though nothing is shipped, a pickup order needs a billing address — invoices and tax depend on it.
@@ -96,10 +96,10 @@ Marking collected closes the money on a COD order. Do it at hand-over, not when 
 
 **Orders → Self Pickup** shows only pickup orders; **Orders** shows only home delivery. The two pages otherwise behave the same way — see [Orders](/docs/admin/orders).
 
-On a pickup order the location column shows the **store** rather than the customer's city, because that is where the order is waiting.
+On a pickup order the location column shows the **branch** rather than the customer's city, because that is where the order is waiting.
 
 :::tip Notify the customer at "Ready for Pickup"
-The `order_status_ready_for_pickup_customer` notification is what tells someone their order is waiting at the counter. Make sure it is enabled in [Notification Settings](/docs/admin/notification-settings), or customers will keep phoning the store.
+The `order_status_ready_for_pickup_customer` notification is what tells someone their order is waiting at the counter. Make sure it is enabled in [Notification Settings](/docs/admin/notification-settings), or customers will keep phoning the branch.
 :::
 
 ## Permissions
@@ -114,7 +114,7 @@ See [Roles & Permissions](/docs/admin/roles-permissions).
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Pickup not offered in the app | Store's service mode is delivery only | Set **Delivery and pickup** or **Self pickup only** |
+| Pickup not offered in the app | Branch's service mode is delivery only | Set **Delivery and pickup** or **Self pickup only** |
 | Pickup offered on the wrong channel | **Pickup Channels** is set to one channel | Change it to Both |
 | Customer charged for delivery | The order is a delivery order, not pickup | Check the order's mode chip in the list |
 | An extra fee appears on pickup orders | An additional charge is set to **Both** | Set its **Applies to** to Delivery |
@@ -124,9 +124,9 @@ See [Roles & Permissions](/docs/admin/roles-permissions).
 
 ## Checklist
 
-- [ ] Store's service mode set, with the right pickup channels
-- [ ] Store address, map pin, phone and opening hours correct
-- [ ] Preparation time set on the store
+- [ ] Branch's service mode set, with the right pickup channels
+- [ ] Branch address, map pin, phone and opening hours correct
+- [ ] Preparation time set on the branch
 - [ ] Additional charges reviewed for **Applies to**
 - [ ] Ready for Pickup notification enabled
 - [ ] Counter staff given the self-pickup permissions

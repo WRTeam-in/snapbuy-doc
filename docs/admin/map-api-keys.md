@@ -12,8 +12,8 @@ Maps do real work in SnapBuy, not decoration:
 
 - Customers pick their delivery address on a map
 - You draw [zone](/docs/admin/zones) polygons on a map
-- You drop the [store](/docs/admin/stores) pin on a map
-- **Road distance between store and customer sets the quick-channel delivery charge**
+- You drop the [branch](/docs/admin/branches) pin on a map
+- **Road distance between branch and customer sets the quick-channel delivery charge**
 
 ![API credentials page](/images/panel/map-api-page.png)
 
@@ -31,7 +31,7 @@ It needs no keys, no billing and no Google account, and the Setup Guide's Map st
 :::
 
 :::warning OpenStreetMap uses a shared public routing service
-Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a store doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.
+Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a branch doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.
 :::
 
 ## Using Google Maps
@@ -40,8 +40,8 @@ Google needs **two separate keys**. This trips people up constantly.
 
 | SnapBuy field | Google API | Used for |
 | --- | --- | --- |
-| **Map API Key** | Maps JavaScript API | Rendering the map tiles you see when drawing zones and pinning stores |
-| **Place API Key** | Places API, Places API (New), Geocoding API, Distance Matrix API | Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge |
+| **Map API Key** | Maps JavaScript API | Rendering the map tiles you see when drawing zones and pinning branches |
+| **Place API Key** | Places API, Places API (New), Geocoding API, Distance Matrix API | Address search, autocomplete, and measuring the branch-to-customer distance that sets the quick-channel delivery charge |
 
 :::danger Distance Matrix belongs to the Place key, not the Map key
 SnapBuy sends the Distance Matrix request using the **Place API Key**. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
@@ -71,7 +71,7 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
 Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. SnapBuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.
 
 :::danger Billing must be enabled
-Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.
+Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small shops, but the account must still exist.
 :::
 
 ### Restrict the keys
@@ -131,7 +131,7 @@ If your server's IP changes, the key stops working until you update the restrict
 :::
 
 :::warning Restrict, but test afterwards
-Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the store** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.
+Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the branch** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.
 
 Restriction changes can take a few minutes to take effect.
 :::

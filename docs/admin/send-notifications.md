@@ -23,8 +23,8 @@ Campaign tools for reaching customers directly — as opposed to the automatic m
 | **Image** | Optional rich media |
 | **Target** | Where a tap takes the customer — a product, category, or nothing |
 
-:::danger Sends are queued — no cron, no campaign
-Campaigns are dispatched as queued jobs. Without the [cron job](/docs/admin/cron-jobs), the panel reports the campaign as sent and **nothing is delivered**. Confirm the heartbeat is green under **Settings → Cron Jobs** first.
+:::danger Sends are queued — no worker, no campaign
+Campaigns are dispatched as queued jobs. Without a [queue worker](/docs/admin/cron-jobs#the-queue-worker), the panel reports the campaign as sent and **nothing is delivered**. Confirm **Pending Jobs** is not climbing under **Settings → Cron Jobs** first.
 :::
 
 :::danger There is no unsend
@@ -103,7 +103,7 @@ Customers whose language you have not written for receive whatever you typed. If
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Reported sent, nothing received | Queue not processed | Check the [cron job](/docs/admin/cron-jobs) |
+| Reported sent, nothing received | No queue worker running | Check the [queue worker](/docs/admin/cron-jobs#the-queue-worker) |
 | Push fails, email works | Firebase service account missing | Check `config/firebase.json` |
 | Email fails, push works | SMTP misconfigured | Check [SMTP Settings](/docs/admin/smtp-settings) |
 | Delivered to some customers only | Others revoked notification permission | Nothing to fix — expected |

@@ -46,8 +46,8 @@
     </div>
 
     <div class="admonition admonition--danger">
-      <p class="admonition__title">Sends are queued — no cron, no campaign</p>
-      <p>Campaigns are dispatched as queued jobs. Without the <a href="../admin/cron-jobs.html">cron job</a>, the panel reports the campaign as sent and <strong>nothing is delivered</strong>. Confirm the heartbeat is green under <strong>Settings → Cron Jobs</strong> first.</p>
+      <p class="admonition__title">Sends are queued &mdash; no worker, no campaign</p>
+      <p>Campaigns are dispatched as queued jobs. Without a <a href="../admin/cron-jobs.html#the-queue-worker">queue worker</a>, the panel reports the campaign as sent and <strong>nothing is delivered</strong>. Confirm <strong>Pending Jobs</strong> is not climbing under <strong>Settings → Cron Jobs</strong> first.</p>
     </div>
 
     <div class="admonition admonition--danger">
@@ -132,7 +132,7 @@
     <table>
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
-        <tr><td>Reported sent, nothing received</td><td>Queue not processed</td><td>Check the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
+        <tr><td>Reported sent, nothing received</td><td>No queue worker running</td><td>Check the <a href="../admin/cron-jobs.html#the-queue-worker">queue worker</a></td></tr>
         <tr><td>Push fails, email works</td><td>Firebase service account missing</td><td>Check <code>config/firebase.json</code></td></tr>
         <tr><td>Email fails, push works</td><td>SMTP misconfigured</td><td>Check <a href="../admin/smtp-settings.html">SMTP Settings</a></td></tr>
         <tr><td>Delivered to some customers only</td><td>Others revoked notification permission</td><td>Nothing to fix — expected</td></tr>

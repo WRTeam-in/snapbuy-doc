@@ -36,7 +36,7 @@ Grouped by area. The same underlying event often exists separately per audience 
 | `order_item_cancelled_customer` | Customer — item cancelled |
 | `order_item_returned_customer` | Customer — return processed |
 | `order_item_delivery_estimate_customer` | Customer — the promised delivery date changed |
-| `order_status_ready_for_pickup_customer` | Customer — a [self pickup](/docs/admin/self-pickup) order is waiting at the store |
+| `order_status_ready_for_pickup_customer` | Customer — a [self pickup](/docs/admin/self-pickup) order is waiting at the branch |
 | `payment_failed_customer` | Customer — payment failed |
 
 #### Estimated delivery date

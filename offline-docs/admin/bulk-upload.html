@@ -41,11 +41,11 @@
     <img src="../images/panel/bulk-upload-page.png" alt="Bulk upload page">
 
     <h2 id="always-start-from-the-generated-sample">Always start from the generated sample</h2>
-    <p>The page generates a sample <code>.xlsx</code> built for <strong>your</strong> installation — your languages, your attributes, your custom fields, and one column group per <a href="../admin/stores.html">store</a>.</p>
+    <p>The page generates a sample <code>.xlsx</code> built for <strong>your</strong> installation — your languages, your attributes, your custom fields, and one column group per <a href="../admin/branches.html">branch</a>.</p>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Never build the file yourself</p>
-      <p>The columns are generated dynamically. A spreadsheet from another installation, or from an older version of yours, will have the wrong store columns and the wrong language columns. Download a fresh sample every time.</p>
+      <p>The columns are generated dynamically. A spreadsheet from another installation, or from an older version of yours, will have the wrong branch columns and the wrong language columns. Download a fresh sample every time.</p>
     </div>
 
     <p>The sample includes example rows and a notes sheet explaining each column, plus dropdown validation on the cells that accept fixed values.</p>
@@ -74,16 +74,16 @@
       <p>A t-shirt in three sizes is <strong>three rows sharing one handle</strong>, not three products. Get this wrong and you create three separate products that customers see as unrelated items.</p>
     </div>
 
-    <h2 id="per-store-columns">Per-store columns</h2>
-    <p>Because stock and price are held per store, the sheet carries a column group for <strong>each</strong> store:</p>
+    <h2 id="per-branch-columns">Per-branch columns</h2>
+    <p>Because stock and price are held per branch, the sheet carries a column group for <strong>each</strong> branch:</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
       <tbody>
-        <tr><td><strong>Listed</strong></td><td>Whether the product is sold at this store</td></tr>
-        <tr><td><strong>Price</strong></td><td>Selling price at this store</td></tr>
-        <tr><td><strong>Discounted Price</strong></td><td>Offer price at this store</td></tr>
-        <tr><td><strong>Purchase Price</strong></td><td>Your cost at this store</td></tr>
+        <tr><td><strong>Listed</strong></td><td>Whether the product is sold at this branch</td></tr>
+        <tr><td><strong>Price</strong></td><td>Selling price at this branch</td></tr>
+        <tr><td><strong>Discounted Price</strong></td><td>Offer price at this branch</td></tr>
+        <tr><td><strong>Purchase Price</strong></td><td>Your cost at this branch</td></tr>
         <tr><td><strong>Stock Status</strong></td><td>In stock / out of stock</td></tr>
         <tr><td><strong>Available Qty</strong></td><td>Units on hand</td></tr>
         <tr><td><strong>Min Alert</strong></td><td>Low-stock threshold</td></tr>
@@ -92,17 +92,80 @@
     </table>
     </div>
 
-    <img src="../images/panel/bulk-upload-store-columns.png" alt="Per-store columns in the bulk sheet">
+    <img src="../images/panel/bulk-upload-branch-columns.png" alt="Per-branch columns in the bulk sheet">
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">A product left unlisted everywhere is invisible</p>
-      <p>Importing a product without setting <strong>Listed</strong> at any store creates a catalogue entry no customer can ever see. If products "imported successfully but do not appear", check the Listed column first.</p>
+      <p>Importing a product without setting <strong>Listed</strong> at any branch creates a catalogue entry no customer can ever see. If products "imported successfully but do not appear", check the Listed column first.</p>
     </div>
 
     <div class="admonition admonition--warning">
-      <p class="admonition__title">Adding a store changes the sheet</p>
-      <p>Create a new <a href="../admin/stores.html">store</a> and the sample gains a new column group. An older file will not contain it, so the new store gets nothing. Re-download after any store change.</p>
+      <p class="admonition__title">Adding a branch changes the sheet</p>
+      <p>Create a new <a href="../admin/branches.html">branch</a> and the sample gains a new column group. An older file will not contain it, so the new branch gets nothing. Re-download after any branch change.</p>
     </div>
+
+    <h2 id="addons-sheet">Addons sheet</h2>
+
+    <p>A product marked as a <a href="../admin/food-items-addons.html">food item</a> carries a menu of addon groups and options. The generated workbook has a <strong>second tab, Addons</strong>, for exactly that &mdash; so a whole menu can be built in a spreadsheet instead of typed in the panel.</p>
+
+    <img src="../images/panel/bulk-upload-addons-sheet.png" alt="The Addons tab of the bulk sheet">
+
+    <h3 id="how-the-tab-is-read">How the tab is read</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><strong>One row per option</strong></td><td>A group offering four toppings is four rows, not one</td></tr>
+        <tr><td><strong>Group columns repeat</strong></td><td>Group Name, Selection Type, Required, Min/Max Select, Max Qty Per Option and Group Status are repeated on every option row of that group</td></tr>
+        <tr><td><strong>The first row of a group wins</strong></td><td>A different value further down is reported as an error, never silently ignored</td></tr>
+        <tr><td><strong>Keep rows together</strong></td><td>A product&rsquo;s rows together, and a group&rsquo;s rows together inside it. Sheet order is the order the customer sees.</td></tr>
+        <tr><td><strong>Which product</strong></td><td><strong>Product Name</strong> must match a Product Name on the Products sheet exactly. On update the <strong>Product ID</strong> identifies it, and the name beside it is only there to read.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="columns">Columns</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Accepts</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Group Name</strong></td><td>One column per language; the default language is required</td></tr>
+        <tr><td><strong>Selection Type</strong></td><td><code>Radio</code> (pick one) or <code>Checkbox</code> (pick several)</td></tr>
+        <tr><td><strong>Required</strong></td><td>Yes / No</td></tr>
+        <tr><td><strong>Min Select</strong> / <strong>Max Select</strong></td><td>Numbers; <code>0</code> means no bound</td></tr>
+        <tr><td><strong>Max Qty Per Option</strong></td><td>1&ndash;50</td></tr>
+        <tr><td><strong>Group Status</strong></td><td>Active / Inactive</td></tr>
+        <tr><td><strong>Option Name</strong></td><td>One column per language; the default language is required</td></tr>
+        <tr><td><strong>Option Image (path or URL)</strong></td><td>Same image rules as the Products sheet</td></tr>
+        <tr><td><strong>Diet Type</strong></td><td>Veg / non-veg marker for the option</td></tr>
+        <tr><td><strong>Linked Product SKU</strong></td><td>Point the option at a catalogue variant. On update a <strong>Linked Variant ID</strong> column sits beside it and wins when filled, because an SKU may be blank.</td></tr>
+        <tr><td><strong>Price From</strong></td><td><code>Custom</code> or <code>Follow product</code></td></tr>
+        <tr><td><strong>Free</strong></td><td>Yes / No</td></tr>
+        <tr><td><strong>Option Status</strong></td><td>Active / Inactive</td></tr>
+        <tr><td><strong>[Branch] Addon Offered / Addon Price / Addon Offer Price</strong></td><td>One group of three per branch, exactly like the product pricing columns</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A product listed here has its whole menu replaced</p>
+      <p>Every group and option for that product is rebuilt from these rows. <strong>Anything you do not list is removed from it.</strong> Export, edit, re-upload &mdash; never type a partial sheet by hand.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Leaving the tab alone changes nothing</p>
+      <p>A product you do not list keeps the addons it has. An empty Addons tab means &ldquo;do not touch any menu&rdquo;, so you can use the workbook for ordinary product edits and ignore the second tab entirely.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Do not delete the Group ID and Option ID columns on update</p>
+      <p>A live cart stores its addons by option ID. A sheet that cannot send those ids back recreates every option on every upload, which empties the cart of every customer holding that dish. Export, edit in place, upload.</p>
+    </div>
+
+    <p>Limits per upload: <strong>4000 addon rows</strong> across at most <strong>500 dishes</strong>.</p>
+
 
     <h2 id="languages">Languages</h2>
     <p>Translatable fields — name, description and others — appear once per active <a href="../admin/languages.html">language</a>.</p>
@@ -133,7 +196,7 @@
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Test with five rows before importing five hundred</p>
-      <p>Import a handful first, check the result in the catalogue — pricing, stock, images, the right store, the right language — then run the full file. Fixing five bad rows is trivial; unpicking five hundred is not.</p>
+      <p>Import a handful first, check the result in the catalogue — pricing, stock, images, the right branch, the right language — then run the full file. Fixing five bad rows is trivial; unpicking five hundred is not.</p>
     </div>
 
     <h2 id="bulk-update">Bulk Update</h2>
@@ -141,7 +204,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Bulk Update overwrites — there is no undo</p>
-      <p>A blank cell can clear a value, and a mistyped price applies immediately to every affected product across every store.</p>
+      <p>A blank cell can clear a value, and a mistyped price applies immediately to every affected product across every branch.</p>
       <p>Before any bulk update:</p>
       <ol>
         <li>Take a <a href="../installation/database-migration.html#routine-backups">database backup</a></li>
@@ -160,7 +223,7 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">No cron, no import</p>
-      <p>The import is processed by the queue. Without the <a href="../admin/cron-jobs.html">cron job</a> running, the file uploads and reports as accepted but nothing is ever created. Check the cron heartbeat and the pending-jobs count under <strong>Settings → Cron Jobs</strong> if an import appears to do nothing.</p>
+      <p>The import is processed by the queue. Without a <a href="../admin/cron-jobs.html#the-queue-worker">queue worker</a> running, the file uploads and reports as accepted but nothing is ever created. Check the pending-jobs count under <strong>Settings → Cron Jobs</strong> if an import appears to do nothing.</p>
     </div>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
@@ -170,10 +233,10 @@
       <tbody>
         <tr><td>Upload rejected</td><td>Wrong format, or over 20 MB</td><td>Use <code>.xlsx</code> under 20 MB; split the file</td></tr>
         <tr><td>Column errors on a valid-looking file</td><td>Sheet from another installation or an older version</td><td>Download a fresh sample</td></tr>
-        <tr><td>Import accepted, nothing appears</td><td>Queue not processed</td><td>Set up the <a href="../admin/cron-jobs.html">cron job</a></td></tr>
-        <tr><td>Products created but invisible</td><td>Not listed at any store</td><td>Set the Listed column</td></tr>
+        <tr><td>Import accepted, nothing appears</td><td>No queue worker running</td><td>Set one up from the <strong>Queue Worker</strong> card on <a href="../admin/cron-jobs.html#the-queue-worker">Cron Jobs</a></td></tr>
+        <tr><td>Products created but invisible</td><td>Not listed at any branch</td><td>Set the Listed column</td></tr>
         <tr><td>Variants became separate products</td><td>Handle not shared across rows</td><td>Use one handle per product</td></tr>
-        <tr><td>Prices wrong at one store only</td><td>Edited the wrong store's column group</td><td>Check the column headings</td></tr>
+        <tr><td>Prices wrong at one branch only</td><td>Edited the wrong branch's column group</td><td>Check the column headings</td></tr>
         <tr><td>SKUs lost leading zeros</td><td>Spreadsheet auto-formatting</td><td>Format the column as Text</td></tr>
         <tr><td>Images missing</td><td>Referenced files not uploaded</td><td>Upload first, then import</td></tr>
         <tr><td>Update wiped values</td><td>Blank cells overwrote them</td><td>Restore from backup</td></tr>
@@ -186,7 +249,7 @@
       <li class="task-item"><input type="checkbox" disabled> Fresh sample downloaded from <strong>your</strong> panel</li>
       <li class="task-item"><input type="checkbox" disabled> Backup taken before any bulk update</li>
       <li class="task-item"><input type="checkbox" disabled> Handles shared correctly across variant rows</li>
-      <li class="task-item"><input type="checkbox" disabled> Listed and price set for every store that should sell the product</li>
+      <li class="task-item"><input type="checkbox" disabled> Listed and price set for every branch that should sell the product</li>
       <li class="task-item"><input type="checkbox" disabled> Default language filled</li>
       <li class="task-item"><input type="checkbox" disabled> Product type correct</li>
       <li class="task-item"><input type="checkbox" disabled> Images uploaded first</li>

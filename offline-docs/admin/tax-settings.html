@@ -137,8 +137,8 @@
     <table>
       <thead><tr><th>Value</th><th>Applies when</th></tr></thead>
       <tbody>
-        <tr><td><strong>Intra-state</strong></td><td>Buyer is in the same region as the store</td></tr>
-        <tr><td><strong>Inter-state</strong></td><td>Buyer is in a different region from the store</td></tr>
+        <tr><td><strong>Intra-state</strong></td><td>Buyer is in the same region as the branch</td></tr>
+        <tr><td><strong>Inter-state</strong></td><td>Buyer is in a different region from the branch</td></tr>
         <tr><td><strong>Any</strong></td><td>Either case — use this where the distinction does not exist</td></tr>
       </tbody>
     </table>
@@ -174,7 +174,7 @@
 
     <h2 id="how-a-rule-is-chosen">How a rule is chosen</h2>
 
-    <p>When SnapBuy needs a rate, it works out the <strong>seller's jurisdiction from the store</strong> — the store belongs to a zone, and the zone carries the country and region. Tax here is <strong>origin-based</strong>: the store's location narrows the rule, not the customer's.</p>
+    <p>When SnapBuy needs a rate, it works out the <strong>seller's jurisdiction from the branch</strong> — the branch belongs to a zone, and the zone carries the country and region. Tax here is <strong>origin-based</strong>: the branch's location narrows the rule, not the customer's.</p>
 
     <p>It then scores every rule for that country and category, and picks the highest:</p>
 
@@ -201,7 +201,7 @@
 
     <p>On the product form, set <strong>Tax Category</strong>. Leave it as <strong>No tax</strong> for anything exempt.</p>
 
-    <p>Whether the price you typed already includes tax is a separate switch, set <strong>per store</strong> on the variant:</p>
+    <p>Whether the price you typed already includes tax is a separate switch, set <strong>per branch</strong> on the variant:</p>
 
     <div class="table-wrap">
     <table>
@@ -215,7 +215,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">Inclusive pricing is a property of the price, not the rule</p>
-      <p>Two stores can sell the same product with the same tax category, one quoting tax-inclusive and the other tax-exclusive. That is why the switch sits on the store's price row and not on the tax rule.</p>
+      <p>Two branches can sell the same product with the same tax category, one quoting tax-inclusive and the other tax-exclusive. That is why the switch sits on the branch's price row and not on the tax rule.</p>
     </div>
 
     <p>Bulk assignment of tax categories is available through <a href="../admin/bulk-upload.html">Bulk Upload &amp; Update</a>.</p>
@@ -250,11 +250,11 @@
 
     <h2 id="seller-tax-registration">Seller tax registration</h2>
 
-    <p>Each <a href="../admin/stores.html">store</a> can hold its own <strong>tax number</strong> and <strong>registration type</strong> — a GSTIN, VAT number or equivalent. These are printed on invoices for the store that fulfilled the order.</p>
+    <p>Each <a href="../admin/branches.html">branch</a> can hold its own <strong>tax number</strong> and <strong>registration type</strong> — a GSTIN, VAT number or equivalent. These are printed on invoices for the branch that fulfilled the order.</p>
 
     <div class="admonition admonition--tip">
-      <p class="admonition__title">Set it per store, not globally</p>
-      <p>The store is the seller for tax purposes. An installation with outlets in two states needs a different registration number on each, and putting it on the store is what makes that work.</p>
+      <p class="admonition__title">Set it per branch, not globally</p>
+      <p>The branch is the seller for tax purposes. An installation with outlets in two states needs a different registration number on each, and putting it on the branch is what makes that work.</p>
     </div>
 
     <h2 id="worked-example--india">Worked example — India</h2>
@@ -271,7 +271,7 @@
       <li><strong>Delivery charge</strong>: Is taxable ON, Tax category <code>Standard 18</code></li>
     </ol>
 
-    <p>A customer in the same state as the store is charged CGST 9% + SGST 9%. A customer in another state is charged IGST 18%. Both totals are 18%, so the cart figure never changes at checkout.</p>
+    <p>A customer in the same state as the branch is charged CGST 9% + SGST 9%. A customer in another state is charged IGST 18%. Both totals are 18%, so the cart figure never changes at checkout.</p>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
 
@@ -283,7 +283,7 @@
         <tr><td>No tax on delivery</td><td>Charge not marked taxable, or no category on it</td><td>Enable <strong>Is taxable</strong> and pick a category</td></tr>
         <tr><td>Tax changes between cart and checkout</td><td>Intra and inter rules total different percentages</td><td>Make both add up to the same rate</td></tr>
         <tr><td>Wrong rate applied</td><td>A more specific regional rule exists, or two rules tie</td><td>Check the region and place of supply on each rule</td></tr>
-        <tr><td>Tax appears twice in the price</td><td>Price marked inclusive but tax also added</td><td>Check <strong>Price includes tax</strong> on the store's price row</td></tr>
+        <tr><td>Tax appears twice in the price</td><td>Price marked inclusive but tax also added</td><td>Check <strong>Price includes tax</strong> on the branch's price row</td></tr>
         <tr><td>Rule saved but never used</td><td>Rule inactive, or its category is inactive</td><td>Activate both</td></tr>
         <tr><td>Correct rate, wrong split</td><td>Components do not match the jurisdiction</td><td>Edit the rule's component rows</td></tr>
       </tbody>
@@ -298,9 +298,9 @@
       <li class="task-item"><input type="checkbox" disabled> Intra and inter rules total the same percentage</li>
       <li class="task-item"><input type="checkbox" disabled> Regions added where a state-level rate differs</li>
       <li class="task-item"><input type="checkbox" disabled> Every taxable product has a tax category</li>
-      <li class="task-item"><input type="checkbox" disabled> <strong>Price includes tax</strong> set correctly per store</li>
+      <li class="task-item"><input type="checkbox" disabled> <strong>Price includes tax</strong> set correctly per branch</li>
       <li class="task-item"><input type="checkbox" disabled> Delivery, surge and additional charges marked taxable and categorised</li>
-      <li class="task-item"><input type="checkbox" disabled> Store tax number and registration type filled in</li>
+      <li class="task-item"><input type="checkbox" disabled> Branch tax number and registration type filled in</li>
       <li class="task-item"><input type="checkbox" disabled> A test order shows the expected tax lines</li>
     </ul>
   </main>

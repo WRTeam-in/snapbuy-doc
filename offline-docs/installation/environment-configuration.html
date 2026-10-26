@@ -147,6 +147,7 @@ TRUSTED_PROXIES=10.0.0.5,192.168.1.0/24
       <thead><tr><th>Key</th><th>Recommended</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td><code>QUEUE_CONNECTION</code></td><td><code>database</code></td><td>Order emails, push notifications, referral credit and bulk imports all run through the queue</td></tr>
+        <tr><td><code>QUEUE_SCHEDULER_FALLBACK</code></td><td><code>false</code></td><td>Supervisor available on your server &rarr; <code>false</code>. No Supervisor &rarr; <code>true</code>, and the minute cron drains the queue instead. See <a href="../admin/cron-jobs.html#the-queue-worker">the queue worker</a>.</td></tr>
         <tr><td><code>CACHE_DRIVER</code></td><td><code>file</code>, or <code>redis</code> at scale</td><td></td></tr>
         <tr><td><code>SESSION_DRIVER</code></td><td><code>file</code></td><td></td></tr>
         <tr><td><code>SESSION_LIFETIME</code></td><td><code>120</code></td><td>Minutes before an idle admin is signed out</td></tr>
@@ -155,8 +156,9 @@ TRUSTED_PROXIES=10.0.0.5,192.168.1.0/24
     </div>
 
     <div class="admonition admonition--danger">
-      <p class="admonition__title">The queue does nothing without the scheduler</p>
-      <p>Setting <code>QUEUE_CONNECTION</code> only decides where jobs are stored. They are processed by the queue worker that the cron scheduler starts every minute. Without the cron job, jobs queue up and are never delivered while the panel reports success. See <a href="../admin/cron-jobs.html">Cron Job Setup</a>.</p>
+      <p class="admonition__title">The queue does nothing without a worker</p>
+      <p>Setting <code>QUEUE_CONNECTION</code> only decides where jobs are stored. Something still has to run them, and that is a <strong>queue worker</strong> kept alive by Supervisor &mdash; not the cron scheduler. With no worker, jobs pile up and are never delivered while the panel reports success.</p>
+      <p><strong>Settings → Cron Jobs</strong> prints the worker command and a ready-made Supervisor block for your server. See <a href="../admin/cron-jobs.html#the-queue-worker">Cron Job Setup</a>.</p>
     </div>
 
     <h2 id="mail">Mail</h2>

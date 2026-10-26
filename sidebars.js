@@ -46,7 +46,7 @@ const sidebars = {
           items: [
             "admin/countries",
             "admin/zones",
-            "admin/stores",
+            "admin/branches",
             "admin/home-builder",
             "admin/page-builder",
             "admin/smtp-settings",
@@ -94,6 +94,8 @@ const sidebars = {
             "admin/wallet-withdrawals",
             "admin/delivery-boy-portal",
             "admin/spin-wheel",
+            "admin/products",
+            "admin/food-items-addons",
             "admin/bulk-upload",
             "admin/reports",
             "admin/send-notifications",

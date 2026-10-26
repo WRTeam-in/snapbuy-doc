@@ -35,7 +35,7 @@ Plus **Cancelled**, and **Returned** after delivery.
 | Status | Quick | eCommerce | Meaning |
 | --- | :---: | :---: | --- |
 | Payment Pending | ✓ | ✓ | Awaiting payment confirmation |
-| Received | ✓ | ✓ | Accepted by the store |
+| Received | ✓ | ✓ | Accepted by the branch |
 | **Preparing** | ✓ | — | Being picked and packed |
 | **Ready for Pickup** | ✓ | — | Waiting for the rider |
 | **Picked Up** | ✓ | — | Rider has collected it |
@@ -47,7 +47,7 @@ Plus **Cancelled**, and **Returned** after delivery.
 | **Returned** | — | ✓ | Returned after delivery |
 
 :::info Why quick has three extra statuses
-Quick commerce is fulfilled from a nearby [store](/docs/admin/stores) with a rider who physically collects the order, so *Preparing / Ready for Pickup / Picked Up* give the store and the rider a shared view of the handover. eCommerce goes through packing and shipping instead.
+Quick commerce is fulfilled from a nearby [branch](/docs/admin/branches) with a rider who physically collects the order, so *Preparing / Ready for Pickup / Picked Up* give the branch and the rider a shared view of the handover. eCommerce goes through packing and shipping instead.
 :::
 
 :::warning Do not expect Processed or Shipped on a quick order
@@ -78,7 +78,7 @@ Assign a rider from the order. On assignment:
 :::warning Riders only see a restricted set of statuses
 In their own portal, a rider can move a **quick** order through *Ready for Pickup → Picked Up → Out For Delivery → Delivered*, and an **eCommerce** order only between *Out For Delivery* and *Delivered*.
 
-Everything earlier in the flow is the store's job, done from this panel. A rider cannot mark an order Received or Preparing.
+Everything earlier in the flow is the branch's job, done from this panel. A rider cannot mark an order Received or Preparing.
 :::
 
 :::danger Notifications need cron and Firebase
@@ -98,7 +98,7 @@ It is the cheapest proof of delivery you have and settles most "it never arrived
 Orders can be cancelled up to delivery. Cancellation triggers `order_item_cancelled_customer`, and any refund follows your [payment gateway](/docs/admin/payment-gateway) or goes to the customer's [wallet](/docs/admin/wallet-withdrawals).
 
 :::warning Cancelling releases reserved stock
-Stock held against the order returns to available at the [store](/docs/admin/stores#per-store-stock-and-pricing) it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.
+Stock held against the order returns to available at the [branch](/docs/admin/branches#per-branch-stock-and-pricing) it was reserved from. If stock figures look wrong after a busy day, check for orders cancelled mid-flow.
 :::
 
 ## Per-item status
@@ -119,7 +119,7 @@ Full detail: [Shiprocket](/docs/admin/shiprocket-addon).
 
 ## Self pickup orders
 
-A self-pickup order is collected by the customer at the store, so it walks a shorter flow and has no rider: **Received → Preparing → Ready for Pickup → Collected**. They are listed on their own page, **Orders → Self Pickup**.
+A self-pickup order is collected by the customer at the branch, so it walks a shorter flow and has no rider: **Received → Preparing → Ready for Pickup → Collected**. They are listed on their own page, **Orders → Self Pickup**.
 
 Full detail: [Self Pickup](/docs/admin/self-pickup).
 
@@ -154,5 +154,5 @@ Changing the prefix later does not renumber existing invoices. Set it during ini
 | Expected status missing | Wrong channel's flow | Quick and eCommerce use different statuses |
 | Rider cannot advance the status | Riders only get a restricted set | Move it from the panel |
 | Customer not notified of status changes | `order_item_status_customer` disabled | Enable it in [Notification Settings](/docs/admin/notification-settings) |
-| Stock wrong after cancellations | Reserved stock released | Verify at the store's variant record |
+| Stock wrong after cancellations | Reserved stock released | Verify at the branch's variant record |
 | Cannot mark delivered | Delivery OTP required and not entered | Get the code from the customer, or disable OTP |

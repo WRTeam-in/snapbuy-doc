@@ -14,7 +14,7 @@ An audit trail of what changed in the panel, who changed it, and when.
 
 ## What is recorded
 
-SnapBuy logs create, update and delete actions on the records that matter — products, orders, stores, zones, countries, home layouts, promo codes, staff users and settings.
+SnapBuy logs create, update and delete actions on the records that matter — products, orders, branches, zones, countries, home layouts, promo codes, staff users and settings.
 
 Each entry shows:
 
@@ -33,14 +33,14 @@ Each entry shows:
 - *"When did this stop working?"* — line the timestamp up against a settings change
 - *"Did that staff member do what they say they did?"* — for genuine disputes
 
-Most operational mysteries in a busy store are answered here faster than anywhere else.
+Most operational mysteries in a busy branch are answered here faster than anywhere else.
 :::
 
 A worked example: customers report wrong delivery charges starting Tuesday afternoon. Filter the log to zone changes, find the edit at 2:15 PM Tuesday, see exactly which field moved and who moved it, and revert it.
 
 ## Filtering
 
-Narrow by user, action type, record type and date range. Use it before scrolling — a busy store generates a lot of entries.
+Narrow by user, action type, record type and date range. Use it before scrolling — a busy branch generates a lot of entries.
 
 ## Limits worth knowing
 
