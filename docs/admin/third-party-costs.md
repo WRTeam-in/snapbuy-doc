@@ -40,18 +40,25 @@ The trade-off is reliability: the public routing endpoint is rate-limited and ca
 
 ### Google Maps Platform — paid, with a monthly free allowance
 
-Google changed its pricing model in March 2025. The old **$200 monthly credit was replaced** by a per-API free allowance of **10,000 calls per month, per SKU**.
+Google changed its pricing model in March 2025. The old **$200 monthly credit was replaced** by a per-API free allowance of **10,000 calls per month, per SKU** — with a smaller allowance on the premium SKUs, as below.
 
 | API SnapBuy uses | Free per month | Cost after the free tier (per 1,000 calls) |
 | --- | --- | --- |
 | Maps JavaScript API | 10,000 | from $7.00 |
-| Places Autocomplete | 10,000 | from $2.83 |
-| Place Details | 10,000 | from $5.00 |
+| Places Autocomplete (New) | 10,000 | from $2.83 |
+| Place Details (New) | 1,000 | from $20.00 |
 | Geocoding | 10,000 | from $5.00 |
-| Distance Matrix | 10,000 | from $5.00 |
-| Directions | 10,000 | from $5.00 |
+| Routes — Compute Route Matrix | 10,000 | from $5.00 |
 
 Rates fall as volume rises. Figures above are the entry band.
+
+:::info Why Place Details has the smallest allowance
+Google bills Place Details by the most expensive **field band** you ask for. SnapBuy's lookup includes the place's website URL, which sits in Google's **Enterprise** band, so the call lands on the Place Details Enterprise SKU — 1,000 free a month rather than 10,000.
+:::
+
+:::info Distance is a Routes API call now
+SnapBuy measures road distance with the Routes API (`computeRouteMatrix`), not the legacy Distance Matrix or Directions APIs. Route Matrix is billed **per element** — origins × destinations — and SnapBuy sends one origin and one destination, so one lookup is one element. See [Map & API Keys](/docs/admin/map-api-keys#using-google-maps).
+:::
 
 :::warning A billing account is mandatory even inside the free tier
 Google refuses Maps requests from a project with no billing account attached — the map renders grey with a "for development purposes only" watermark. You must attach a card even if you never exceed the free allowance.
@@ -61,7 +68,7 @@ Google refuses Maps requests from a project with no billing account attached —
 In **Billing → Budgets & alerts**, create a budget with email notifications. It does not cap spending, but it tells you within hours instead of at the end of the month. Also restrict every key — an unrestricted key found in your page source can be used by anyone and billed to you.
 :::
 
-**Rough sizing.** Each customer checkout that uses address autocomplete plus a distance lookup consumes roughly one Autocomplete, one Place Details and one Distance Matrix call. At 10,000 free calls per SKU you can serve on the order of 10,000 address selections a month before any charge.
+**Rough sizing.** Each customer checkout that uses address autocomplete plus a distance lookup consumes roughly one Autocomplete request, one Place Details lookup and one Route Matrix element. Place Details has the smallest free allowance, so that is the one that runs out first — expect charges past roughly **1,000 address selections a month**, even though the other SKUs each give you 10,000.
 
 ## Firebase
 
@@ -102,13 +109,15 @@ Every OTP is a paid message, and an automated signup script can generate thousan
 
 Optional. Powers the "Generate with AI" buttons for product descriptions, blog content, SEO meta text and automatic field translation. With no key those buttons do nothing and everything is written by hand — nothing else in SnapBuy is affected.
 
-SnapBuy uses the **Generative Language API** with the `gemini-2.5-flash` model.
+SnapBuy uses the **Generative Language API** with the `gemini-3.6-flash` model.
 
 | | |
 | --- | --- |
-| **Free tier** | Yes — `gemini-2.5-flash` has a free tier suitable for light use |
-| **Paid input** | About $0.30 per 1M tokens |
-| **Paid output** | About $2.50 per 1M tokens |
+| **Free tier** | Yes — `gemini-3.6-flash` has a free tier suitable for light use |
+| **Paid input** | About $0.75 per 1M tokens |
+| **Paid output** | About $3.75 per 1M tokens, thinking tokens included |
+
+Google has published a rise to $1.50 / $7.50 per 1M tokens from 1 January 2027.
 
 :::tip Token cost in practice
 A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most branches never leave the free tier.

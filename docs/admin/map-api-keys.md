@@ -41,10 +41,12 @@ Google needs **two separate keys**. This trips people up constantly.
 | SnapBuy field | Google API | Used for |
 | --- | --- | --- |
 | **Map API Key** | Maps JavaScript API | Rendering the map tiles you see when drawing zones and pinning branches |
-| **Place API Key** | Places API, Places API (New), Geocoding API, Distance Matrix API | Address search, autocomplete, and measuring the branch-to-customer distance that sets the quick-channel delivery charge |
+| **Place API Key** | Places API (New), Geocoding API, Routes API | Address search, autocomplete, and measuring the branch-to-customer distance that sets the quick-channel delivery charge |
 
-:::danger Distance Matrix belongs to the Place key, not the Map key
-SnapBuy sends the Distance Matrix request using the **Place API Key**. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
+:::danger Distance comes from the Routes API now, and it uses the Place key
+SnapBuy measures the branch-to-customer road distance with the **Routes API** (`computeRouteMatrix`), sent with the **Place API Key**. The old Distance Matrix API is no longer called at all.
+
+Enabling Routes against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.
 
 The symptom is "unable to fetch distance" at checkout on a panel where the maps clearly render fine.
 :::
@@ -60,15 +62,27 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
 3. **Enable billing** — Google refuses Maps requests without a billing account, even inside the free credit.
 4. Go to **APIs & Services → Library** and enable:
    - Maps JavaScript API
-   - Places API
    - Places API (New)
    - Geocoding API
-   - Distance Matrix API
-   - Directions API
+   - Routes API
 5. Go to **APIs & Services → Credentials → Create credentials → API key**.
 6. Create **two** keys and name them clearly.
 
-Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. SnapBuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.
+Those four are everything SnapBuy needs. It calls Google's **current** endpoints only — `places.googleapis.com/v1` for address search and `routes.googleapis.com` for distance — so the legacy services are **not** required:
+
+| Legacy service | Replaced by | Still needed? |
+| --- | --- | --- |
+| Places API (the original one) | Places API (New) | No |
+| Distance Matrix API | Routes API | No |
+| Directions API | Routes API | No |
+
+Places API and Places API (New) are listed as two separate services in the Library. Enable only **Places API (New)** — recent Google Cloud projects do not even offer the old one.
+
+:::warning Upgrading an existing SnapBuy? Enable Routes API
+Earlier SnapBuy versions called Distance Matrix and the legacy Places endpoints. This version does not. If your Google project was set up for the old pair, go to **APIs & Services → Library**, enable **Routes API** and **Places API (New)**, then add both to the Place key's API restrictions — otherwise delivery-charge lookups and address search stop working after the update, on a project that was perfectly correct before.
+
+The legacy services can be left enabled; they are simply never called. Turning them off is tidier and changes nothing.
+:::
 
 :::danger Billing must be enabled
 Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small shops, but the account must still exist.
@@ -100,7 +114,7 @@ https://yourstore.com/*
 
 #### Place API Key — restrict by IP address
 
-SnapBuy calls Places, Geocoding and Distance Matrix **from the server**, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.
+SnapBuy calls Places (New), Geocoding and Routes **from the server**, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.
 
 Restrict this key by **IP addresses** instead and enter your server's address. Modern VPS providers usually assign an **IPv6** address, so add that — and the IPv4 address too if your server has one.
 
@@ -113,7 +127,7 @@ In **APIs & Services → Credentials**, open the key, choose **IP addresses** un
 
 ![Place API key restricted by server IP address](/images/panel/map-key-restriction-ip.png)
 
-Under **API restrictions**, limit it to Places, Places (New), Geocoding and Distance Matrix.
+Under **API restrictions**, limit it to **Places API (New)**, **Geocoding API** and **Routes API**.
 
 :::danger Do not restrict the Place key by referrer
 It is the most common way to break delivery-charge calculation. Server-side requests carry no referrer, so the key is rejected — the map still draws, because that uses the other key, and the failure looks like a distance problem rather than a key problem.
@@ -131,7 +145,7 @@ If your server's IP changes, the key stops working until you update the restrict
 :::
 
 :::warning Restrict, but test afterwards
-Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the branch** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.
+Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — **then place a test order to an address a few kilometres from the branch** and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach the Routes API.
 
 Restriction changes can take a few minutes to take effect.
 :::
@@ -170,7 +184,7 @@ Add it only if you want the AI writing assistance.
 
 ### Enable only the Generative Language API
 
-SnapBuy calls a single endpoint — the **Generative Language API**, model `gemini-2.5-flash`.
+SnapBuy calls a single endpoint — the **Generative Language API**, model `gemini-3.6-flash`.
 
 In **APIs & Services → Library**, enable **Generative Language API** and nothing else. Then open the key under **Credentials** and, under **API restrictions**, choose **Restrict key** and select only that API.
 
@@ -204,8 +218,9 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 | Setup Guide Map step stays red | Provider is Google but only one key filled | Fill both Map and Place keys |
 | Grey map with a watermark | Billing not enabled on the Google project | Enable billing |
 | "This page can't load Google Maps correctly" | Required API not enabled, or the Map key's domain restriction does not cover this hostname | Enable the APIs; add the hostname to the Map key's website restrictions |
-| Map loads, address search does nothing | Places API (New) not enabled, Places API not enabled, or Place key missing | Enable both Places services; fill the Place key |
-| "Unable to fetch distance" at checkout, but maps render fine | Distance Matrix not enabled, or the Place key is restricted by referrer instead of by server IP | Enable Distance Matrix; restrict the Place key by IP address |
+| Map loads, address search does nothing | **Places API (New)** not enabled, or Place key missing | Enable Places API (New); fill the Place key |
+| "Unable to fetch distance" at checkout, but maps render fine | **Routes API** not enabled, or the Place key is restricted by referrer instead of by server IP | Enable Routes API; restrict the Place key by IP address |
+| Distance and address search worked before the update, not after | The project has only the legacy Distance Matrix and Places APIs enabled | Enable **Routes API** and **Places API (New)**, and allow both on the Place key |
 | "Unable to fetch distance" on OpenStreetMap | Public OSRM routing service rate-limited | Switch to Google Maps, or host your own OSRM |
 | Distance lookups failed after a server migration | Place key still restricted to the old server IP | Update the IP restriction |
 | Unexpected Google bill | Unrestricted key in use elsewhere | Apply the restrictions above and regenerate the key |
@@ -215,9 +230,9 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 ## Checklist
 
 - [ ] Provider chosen
-- [ ] If Google: billing enabled, all six APIs enabled (including Places API (New))
+- [ ] If Google: billing enabled, all four APIs enabled — Maps JavaScript, Places API (New), Geocoding, Routes
 - [ ] If Google: **both** Map and Place keys entered
-- [ ] Distance Matrix enabled and allowed on the Place API Key
+- [ ] Routes API enabled and allowed on the Place API Key
 - [ ] Map key restricted by domain; Place key restricted by server IP
 - [ ] Budget alert configured
 - [ ] Zone map draws correctly

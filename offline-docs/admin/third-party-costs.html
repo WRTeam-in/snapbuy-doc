@@ -64,23 +64,32 @@
 
     <h3 id="google-maps-platform">Google Maps Platform — paid, with a monthly free allowance</h3>
 
-    <p>Google changed its pricing model in March 2025. The old <strong>$200 monthly credit was replaced</strong> by a per-API free allowance of <strong>10,000 calls per month, per SKU</strong>.</p>
+    <p>Google changed its pricing model in March 2025. The old <strong>$200 monthly credit was replaced</strong> by a per-API free allowance of <strong>10,000 calls per month, per SKU</strong> — with a smaller allowance on the premium SKUs, as below.</p>
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>API SnapBuy uses</th><th>Free per month</th><th>Cost after the free tier (per 1,000 calls)</th></tr></thead>
       <tbody>
         <tr><td>Maps JavaScript API</td><td>10,000</td><td>from $7.00</td></tr>
-        <tr><td>Places Autocomplete</td><td>10,000</td><td>from $2.83</td></tr>
-        <tr><td>Place Details</td><td>10,000</td><td>from $5.00</td></tr>
+        <tr><td>Places Autocomplete (New)</td><td>10,000</td><td>from $2.83</td></tr>
+        <tr><td>Place Details (New)</td><td>1,000</td><td>from $20.00</td></tr>
         <tr><td>Geocoding</td><td>10,000</td><td>from $5.00</td></tr>
-        <tr><td>Distance Matrix</td><td>10,000</td><td>from $5.00</td></tr>
-        <tr><td>Directions</td><td>10,000</td><td>from $5.00</td></tr>
+        <tr><td>Routes — Compute Route Matrix</td><td>10,000</td><td>from $5.00</td></tr>
       </tbody>
     </table>
     </div>
 
     <p>Rates fall as volume rises. Figures above are the entry band.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why Place Details has the smallest allowance</p>
+      <p>Google bills Place Details by the most expensive <strong>field band</strong> you ask for. SnapBuy's lookup includes the place's website URL, which sits in Google's <strong>Enterprise</strong> band, so the call lands on the Place Details Enterprise SKU — 1,000 free a month rather than 10,000.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Distance is a Routes API call now</p>
+      <p>SnapBuy measures road distance with the Routes API (<code>computeRouteMatrix</code>), not the legacy Distance Matrix or Directions APIs. Route Matrix is billed <strong>per element</strong> — origins × destinations — and SnapBuy sends one origin and one destination, so one lookup is one element. See <a href="../admin/map-api-keys.html#using-google-maps">Map &amp; API Keys</a>.</p>
+    </div>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">A billing account is mandatory even inside the free tier</p>
@@ -92,7 +101,7 @@
       <p>In <strong>Billing → Budgets &amp; alerts</strong>, create a budget with email notifications. It does not cap spending, but it tells you within hours instead of at the end of the month. Also restrict every key — an unrestricted key found in your page source can be used by anyone and billed to you.</p>
     </div>
 
-    <p><strong>Rough sizing.</strong> Each customer checkout that uses address autocomplete plus a distance lookup consumes roughly one Autocomplete, one Place Details and one Distance Matrix call. At 10,000 free calls per SKU you can serve on the order of 10,000 address selections a month before any charge.</p>
+    <p><strong>Rough sizing.</strong> Each customer checkout that uses address autocomplete plus a distance lookup consumes roughly one Autocomplete request, one Place Details lookup and one Route Matrix element. Place Details has the smallest free allowance, so that is the one that runs out first — expect charges past roughly <strong>1,000 address selections a month</strong>, even though the other SKUs each give you 10,000.</p>
 
     <h2 id="firebase">Firebase</h2>
 
@@ -145,17 +154,19 @@
 
     <p>Optional. Powers the "Generate with AI" buttons for product descriptions, blog content, SEO meta text and automatic field translation. With no key those buttons do nothing and everything is written by hand — nothing else in SnapBuy is affected.</p>
 
-    <p>SnapBuy uses the <strong>Generative Language API</strong> with the <code>gemini-2.5-flash</code> model.</p>
+    <p>SnapBuy uses the <strong>Generative Language API</strong> with the <code>gemini-3.6-flash</code> model.</p>
 
     <div class="table-wrap">
     <table>
       <tbody>
-        <tr><td><strong>Free tier</strong></td><td>Yes — <code>gemini-2.5-flash</code> has a free tier suitable for light use</td></tr>
-        <tr><td><strong>Paid input</strong></td><td>About $0.30 per 1M tokens</td></tr>
-        <tr><td><strong>Paid output</strong></td><td>About $2.50 per 1M tokens</td></tr>
+        <tr><td><strong>Free tier</strong></td><td>Yes — <code>gemini-3.6-flash</code> has a free tier suitable for light use</td></tr>
+        <tr><td><strong>Paid input</strong></td><td>About $0.75 per 1M tokens</td></tr>
+        <tr><td><strong>Paid output</strong></td><td>About $3.75 per 1M tokens, thinking tokens included</td></tr>
       </tbody>
     </table>
     </div>
+
+    <p>Google has published a rise to $1.50 / $7.50 per 1M tokens from 1 January 2027.</p>
 
     <div class="admonition admonition--tip">
       <p class="admonition__title">Token cost in practice</p>
