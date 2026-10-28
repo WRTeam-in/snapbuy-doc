@@ -12,6 +12,7 @@ Track all updates, improvements, and fixes released for SnapBuy.
 
 | Product Version | Flutter Version | Kotlin Version | AGP Version | distributionUrl (Gradle) | JDK Version |
 |---|---|---|---|---|---|
+| 1.5.0 | 3.47.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.4.0 | 3.47.7 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.3.1 | 3.47.4 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.3.0 | 3.44.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
@@ -20,6 +21,23 @@ Track all updates, improvements, and fixes released for SnapBuy.
 | 1.0.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 
 ## Version History
+
+### v1.5.0
+
+- [Added] Unused images in the Media page. (Admin)
+- [Added] Food Item with Add-ons and Add-on Bulk Upload. (Admin, App, Web)
+- [Added] App Version Management and Notification feature. (Admin, App)
+- [Added] Broken Image field. (Admin)
+- [Added] Homebuilder Search Suggestion management. (Admin, App, Web)
+- [Added] Buyer Tax Number setting. (Admin, App, Web)
+- [Added] Drag-and-drop option for Product Variants reorder. (Admin)
+- [Added] Attributes Filter in Homebuilder. (Admin, App, Web)
+- [Added] Video support for products. (Admin, App, Web)
+- [Improved] SnapBuy is now compatible with PHP 8.5. (Admin)
+- [Improved] Product Bulk Update, Category, and Attributes UI. (Admin)
+- [Improved] Renamed Store to Branch throughout the system. (Admin, App, Web)
+- [Improved] Separated Queue Worker from Cron Job. (Admin)
+- [Improved] Page Builder with enhanced app bar and text color customization. (Admin, App)
 
 ### v1.4.0
 
