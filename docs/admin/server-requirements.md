@@ -15,7 +15,7 @@ SnapBuy requires a **VPS, cloud instance or dedicated server with root access**.
 | Requirement | Why a VPS is necessary |
 | --- | --- |
 | Server-rendered storefront | The web portal renders pages on the server so search engines can index your products. That needs a continuously running Node process. |
-| Background processing | Order emails, push notifications, referral credit and bulk imports run on a queue worker started by the scheduler. |
+| Background processing | Order emails, push notifications, referral credit and bulk imports run on a queue worker kept alive by Supervisor, separate from the cron scheduler. |
 | Real-time chat | Laravel Reverb runs as a long-lived WebSocket process on its own port. |
 | Installation | The installer runs the full migration and seeding in one request, beyond the execution limits of most entry-level plans. |
 
@@ -27,10 +27,10 @@ Provision a VPS. See [Deployment Guide](/docs/installation/server-setup) for a s
 
 ### Suggested sizing
 
-| Store size | vCPU | RAM | Disk |
+| Branch size | vCPU | RAM | Disk |
 | --- | --- | --- | --- |
 | Launch / small catalogue | 2 | 4 GB | 50 GB SSD |
-| Established store | 4 | 8 GB | 100 GB SSD |
+| Established branch | 4 | 8 GB | 100 GB SSD |
 | High volume | 8+ | 16 GB+ | 200 GB+ SSD |
 
 ## PHP version
@@ -38,6 +38,7 @@ Provision a VPS. See [Deployment Guide](/docs/installation/server-setup) for a s
 | Requirement | Value |
 | --- | --- |
 | **Minimum PHP version** | **8.3.0** |
+| **Tested PHP versions** | **8.3, 8.4 and 8.5** |
 
 :::danger PHP 8.2 and below will not work
 SnapBuy requires PHP 8.3 or newer. There is no fallback build for older PHP.
@@ -127,7 +128,7 @@ If `symlink` is disabled, installation appears to succeed but **all uploaded ima
 
 | Need | Why |
 | --- | --- |
-| **Cron access** | Cart reminders, maintenance windows, scheduled home layouts and queued jobs all depend on it. See [Cron Job Setup](/docs/admin/cron-jobs). |
+| **Cron access** | Cart reminders, maintenance windows and scheduled home layouts depend on it. Background jobs need a queue worker as well. See [Cron Job Setup](/docs/admin/cron-jobs). |
 | **Outbound HTTPS** | The panel calls Firebase, Twilio, payment gateways and the licence server. Hosts that block outbound connections will break these. |
 | **SSL certificate** | Required in production. Firebase web push, several payment gateways and the mobile apps refuse plain HTTP. |
 | **A WebSocket port** (optional) | Only if you run **Laravel Reverb** for chat instead of Pusher. Default `9090`. See [Chat Settings](/docs/admin/chat-settings). |

@@ -59,7 +59,7 @@ A4 on a thermal roll comes out unreadable, and an 80 mm layout on A4 wastes most
 | **Logo Height (px)** | 10–120 |
 
 :::info The logo falls back on its own
-Leave **Invoice Logo** empty and the invoice uses your store logo from [General Settings](/docs/admin/general-settings). Upload one here only when you want the printed sheet to differ — a higher-contrast mark that survives a cheap printer, for example.
+Leave **Invoice Logo** empty and the invoice uses your branch logo from [General Settings](/docs/admin/general-settings). Upload one here only when you want the printed sheet to differ — a higher-contrast mark that survives a cheap printer, for example.
 :::
 
 ### Notes and totals

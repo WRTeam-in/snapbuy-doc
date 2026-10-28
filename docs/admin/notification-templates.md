@@ -24,7 +24,7 @@ Templates contain placeholders in curly braces, replaced at send time with real 
 
 | Placeholder | Becomes |
 | --- | --- |
-| `{app_name}` | Your store name from [General Settings](/docs/admin/general-settings) |
+| `{app_name}` | Your branch name from [General Settings](/docs/admin/general-settings) |
 | `{customer_name}` | The customer's name |
 | `{delivery_boy_name}` | The assigned rider |
 | `{id}` | Order or record ID |

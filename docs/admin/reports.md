@@ -51,10 +51,10 @@ The products that never sell are costing you stock capital, shelf space and cata
 
 ### Inventory
 
-Stock on hand, by [store](/docs/admin/stores).
+Stock on hand, by [branch](/docs/admin/branches).
 
-:::warning Inventory is per store
-A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the store serving their [zone](/docs/admin/zones), so a healthy total across all stores can still mean "unavailable" for most customers.
+:::warning Inventory is per branch
+A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the branch serving their [zone](/docs/admin/zones), so a healthy total across all branches can still mean "unavailable" for most customers.
 :::
 
 ### Delivery
@@ -175,7 +175,7 @@ Once downloaded, a file containing customer details and revenue can be forwarded
 | Report empty | Date range has no data, or filters too narrow | Widen the range |
 | Figures shifted by hours | Country timezone wrong | Fix it on the [country](/docs/admin/countries) |
 | Totals disagree with the gateway | Missing webhook, some payments unrecorded | See [Payment Gateways](/docs/admin/payment-gateway#webhooks) |
-| Inventory looks wrong | Reading totals across stores | Filter by store |
+| Inventory looks wrong | Reading totals across branches | Filter by branch |
 | Export times out | Range too large | Export in smaller periods |
 | Staff cannot open reports | `report` permission not granted | Grant `list` in that category |
 | Tax report empty | No orders carried tax in the range, or no product has a tax category | Check [Tax Settings](/docs/admin/tax-settings) |

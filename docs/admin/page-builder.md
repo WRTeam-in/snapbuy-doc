@@ -51,7 +51,7 @@ A page has a **draft** and a **published** copy, exactly like a home layout.
 
 | Button | Does |
 | --- | --- |
-| **Save Draft** | Stores your edits without changing what customers see |
+| **Save Draft** | Branches your edits without changing what customers see |
 | **Publish** | Promotes the draft to live |
 | **Edit Draft / Edit Published** | Switches which copy you are editing |
 | **Publish Changes** | Pushes edits made directly on the published copy |

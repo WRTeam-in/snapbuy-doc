@@ -20,7 +20,7 @@ Installation creates four:
 | --- | --- | --- |
 | **Super Admin** | Every permission. Created by the installer as your account. | `/login` |
 | **Admin** | Broad management access | `/login` |
-| **Store** | A store manager, scoped to their own outlet | `/store/login` |
+| **Branch** | A branch manager, scoped to their own outlet | `/branch/login` |
 | **Delivery Boy** | The rider's own portal — not a panel administrator | `/delivery_boy/login` |
 
 :::danger Protect the Super Admin account
@@ -58,7 +58,7 @@ Grant it only to people you would trust with your bank login. A warehouse superv
 
 | Role | Grant | Withhold |
 | --- | --- | --- |
-| **Store Manager** | order, product, category, store, return_request, chat, report (list) | settings, countries, delivery_boy payouts |
+| **Branch Manager** | order, product, category, branch, return_request, chat, report (list) | settings, countries, delivery_boy payouts |
 | **Catalogue Staff** | product, category (list/create/update) | delete, order, settings, customer |
 | **Support Agent** | order (list/update), customer (list), chat, return_request | settings, product, report |
 | **Accountant** | report, order (list), customer (list), withdrawal_request (list) | everything create/update/delete |

@@ -34,7 +34,7 @@ A customer's wallet balance can come from several places:
 Crediting a wallet by hand creates spendable value with no payment behind it. It is the right tool for goodwill and for resolving a dispute — and the wrong tool for anything routine. Every credit is recorded in the [activity log](/docs/admin/activity-logs) against your account.
 :::
 
-:::tip Refunding to wallet keeps the value in your store
+:::tip Refunding to wallet keeps the value in your branch
 A wallet refund is instant, avoids gateway refund fees, and the customer usually spends it with you again. Offer it as the fast option, but never as the *only* option — customers are entitled to their money back by the original method.
 :::
 

@@ -32,7 +32,7 @@
 
     <h2 id="the-return-flow">The return flow</h2>
     <pre><code>Return Requested → Accepted → Delivery Boy Assigned → Out For Pickup
-    → Received From Customer → Return to Store → Refund Completed</code></pre>
+    → Received From Customer → Return to Branch → Refund Completed</code></pre>
 
     <p>Or <strong>Rejected</strong> at the review stage.</p>
 
@@ -46,7 +46,7 @@
         <tr><td><strong>Delivery Boy Assigned</strong></td><td>A rider will collect</td><td>Admin</td></tr>
         <tr><td><strong>Out For Pickup</strong></td><td>Rider is on the way</td><td>Rider</td></tr>
         <tr><td><strong>Received From Customer</strong></td><td>Rider has the item</td><td>Rider</td></tr>
-        <tr><td><strong>Return to Store</strong></td><td>Item is back at the store</td><td>Rider / store</td></tr>
+        <tr><td><strong>Return to Branch</strong></td><td>Item is back at the branch</td><td>Rider / branch</td></tr>
         <tr><td><strong>Refund Completed</strong></td><td>Money returned</td><td>Admin</td></tr>
       </tbody>
     </table>
@@ -54,7 +54,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">The return is a collection, run in reverse</p>
-      <p>Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the <a href="../admin/stores.html">store</a>. It is not a courier drop-off.</p>
+      <p>Notice that a return uses the delivery network in the opposite direction — a rider is assigned, goes out for pickup, and brings the item back to the <a href="../admin/branches.html">branch</a>. It is not a courier drop-off.</p>
     </div>
 
     <h2 id="reviewing-a-request">Reviewing a request</h2>
@@ -71,7 +71,7 @@
     </div>
 
     <h2 id="assigning-a-rider-for-pickup">Assigning a rider for pickup</h2>
-    <p>Once accepted, assign a delivery boy to collect. The rider then moves the request through <em>Out For Pickup → Received From Customer → Return to Store</em> from their <a href="../admin/delivery-boy-portal.html">portal</a>.</p>
+    <p>Once accepted, assign a delivery boy to collect. The rider then moves the request through <em>Out For Pickup → Received From Customer → Return to Branch</em> from their <a href="../admin/delivery-boy-portal.html">portal</a>.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Riders see a restricted set of return statuses too</p>
@@ -86,7 +86,7 @@
       <thead><tr><th>Route</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td>Back to the original payment method</td><td>Through the <a href="../admin/payment-gateway.html">gateway</a> used for the order</td></tr>
-        <tr><td>To the customer's <a href="../admin/wallet-withdrawals.html">wallet</a></td><td>Instant, and keeps the value in your store</td></tr>
+        <tr><td>To the customer's <a href="../admin/wallet-withdrawals.html">wallet</a></td><td>Instant, and keeps the value in your branch</td></tr>
       </tbody>
     </table>
     </div>
@@ -102,11 +102,11 @@
     </div>
 
     <h2 id="stock">Stock</h2>
-    <p>When a returned item comes back to the store, decide whether it re-enters sellable stock.</p>
+    <p>When a returned item comes back to the branch, decide whether it re-enters sellable stock.</p>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Returned stock is not automatically resellable</p>
-      <p>Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the <a href="../admin/stores.html#per-store-stock-and-pricing">store</a> — an automatic return to shelf will eventually send a customer something they should never have received.</p>
+      <p>Perishables, opened packaging and damaged goods should not go back on sale. Check the item before adjusting stock at the <a href="../admin/branches.html#per-branch-stock-and-pricing">branch</a> — an automatic return to shelf will eventually send a customer something they should never have received.</p>
     </div>
 
     <h2 id="customer-notifications">Customer notifications</h2>

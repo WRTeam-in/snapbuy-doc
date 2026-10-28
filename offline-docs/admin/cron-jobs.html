@@ -26,8 +26,12 @@
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Do not skip this page</p>
-      <p>SnapBuy needs <strong>one</strong> server cron job. Without it the panel still loads and looks healthy, but abandoned-cart reminders never send, scheduled maintenance windows never start or end, scheduled home layouts never publish, and every queued job — order emails, push notifications, bulk imports, referral bonuses, cashback — sits unprocessed forever.</p>
-      <p>Nothing on the dashboard warns you. This is the single most common cause of "notifications are not working" support tickets.</p>
+      <p>SnapBuy needs <strong>two</strong> things running on the server, and they do different jobs:</p>
+      <ol>
+        <li><strong>One cron entry</strong>, every minute. Without it abandoned-cart reminders never send, scheduled maintenance windows never start or end, scheduled home layouts and spin-wheel campaigns never publish, and courier tracking is never synced.</li>
+        <li><strong>One queue worker</strong>, always running. Without it every queued job &mdash; order emails, push notifications, bulk imports, referral bonuses, cashback &mdash; sits unprocessed forever.</li>
+      </ol>
+      <p>Nothing on the dashboard warns you. Between them these are the single most common cause of &ldquo;notifications are not working&rdquo; support tickets.</p>
     </div>
 
     <h2 id="the-one-line-you-need">The one line you need</h2>
@@ -92,15 +96,23 @@
     <h2 id="what-the-scheduler-runs-every-minute">What the scheduler runs every minute</h2>
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Task</th><th>Command</th><th>What it does</th></tr></thead>
+      <thead><tr><th>Task</th><th>Command</th><th>Runs</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td><strong>Heartbeat</strong></td><td><em>(internal)</em></td><td>Proves to the panel that cron is alive</td></tr>
-        <tr><td><strong>Process queued jobs</strong></td><td><code>queue:work --stop-when-empty --max-time=55</code></td><td>Drains the job queue, then exits before the next minute</td></tr>
-        <tr><td><strong>Cart reminders</strong></td><td><code>cart:notification</code></td><td>Sends abandoned-cart notifications per your <a href="../admin/cart-settings.html">Cart Settings</a></td></tr>
-        <tr><td><strong>Scheduled maintenance</strong></td><td><code>maintenance:apply</code></td><td>Turns maintenance mode on and off at the times you scheduled</td></tr>
-        <tr><td><strong>Publish home layouts</strong></td><td><code>home-layout:publish-scheduled</code></td><td>Publishes Home Builder drafts at their scheduled time</td></tr>
+        <tr><td><strong>Heartbeat</strong></td><td><em>(internal)</em></td><td>Every minute</td><td>Proves to the panel that cron is alive</td></tr>
+        <tr><td><strong>Cart reminders</strong></td><td><code>cart:notification</code></td><td>Every minute</td><td>Sends abandoned-cart notifications per your <a href="../admin/cart-settings.html">Cart Settings</a></td></tr>
+        <tr><td><strong>Scheduled maintenance</strong></td><td><code>maintenance:apply</code></td><td>Every minute</td><td>Turns maintenance mode on and off at the times you scheduled</td></tr>
+        <tr><td><strong>Publish home layouts</strong></td><td><code>home-layout:publish-scheduled</code></td><td>Every minute</td><td>Publishes Home Builder drafts at their scheduled time</td></tr>
+        <tr><td><strong>Scheduled popup offer</strong></td><td><code>popup:apply-schedule</code></td><td>Every minute</td><td>Turns the popup offer on and off at its scheduled times</td></tr>
+        <tr><td><strong>Spin wheel campaigns</strong></td><td><code>spin-wheel:apply-schedule</code></td><td>Every minute</td><td>Activates a campaign at its start time and retires it at its end</td></tr>
+        <tr><td><strong>Expire spin wheel coupons</strong></td><td><code>promo:expire-spin-codes</code></td><td>Daily, 00:30</td><td>Deactivates won coupons past their validity. Nothing is deleted.</td></tr>
+        <tr><td><strong>Courier tracking sync</strong></td><td><code>shipping:sync-tracking</code></td><td>Every 30 minutes</td><td>Asks each carrier about parcels still in flight, so a delivery, COD settlement or RTO is recorded even when a webhook was lost. Does nothing when no shipping plugin is installed.</td></tr>
       </tbody>
     </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Processing the queue is no longer on this list</p>
+      <p>Earlier versions drained the queue from the scheduler every minute. That job now belongs to a <strong>permanently running worker</strong> &mdash; see below. <strong>Process Queued Jobs</strong> still appears on the Cron Jobs page, but its schedule reads <em>On demand</em>: it is a button for &ldquo;drain what is waiting right now and show me&rdquo;, not something the cron fires.</p>
     </div>
 
     <p>Each of these can also be triggered manually from <strong>Settings → Cron Jobs</strong> using the <strong>Run now</strong> button — useful when testing, and for confirming a task works before you trust the schedule.</p>
@@ -108,60 +120,115 @@
     <img src="../images/panel/cron-run-now.png" alt="Running a scheduled task manually from the panel">
 
     <h2 id="work-handled-by-the-queue">Work handled by the queue</h2>
-    <p>These are not cron entries. They are dispatched by the application and executed by the <code>queue:work</code> run above — which means <strong>they all stop if the cron job is missing</strong>:</p>
+
+    <p>These are not cron entries and not scheduled tasks. The application dispatches them as things happen, and the <strong>queue worker</strong> executes them:</p>
+
     <ul>
-      <li>Referral bonus credit</li>
-      <li>Order cashback credit</li>
+      <li>Referral bonus credit &mdash; after the order&rsquo;s return period ends</li>
+      <li>Order cashback credit &mdash; into the customer&rsquo;s wallet, after the return period</li>
       <li>Order confirmation and status emails</li>
-      <li>Order push notifications</li>
+      <li>Order push notifications, to customers and delivery boys</li>
       <li>Bulk promotional emails</li>
       <li>Bulk push notifications</li>
       <li>Product bulk import</li>
-      <li>Cart reminder notifications</li>
+      <li>App version update notifications</li>
     </ul>
 
+    <p>The Cron Jobs page lists them under <strong>Background Jobs</strong>, for reference only &mdash; there is no <strong>Run now</strong> button, because nothing schedules them.</p>
+
+    <h2 id="the-queue-worker">The queue worker</h2>
+
+    <p><strong>The short version:</strong></p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Can your server run Supervisor (or any process manager that keeps a program alive)?</th><th>Set in <code>.env</code></th><th>What runs the queue</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Yes</strong> &mdash; VPS, dedicated server, aaPanel, cPanel with Supervisor</td><td><code>QUEUE_SCHEDULER_FALLBACK=false</code></td><td>A worker that stays running</td></tr>
+        <tr><td><strong>No</strong> &mdash; basic shared hosting</td><td><code>QUEUE_SCHEDULER_FALLBACK=true</code></td><td>The minute cron drains the queue instead</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Most hosts can run Supervisor, so leave it <code>false</code> and set the worker up. Only switch it to <code>true</code> if your host genuinely will not let you keep a process alive.</p>
+
+    <p>A worker is a PHP process that <strong>stays running</strong>, waits on the queue and picks a job up within seconds. You set it up once with Supervisor &mdash; or whatever process manager your host offers &mdash; and it starts with the server and restarts itself if it dies.</p>
+
+    <img src="../images/panel/cron-queue-worker.png" alt="The Queue Worker card on the Cron Jobs page">
+
+    <p>The <strong>Queue Worker</strong> card on <strong>Settings → Cron Jobs</strong> prints everything for <em>your</em> server, with the real PHP binary, project path and system user already filled in:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What the card gives you</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Worker command</strong></td><td>The single command, if your host just asks for one</td></tr>
+        <tr><td><strong>Supervisor configuration</strong></td><td>A whole <code>[program:…]</code> block, ready to paste</td></tr>
+        <tr><td><strong>After every update</strong></td><td><code>php artisan queue:restart</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The steps, as the card states them:</p>
+
+    <ol>
+      <li>Open your server&rsquo;s process manager &mdash; in aaPanel that is <strong>App Store → Supervisor Manager</strong>.</li>
+      <li>Add a new daemon using the command, or paste the whole configuration block.</li>
+      <li>Start it, and confirm <strong>Pending Jobs</strong> on this page stops growing.</li>
+    </ol>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Restart the worker after every deployment</p>
+      <p>A running worker holds the old code in memory, so new code does not take effect until it restarts. The <a href="../admin/system-updater.html">System Updater</a> and the plugin installer signal a restart for you. After a <strong>manual</strong> deployment, run <code>php artisan queue:restart</code> yourself &mdash; the card gives you the exact line.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Raise <code>numprocs</code> only when jobs pile up</p>
+      <p>One worker is right for almost every shop. Each extra one is another PHP process and another set of database connections, so add a second only if <strong>Pending Jobs</strong> keeps climbing while the worker is healthy.</p>
+    </div>
+
+    <h3 id="hosting-that-cannot-run-a-daemon">Hosting that cannot run a daemon</h3>
+
+    <p>Some shared hosting will not let you keep a process alive. For those, and only those, SnapBuy keeps the old behaviour behind an environment flag:</p>
+
+    <pre><code>QUEUE_SCHEDULER_FALLBACK=true</code></pre>
+
+    <p>With it on, the minute scheduler runs <code>queue:work --stop-when-empty --max-time=55</code> again: it drains whatever is waiting and exits before the next minute starts.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Leave it <code>false</code> wherever you can</p>
+      <p>The fallback costs a full application boot every minute whether or not there is any work, and a job dispatched just after a run waits up to a minute before anything looks at it. <code>--max-time</code> also cannot cut a long job short, so a slow one overlaps the next minute and doubles the database load.</p>
+      <p>The panel says so too: with the flag on, the Queue Worker card shows a notice that this installation is draining the queue from the scheduler and should move to a worker on a VPS.</p>
+    </div>
+
     <h2 id="queue-health">Queue health</h2>
-    <p>The Cron Jobs page also reports queue status:</p>
+
+    <p>The Cron Jobs page reports queue status across the top and in the worker card:</p>
+
     <div class="table-wrap">
     <table>
       <thead><tr><th>Field</th><th>What to look for</th></tr></thead>
       <tbody>
         <tr><td><strong>Driver</strong></td><td><code>database</code> by default</td></tr>
-        <tr><td><strong>Pending jobs</strong></td><td>A small number that keeps changing is normal. A large number that only grows means the queue is not being processed.</td></tr>
+        <tr><td><strong>Pending jobs</strong></td><td>A small number that keeps changing is normal. A number that only grows means nothing is working the queue.</td></tr>
         <tr><td><strong>Failed jobs</strong></td><td>Should stay at zero. Anything here failed permanently.</td></tr>
-        <tr><td><strong>Oldest pending job</strong></td><td>If this timestamp is hours old, your cron is not running.</td></tr>
+        <tr><td><strong>Oldest pending job</strong></td><td>A timestamp more than a couple of minutes old is the giveaway.</td></tr>
       </tbody>
     </table>
     </div>
 
     <img src="../images/panel/cron-queue-health.png" alt="Queue health panel">
 
-    <div class="admonition admonition--info">
-      <p class="admonition__title">Why <code>--stop-when-empty --max-time=55</code></p>
-      <p>SnapBuy starts a worker every minute that processes whatever is waiting and exits after at most 55 seconds — before the next minute's run begins. On a VPS you may prefer a Supervisor-managed permanent worker; see below.</p>
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">&ldquo;Jobs have been waiting for more than two minutes&rdquo;</p>
+      <p>When the oldest pending job is over two minutes old, the page says so directly: nothing is processing the queue, and emails, notifications and bulk imports are stuck until a worker runs.</p>
+      <p>Either set the worker up, or press <strong>Run Now</strong> on <strong>Process Queued Jobs</strong> to clear the backlog while you do.</p>
     </div>
 
-    <h2 id="optional-a-permanent-worker-on-a-vps">Optional — a permanent worker on a VPS</h2>
-    <p>If you run your own server and want jobs processed instantly rather than up to a minute later, use Supervisor.</p>
-
-    <p>Create <code>/etc/supervisor/conf.d/snapbuy-worker.conf</code>:</p>
-    <pre><code>[program:snapbuy-worker]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/snapbuy/artisan queue:work --sleep=3 --tries=3 --max-time=3600
-autostart=true
-autorestart=true
-user=www-data
-numprocs=2
-redirect_stderr=true
-stdout_logfile=/var/www/snapbuy/storage/logs/worker.log
-stopwaitsecs=3600</code></pre>
-
-    <p>Then:</p>
-    <pre><code>sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl start snapbuy-worker:*</code></pre>
-
-    <p>Keep the <code>schedule:run</code> cron job as well — the scheduler still drives cart reminders, maintenance windows and layout publishing.</p>
+    <div class="admonition admonition--info">
+      <p class="admonition__title">The <code>sync</code> driver has no queue at all</p>
+      <p>With <code>QUEUE_CONNECTION=sync</code> jobs run inside the web request that created them. Nothing is queued, so no worker is needed &mdash; but a slow job then makes the customer wait for it. Use <code>database</code> in production.</p>
+    </div>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
     <div class="table-wrap">
@@ -170,8 +237,10 @@ sudo supervisorctl start snapbuy-worker:*</code></pre>
       <tbody>
         <tr><td>Cron Jobs page shows <strong>inactive</strong> after 5 minutes</td><td>Cron not registered, or wrong PHP path</td><td>Re-copy the line from the panel; use the absolute PHP binary</td></tr>
         <tr><td>Cron registered but still inactive</td><td>Wrong project path in the command</td><td>Compare against <strong>Project path</strong> shown on the Cron Jobs page</td></tr>
-        <tr><td>Emails and notifications never arrive</td><td>Queue not being processed</td><td>Check <strong>Pending jobs</strong> — if it only grows, cron is not running</td></tr>
-        <tr><td>Everything arrives roughly a minute late</td><td>Normal</td><td>The scheduler runs once per minute; use Supervisor for instant processing</td></tr>
+        <tr><td>Emails and notifications never arrive</td><td>No queue worker running</td><td>Set the worker up from the <strong>Queue Worker</strong> card; <strong>Pending jobs</strong> should stop growing</td></tr>
+        <tr><td>Panel warns jobs have waited over two minutes</td><td>The worker is not running, or died</td><td>Start it, check <code>storage/logs/queue-worker.log</code>, confirm Supervisor has <code>autorestart=true</code></td></tr>
+        <tr><td>Everything arrives roughly a minute late</td><td><code>QUEUE_SCHEDULER_FALLBACK=true</code></td><td>Expected on that mode. Move to a real worker and set the flag back to <code>false</code>.</td></tr>
+        <tr><td>New code behaves like the old code in emails or imports</td><td>The worker still holds the old code</td><td><code>php artisan queue:restart</code></td></tr>
         <tr><td><strong>Failed jobs</strong> count rising</td><td>A job errors every time</td><td>Check <code>storage/logs/laravel.log</code>, or the <code>/logs</code> viewer</td></tr>
       </tbody>
     </table>

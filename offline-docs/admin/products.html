@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Products — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>Products</h1>
+
+    <p>Menu path: <strong>Products → Manage Products</strong> · <strong>Products → Add Product</strong></p>
+
+    <p>Everything a customer can buy lives here. A product is created through a <strong>five-step wizard</strong>, and nothing reaches the catalogue until the last step is confirmed.</p>
+
+    <img src="../images/panel/products-list.png" alt="Manage Products">
+
+    <h2 id="the-listing">The listing</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Published / Drafts</strong></td><td>Two tabs. A draft is a product saved part-way through the wizard &mdash; invisible to customers until it is completed and published.</td></tr>
+        <tr><td><strong>Country / Zone</strong></td><td>Narrows the list to products listed at the branches of that country or zone</td></tr>
+        <tr><td><strong>Filters</strong></td><td>Category, brand, status, sales channel</td></tr>
+        <tr><td><strong>Sort</strong></td><td>Latest, name, price</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Each card shows the product&rsquo;s status, category, sales channel, price and how many variants it has.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Price on the card is indicative</p>
+      <p>A product is priced <strong>per branch</strong>, so the card shows one representative figure. The real prices live on the <strong>Variants</strong> step, branch by branch.</p>
+    </div>
+
+    <h2 id="step-1--category">Step 1 &mdash; Category</h2>
+
+    <img src="../images/panel/product-step-category.png" alt="Choosing a category">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Category</strong></td><td>Where the product sits in the catalogue tree</td></tr>
+        <tr><td><strong>Attributes from category</strong></td><td>The attributes this category offers &mdash; tick the ones this product varies by</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Pick the last level</p>
+      <p>A category that has sub-categories is shown for context but cannot be chosen. Only a leaf category accepts products.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">The category decides the attributes, and the attributes decide the variants</p>
+      <p>Attributes are inherited from the category, and the values you tick here build the variant matrix in step 3. Changing the category of a product that already has variants means rebuilding them, so get this right first.</p>
+    </div>
+
+    <p>If the category has no attributes, add them under <strong>Categories → Attributes</strong> before creating the product.</p>
+
+    <h2 id="step-2--product-details">Step 2 &mdash; Product Details</h2>
+
+    <img src="../images/panel/product-step-details.png" alt="Product details">
+
+    <h3 id="identity">Identity</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Product Name</strong></td><td>Shown everywhere. Translatable &mdash; one name per language.</td></tr>
+        <tr><td><strong>Brand</strong></td><td>Optional. Powers brand pages and the Top Brands section in <a href="../admin/home-builder.html">Home Builder</a>.</td></tr>
+        <tr><td><strong>Tax Category</strong></td><td>One classification for the product. The <strong>rate</strong> comes from each country&rsquo;s <a href="../admin/tax-settings.html">tax rules</a>, so the same category is taxed differently by a branch in India and one in the UAE.</td></tr>
+        <tr><td><strong>Product Type</strong></td><td><code>None</code>, <code>Veg</code>, <code>Non-veg</code>, <code>Chemical</code>, <code>Eggetarian</code>, <code>Medical</code> &mdash; the diet or handling marker shown on the product card</td></tr>
+        <tr><td><strong>Is this a food item?</strong></td><td>Made to order, with <a href="../admin/food-items-addons.html">addons</a></td></tr>
+        <tr><td><strong>Is this sold only as an addon?</strong></td><td>Attachable to a dish, never listed on its own</td></tr>
+        <tr><td><strong>Prescription Required</strong></td><td>Shown for a <strong>Medical</strong> product. The customer must upload a prescription (image or PDF) before the order can be placed.</td></tr>
+        <tr><td><strong>Manufacturer</strong></td><td>Free text, printed on the product page</td></tr>
+        <tr><td><strong>Made In</strong></td><td>Country of origin</td></tr>
+        <tr><td><strong>Tags</strong></td><td>Comma-separated. They feed search and related-product matching.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="selling-rules">Selling rules</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sales channel</strong></td><td><code>Quick commerce</code>, <code>eCommerce</code> or <code>Both</code>. Only branches matching this channel are offered for inventory in step 3.</td></tr>
+        <tr><td><strong>Total Allowed Quantity in Cart</strong></td><td>The most of this product one cart may hold. <code>0</code> means no limit.</td></tr>
+        <tr><td><strong>Status</strong></td><td>Inactive products disappear from the apps immediately</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">The sales channel decides which branches you can stock</p>
+      <p>Set it before step 3. Switching it afterwards drops the branches that no longer match, and their pricing with them.</p>
+    </div>
+
+    <h3 id="descriptions">Descriptions</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Short Description</strong></td><td>One or two lines under the product name</td></tr>
+        <tr><td><strong>Description</strong></td><td>The full rich-text description</td></tr>
+        <tr><td><strong>Custom Sections</strong></td><td>Extra structured blocks the category defines &mdash; nutrition, storage, FSSAI licence, disclaimers</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Generate with AI</strong> drafts either description from the product name and category. Treat it as a first draft and read it before saving.</p>
+
+    <h3 id="return-and-cancellation-policy">Return and cancellation policy</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Return Status</strong></td><td><code>Returnable</code> or <code>Not returnable</code></td></tr>
+        <tr><td><strong>Return Days</strong></td><td>How many days after delivery a return may be raised. Shown only when returnable.</td></tr>
+        <tr><td><strong>Cancelable</strong></td><td>Whether the customer may cancel at all</td></tr>
+        <tr><td><strong>Cancellable Till</strong></td><td>The order status up to which cancelling is allowed. A product sold on both channels gets one setting for <strong>Quick</strong> and one for <strong>eCommerce</strong>, because the two move at different speeds.</td></tr>
+        <tr><td><strong>COD Available</strong></td><td>Whether cash on delivery may be used for this product</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">These beat the global settings for this product alone</p>
+      <p>A shop-wide return window is a default. What you set here is what the customer actually gets for this product.</p>
+    </div>
+
+    <h2 id="step-3--variants">Step 3 &mdash; Variants</h2>
+
+    <p>This is where price and stock live. A product has at least one variant, even when nothing varies.</p>
+
+    <img src="../images/panel/product-step-variants.png" alt="Variant matrix">
+
+    <h3 id="the-variant-matrix">The variant matrix</h3>
+
+    <p>Tick the values for the attributes this product varies by and leave the rest empty. <strong>Every combination becomes a variant</strong> &mdash; two pack sizes and three colours make six.</p>
+
+    <p><strong>Generate All Variants</strong> builds them in one go; the banner tells you how many you are about to create.</p>
+
+    <h3 id="per-variant-fields">Per-variant fields</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Variant Name</strong></td><td>Shown in the variant picker &mdash; <em>Red / 0-1 yr</em></td></tr>
+        <tr><td><strong>SKU</strong></td><td>Your own stock code. Required, and the key the bulk sheets match on.</td></tr>
+        <tr><td><strong>HSN Code</strong></td><td>The internationally standardised goods code used for GST and invoicing &mdash; <code>6109</code> for T-shirts. Printed on invoices when set.</td></tr>
+        <tr><td><strong>Weight (kg)</strong></td><td>Dead weight of one unit. Courier integrations quote and label from it.</td></tr>
+        <tr><td><strong>Package Size (cm)</strong></td><td>Length &times; breadth &times; height of one packed unit, used for volumetric weight</td></tr>
+        <tr><td><strong>Main Image</strong></td><td>The picture used on cards and listings. Recommended 800&times;800px.</td></tr>
+        <tr><td><strong>Other Images</strong></td><td>The gallery on the product page</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Choose From Media</strong> picks an image already uploaded instead of uploading it again.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A variant with no weight cannot be shipped by courier</p>
+      <p><a href="../admin/shiprocket-addon.html">Shiprocket</a> refuses to quote a parcel whose weight is unknown, and the ship dialog names the products that are missing one. Fill the weight for anything you post.</p>
+    </div>
+
+    <h3 id="branch-wise-inventory">Branch-wise inventory</h3>
+
+    <p>Each card below the variant is one <strong>branch</strong> that matches the product&rsquo;s sales channel.</p>
+
+    <img src="../images/panel/product-branch-inventory.png" alt="Per-branch pricing and stock">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Listed</strong></td><td>On: customers can see and buy this SKU at this branch. Off hides it there without losing the quantities.</td></tr>
+        <tr><td><strong>Purchase Price</strong></td><td>What it costs you. Required &mdash; it is what the margin is calculated from.</td></tr>
+        <tr><td><strong>Selling Price</strong></td><td>The normal price, in that branch&rsquo;s currency</td></tr>
+        <tr><td><strong>Discounted Price</strong></td><td>The offer price. Leave empty for none.</td></tr>
+        <tr><td><strong>Customer Price</strong></td><td>Read-only &mdash; what the shopper actually sees, tax included if tax is added</td></tr>
+        <tr><td><strong>Price includes tax</strong></td><td>On when the price you typed already has tax in it</td></tr>
+        <tr><td><strong>Estimated margin</strong></td><td>Read-only &mdash; selling minus purchase, as an amount and a percentage</td></tr>
+        <tr><td><strong>Quantity-based slab pricing</strong></td><td>Optional cheaper price per quantity band: <em>Min Qty</em>, <em>Max Qty</em>, <em>Price</em>. Leave the last row&rsquo;s Max Qty blank to mean &ldquo;and above&rdquo;. The base selling price applies when no slab matches.</td></tr>
+        <tr><td><strong>Stock Limit Type</strong></td><td><code>Limited</code> tracks quantities; <code>Unlimited</code> never runs out</td></tr>
+        <tr><td><strong>Stock status</strong></td><td>Customer-facing <em>In stock</em> / <em>Out of stock</em>, independent of the numbers &mdash; use it for a manual sell-out</td></tr>
+        <tr><td><strong>Available</strong></td><td>Units you can sell right now, not yet tied to open orders</td></tr>
+        <tr><td><strong>Reserved</strong></td><td>Units held in carts and pending orders. Managed automatically &mdash; not editable.</td></tr>
+        <tr><td><strong>Min alert</strong></td><td>Low-stock threshold for this branch, used for replenishment alerts and reporting</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Copy first branch to all</strong> applies the first branch&rsquo;s pricing and stock to every other branch.</p>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Check every branch that prices in another currency</p>
+      <p>The copy is a straight number copy. <code>65</code> stays <code>65</code> whether that branch charges in ₹, £ or AED. Review each one afterwards.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why there is no single global price</p>
+      <p>Pricing is held per branch and per variant, so one outlet can run a promotion while another does not, and each prices in its own currency. A product with no price at a branch is simply not sold there.</p>
+    </div>
+
+    <h2 id="step-4--seo">Step 4 &mdash; SEO</h2>
+
+    <img src="../images/panel/product-step-seo.png" alt="SEO step">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Meta Title</strong></td><td>The browser-tab and search-result title</td></tr>
+        <tr><td><strong>Meta Keywords</strong></td><td>Comma-separated keywords</td></tr>
+        <tr><td><strong>Meta Description</strong></td><td>The snippet under the search result</td></tr>
+        <tr><td><strong>Schema Markup</strong></td><td>Structured data for rich search results</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Generate SEO with AI</strong> fills the three text fields from the product you have already described.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Leave it blank rather than stuffing it</p>
+      <p>An empty meta description makes search engines write their own from the page, which is usually better than a keyword list. Write one when you have something specific to say.</p>
+    </div>
+
+    <h2 id="step-5--review">Step 5 &mdash; Review</h2>
+
+    <img src="../images/panel/product-step-review.png" alt="Review step">
+
+    <p>The last step lists every variant about to be created, with its SKU, pricing and the branches it will be listed at.</p>
+
+    <p><strong>Nothing is saved until you press Create Products.</strong> Until then the whole wizard is a draft in your browser.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Save as Draft to come back later</p>
+      <p><strong>Save as Draft</strong> stores an unfinished product under the <strong>Drafts</strong> tab on the listing. Customers never see a draft. It is also how you get a product id early &mdash; the <a href="../admin/food-items-addons.html">Addons</a> editor needs a saved product.</p>
+    </div>
+
+    <h2 id="editing-an-existing-product">Editing an existing product</h2>
+
+    <p>Opening a product from the listing puts you back in the same five steps, with every step unlocked. Changes save per step, so you can edit prices without touching the description.</p>
+
+    <p>Adding an attribute value later and pressing <strong>Generate All Variants</strong> adds the missing combinations and leaves the existing ones alone.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Category cannot be selected</td><td>It has sub-categories</td><td>Pick a leaf category</td></tr>
+        <tr><td>No attributes offered</td><td>The category has none</td><td>Add them under Categories → Attributes</td></tr>
+        <tr><td>No branches on step 3</td><td>None match the product&rsquo;s sales channel</td><td>Change the channel, or set the branch&rsquo;s fulfilment type on <a href="../admin/branches.html">Branches</a></td></tr>
+        <tr><td>Product invisible to customers</td><td>Not <strong>Listed</strong> at the branch serving that zone, or Status inactive</td><td>Tick Listed on that branch; check Status</td></tr>
+        <tr><td>Price shows but nobody can buy</td><td>Stock status <em>Out of stock</em>, or Available is <code>0</code> with Limited stock</td><td>Restock, or switch Stock Limit Type to Unlimited</td></tr>
+        <tr><td>Courier booking refuses the item</td><td>The variant has no <strong>Weight</strong></td><td>Fill Weight (kg) on that variant</td></tr>
+        <tr><td>Margin looks wrong</td><td>Purchase price missing or includes tax inconsistently</td><td>Re-enter purchase price; check <strong>Price includes tax</strong></td></tr>
+        <tr><td>Changes not visible in the app</td><td>The product is still a <strong>draft</strong></td><td>Finish the wizard and press Create Products</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul class="contains-task-list">
+      <li class="task-item"><input type="checkbox" disabled> Leaf category chosen, with the right attributes ticked</li>
+      <li class="task-item"><input type="checkbox" disabled> Sales channel set before pricing</li>
+      <li class="task-item"><input type="checkbox" disabled> Tax category set &mdash; it drives the rate in every country</li>
+      <li class="task-item"><input type="checkbox" disabled> Every variant has an SKU and a main image</li>
+      <li class="task-item"><input type="checkbox" disabled> Weight and package size filled for anything shipped by courier</li>
+      <li class="task-item"><input type="checkbox" disabled> Purchase and selling price set at every branch that should sell it</li>
+      <li class="task-item"><input type="checkbox" disabled> Stock quantities and min alert set where stock is Limited</li>
+      <li class="task-item"><input type="checkbox" disabled> Return and cancellation policy matches what you can actually honour</li>
+      <li class="task-item"><input type="checkbox" disabled> Created the product and opened it once in the app</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/products.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

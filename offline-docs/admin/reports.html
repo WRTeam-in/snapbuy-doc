@@ -74,11 +74,11 @@
     </div>
 
     <h3 id="inventory">Inventory</h3>
-    <p>Stock on hand, by <a href="../admin/stores.html">store</a>.</p>
+    <p>Stock on hand, by <a href="../admin/branches.html">branch</a>.</p>
 
     <div class="admonition admonition--warning">
-      <p class="admonition__title">Inventory is per store</p>
-      <p>A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the store serving their <a href="../admin/zones.html">zone</a>, so a healthy total across all stores can still mean "unavailable" for most customers.</p>
+      <p class="admonition__title">Inventory is per branch</p>
+      <p>A product can be out of stock at one outlet and plentiful at another. The customer only ever sees the stock of the branch serving their <a href="../admin/zones.html">zone</a>, so a healthy total across all branches can still mean "unavailable" for most customers.</p>
     </div>
 
     <h3 id="delivery">Delivery</h3>
@@ -222,7 +222,7 @@
         <tr><td>Report empty</td><td>Date range has no data, or filters too narrow</td><td>Widen the range</td></tr>
         <tr><td>Figures shifted by hours</td><td>Country timezone wrong</td><td>Fix it on the <a href="../admin/countries.html">country</a></td></tr>
         <tr><td>Totals disagree with the gateway</td><td>Missing webhook, some payments unrecorded</td><td>See <a href="../admin/payment-gateway.html#webhooks">Payment Gateways</a></td></tr>
-        <tr><td>Inventory looks wrong</td><td>Reading totals across stores</td><td>Filter by store</td></tr>
+        <tr><td>Inventory looks wrong</td><td>Reading totals across branches</td><td>Filter by branch</td></tr>
         <tr><td>Export times out</td><td>Range too large</td><td>Export in smaller periods</td></tr>
         <tr><td>Staff cannot open reports</td><td><code>report</code> permission not granted</td><td>Grant <code>list</code> in that category</td></tr>
         <tr><td>Tax report empty</td><td>No orders carried tax in the range, or no product has a tax category</td><td>Check <a href="../admin/tax-settings.html">Tax Settings</a></td></tr>

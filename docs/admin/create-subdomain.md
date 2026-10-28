@@ -16,7 +16,7 @@ The admin panel is normally installed on its own hostname, separate from the cus
 Both can live on the same VPS. Separate hostnames let you update, secure and back them up independently, and keep the panel out of your public search results.
 
 :::danger Choose this URL once
-The panel URL is written into the Web Portal configuration and compiled into the Customer and Delivery Boy apps. Changing it later means editing the portal config and rebuilding and republishing both apps through the stores.
+The panel URL is written into the Web Portal configuration and compiled into the Customer and Delivery Boy apps. Changing it later means editing the portal config and rebuilding and republishing both apps through the branches.
 
 Decide it before installing, and keep it.
 :::

@@ -16,14 +16,14 @@ Use the live demo to explore SnapBuy before installing it, or to check how a fea
 | **Email** | `admin@gmail.com` |
 | **Password** | `123456` |
 
-## Store panel
+## Branch panel
 
-Store managers sign in through their own portal and see only their own store's orders, stock and products.
+Branch managers sign in through their own portal and see only their own branch's orders, stock and products.
 
 | | |
 | --- | --- |
-| **URL** | [https://admin-snapbuy.wrteam.me/store/login](https://admin-snapbuy.wrteam.me/store/login) |
-| **Email** | `mumbai@store.com` |
+| **URL** | [https://admin-snapbuy.wrteam.me/branch/login](https://admin-snapbuy.wrteam.me/branch/login) |
+| **Email** | `mumbai@branch.com` |
 | **Password** | `Mumbai@1` |
 
 ## Delivery boy portal
@@ -62,7 +62,7 @@ If you have fifteen minutes and want to judge whether SnapBuy fits your business
 
 1. **Dashboard** — the operational overview.
 2. **[Zones](/docs/admin/zones)** — open a zone and look at the two pricing models. This is where most delivery businesses succeed or fail.
-3. **[Stores](/docs/admin/stores)** — note that stock and price are held per outlet.
+3. **[Branches](/docs/admin/branches)** — note that stock and price are held per outlet.
 4. **[Home Builder](/docs/admin/home-builder)** — open a layout and use the live device preview.
 5. **[Roles & Permissions](/docs/admin/roles-permissions)** — check the permission granularity against your staffing.
 6. **[Reports](/docs/admin/reports)** — ten reports covering sales, inventory, delivery and payment.

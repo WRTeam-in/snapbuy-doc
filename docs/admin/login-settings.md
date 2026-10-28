@@ -8,7 +8,7 @@ sidebar_position: 20
 
 Menu path: **Settings → Login Settings**
 
-Decides how customers sign in, how **admins and store users** sign in to this panel, and the password rules everyone must meet.
+Decides how customers sign in, how **admins and branch users** sign in to this panel, and the password rules everyone must meet.
 
 ![Login settings page](/images/panel/login-settings-page.png)
 
@@ -81,7 +81,7 @@ No password to forget and no reset flow to support. It is what most delivery app
 | Field | Meaning |
 | --- | --- |
 | **Two-Factor Authentication (Email OTP)** | Master switch for panel logins |
-| **Also apply to store panel users** | On by default. Turn it off to require the code from admins only, leaving store users on a one-step login. |
+| **Also apply to store panel users** | On by default. Turn it off to require the code from admins only, leaving branch users on a one-step login. |
 | **Code validity (minutes)** | How long an emailed code stays usable. Between `1` and `60`; `10` when left empty. |
 
 :::warning Delivery boys are always exempt

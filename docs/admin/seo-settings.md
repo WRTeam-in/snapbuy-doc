@@ -34,7 +34,7 @@ Each key page carries its own entry — home, category listings, product pages, 
 Google truncates longer titles mid-word. Put the distinguishing part first — the brand name belongs at the end, not the beginning.
 
 Good: `Fresh Organic Vegetables — Same Day Delivery | SnapBuy`
-Weak: `SnapBuy — Welcome to our online store, shop now for the best deals`
+Weak: `SnapBuy — Welcome to our online branch, shop now for the best deals`
 :::
 
 :::warning Every page needs a different title

@@ -74,7 +74,7 @@ Interface strings are only part of it. These are translated on their own screens
 | --- | --- |
 | Product names and descriptions | Product edit form, per language |
 | Category names | Category form |
-| Store name, provider, address | [Stores](/docs/admin/stores) — default language first |
+| Branch name, provider, address | [Branches](/docs/admin/branches) — default language first |
 | Zone surge labels and charge names | [Zones](/docs/admin/zones) |
 | Home Builder headings and labels | [Home Builder](/docs/admin/home-builder) |
 | Legal policies | [Countries](/docs/admin/countries#policies) |
@@ -82,7 +82,7 @@ Interface strings are only part of it. These are translated on their own screens
 | Blogs and FAQs | Their own modules |
 
 :::warning Several forms require the default language first
-Stores and some other records refuse to be created in a secondary language — *"Please create store in default language first."* Create the record in the default language, then switch and translate.
+Branches and some other records refuse to be created in a secondary language — *"Please create branch in default language first."* Create the record in the default language, then switch and translate.
 :::
 
 ## Changing the default language

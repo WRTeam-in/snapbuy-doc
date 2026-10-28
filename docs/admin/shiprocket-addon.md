@@ -20,7 +20,7 @@ Install it the way every plugin installs — see [Plugins](/docs/admin/plugins).
 | An **API user** — Shiprocket → Settings → API → Configure | Its email and password are what SnapBuy signs in with |
 | Money in the Shiprocket wallet | An empty wallet is the most common reason a waybill is refused |
 | **Weight** on your product variants | A parcel with no weight cannot be quoted |
-| A **pincode** on each store | It is the pickup end of every quote |
+| A **pincode** on each branch | It is the pickup end of every quote |
 
 :::tip Create a separate API user
 Use Shiprocket → Settings → API → Configure rather than the account owner's own login. Then changing the owner's password does not stop your shop shipping.
@@ -56,26 +56,26 @@ A scheduled sync asks Shiprocket about every parcel still in flight every half h
 A post without a matching token is rejected. Use a long random string, not a word.
 :::
 
-## Connecting each store
+## Connecting each branch
 
-Shiprocket identifies a pickup point by a **nickname registered on your account**, not by an address — so each store has to be matched to one before it can ship.
+Shiprocket identifies a pickup point by a **nickname registered on your account**, not by an address — so each branch has to be matched to one before it can ship.
 
-**Stores → edit a store → Location**
+**Branches → edit a branch → Location**
 
-![Store pickup pincode and registration](/images/panel/shiprocket-store-pickup.png)
+![Branch pickup pincode and registration](/images/panel/shiprocket-branch-pickup.png)
 
 | Control | What it does |
 | --- | --- |
 | **Pincode** | The pickup pincode a courier quotes from. Required for booking. |
-| **Check Pickup** | Asks Shiprocket whether it collects from this pincode, and whether this store is already matched to one of your pickup addresses |
-| **Register with Shiprocket** | Appears when the store is not matched yet. One click sends this store's own address up to Shiprocket under a name derived from the store, so the two sides cannot drift apart. |
+| **Check Pickup** | Asks Shiprocket whether it collects from this pincode, and whether this branch is already matched to one of your pickup addresses |
+| **Register with Shiprocket** | Appears when the branch is not matched yet. One click sends this branch's own address up to Shiprocket under a name derived from the branch, so the two sides cannot drift apart. |
 
-:::danger Booking is refused until a store is connected
-You will see *"This store is not connected to Shiprocket yet"*. That is deliberate — the alternative is a courier arriving at whichever warehouse happened to be first in the list. Fill in the store's address and pincode, then use **Register with Shiprocket**.
+:::danger Booking is refused until a branch is connected
+You will see *"This branch is not connected to Shiprocket yet"*. That is deliberate — the alternative is a courier arriving at whichever warehouse happened to be first in the list. Fill in the branch's address and pincode, then use **Register with Shiprocket**.
 :::
 
 :::warning Shiprocket verifies a new pickup address before it can ship
-Right after registering you may see *"waiting for their verification"*. That is Shiprocket's own check, not SnapBuy's. It also needs a ten-digit contact number on the store.
+Right after registering you may see *"waiting for their verification"*. That is Shiprocket's own check, not SnapBuy's. It also needs a ten-digit contact number on the branch.
 :::
 
 ## Telling a zone it may use the courier
@@ -153,7 +153,7 @@ What stops a booking, and what to do:
 | Message | Fix |
 | --- | --- |
 | Add weight to these products first | Set **Shipping Weight** on the named variants |
-| Store pickup pincode is missing | Fill the store's pincode |
+| Branch pickup pincode is missing | Fill the branch's pincode |
 | Customer pincode is missing | The order has no destination pincode |
 | Customer city or state is missing | Couriers reject an address with no town |
 | This zone does not ship by courier | Tick **Courier** on the zone |
@@ -193,7 +193,7 @@ Menu path: **Shipments** — the dispatch desk, one row per parcel across every 
 | **Delivered** | Done |
 | **Needs Attention** | A delivery attempt failed |
 
-Filter by date range and store, search by order, waybill, product or customer, then select rows for the bulk actions: **print labels**, **print manifest**, **schedule pickup**, **refresh tracking** and **print delivery receipts**. Your Shiprocket balance is shown at the top.
+Filter by date range and branch, search by order, waybill, product or customer, then select rows for the bulk actions: **print labels**, **print manifest**, **schedule pickup**, **refresh tracking** and **print delivery receipts**. Your Shiprocket balance is shown at the top.
 
 :::info Two tabs belong to the courier
 **Awaiting Waybill** and **Needs Attention** only make sense with a shipping plugin installed, so they are hidden otherwise. Delivery receipts print for any parcel, courier or not.
@@ -233,13 +233,13 @@ Only a courier can answer "do you deliver to my pincode?". Without one the setti
 | Point | Detail |
 | --- | --- |
 | **When** | Once the return is Accepted and nobody else has it |
-| **Addresses** | Reversed — the customer is the pickup, the store is the drop |
+| **Addresses** | Reversed — the customer is the pickup, the branch is the drop |
 | **No label or manifest** | Shiprocket needs neither for a collection; the collecting rider brings the paperwork |
 | **Parcel figures** | Prefilled from the returned product, editable before booking |
 | **Cancellation** | Allowed until the parcel is collected |
 | **The refund** | Stays manual — a person opens the box and completes it |
 
-Carrier scans move the request along: Out for Pickup → Received from Customer → Return to Store. **Refund Completed** is never set by a courier.
+Carrier scans move the request along: Out for Pickup → Received from Customer → Return to Branch. **Refund Completed** is never set by a courier.
 
 ## What installing it adds
 
@@ -248,7 +248,7 @@ Carrier scans move the request along: Out for Pickup → Received from Customer 
 | Three tables — shipments, shipment items, pickup locations | The plugin's own records, so a parcel stays trackable and cancellable |
 | Its language strings | Field labels, hints and carrier messages |
 | A tracking webhook action | The URL shown on its settings form |
-| Courier rows on the panel | Ship dialog, Shipments tabs, zone pricing, store pickup check, return pickup |
+| Courier rows on the panel | Ship dialog, Shipments tabs, zone pricing, branch pickup check, return pickup |
 
 Columns such as the tracking number, courier name and label URL on the order itself belong to **SnapBuy**, not the plugin — so your dispatch history survives uninstalling it.
 
@@ -257,8 +257,8 @@ Columns such as the tracking number, courier name and label URL on the order its
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | Shiprocket rejected the email or password | Wrong API user, or the password changed | Re-enter them on the settings form |
-| This store is not connected to Shiprocket yet | No pickup address matched | Use **Register with Shiprocket** on the store |
-| Shiprocket does not collect from this pincode | The pickup pincode is outside their network | Check the store's pincode |
+| This branch is not connected to Shiprocket yet | No pickup address matched | Use **Register with Shiprocket** on the branch |
+| Shiprocket does not collect from this pincode | The pickup pincode is outside their network | Check the branch's pincode |
 | No courier will carry this parcel | Nothing serves that pincode pair, or the parcel is too heavy | Try another courier or deliver by rider |
 | No waybill was returned | Usually an empty wallet | Top up the Shiprocket wallet and retry |
 | Label is not ready | Shiprocket has not generated it yet | Try again shortly |
@@ -273,7 +273,7 @@ Columns such as the tracking number, courier name and label URL on the order its
 - [ ] API user created in Shiprocket, email and password saved
 - [ ] Mode set — Sandbox to rehearse, Live to ship
 - [ ] Webhook token set and pasted into Shiprocket with the URL
-- [ ] Every store has a pincode and is registered with Shiprocket
+- [ ] Every branch has a pincode and is registered with Shiprocket
 - [ ] Shipping weight on every variant you sell
 - [ ] Zone's delivery methods ticked, pricing strategy and markup decided
 - [ ] Fallback flat pricing set to something sensible

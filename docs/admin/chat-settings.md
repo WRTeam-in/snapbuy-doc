@@ -122,7 +122,7 @@ A correct key with the wrong cluster fails to connect with no useful error. Copy
 Cluster choice sets message latency. Serving India from a US cluster adds noticeable delay to every message.
 :::
 
-Pusher's free tier covers a limited number of daily messages and concurrent connections — fine for a small store, worth watching as you grow.
+Pusher's free tier covers a limited number of daily messages and concurrent connections — fine for a small branch, worth watching as you grow.
 
 ## Verify chat works
 

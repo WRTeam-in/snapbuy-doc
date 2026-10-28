@@ -32,7 +32,7 @@ Set it during initial setup and leave it alone.
 :::
 
 :::warning Choose a unique schema
-Schemes are first-come, first-served on a device. A generic value like `shop` or `store` may already be claimed by another installed app, and the wrong app opens. Use your brand name.
+Schemes are first-come, first-served on a device. A generic value like `shop` or `branch` may already be claimed by another installed app, and the wrong app opens. Use your brand name.
 :::
 
 ## What deeplinks are used for

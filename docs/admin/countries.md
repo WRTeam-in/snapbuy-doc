@@ -10,7 +10,7 @@ sidebar_position: 9
 
 A country in SnapBuy is far more than a name in a dropdown. It is the container for your **currency**, **phone number rules**, **timezone**, **date formats**, **which payment gateways are offered**, your **referral programme**, and every **legal policy** the apps display.
 
-Get this right before anything else — zones, stores and prices all hang off it.
+Get this right before anything else — zones, branches and prices all hang off it.
 
 ![Countries list](/images/panel/countries-list.png)
 
@@ -90,6 +90,38 @@ Customers sign in by mobile number. If the length range does not match reality f
 For India set both min and max to `10`. For countries with variable-length numbers, widen the range rather than guessing.
 :::
 
+### Buyer Tax Number
+
+A business buying from you needs its own registration number on the invoice before it can claim the purchase back. This block, on **Country Details**, decides whether this country's customers are asked for one.
+
+![Buyer tax number settings on a country](/images/panel/countries-buyer-tax-number.png)
+
+| Field | What it does |
+| --- | --- |
+| **Buyer Tax Number** | Off: *Not asked*. On: *Asked at checkout* — the field appears on the address form for this country. |
+| **Field Label** | What this country calls the number — `GSTIN`, `VAT Number`, `TRN`, `ABN`. Up to 48 characters. |
+| **Format Pattern** | A regular expression used to catch a typo. Leave blank to accept any value. |
+
+With it on, the buyer may also give a **Business Name**. Whatever they enter is copied onto the order and printed on the invoice under your label, so a GSTIN shows as *GSTIN:* and a TRN as *TRN:*.
+
+:::info Always optional for the buyer
+Switching this on adds the field; it never makes it mandatory. A private customer leaves it blank and checks out as before.
+:::
+
+:::warning Anchor the pattern, and test it
+An unanchored expression matches anything that merely *contains* a valid-looking number, so `12ABCDE1234F1Z5xxxx` passes. The form warns you when the pattern has no `^ … $`, flags an expression that will not compile at all, and gives you a **try a number** box right underneath — type a real registration number and confirm it is accepted before you save.
+
+A broken pattern turns away every number a buyer types, with nothing on the checkout screen to say why.
+:::
+
+:::tip A worked example
+India, GSTIN: label `GSTIN`, pattern `^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$`. Leave the pattern blank for countries whose formats you are unsure of — catching typos is worth less than rejecting valid numbers.
+:::
+
+:::info This is the buyer's number, not yours
+Your own registration number is set per [branch](/docs/admin/branches) and appears on the invoice as the seller's. This field is the number the *customer* supplies.
+:::
+
 ### Currency
 
 Set on the **Payment Gateways** step, alongside the gateways that will charge in it.
@@ -115,7 +147,7 @@ Use `0` decimal points for currencies without minor units (for example JPY) — 
 | **Time Format** | `h:i A` | 12-hour (`h:i A`) or 24-hour (`H:i`) |
 
 :::warning Timezone drives scheduling, not just display
-Zone surge slots, store operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and stores appear closed when they are open.
+Zone surge slots, branch operating hours, scheduled maintenance windows and scheduled Home Builder publishing are all evaluated against the country timezone. A wrong timezone means surge pricing applies at the wrong hours and branches appear closed when they are open.
 :::
 
 ### Payment gateways per country
@@ -160,7 +192,7 @@ Every legal document lives on the country, so different regions can carry differ
 Installation writes **placeholder text** into these fields so nothing appears blank in the apps.
 
 :::danger Replace the placeholder policies before going live
-App stores reject submissions that show placeholder legal text, and in many regions publishing a store without a real privacy policy is a compliance problem. Rewrite all seven before you publish.
+App stores reject submissions that show placeholder legal text, and in many regions publishing an app without a real privacy policy is a compliance problem. Rewrite all seven before you publish.
 :::
 
 Each policy is editable **per language** — see [Manage Languages](/docs/admin/languages). Customers see the policy for their selected language, falling back to the default language when a translation is missing.
@@ -209,7 +241,7 @@ Every zone carries a `country_id`. Create the country first, then draw zones ins
 ## Deactivating or deleting
 
 - **Set status inactive** to hide a country from the apps while keeping its orders and customers intact. This is the safe option.
-- **Deleting** a country whose zones, stores and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.
+- **Deleting** a country whose zones, branches and orders still reference it will break those records. Deactivate instead unless the country was created in error and never used.
 
 ## Checklist
 

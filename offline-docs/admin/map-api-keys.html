@@ -31,8 +31,8 @@
     <ul>
       <li>Customers pick their delivery address on a map</li>
       <li>You draw <a href="../admin/zones.html">zone</a> polygons on a map</li>
-      <li>You drop the <a href="../admin/stores.html">store</a> pin on a map</li>
-      <li><strong>Road distance between store and customer sets the quick-channel delivery charge</strong></li>
+      <li>You drop the <a href="../admin/branches.html">branch</a> pin on a map</li>
+      <li><strong>Road distance between branch and customer sets the quick-channel delivery charge</strong></li>
     </ul>
 
     <img src="../images/panel/map-api-page.png" alt="API credentials page">
@@ -58,7 +58,7 @@
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">OpenStreetMap uses a shared public routing service</p>
-      <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a store doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
+      <p>Distance lookups go to the public OSRM demo server. It is free and unauthenticated, but it is rate-limited and offers no uptime guarantee. On a branch doing serious order volume, move to Google Maps or host your own OSRM instance — otherwise busy periods can produce "unable to fetch distance" at checkout.</p>
     </div>
 
     <h2 id="using-google-maps">Using Google Maps</h2>
@@ -69,15 +69,16 @@
     <table>
       <thead><tr><th>SnapBuy field</th><th>Google API</th><th>Used for</th></tr></thead>
       <tbody>
-        <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning stores</td></tr>
-        <tr><td><strong>Place API Key</strong></td><td>Places API, Places API (New), Geocoding API, Distance Matrix API</td><td>Address search, autocomplete, and measuring the store-to-customer distance that sets the quick-channel delivery charge</td></tr>
+        <tr><td><strong>Map API Key</strong></td><td>Maps JavaScript API</td><td>Rendering the map tiles you see when drawing zones and pinning branches</td></tr>
+        <tr><td><strong>Place API Key</strong></td><td>Places API (New), Geocoding API, Routes API</td><td>Address search, autocomplete, and measuring the branch-to-customer distance that sets the quick-channel delivery charge</td></tr>
       </tbody>
     </table>
     </div>
 
     <div class="admonition admonition--danger">
-      <p class="admonition__title">Distance Matrix belongs to the Place key, not the Map key</p>
-      <p>SnapBuy sends the Distance Matrix request using the <strong>Place API Key</strong>. Enabling Distance Matrix against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.</p>
+      <p class="admonition__title">Distance comes from the Routes API now, and it uses the Place key</p>
+      <p>SnapBuy measures the branch-to-customer road distance with the <strong>Routes API</strong> (<code>computeRouteMatrix</code>), sent with the <strong>Place API Key</strong>. The old Distance Matrix API is no longer called at all.</p>
+      <p>Enabling Routes against the Map key only — or restricting the Place key to Places and Geocoding — leaves the map working perfectly while every delivery-charge lookup fails.</p>
       <p>The symptom is "unable to fetch distance" at checkout on a panel where the maps clearly render fine.</p>
     </div>
 
@@ -95,22 +96,39 @@
       <li>Go to <strong>APIs &amp; Services → Library</strong> and enable:
         <ul>
           <li>Maps JavaScript API</li>
-          <li>Places API</li>
           <li>Places API (New)</li>
           <li>Geocoding API</li>
-          <li>Distance Matrix API</li>
-          <li>Directions API</li>
+          <li>Routes API</li>
         </ul>
       </li>
       <li>Go to <strong>APIs &amp; Services → Credentials → Create credentials → API key</strong>.</li>
       <li>Create <strong>two</strong> keys and name them clearly.</li>
     </ol>
 
-    <p>Places API and Places API (New) are listed as two separate services in the Library and are not interchangeable. SnapBuy calls the legacy Places endpoints, so Places API must be enabled, while Google Cloud projects created recently only surface Places API (New). Enable both. If your project shows only one of the two, enable what is available and then test address search before going live — this is a common reason autocomplete returns nothing on an otherwise correct setup.</p>
+    <p>Those four are everything SnapBuy needs. It calls Google's <strong>current</strong> endpoints only — <code>places.googleapis.com/v1</code> for address search and <code>routes.googleapis.com</code> for distance — so the legacy services are <strong>not</strong> required:</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Legacy service</th><th>Replaced by</th><th>Still needed?</th></tr></thead>
+      <tbody>
+        <tr><td>Places API (the original one)</td><td>Places API (New)</td><td>No</td></tr>
+        <tr><td>Distance Matrix API</td><td>Routes API</td><td>No</td></tr>
+        <tr><td>Directions API</td><td>Routes API</td><td>No</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Places API and Places API (New) are listed as two separate services in the Library. Enable only <strong>Places API (New)</strong> — recent Google Cloud projects do not even offer the old one.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Upgrading an existing SnapBuy? Enable Routes API</p>
+      <p>Earlier SnapBuy versions called Distance Matrix and the legacy Places endpoints. This version does not. If your Google project was set up for the old pair, go to <strong>APIs &amp; Services → Library</strong>, enable <strong>Routes API</strong> and <strong>Places API (New)</strong>, then add both to the Place key's API restrictions — otherwise delivery-charge lookups and address search stop working after the update, on a project that was perfectly correct before.</p>
+      <p>The legacy services can be left enabled; they are simply never called. Turning them off is tidier and changes nothing.</p>
+    </div>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Billing must be enabled</p>
-      <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small stores, but the account must still exist.</p>
+      <p>Without a billing account every Google Maps request fails and the map area renders grey with a "for development purposes only" watermark. Google applies a recurring monthly credit that covers small shops, but the account must still exist.</p>
     </div>
 
     <h3 id="restrict-the-keys">Restrict the keys</h3>
@@ -142,7 +160,7 @@ https://yourstore.com/*</code></pre>
 
     <h4 id="place-api-key-restrict-by-ip-address">Place API Key — restrict by IP address</h4>
 
-    <p>SnapBuy calls Places, Geocoding and Distance Matrix <strong>from the server</strong>, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.</p>
+    <p>SnapBuy calls Places (New), Geocoding and Routes <strong>from the server</strong>, not the browser. A referrer restriction would block those calls, because a server-to-server request sends no referrer.</p>
 
     <p>Restrict this key by <strong>IP addresses</strong> instead and enter your server's address. Modern VPS providers usually assign an <strong>IPv6</strong> address, so add that — and the IPv4 address too if your server has one.</p>
 
@@ -153,7 +171,7 @@ https://yourstore.com/*</code></pre>
 
     <img src="../images/panel/map-key-restriction-ip.png" alt="Place API key restricted by server IP address">
 
-    <p>Under <strong>API restrictions</strong>, limit it to Places, Places (New), Geocoding and Distance Matrix.</p>
+    <p>Under <strong>API restrictions</strong>, limit it to <strong>Places API (New)</strong>, <strong>Geocoding API</strong> and <strong>Routes API</strong>.</p>
 
     <div class="admonition admonition--danger">
       <p class="admonition__title">Do not restrict the Place key by referrer</p>
@@ -170,7 +188,7 @@ curl -4 ifconfig.co   # IPv4</code></pre>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Restrict, but test afterwards</p>
-      <p>Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — <strong>then place a test order to an address a few kilometres from the store</strong> and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach Distance Matrix.</p>
+      <p>Over-restricting is the second most common Maps problem. After adding restrictions, reload the panel and confirm the zone map still draws — <strong>then place a test order to an address a few kilometres from the branch</strong> and check the delivery charge is calculated. The map drawing correctly does not prove the Place key can still reach the Routes API.</p>
       <p>Restriction changes can take a few minutes to take effect.</p>
     </div>
 
@@ -215,7 +233,7 @@ curl -4 ifconfig.co   # IPv4</code></pre>
 
     <h3 id="enable-only-the-generative-language-api">Enable only the Generative Language API</h3>
 
-    <p>SnapBuy calls a single endpoint — the <strong>Generative Language API</strong>, model <code>gemini-2.5-flash</code>.</p>
+    <p>SnapBuy calls a single endpoint — the <strong>Generative Language API</strong>, model <code>gemini-3.6-flash</code>.</p>
 
     <p>In <strong>APIs &amp; Services → Library</strong>, enable <strong>Generative Language API</strong> and nothing else. Then open the key under <strong>Credentials</strong> and, under <strong>API restrictions</strong>, choose <strong>Restrict key</strong> and select only that API.</p>
 
@@ -252,8 +270,9 @@ curl -4 ifconfig.co   # IPv4</code></pre>
         <tr><td>Setup Guide Map step stays red</td><td>Provider is Google but only one key filled</td><td>Fill both Map and Place keys</td></tr>
         <tr><td>Grey map with a watermark</td><td>Billing not enabled on the Google project</td><td>Enable billing</td></tr>
         <tr><td>"This page can't load Google Maps correctly"</td><td>Required API not enabled, or the Map key's domain restriction does not cover this hostname</td><td>Enable the APIs; add the hostname to the Map key's website restrictions</td></tr>
-        <tr><td>Map loads, address search does nothing</td><td>Places API (New) not enabled, Places API not enabled, or Place key missing</td><td>Enable both Places services; fill the Place key</td></tr>
-        <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td>Distance Matrix not enabled, or the Place key is restricted by referrer instead of by server IP</td><td>Enable Distance Matrix; restrict the Place key by IP address</td></tr>
+        <tr><td>Map loads, address search does nothing</td><td><strong>Places API (New)</strong> not enabled, or Place key missing</td><td>Enable Places API (New); fill the Place key</td></tr>
+        <tr><td>"Unable to fetch distance" at checkout, but maps render fine</td><td><strong>Routes API</strong> not enabled, or the Place key is restricted by referrer instead of by server IP</td><td>Enable Routes API; restrict the Place key by IP address</td></tr>
+        <tr><td>Distance and address search worked before the update, not after</td><td>The project has only the legacy Distance Matrix and Places APIs enabled</td><td>Enable <strong>Routes API</strong> and <strong>Places API (New)</strong>, and allow both on the Place key</td></tr>
         <tr><td>"Unable to fetch distance" on OpenStreetMap</td><td>Public OSRM routing service rate-limited</td><td>Switch to Google Maps, or host your own OSRM</td></tr>
         <tr><td>Distance lookups failed after a server migration</td><td>Place key still restricted to the old server IP</td><td>Update the IP restriction</td></tr>
         <tr><td>Unexpected Google bill</td><td>Unrestricted key in use elsewhere</td><td>Apply the restrictions above and regenerate the key</td></tr>
@@ -267,9 +286,9 @@ curl -4 ifconfig.co   # IPv4</code></pre>
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Provider chosen</li>
-      <li class="task-item"><input type="checkbox" disabled> If Google: billing enabled, all six APIs enabled (including Places API (New))</li>
+      <li class="task-item"><input type="checkbox" disabled> If Google: billing enabled, all four APIs enabled — Maps JavaScript, Places API (New), Geocoding, Routes</li>
       <li class="task-item"><input type="checkbox" disabled> If Google: <strong>both</strong> Map and Place keys entered</li>
-      <li class="task-item"><input type="checkbox" disabled> Distance Matrix enabled and allowed on the Place API Key</li>
+      <li class="task-item"><input type="checkbox" disabled> Routes API enabled and allowed on the Place API Key</li>
       <li class="task-item"><input type="checkbox" disabled> Map key restricted by domain; Place key restricted by server IP</li>
       <li class="task-item"><input type="checkbox" disabled> Budget alert configured</li>
       <li class="task-item"><input type="checkbox" disabled> Zone map draws correctly</li>

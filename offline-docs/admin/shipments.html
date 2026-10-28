@@ -32,7 +32,7 @@
 
     <div class="admonition admonition--info">
       <p class="admonition__title">It works with no courier plugin installed</p>
-      <p>A store handing parcels to its own rider still needs a stack of delivery receipts, so this page is part of core. With a shipping plugin added — see <a href="../admin/shiprocket-addon.html">Shiprocket</a> — the courier columns, labels, manifests and pickups come alive on the same rows.</p>
+      <p>A branch handing parcels to its own rider still needs a stack of delivery receipts, so this page is part of core. With a shipping plugin added — see <a href="../admin/shiprocket-addon.html">Shiprocket</a> — the courier columns, labels, manifests and pickups come alive on the same rows.</p>
     </div>
 
     <h2 id="what-appears-here">What appears here</h2>
@@ -50,7 +50,7 @@
 
     <h2 id="one-row-is-one-parcel">One row is one parcel, not one item</h2>
 
-    <p>Lines are grouped into a <strong>consignment</strong> — the items that would physically go in one box. A row is one order, from one store, under one waybill or one booked shipment, with one rider.</p>
+    <p>Lines are grouped into a <strong>consignment</strong> — the items that would physically go in one box. A row is one order, from one branch, under one waybill or one booked shipment, with one rider.</p>
 
     <p>So an order whose three items ship together is a single row; split that order across two parcels and you get two rows.</p>
 
@@ -61,7 +61,7 @@
         <tr><td><strong>Order No</strong></td><td>The order. Click it to open the order drawer right here.</td></tr>
         <tr><td><strong>Item</strong></td><td>The first product, with the count of the rest. Expand the row to see every line.</td></tr>
         <tr><td><strong>Customer</strong></td><td>Name, city and pincode</td></tr>
-        <tr><td><strong>Store</strong></td><td>Which outlet is shipping it</td></tr>
+        <tr><td><strong>Branch</strong></td><td>Which outlet is shipping it</td></tr>
         <tr><td><strong>Courier</strong></td><td>The carrier and its waybill, once there is one</td></tr>
         <tr><td><strong>Status</strong></td><td>The parcel's state — see below</td></tr>
         <tr><td><strong>Amount</strong></td><td>The consignment's total</td></tr>
@@ -114,7 +114,7 @@
       <thead><tr><th>Filter</th><th>Matches</th></tr></thead>
       <tbody>
         <tr><td><strong>Search</strong></td><td>Order number, pincode, waybill, product name or customer name</td></tr>
-        <tr><td><strong>Store</strong></td><td>One outlet</td></tr>
+        <tr><td><strong>Branch</strong></td><td>One outlet</td></tr>
         <tr><td><strong>Date range</strong></td><td>When the order was placed</td></tr>
         <tr><td><strong>Reset</strong></td><td>Clears all of them</td></tr>
       </tbody>
@@ -122,8 +122,8 @@
     </div>
 
     <div class="admonition admonition--info">
-      <p class="admonition__title">A store user only ever sees their own store</p>
-      <p>The store filter is applied automatically for a store login, so a branch cannot read another branch's dispatch queue. See <a href="../admin/stores.html">Stores</a>.</p>
+      <p class="admonition__title">A branch user only ever sees their own branch</p>
+      <p>The branch filter is applied automatically for a branch login, so a branch cannot read another branch's dispatch queue. See <a href="../admin/branches.html">Branches</a>.</p>
     </div>
 
     <h2 id="acting-on-a-selection">Acting on a selection</h2>
@@ -190,7 +190,7 @@
       <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
       <tbody>
         <tr><td>An order is missing from the list</td><td>It is quick-commerce, self pickup, cancelled, or still unpaid</td><td>Those never appear here</td></tr>
-        <tr><td>A row covers items you wanted apart</td><td>They share an order, store, waybill and rider</td><td>Book them as separate parcels from the order drawer</td></tr>
+        <tr><td>A row covers items you wanted apart</td><td>They share an order, branch, waybill and rider</td><td>Book them as separate parcels from the order drawer</td></tr>
         <tr><td>Two tabs are missing</td><td>No shipping plugin installed</td><td>Expected — see <a href="../admin/plugins.html">Plugins</a></td></tr>
         <tr><td>Labels or manifest refused</td><td>The selection has no waybill</td><td>Assign one first</td></tr>
         <tr><td>Nothing happens on <strong>Refresh Tracking</strong></td><td>The parcel has no waybill, or the carrier has no new scan</td><td>Check the waybill</td></tr>
@@ -204,7 +204,7 @@
 
     <ul>
       <li class="task-item"><input type="checkbox" disabled> Work <strong>Needs Attention</strong> and <strong>Awaiting Waybill</strong> before <strong>To Dispatch</strong></li>
-      <li class="task-item"><input type="checkbox" disabled> Filter to one store when a desk packs for one outlet</li>
+      <li class="task-item"><input type="checkbox" disabled> Filter to one branch when a desk packs for one outlet</li>
       <li class="task-item"><input type="checkbox" disabled> Labels and manifest printed together before the courier arrives</li>
       <li class="task-item"><input type="checkbox" disabled> Delivery receipts printed for rider handovers</li>
       <li class="task-item"><input type="checkbox" disabled> Carrier balance watched</li>

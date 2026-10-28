@@ -6,7 +6,7 @@ sidebar_position: 8
 
 # Setup Guide — the first nine steps
 
-A freshly installed SnapBuy panel is empty. The apps and the web portal will load, but they will show nothing, because there is no country, no delivery zone, no store and no home layout yet.
+A freshly installed SnapBuy panel is empty. The apps and the web portal will load, but they will show nothing, because there is no country, no delivery zone, no branch and no home layout yet.
 
 The panel guides you through this with a **Setup Guide** widget in the sidebar. It tracks nine steps, shows a completion ring, and hides itself once all nine are done.
 
@@ -18,7 +18,7 @@ The panel guides you through this with a **Setup Guide** widget in the sidebar. 
 | --- | --- | --- | --- |
 | 1 | **Add a Country** | `/countries/create` | Sets currency, and the countries you deliver in |
 | 2 | **Add a Zone** | `/zones/create` | The geographic area you actually deliver to |
-| 3 | **Add a Store** | `/stores/create` | Products belong to a store; without one nothing can be sold |
+| 3 | **Add a Branch** | `/branches/create` | Products belong to a branch; without one nothing can be sold |
 | 4 | **Build the Home Layout** | `/home_builder` | Controls what the app and website home screen show |
 | 5 | **Configure SMTP** | `/settings/smtp` | Order emails, password resets, OTP by email |
 | 6 | **Configure Firebase** | `/settings/firebase` | Login, push notifications, real-time updates |
@@ -26,7 +26,7 @@ The panel guides you through this with a **Setup Guide** widget in the sidebar. 
 | 8 | **Configure Chat** | `/settings/chat` | Live chat between customers, delivery boys and admin |
 | 9 | **Set up Cron** | Server | Reminders, queued jobs, scheduled publishing |
 
-Follow them in this order. Later steps depend on earlier ones — you cannot create a store without a zone, and you cannot create a zone without a country.
+Follow them in this order. Later steps depend on earlier ones — you cannot create a branch without a zone, and you cannot create a zone without a country.
 
 ## How each step is detected
 
@@ -36,7 +36,7 @@ The Setup Guide does not use checkboxes you tick yourself. It inspects your data
 | --- | --- |
 | Country | At least one country exists |
 | Zone | At least one zone exists |
-| Store | At least one store exists |
+| Branch | At least one branch exists |
 | Home Builder | At least one home layout exists |
 | SMTP | `smtp_host`, `smtp_port` and `smtp_from_mail` are all filled |
 | Firebase | `apiKey`, `projectId`, `messagingSenderId`, `appId` are filled **and** `config/firebase.json` exists on the server |
@@ -57,7 +57,7 @@ Each step has its own page with the full walkthrough:
 
 1. **[Countries & Currency](/docs/admin/countries)**
 2. **[Delivery Zones](/docs/admin/zones)**
-3. **[Stores](/docs/admin/stores)**
+3. **[Branches](/docs/admin/branches)**
 4. **[Home Builder](/docs/admin/home-builder)**
 5. **[SMTP / Email Settings](/docs/admin/smtp-settings)**
 6. **[Firebase Settings](/docs/admin/firebase-settings)**
@@ -67,10 +67,10 @@ Each step has its own page with the full walkthrough:
 
 ## Recommended order beyond the nine
 
-Once the Setup Guide is complete, the store works but is not yet ready to sell. Continue with:
+Once the Setup Guide is complete, the branch works but is not yet ready to sell. Continue with:
 
 1. **[Payment Gateways](/docs/admin/payment-gateway)** — customers cannot pay online until one is live
-2. **[General Settings](/docs/admin/general-settings)** — store name, logo, currency display, timezone
+2. **[General Settings](/docs/admin/general-settings)** — branch name, logo, currency display, timezone
 3. **[App Settings](/docs/admin/app-settings)** — minimum order value, delivery charges, order behaviour
 4. **Catalogue** — categories, then brands and attributes, then products
 5. **[Login Settings](/docs/admin/login-settings)** and **[SMS Settings](/docs/admin/sms-settings)** — how customers sign in

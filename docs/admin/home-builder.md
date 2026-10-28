@@ -16,7 +16,7 @@ You assemble a layout from **sections** — banner sliders, category grids, prod
 
 ## Draft and published — how safety works
 
-Every layout stores **two complete copies** of itself:
+Every layout branches **two complete copies** of itself:
 
 | Copy | What it is |
 | --- | --- |
@@ -126,6 +126,42 @@ A product slider is the most-used section, and the **data source** decides which
 **Recently Visited** and **Buy Again** have nothing to show a first-time customer. Do not place them at the top of the home screen — put them lower, below sections that always have content.
 :::
 
+### Narrowing an automatic source
+
+Automatic sources draw from the whole catalogue. **Filter Products** scopes one to part of it — or keeps that part out.
+
+| Field | What it does |
+| --- | --- |
+| **Filter Products** | `No Filter`, `By Category`, or `By Brand` |
+| **Filter Mode** | `Only These` keeps the selected categories/brands; `Everything Except These` drops them |
+| **Categories / Brands** | Which ones, once a filter type is chosen |
+
+![Filtering an automatic product source](/images/panel/home-builder-filter-products.png)
+
+:::info Only shown where it makes sense
+The filter appears on ordering-only sources — Top Selling, Trending, New Arrivals, Discounted, Best Rated, Most Favorited. It is hidden on **Manual**, **Category** and **Brand**, where it would contradict the source itself.
+:::
+
+:::tip Two rows from one source
+"Top Selling, only Electronics" and "Top Selling, everything except Electronics" give you a featured row and a general row without a single manual pick, and both stay fresh on their own.
+:::
+
+## Search suggestions
+
+The hints that rotate inside the app's search bar are set per layout, under **Search Suggestions**.
+
+Type a name and press enter to add it; each one becomes a chip. Leave the list empty and the app keeps showing random product names, as it always did.
+
+![Search suggestions on a layout](/images/panel/home-builder-search-suggestions.png)
+
+:::info One list per layout, or one per tab
+On a **single** home layout the list belongs to the whole layout. On a **category-wise** layout each tab carries its own list, and the field shows which tab you are editing — so the Grocery tab can hint *Fresh milk* while the Electronics tab hints *Wireless earbuds*.
+:::
+
+:::tip Suggest what you want searched, not what is popular
+These are prompts, not analytics. Use them to push a season, a new category or a campaign term, and change them as often as you change banners.
+:::
+
 ## Banners and redirects
 
 Every banner and grid tile can carry a **redirect** — where the customer lands on tap:
@@ -134,6 +170,7 @@ Every banner and grid tile can carry a **redirect** — where the customer lands
 - A category
 - A brand
 - **A page built in [Page Builder](/docs/admin/page-builder)**
+- **A product list with filters** — a listing opened already narrowed
 - An external URL
 - Nothing (decorative)
 
@@ -146,6 +183,36 @@ Choose **Redirect Type → Page Builder** to send the tap to a page you built yo
 
 :::warning Check redirects after catalogue changes
 A banner pointing at a deleted or deactivated product leaves customers tapping into an error. After removing products or categories, review banners that referenced them.
+:::
+
+### Redirecting to a filtered product list
+
+**Product list with filters** is a redirect type of its own: the tap opens a product listing that is already narrowed, without you building a page for it.
+
+![Listing filters on a redirect](/images/panel/home-builder-listing-filters.png)
+
+| Field | What it narrows by |
+| --- | --- |
+| **Listing heading** | The title at the top of the listing — *Up to 50% Off*. Translatable. |
+| **Category** | One category |
+| **Brands** | Any number of brands |
+| **Attributes** | Attribute values — Colour: Red, Size: M |
+| **Min / Max price** | A price band; leave either blank for no limit |
+| **Min / Max discount %** | A discount band |
+| **Sort by** | The order the listing opens in |
+
+Leave a field blank to leave it out of the filter.
+
+:::info How several attributes combine
+Values of the **same** attribute match any of them; values of **different** attributes must all match. *Colour: Red + Colour: Blue* shows both colours, while *Colour: Red + Size: M* shows only red in size M.
+:::
+
+:::warning A discount filter hides everything at full price
+Set any discount bound and the listing shows **only** discounted products. That is usually what a sale banner wants — just do not use it for a general category link.
+:::
+
+:::tip Pick the category first
+Attribute values are scoped to the chosen category, so the picker has far less to wade through once a category is set. With no category it offers every attribute value in the catalogue.
 :::
 
 ## Images and platforms

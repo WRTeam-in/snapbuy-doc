@@ -34,7 +34,7 @@
 
     <h2 id="draft-and-published-how-safety-works">Draft and published — how safety works</h2>
 
-    <p>Every layout stores <strong>two complete copies</strong> of itself:</p>
+    <p>Every layout branches <strong>two complete copies</strong> of itself:</p>
 
     <div class="table-wrap">
     <table>
@@ -177,6 +177,52 @@
       <p><strong>Recently Visited</strong> and <strong>Buy Again</strong> have nothing to show a first-time customer. Do not place them at the top of the home screen — put them lower, below sections that always have content.</p>
     </div>
 
+    <h3 id="narrowing-an-automatic-source">Narrowing an automatic source</h3>
+
+    <p>Automatic sources draw from the whole catalogue. <strong>Filter Products</strong> scopes one to part of it &mdash; or keeps that part out.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Filter Products</strong></td><td><code>No Filter</code>, <code>By Category</code>, or <code>By Brand</code></td></tr>
+        <tr><td><strong>Filter Mode</strong></td><td><code>Only These</code> keeps the selected categories/brands; <code>Everything Except These</code> drops them</td></tr>
+        <tr><td><strong>Categories / Brands</strong></td><td>Which ones, once a filter type is chosen</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <img src="../images/panel/home-builder-filter-products.png" alt="Filtering an automatic product source">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Only shown where it makes sense</p>
+      <p>The filter appears on ordering-only sources &mdash; Top Selling, Trending, New Arrivals, Discounted, Best Rated, Most Favorited. It is hidden on <strong>Manual</strong>, <strong>Category</strong> and <strong>Brand</strong>, where it would contradict the source itself.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Two rows from one source</p>
+      <p>&ldquo;Top Selling, only Electronics&rdquo; and &ldquo;Top Selling, everything except Electronics&rdquo; give you a featured row and a general row without a single manual pick, and both stay fresh on their own.</p>
+    </div>
+
+    <h2 id="search-suggestions">Search suggestions</h2>
+
+    <p>The hints that rotate inside the app&rsquo;s search bar are set per layout, under <strong>Search Suggestions</strong>.</p>
+
+    <p>Type a name and press enter to add it; each one becomes a chip. Leave the list empty and the app keeps showing random product names, as it always did.</p>
+
+    <img src="../images/panel/home-builder-search-suggestions.png" alt="Search suggestions on a layout">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">One list per layout, or one per tab</p>
+      <p>On a <strong>single</strong> home layout the list belongs to the whole layout. On a <strong>category-wise</strong> layout each tab carries its own list, and the field shows which tab you are editing &mdash; so the Grocery tab can hint <em>Fresh milk</em> while the Electronics tab hints <em>Wireless earbuds</em>.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Suggest what you want searched, not what is popular</p>
+      <p>These are prompts, not analytics. Use them to push a season, a new category or a campaign term, and change them as often as you change banners.</p>
+    </div>
+
+
     <h2 id="banners-and-redirects">Banners and redirects</h2>
 
     <p>Every banner and grid tile can carry a <strong>redirect</strong> — where the customer lands on tap:</p>
@@ -186,6 +232,7 @@
       <li>A category</li>
       <li>A brand</li>
       <li><strong>A page built in <a href="../admin/page-builder.html">Page Builder</a></strong></li>
+      <li><strong>A product list with filters</strong> &mdash; a listing opened already narrowed</li>
       <li>An external URL</li>
       <li>Nothing (decorative)</li>
     </ul>
@@ -201,6 +248,45 @@
       <p class="admonition__title">Check redirects after catalogue changes</p>
       <p>A banner pointing at a deleted or deactivated product leaves customers tapping into an error. After removing products or categories, review banners that referenced them.</p>
     </div>
+
+    <h3 id="redirecting-to-a-filtered-product-list">Redirecting to a filtered product list</h3>
+
+    <p><strong>Product list with filters</strong> is a redirect type of its own: the tap opens a product listing that is already narrowed, without you building a page for it.</p>
+
+    <img src="../images/panel/home-builder-listing-filters.png" alt="Listing filters on a redirect">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>What it narrows by</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Listing heading</strong></td><td>The title at the top of the listing &mdash; <em>Up to 50% Off</em>. Translatable.</td></tr>
+        <tr><td><strong>Category</strong></td><td>One category</td></tr>
+        <tr><td><strong>Brands</strong></td><td>Any number of brands</td></tr>
+        <tr><td><strong>Attributes</strong></td><td>Attribute values &mdash; Colour: Red, Size: M</td></tr>
+        <tr><td><strong>Min / Max price</strong></td><td>A price band; leave either blank for no limit</td></tr>
+        <tr><td><strong>Min / Max discount %</strong></td><td>A discount band</td></tr>
+        <tr><td><strong>Sort by</strong></td><td>The order the listing opens in</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Leave a field blank to leave it out of the filter.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">How several attributes combine</p>
+      <p>Values of the <strong>same</strong> attribute match any of them; values of <strong>different</strong> attributes must all match. <em>Colour: Red + Colour: Blue</em> shows both colours, while <em>Colour: Red + Size: M</em> shows only red in size M.</p>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">A discount filter hides everything at full price</p>
+      <p>Set any discount bound and the listing shows <strong>only</strong> discounted products. That is usually what a sale banner wants &mdash; just do not use it for a general category link.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Pick the category first</p>
+      <p>Attribute values are scoped to the chosen category, so the picker has far less to wade through once a category is set. With no category it offers every attribute value in the catalogue.</p>
+    </div>
+
 
     <h2 id="images-and-platforms">Images and platforms</h2>
 

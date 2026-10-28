@@ -18,7 +18,7 @@ If a gateway "is configured but customers cannot see it", you are almost certain
 
 ## Why per country
 
-Different regions need different processors. A store selling in India and the UAE cannot use one gateway for both — Razorpay settles in INR, PayTabs serves the Gulf. Attaching gateways to countries lets each region use what actually works there, in the right currency.
+Different regions need different processors. A branch selling in India and the UAE cannot use one gateway for both — Razorpay settles in INR, PayTabs serves the Gulf. Attaching gateways to countries lets each region use what actually works there, in the right currency.
 
 The **Payment Method Settings** master switch on the country turns online payment on or off for that country as a whole.
 
