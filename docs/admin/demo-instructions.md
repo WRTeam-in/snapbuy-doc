@@ -70,9 +70,3 @@ If you have fifteen minutes and want to judge whether SnapBuy fits your business
 ## Mobile apps
 
 Demo builds of the Customer and Delivery Boy apps are linked from the product page. Both point at the demo panel above, so anything you change in the panel appears in the apps.
-
-## Questions
-
-- 📧 **Email**: support@snapbuy.in
-- 🌐 **Website**: [snapbuy.in](https://www.snapbuy.in/)
-- 📄 **[Support](/docs/support)**
