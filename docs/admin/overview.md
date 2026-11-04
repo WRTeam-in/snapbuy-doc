@@ -65,9 +65,3 @@ If a branch ever reports "the app shows nothing" or "no notifications arrive", t
 ## Access and permissions
 
 SnapBuy uses **role-based access control**. The account created during installation is the **Super Admin** and holds every permission. Staff accounts you create later see only the menus their role allows.
-
-## Need help?
-
-- 📧 **Email**: support@snapbuy.in
-- 🌐 **Website**: [snapbuy.in](https://www.snapbuy.in/)
-- 📄 **[Support](/docs/support)**
