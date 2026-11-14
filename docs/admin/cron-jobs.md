@@ -85,7 +85,11 @@ The **Setup Guide** step for Cron uses this same heartbeat, so it ticks itself o
 | **Publish home layouts** | `home-layout:publish-scheduled` | Every minute | Publishes Home Builder drafts at their scheduled time |
 | **Scheduled popup offer** | `popup:apply-schedule` | Every minute | Turns the popup offer on and off at its scheduled times |
 | **Spin wheel campaigns** | `spin-wheel:apply-schedule` | Every minute | Activates a campaign at its start time and retires it at its end |
+| **Cancel unpaid orders** | `orders:expire-unpaid` | Every 5 minutes | Cancels online orders never paid within your [Cart Settings](/docs/admin/cart-settings) limit, and frees their stock |
+| **Free idle cart stock** | `cart:release-idle-stock` | Every 10 minutes | Puts stock held by untouched carts back on sale. The items stay in the cart. |
 | **Expire spin wheel coupons** | `promo:expire-spin-codes` | Daily, 00:30 | Deactivates won coupons past their validity. Nothing is deleted. |
+| **Remove unapproved rider sign-ups** | `riders:expire-signups` | Daily, 01:00 | Deletes rider sign-ups never approved — by default after 90 days. They hold a login and ID documents, so they do not stay for ever. Approved or active riders are never touched. |
+| **Remove unverified email sign-ups** | `customers:expire-unverified` | Daily, 01:15 | Deletes email registrations never verified — by default after 7 days — so the address is free again. An account that has ever ordered is never deleted. |
 | **Courier tracking sync** | `shipping:sync-tracking` | Every 30 minutes | Asks each carrier about parcels still in flight, so a delivery, COD settlement or RTO is recorded even when a webhook was lost. Does nothing when no shipping plugin is installed. |
 
 :::info Processing the queue is no longer on this list

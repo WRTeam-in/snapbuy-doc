@@ -150,11 +150,13 @@
       <p>Every OTP is a paid message, and an automated signup script can generate thousands overnight. Set a spending cap in your provider's dashboard and enable alerts before you go live.</p>
     </div>
 
-    <h2 id="gemini-ai-content-generation">Gemini — AI content generation</h2>
+    <h2 id="ai-content-generation">AI content generation</h2>
 
-    <p>Optional. Powers the "Generate with AI" buttons for product descriptions, blog content, SEO meta text and automatic field translation. With no key those buttons do nothing and everything is written by hand — nothing else in SnapBuy is affected.</p>
+    <p>Optional. Powers the "Generate with AI" and "Suggest with AI" buttons &mdash; product descriptions and autofill, variant suggestions, category setup, SEO, blog content, translations, notification and promo copy, and chat replies. With no provider set up those buttons do not appear and everything is written by hand; nothing else in SnapBuy is affected.</p>
 
-    <p>SnapBuy uses the <strong>Generative Language API</strong> with the <code>gemini-3.6-flash</code> model.</p>
+    <p>You choose the provider on the <strong>AI</strong> tab of API Credentials &mdash; OpenAI, Anthropic Claude, Google Gemini, Groq, DeepSeek, xAI, Mistral, OpenRouter, Together AI, or any OpenAI-compatible endpoint of your own. <strong>Every call is billed by that provider against your own key; SnapBuy adds nothing.</strong> See <a href="../admin/ai-settings.html">AI Settings</a>.</p>
+
+    <p>Figures below are for Google Gemini, SnapBuy's default, on the <code>gemini-3.6-flash</code> model. Other providers charge their own rates &mdash; a small, fast model at any of them is in the same order of magnitude.</p>
 
     <div class="table-wrap">
     <table>
@@ -171,11 +173,12 @@
     <div class="admonition admonition--tip">
       <p class="admonition__title">Token cost in practice</p>
       <p>A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most branches never leave the free tier.</p>
+      <p>The panel's <strong>AI usage, last 30 days</strong> table shows calls and tokens per feature, so you can see what is actually being spent before changing model.</p>
     </div>
 
     <div class="admonition admonition--warning">
       <p class="admonition__title">Restrict the key</p>
-      <p>The key is used from your server. Restrict it to the <strong>Generative Language API</strong> only, and to your server's IP address. An unrestricted key can be spent against your billing account by anyone who obtains it. See <a href="../admin/map-api-keys.html">Map &amp; API Keys</a>.</p>
+      <p>The key is used from your server, and SnapBuy stores it encrypted. Restrict it at the provider &mdash; Google keys to the <strong>Generative Language API</strong> and your server's IP; other providers to a project with a spending cap. An unrestricted key can be spent against your billing account by anyone who obtains it. See <a href="../admin/ai-settings.html">AI Settings</a>.</p>
     </div>
 
     <h2 id="real-time-chat">Real-time chat</h2>

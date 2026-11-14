@@ -72,6 +72,35 @@ If you disable Firebase Authentication, configure [SMS Settings](/docs/admin/sms
 No password to forget and no reset flow to support. It is what most delivery apps use. Password mode makes sense if customers share a household number and you want a second factor.
 :::
 
+## Customers must now prove their phone or email
+
+A customer's number or email is only saved once they have proved they own it.
+
+| Sign-in method | What proves it |
+| --- | --- |
+| **Phone OTP** | The Firebase sign-in behind the code, or the code your own SMS gateway sent |
+| **Google / Apple** | The sign-in token from Google or Apple, checked against the email in the request |
+| **Email and password** | The verification email, as before |
+
+Earlier versions trusted whatever number or email the app sent after the check happened on the device. The server now checks the proof itself, so knowing somebody's number is no longer enough to sign in as them.
+
+### What this changes for you
+
+| | |
+| --- | --- |
+| **Nothing to configure** | There is no new switch. What you already have — Firebase, or a custom SMS gateway, or SMTP — decides what can be verified. |
+| **A customer changing their number or email in the app** | Verifies it first, with a code. Until they do, the new value is saved as a **contact** number or address only. |
+| **A contact-only value** | Cannot be used to log in or to reset a password, and a contact-only email receives no store mail. |
+| **Values saved before the update** | The one the account logs in with counts as verified. Any other saved number or address becomes contact-only until the customer verifies it. |
+
+:::warning Verification needs a working OTP or SMTP setup
+Phone verification needs **Firebase Authentication** or a **Custom SMS Gateway (OTP based)**; email verification needs [SMTP](/docs/admin/smtp-settings) that actually sends. With neither, the Verify buttons never appear in the app and new numbers and addresses are saved as contact details only.
+:::
+
+:::info Why an old customer may be asked to verify once
+Someone who used to sign in by phone OTP to an account created with Google now verifies that number once from their profile. It is a one-off, and it is what stops anyone else claiming that number.
+:::
+
 ## Two-factor authentication for the panel
 
 **Panel Login Settings** protects the admin panel itself, not the shop. With it on, a correct password is no longer enough: a six-digit code is emailed to the user's own address, and only that code finishes the login.
@@ -81,6 +110,7 @@ No password to forget and no reset flow to support. It is what most delivery app
 | Field | Meaning |
 | --- | --- |
 | **Two-Factor Authentication (Email OTP)** | Master switch for panel logins |
+| *(who can change this)* | The panel-login block is **super admin only**. Other roles see it, with a note saying so, but cannot change it. |
 | **Also apply to store panel users** | On by default. Turn it off to require the code from admins only, leaving branch users on a one-step login. |
 | **Code validity (minutes)** | How long an emailed code stays usable. Between `1` and `60`; `10` when left empty. |
 

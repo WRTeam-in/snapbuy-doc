@@ -276,6 +276,24 @@ COD carries real cost — failed deliveries, cash handling, reconciliation. If y
 
 Refunds are issued from the order and flow back through the original gateway, or to the customer's [wallet](/docs/admin/wallet-withdrawals) depending on how the refund is processed.
 
+### A refund made in the gateway's dashboard now updates SnapBuy
+
+Refunding a payment from Stripe, PayPal, Razorpay, Paystack, Cashfree, PayTabs, PhonePe or Midtrans — in the provider's own dashboard, not in SnapBuy — used to leave the order sitting as paid. The gateway's webhook now reports it back.
+
+| What you refunded | What SnapBuy does |
+| --- | --- |
+| **The whole payment** for an order | Cancels the order, restocks it, and takes back any part already refunded to the customer's wallet — so nobody is paid twice |
+| **A wallet top-up** | Reverses the top-up |
+| **Part of a payment**, or anything that cannot be matched | Leaves the order alone and sends every super admin a **refund needs review** notification |
+
+:::warning It depends on the webhook
+This arrives over the same webhook as a payment. A gateway with no webhook registered, or one your server rejects, leaves the order exactly as it was — which is how it behaved before.
+:::
+
+:::tip Refund from the order where you can
+Refunding inside SnapBuy keeps the order, the wallet and the stock in step in one action. The dashboard sync is the safety net for refunds somebody made at the gateway, not the route to prefer.
+:::
+
 :::warning Refunds need the gateway to stay configured
 Removing or rotating a gateway's credentials breaks refunds for **past** orders taken through it. Keep credentials in place while any refundable orders remain.
 :::

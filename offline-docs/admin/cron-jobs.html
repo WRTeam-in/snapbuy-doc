@@ -104,7 +104,11 @@
         <tr><td><strong>Publish home layouts</strong></td><td><code>home-layout:publish-scheduled</code></td><td>Every minute</td><td>Publishes Home Builder drafts at their scheduled time</td></tr>
         <tr><td><strong>Scheduled popup offer</strong></td><td><code>popup:apply-schedule</code></td><td>Every minute</td><td>Turns the popup offer on and off at its scheduled times</td></tr>
         <tr><td><strong>Spin wheel campaigns</strong></td><td><code>spin-wheel:apply-schedule</code></td><td>Every minute</td><td>Activates a campaign at its start time and retires it at its end</td></tr>
+        <tr><td><strong>Cancel unpaid orders</strong></td><td><code>orders:expire-unpaid</code></td><td>Every 5 minutes</td><td>Cancels online orders never paid within your <a href="../admin/cart-settings.html">Cart Settings</a> limit, and frees their stock</td></tr>
+        <tr><td><strong>Free idle cart stock</strong></td><td><code>cart:release-idle-stock</code></td><td>Every 10 minutes</td><td>Puts stock held by untouched carts back on sale. The items stay in the cart.</td></tr>
         <tr><td><strong>Expire spin wheel coupons</strong></td><td><code>promo:expire-spin-codes</code></td><td>Daily, 00:30</td><td>Deactivates won coupons past their validity. Nothing is deleted.</td></tr>
+        <tr><td><strong>Remove unapproved rider sign-ups</strong></td><td><code>riders:expire-signups</code></td><td>Daily, 01:00</td><td>Deletes rider sign-ups never approved &mdash; by default after 90 days. They hold a login and ID documents, so they do not stay for ever. Approved or active riders are never touched.</td></tr>
+        <tr><td><strong>Remove unverified email sign-ups</strong></td><td><code>customers:expire-unverified</code></td><td>Daily, 01:15</td><td>Deletes email registrations never verified &mdash; by default after 7 days &mdash; so the address is free again. An account that has ever ordered is never deleted.</td></tr>
         <tr><td><strong>Courier tracking sync</strong></td><td><code>shipping:sync-tracking</code></td><td>Every 30 minutes</td><td>Asks each carrier about parcels still in flight, so a delivery, COD settlement or RTO is recorded even when a webhook was lost. Does nothing when no shipping plugin is installed.</td></tr>
       </tbody>
     </table>

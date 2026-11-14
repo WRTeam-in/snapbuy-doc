@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Settings — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>AI Settings</h1>
+
+    <p>Menu path: <strong>Settings → Third-Party API Credentials → AI</strong></p>
+
+    <p>SnapBuy can write for you. Connect one AI service, pick a model, and the panel grows a <strong>Generate with AI</strong> or <strong>Suggest with AI</strong> button wherever text or setup work is repetitive — product descriptions, SEO, blog posts, translations, variants, notification copy and support chat replies.</p>
+
+    <img src="../images/panel/ai-providers-tab.png" alt="AI providers tab">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Entirely optional</p>
+      <p>With AI switched off — or never set up — every one of those buttons simply disappears and all those fields are filled by hand, exactly as before. Orders, payments, delivery and notifications do not use AI at all.</p>
+    </div>
+
+    <h2 id="what-ai-does-in-the-panel">What AI does in the panel</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Where</th><th>What it produces</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Product autofill</strong></td><td>Products → Add/Edit → <em>Product Details</em></td><td>Short and long description, tags, manufacturer, country of origin and brand, from the product name</td></tr>
+        <tr><td><strong>Variant suggestions</strong></td><td>Products → Add/Edit → <em>Variants</em></td><td>The attribute values this product should come in, plus the specifications that are the same for every variant</td></tr>
+        <tr><td><strong>Product recommendations</strong></td><td>Products → a product's recommendations</td><td><strong>Cross-sell</strong> from what customers actually bought in the same orders; <strong>upsell</strong> from dearer products in the same category</td></tr>
+        <tr><td><strong>Category setup</strong></td><td>Categories → Add/Edit</td><td>Which of your attributes the category should use, attributes you do not have yet, and specification sections</td></tr>
+        <tr><td><strong>Descriptions</strong></td><td>Product form, Blogs</td><td>Rich-text content from a short prompt</td></tr>
+        <tr><td><strong>SEO</strong></td><td>Product <em>SEO</em> step, <a href="../admin/seo-settings.html">SEO Settings</a></td><td>Meta title, keywords and description</td></tr>
+        <tr><td><strong>Translation</strong></td><td>Any translatable field</td><td>Fills your other languages from the one you typed</td></tr>
+        <tr><td><strong>Push notification copy</strong></td><td><a href="../admin/send-notifications.html">Send Notifications</a></td><td>Title and message</td></tr>
+        <tr><td><strong>Promo code copy</strong></td><td>Promo Codes</td><td>Promo name and description</td></tr>
+        <tr><td><strong>Template rewrite</strong></td><td>Email, SMS and <a href="../admin/notification-templates.html">notification templates</a></td><td>Rewrites the template, keeping every <code>{placeholder}</code> intact</td></tr>
+        <tr><td><strong>Chat replies</strong></td><td>Chat</td><td><strong>Suggest a reply</strong>, <strong>improve my text</strong> (same meaning, clearer wording) and <strong>summarise this chat</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">AI suggests; you apply</p>
+      <p>Nothing is saved behind your back. Every suggestion lands in the form, or in a dialog where you tick what to keep, and you press Save. The one exception is attribute values you accept from a variant suggestion — those are created so the variants can use them.</p>
+    </div>
+
+    <h2 id="choosing-a-provider">Choosing a provider</h2>
+
+    <p>The AI tab lists every service SnapBuy speaks to. <strong>Google Gemini</strong> uses its own API; everything else uses the OpenAI API format, which is why one list covers so many services.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Provider</th><th>Get a key from</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OpenAI</strong></td><td>platform.openai.com/api-keys</td></tr>
+        <tr><td><strong>Anthropic Claude</strong></td><td>console.anthropic.com/settings/keys</td></tr>
+        <tr><td><strong>Google Gemini</strong></td><td>aistudio.google.com/apikey</td></tr>
+        <tr><td><strong>Groq</strong></td><td>console.groq.com/keys</td></tr>
+        <tr><td><strong>DeepSeek</strong></td><td>platform.deepseek.com/api_keys</td></tr>
+        <tr><td><strong>xAI Grok</strong></td><td>console.x.ai</td></tr>
+        <tr><td><strong>Mistral AI</strong></td><td>console.mistral.ai/api-keys</td></tr>
+        <tr><td><strong>OpenRouter</strong></td><td>openrouter.ai/keys</td></tr>
+        <tr><td><strong>Together AI</strong></td><td>api.together.ai/settings/api-keys</td></tr>
+        <tr><td><strong>Custom</strong></td><td>Any other OpenAI-compatible service — you supply the base URL</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Each row carries a link to that provider's key page, so you do not have to hunt for it.</p>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Custom covers self-hosted models</p>
+      <p>Pick <strong>Custom</strong>, enter the base URL of any OpenAI-compatible endpoint — a local Ollama or LM Studio server, a company gateway, a provider not on the list — and the API key becomes optional, because a local model usually does not need one.</p>
+    </div>
+
+    <h2 id="setting-one-up">Setting one up</h2>
+
+    <ol>
+      <li>Open the provider's row.</li>
+      <li>Paste the <strong>API key</strong>. (<strong>Custom</strong> also needs a <strong>Base URL</strong>.)</li>
+      <li>Press <strong>Load models</strong> — SnapBuy asks the provider which models that key can use and fills the dropdown. You can also type a model id yourself.</li>
+      <li>Press <strong>Test connection</strong>. It sends one tiny prompt and tells you whether the key, the model and the network all work.</li>
+      <li>Press <strong>Save</strong>, or <strong>Save and use</strong> to make it the provider the panel uses.</li>
+    </ol>
+
+    <img src="../images/panel/ai-provider-config.png" alt="Configuring a provider">
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Master switch</strong> (top right)</td><td>Turns AI off everywhere in the panel without deleting any key</td></tr>
+        <tr><td><strong>Provider switch</strong> (each row)</td><td>Makes that provider the active one. Only one is used at a time.</td></tr>
+        <tr><td><strong>Ready</strong> badge</td><td>That provider has a key and a model saved, so it can be switched to instantly</td></tr>
+        <tr><td><strong>Active</strong> pill</td><td>The provider the panel is using right now</td></tr>
+        <tr><td><strong>Load models</strong></td><td>Fetches the model list using the key in the box, or the saved one if you have not retyped it</td></tr>
+        <tr><td><strong>Test connection</strong></td><td>One small live request — the quickest way to tell a wrong key from a wrong model</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Every provider keeps its own key and model</p>
+      <p>Switching from OpenAI to Gemini and back does not lose anything: each row stores its own key, model and base URL. That makes it cheap to compare two providers on the same job.</p>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">A provider cannot be activated until it is ready</p>
+      <p>"Ready" means a key (where the provider needs one) <strong>and</strong> a model. A row with a key but no model stays inactive, and the AI buttons will not appear.</p>
+    </div>
+
+    <h3 id="which-model-to-pick">Which model to pick</h3>
+
+    <p>Any model the provider lists will work. The jobs SnapBuy asks for are short, so a fast, cheap model is usually the right choice — the "flash", "mini" or "small" tier of whichever provider you chose. Model names change often, which is why <strong>Load models</strong> reads the live list instead of SnapBuy shipping a fixed one.</p>
+
+    <h2 id="how-your-key-is-stored">How your key is stored</h2>
+
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td><strong>Encrypted</strong></td><td>Keys are encrypted with your application key (<code>APP_KEY</code>) before they are written to the database</td></tr>
+        <tr><td><strong>Never shown again</strong></td><td>The panel only ever shows a mask — <code>••••</code> plus the last four characters</td></tr>
+        <tr><td><strong>Saving the mask keeps the key</strong></td><td>Leave the masked value alone and press Save; the stored key is untouched. Clear the field to remove the key.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Changing APP_KEY loses every stored key</p>
+      <p><code>APP_KEY</code> is what decrypts them. Change it — a fresh install, a copied <code>.env</code>, a careless <code>key:generate</code> — and SnapBuy reads "no key" rather than failing loudly. Re-enter the key on the AI tab afterwards. The same applies to payment and SMS credentials, so never regenerate <code>APP_KEY</code> on a live store.</p>
+    </div>
+
+    <h2 id="usage">Usage</h2>
+
+    <p>Under the provider list, <strong>AI usage, last 30 days</strong> expands into one row per feature: calls, how many failed, and tokens used.</p>
+
+    <p>Use it to see which feature is actually costing you something before you pick a cheaper model, and to spot a feature failing repeatedly — a long run of failures on one feature usually means that model rejects the prompt, not that the key is wrong.</p>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">You pay the provider directly</p>
+      <p>SnapBuy adds nothing to the price. Every call is billed by the AI provider against the key you entered, at that provider's own rate. See <a href="../admin/third-party-costs.html#ai-content-generation">Third-Party Service Costs</a>.</p>
+    </div>
+
+    <h2 id="upgrading-from-the-old-gemini-key">Upgrading from the old Gemini key</h2>
+
+    <p>Earlier versions had a single <strong>Gemini Key</strong> field on this page. Your key is carried over the first time the new settings are saved and shows as Gemini's key, so AI keeps working and nothing needs re-entering.</p>
+
+    <p>What changes is that you now pick a <strong>model</strong> as well. Gemini installs that never chose one keep running on the built-in default until you choose.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>No AI buttons anywhere in the panel</td><td>The master switch is off, or no provider is ready</td><td>Turn AI on; give the active provider a key and a model</td></tr>
+        <tr><td>Provider shows no <strong>Ready</strong> badge</td><td>Key or model missing</td><td>Fill both, then Save</td></tr>
+        <tr><td><strong>Load models</strong> returns an error</td><td>Wrong key, or the provider is unreachable from your server</td><td>Check the key; check the server can make outbound HTTPS calls</td></tr>
+        <tr><td><strong>Test connection</strong> fails but the key is right</td><td>The model id does not exist for that key, or that key has no quota or billing</td><td>Pick a model from the loaded list; check your account at the provider</td></tr>
+        <tr><td>It worked yesterday, now every call fails</td><td>Provider quota or billing, or the key was revoked</td><td>Check the provider's dashboard; re-enter the key</td></tr>
+        <tr><td>Everything AI stopped after a migration</td><td><code>APP_KEY</code> changed, so the stored key no longer decrypts</td><td>Re-enter the API key</td></tr>
+        <tr><td>Generated text is in the wrong language</td><td>AI writes in your panel's default language</td><td>Change the panel language, or translate the result</td></tr>
+        <tr><td>Translation fills some languages only</td><td>The model does not handle that language well</td><td>Try another model, or fill that language by hand</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul class="contains-task-list">
+      <li class="task-item"><input type="checkbox" disabled> One provider configured with a key and a model</li>
+      <li class="task-item"><input type="checkbox" disabled> <strong>Test connection</strong> passed</li>
+      <li class="task-item"><input type="checkbox" disabled> That provider switched to <strong>Active</strong>, master switch on</li>
+      <li class="task-item"><input type="checkbox" disabled> A spend limit or budget alert set at the provider</li>
+      <li class="task-item"><input type="checkbox" disabled> <code>APP_KEY</code> backed up with the rest of <code>.env</code></li>
+      <li class="task-item"><input type="checkbox" disabled> Generated one product description and read it before publishing</li>
+    </ul>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Generated text still needs review</p>
+      <p>AI copy can be confidently wrong about specifications, ingredients or compliance claims — and wrong product information is a refund and a complaint, not a typo. Treat everything it writes as a first draft.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/ai-settings.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

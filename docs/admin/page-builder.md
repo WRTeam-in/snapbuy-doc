@@ -31,7 +31,13 @@ Builds standalone landing pages out of the same sections the [Home Builder](/doc
 | **Name** | Internal name — what you see in the page list and in redirect pickers |
 | **Slug** | The page's address, e.g. `diwali-sale`. Use the refresh button to generate it from the name. |
 | **Page Title** | The heading customers see. Translatable per language. |
+| **Header Colour** | Background of the page's top bar in the app. White unless you change it. |
+| **Title Text Colour** | Colour of the page title and the back arrow on that bar. Left empty, the app uses its own text colour. |
 | **Active** | Whether a published page is being served. Only a published page can be activated. |
+
+:::tip Match the bar to the page
+A campaign page whose first section is a dark hero banner looks broken under a white bar. Set the header colour to the banner's background and the title colour to something readable on it.
+:::
 
 :::warning Change the slug before you advertise the page
 The slug is how the page is looked up. Changing it after a campaign is live breaks every link already pointing at the old one.

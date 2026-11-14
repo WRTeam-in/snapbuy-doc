@@ -25,7 +25,7 @@
 
     <p>Menu path: <strong>Settings → Cart Settings</strong></p>
 
-    <p>Sends push reminders to customers who added items to their cart and never checked out.</p>
+    <p>Two separate things live on this page: the <strong>push reminders</strong> sent to customers who left something in the cart, and the two <strong>stock-release limits</strong> that stop abandoned carts and unpaid orders holding stock for ever.</p>
 
     <img src="../images/panel/cart-settings-page.png" alt="Cart settings page">
 
@@ -35,6 +35,8 @@
     <table>
       <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
       <tbody>
+        <tr><td><strong>Cancel unpaid orders after (minutes)</strong></td><td>An online order that was never paid is cancelled after this long, and its stock goes back on sale. <code>0</code> turns it off. Default <strong>60</strong>.</td></tr>
+        <tr><td><strong>Free stock from idle carts after (hours)</strong></td><td>Stock held by a cart nobody came back to goes back on sale. The items stay in the cart. <code>0</code> turns it off. Default <strong>24</strong>.</td></tr>
         <tr><td><strong>Cart Notification</strong></td><td>Master switch</td></tr>
         <tr><td><strong>Notification Delay After Cart Addition</strong></td><td>How long to wait after the last item is added before the first reminder</td></tr>
         <tr><td><strong>Notification Interval</strong></td><td>Gap between repeat reminders</td></tr>
@@ -43,7 +45,31 @@
     </table>
     </div>
 
-    <p>All three timings are in minutes.</p>
+    <p>The three reminder timings are in minutes.</p>
+
+    <h2 id="stock-that-would-otherwise-be-stuck">Stock that would otherwise be stuck</h2>
+
+    <p>Stock is reserved the moment it is spoken for, so that two customers cannot buy the last unit. Two things used to hold it indefinitely, and both now time out.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>What it releases</th><th>What the customer sees</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cancel unpaid orders after</strong></td><td>An order that reached <em>Payment pending</em> and never got paid</td><td>The order is cancelled. Their cart is untouched, so they can try again. A payment that lands later goes to their wallet, as for any cancelled order.</td></tr>
+        <tr><td><strong>Free stock from idle carts after</strong></td><td>Stock held by cart lines nobody has touched</td><td><strong>Nothing changes in their cart.</strong> The items are still there; the stock is simply back on sale until they check out.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">These are the numbers that decide whether you oversell or undersell</p>
+      <p>Too long, and a sell-out product sits unavailable because of carts that will never check out. Too short, and a customer who takes their time at a slow payment page finds the item gone at the last step. <code>60</code> minutes and <code>24</code> hours suit most stores; a flash sale may want both much lower.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Both need the cron job</p>
+      <p>They are run by <code>orders:expire-unpaid</code> (every five minutes) and <code>cart:release-idle-stock</code> (every ten minutes). Without the <a href="../admin/cron-jobs.html">cron job</a> neither ever runs, and stock stays held.</p>
+    </div>
 
     <h2 id="how-the-sequence-runs">How the sequence runs</h2>
 
