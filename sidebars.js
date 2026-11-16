@@ -81,6 +81,8 @@ const sidebars = {
             "admin/contact-about",
             "admin/system-updater",
             "admin/activity-logs",
+            "admin/system-logs",
+            "admin/system-health",
           ],
         },
         {

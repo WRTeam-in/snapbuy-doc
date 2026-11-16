@@ -81,6 +81,8 @@
             ["Contact Us & About Us Pages", "admin/contact-about.html"],
             ["System Updater", "admin/system-updater.html"],
             ["Activity Logs", "admin/activity-logs.html"],
+            ["System Logs", "admin/system-logs.html"],
+            ["System Health", "admin/system-health.html"],
           ],
         },
         {
