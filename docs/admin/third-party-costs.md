@@ -105,11 +105,13 @@ Sender IDs and message templates must be pre-registered on a DLT platform before
 Every OTP is a paid message, and an automated signup script can generate thousands overnight. Set a spending cap in your provider's dashboard and enable alerts before you go live.
 :::
 
-## Gemini — AI content generation
+## AI content generation
 
-Optional. Powers the "Generate with AI" buttons for product descriptions, blog content, SEO meta text and automatic field translation. With no key those buttons do nothing and everything is written by hand — nothing else in SnapBuy is affected.
+Optional. Powers the "Generate with AI" and "Suggest with AI" buttons — product descriptions and autofill, variant suggestions, category setup, SEO, blog content, translations, notification and promo copy, and chat replies. With no provider set up those buttons do not appear and everything is written by hand; nothing else in SnapBuy is affected.
 
-SnapBuy uses the **Generative Language API** with the `gemini-3.6-flash` model.
+You choose the provider on the **AI** tab of API Credentials — OpenAI, Anthropic Claude, Google Gemini, Groq, DeepSeek, xAI, Mistral, OpenRouter, Together AI, or any OpenAI-compatible endpoint of your own. **Every call is billed by that provider against your own key; SnapBuy adds nothing.** See [AI Settings](/docs/admin/ai-settings).
+
+Figures below are for Google Gemini, SnapBuy's default, on the `gemini-3.6-flash` model. Other providers charge their own rates — a small, fast model at any of them is in the same order of magnitude.
 
 | | |
 | --- | --- |
@@ -121,10 +123,12 @@ Google has published a rise to $1.50 / $7.50 per 1M tokens from 1 January 2027.
 
 :::tip Token cost in practice
 A product description is a small request. A prompt plus a generated description lands in the low hundreds of tokens, so a thousand generated descriptions is measured in cents rather than dollars. This is the cheapest service on this page by a wide margin, and most branches never leave the free tier.
+
+The panel's **AI usage, last 30 days** table shows calls and tokens per feature, so you can see what is actually being spent before changing model.
 :::
 
 :::warning Restrict the key
-The key is used from your server. Restrict it to the **Generative Language API** only, and to your server's IP address. An unrestricted key can be spent against your billing account by anyone who obtains it. See [Map & API Keys](/docs/admin/map-api-keys).
+The key is used from your server, and SnapBuy stores it encrypted. Restrict it at the provider — Google keys to the **Generative Language API** and your server's IP; other providers to a project with a spending cap. An unrestricted key can be spent against your billing account by anyone who obtains it. See [AI Settings](/docs/admin/ai-settings).
 :::
 
 ## Real-time chat

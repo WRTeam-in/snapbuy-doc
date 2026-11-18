@@ -132,14 +132,34 @@ Automatic sources draw from the whole catalogue. **Filter Products** scopes one 
 
 | Field | What it does |
 | --- | --- |
-| **Filter Products** | `No Filter`, `By Category`, or `By Brand` |
-| **Filter Mode** | `Only These` keeps the selected categories/brands; `Everything Except These` drops them |
+| **Filter Products** | `No Filter`, `By Category`, `By Brand`, or **`Product list with filters`** |
+| **Filter Mode** | `Only These` keeps the selected categories/brands; `Everything Except These` drops them. Not offered on *Product list with filters*, whose filters only ever narrow. |
 | **Categories / Brands** | Which ones, once a filter type is chosen |
 
 ![Filtering an automatic product source](/images/panel/home-builder-filter-products.png)
 
 :::info Only shown where it makes sense
-The filter appears on ordering-only sources — Top Selling, Trending, New Arrivals, Discounted, Best Rated, Most Favorited. It is hidden on **Manual**, **Category** and **Brand**, where it would contradict the source itself.
+The filter appears on ordering-only sources — Top Selling, Trending, New Arrivals, Discounted, Best Rated, Most Favorited, Recently Visited, Buy Again. It is hidden on **Manual**, **Category** and **Brand**, where it would contradict the source itself.
+:::
+
+#### Product list with filters
+
+The fourth option opens the full filter set — the same fields as the [filtered product list redirect](#redirecting-to-a-filtered-product-list): any number of categories, brands, attribute values, a price band and a discount band. Combine them freely:
+
+> *Top Selling · in Mobiles · 8 GB RAM · under ₹30,000*
+
+![Advanced filters on a product slider](/images/panel/home-builder-slider-filters.png)
+
+The data source still decides the **order**; the filters decide **what is eligible**.
+
+### Listing heading
+
+Every product slider and every tab now carries a **Listing heading**, whatever its data source. It is the title the **View more** screen opens with, and it is translatable.
+
+Leave it blank and the View more screen keeps using the section's own title, as it always did.
+
+:::tip It is the whole point of a narrowed slider
+A row filtered down to "Top selling phones under ₹30,000" should not open a View more screen headed *Top Selling*. Type the heading the customer should see there.
 :::
 
 :::tip Two rows from one source
@@ -194,7 +214,7 @@ A banner pointing at a deleted or deactivated product leaves customers tapping i
 | Field | What it narrows by |
 | --- | --- |
 | **Listing heading** | The title at the top of the listing — *Up to 50% Off*. Translatable. |
-| **Category** | One category |
+| **Categories** | Any number of categories. Each one brings its sub-categories with it. |
 | **Brands** | Any number of brands |
 | **Attributes** | Attribute values — Colour: Red, Size: M |
 | **Min / Max price** | A price band; leave either blank for no limit |
@@ -202,6 +222,10 @@ A banner pointing at a deleted or deactivated product leaves customers tapping i
 | **Sort by** | The order the listing opens in |
 
 Leave a field blank to leave it out of the filter.
+
+:::info A listing heading on plain category and brand links too
+**Category** and **Brand** redirects now carry the same **Listing heading** field. Tapping a *Women* banner can open a screen headed *Diwali Picks for Her* instead of *Women*. Left blank, the category or brand name is used, as before.
+:::
 
 :::info How several attributes combine
 Values of the **same** attribute match any of them; values of **different** attributes must all match. *Colour: Red + Colour: Blue* shows both colours, while *Colour: Red + Size: M* shows only red in size M.

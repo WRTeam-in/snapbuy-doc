@@ -115,6 +115,46 @@
       <p>No password to forget and no reset flow to support. It is what most delivery apps use. Password mode makes sense if customers share a household number and you want a second factor.</p>
     </div>
 
+    <h2 id="customers-must-now-prove-their-phone-or-email">Customers must now prove their phone or email</h2>
+
+    <p>A customer's number or email is only saved once they have proved they own it.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Sign-in method</th><th>What proves it</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phone OTP</strong></td><td>The Firebase sign-in behind the code, or the code your own SMS gateway sent</td></tr>
+        <tr><td><strong>Google / Apple</strong></td><td>The sign-in token from Google or Apple, checked against the email in the request</td></tr>
+        <tr><td><strong>Email and password</strong></td><td>The verification email, as before</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Earlier versions trusted whatever number or email the app sent after the check happened on the device. The server now checks the proof itself, so knowing somebody's number is no longer enough to sign in as them.</p>
+
+    <h3 id="what-this-changes-for-you">What this changes for you</h3>
+
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td><strong>Nothing to configure</strong></td><td>There is no new switch. What you already have &mdash; Firebase, or a custom SMS gateway, or SMTP &mdash; decides what can be verified.</td></tr>
+        <tr><td><strong>A customer changing their number or email in the app</strong></td><td>Verifies it first, with a code. Until they do, the new value is saved as a <strong>contact</strong> number or address only.</td></tr>
+        <tr><td><strong>A contact-only value</strong></td><td>Cannot be used to log in or to reset a password, and a contact-only email receives no store mail.</td></tr>
+        <tr><td><strong>Values saved before the update</strong></td><td>The one the account logs in with counts as verified. Any other saved number or address becomes contact-only until the customer verifies it.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Verification needs a working OTP or SMTP setup</p>
+      <p>Phone verification needs <strong>Firebase Authentication</strong> or a <strong>Custom SMS Gateway (OTP based)</strong>; email verification needs <a href="../admin/smtp-settings.html">SMTP</a> that actually sends. With neither, the Verify buttons never appear in the app and new numbers and addresses are saved as contact details only.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Why an old customer may be asked to verify once</p>
+      <p>Someone who used to sign in by phone OTP to an account created with Google now verifies that number once from their profile. It is a one-off, and it is what stops anyone else claiming that number.</p>
+    </div>
+
     <h2 id="two-factor-authentication-for-the-panel">Two-factor authentication for the panel</h2>
 
     <p><strong>Panel Login Settings</strong> protects the admin panel itself, not the shop. With it on, a correct password is no longer enough: a six-digit code is emailed to the user&rsquo;s own address, and only that code finishes the login.</p>
@@ -126,6 +166,7 @@
       <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
       <tbody>
         <tr><td><strong>Two-Factor Authentication (Email OTP)</strong></td><td>Master switch for panel logins</td></tr>
+        <tr><td><em>(who can change this)</em></td><td>The panel-login block is <strong>super admin only</strong>. Other roles see it, with a note saying so, but cannot change it.</td></tr>
         <tr><td><strong>Also apply to store panel users</strong></td><td>On by default. Turn it off to require the code from admins only, leaving branch users on a one-step login.</td></tr>
         <tr><td><strong>Code validity (minutes)</strong></td><td>How long an emailed code stays usable. Between <code>1</code> and <code>60</code>; <code>10</code> when left empty.</td></tr>
       </tbody>

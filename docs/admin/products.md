@@ -87,6 +87,10 @@ Set it before step 3. Switching it afterwards drops the branches that no longer 
 
 **Generate with AI** drafts either description from the product name and category. Treat it as a first draft and read it before saving.
 
+:::tip Fill most of this step from the product name
+**Suggest with AI** on this step fills short description, description, tags, manufacturer, country of origin and brand in one go, from the name you typed. It only offers your own brands; when it recognises a brand you do not stock, it tells you rather than inventing one. Needs [AI Settings](/docs/admin/ai-settings) set up.
+:::
+
 ### Return and cancellation policy
 
 | Field | What it does |
@@ -113,6 +117,10 @@ Tick the values for the attributes this product varies by and leave the rest emp
 
 **Generate All Variants** builds them in one go; the banner tells you how many you are about to create.
 
+:::tip Suggest variants with AI
+**Suggest variants with AI** reads the product name, the category's attributes and how products already in that category are split, then proposes the values this product should come in — plus the specifications that are the same for every variant. You tick what to keep. Values your catalogue does not have yet are created only when you accept them. See [AI Settings](/docs/admin/ai-settings).
+:::
+
 ### Per-variant fields
 
 | Field | What it does |
@@ -123,7 +131,7 @@ Tick the values for the attributes this product varies by and leave the rest emp
 | **Weight (kg)** | Dead weight of one unit. Courier integrations quote and label from it. |
 | **Package Size (cm)** | Length × breadth × height of one packed unit, used for volumetric weight |
 | **Main Image** | The picture used on cards and listings. Recommended 800×800px. |
-| **Other Images** | The gallery on the product page |
+| **Other Images** | The gallery on the product page. JPG, PNG, GIF, WEBP, SVG — and **MP4 video**, which plays in the gallery. |
 
 **Choose From Media** picks an image already uploaded instead of uploading it again.
 

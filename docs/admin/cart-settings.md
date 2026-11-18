@@ -8,7 +8,7 @@ sidebar_position: 22
 
 Menu path: **Settings → Cart Settings**
 
-Sends push reminders to customers who added items to their cart and never checked out.
+Two separate things live on this page: the **push reminders** sent to customers who left something in the cart, and the two **stock-release limits** that stop abandoned carts and unpaid orders holding stock for ever.
 
 ![Cart settings page](/images/panel/cart-settings-page.png)
 
@@ -16,12 +16,31 @@ Sends push reminders to customers who added items to their cart and never checke
 
 | Field | Meaning |
 | --- | --- |
+| **Cancel unpaid orders after (minutes)** | An online order that was never paid is cancelled after this long, and its stock goes back on sale. `0` turns it off. Default **60**. |
+| **Free stock from idle carts after (hours)** | Stock held by a cart nobody came back to goes back on sale. The items stay in the cart. `0` turns it off. Default **24**. |
 | **Cart Notification** | Master switch |
 | **Notification Delay After Cart Addition** | How long to wait after the last item is added before the first reminder |
 | **Notification Interval** | Gap between repeat reminders |
 | **Notification Stop Time** | When to stop reminding that customer |
 
-All three timings are in minutes.
+The three reminder timings are in minutes.
+
+## Stock that would otherwise be stuck
+
+Stock is reserved the moment it is spoken for, so that two customers cannot buy the last unit. Two things used to hold it indefinitely, and both now time out.
+
+| Setting | What it releases | What the customer sees |
+| --- | --- | --- |
+| **Cancel unpaid orders after** | An order that reached *Payment pending* and never got paid | The order is cancelled. Their cart is untouched, so they can try again. A payment that lands later goes to their wallet, as for any cancelled order. |
+| **Free stock from idle carts after** | Stock held by cart lines nobody has touched | **Nothing changes in their cart.** The items are still there; the stock is simply back on sale until they check out. |
+
+:::warning These are the numbers that decide whether you oversell or undersell
+Too long, and a sell-out product sits unavailable because of carts that will never check out. Too short, and a customer who takes their time at a slow payment page finds the item gone at the last step. `60` minutes and `24` hours suit most stores; a flash sale may want both much lower.
+:::
+
+:::info Both need the cron job
+They are run by `orders:expire-unpaid` (every five minutes) and `cart:release-idle-stock` (every ten minutes). Without the [cron job](/docs/admin/cron-jobs) neither ever runs, and stock stays held.
+:::
 
 ## How the sequence runs
 

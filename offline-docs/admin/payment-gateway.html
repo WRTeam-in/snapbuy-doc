@@ -376,6 +376,31 @@
 
     <p>Refunds are issued from the order and flow back through the original gateway, or to the customer's <a href="../admin/wallet-withdrawals.html">wallet</a> depending on how the refund is processed.</p>
 
+    <h3 id="a-refund-made-in-the-gateways-dashboard-now-updates-snapbuy">A refund made in the gateway's dashboard now updates SnapBuy</h3>
+
+    <p>Refunding a payment from Stripe, PayPal, Razorpay, Paystack, Cashfree, PayTabs, PhonePe or Midtrans &mdash; in the provider's own dashboard, not in SnapBuy &mdash; used to leave the order sitting as paid. The gateway's webhook now reports it back.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What you refunded</th><th>What SnapBuy does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>The whole payment</strong> for an order</td><td>Cancels the order, restocks it, and takes back any part already refunded to the customer's wallet &mdash; so nobody is paid twice</td></tr>
+        <tr><td><strong>A wallet top-up</strong></td><td>Reverses the top-up</td></tr>
+        <tr><td><strong>Part of a payment</strong>, or anything that cannot be matched</td><td>Leaves the order alone and sends every super admin a <strong>refund needs review</strong> notification</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">It depends on the webhook</p>
+      <p>This arrives over the same webhook as a payment. A gateway with no webhook registered, or one your server rejects, leaves the order exactly as it was &mdash; which is how it behaved before.</p>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Refund from the order where you can</p>
+      <p>Refunding inside SnapBuy keeps the order, the wallet and the stock in step in one action. The dashboard sync is the safety net for refunds somebody made at the gateway, not the route to prefer.</p>
+    </div>
+
     <div class="admonition admonition--warning">
       <p class="admonition__title">Refunds need the gateway to stay configured</p>
       <p>Removing or rotating a gateway's credentials breaks refunds for <strong>past</strong> orders taken through it. Keep credentials in place while any refundable orders remain.</p>

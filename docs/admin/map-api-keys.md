@@ -17,6 +17,14 @@ Maps do real work in SnapBuy, not decoration:
 
 ![API credentials page](/images/panel/map-api-page.png)
 
+The page has three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Maps** | Map provider, and the Google keys below |
+| **AI** | The AI service that writes content for you — see [AI Settings](/docs/admin/ai-settings) |
+| **Microsoft Clarity** | Optional session-analytics project ids, one per app |
+
 ## Choose a provider
 
 | Provider | Cost | Address autocomplete | Setup |
@@ -24,7 +32,7 @@ Maps do real work in SnapBuy, not decoration:
 | **OpenStreetMap** | Free | Basic | None — works immediately |
 | **Google Maps** | Paid, with a monthly free credit | Excellent | Two API keys, billing enabled |
 
-SnapBuy defaults to **OpenStreetMap**, and distance is measured with the public OSRM routing service.
+Pick one of the two provider cards at the top of the **Maps** tab. SnapBuy defaults to **OpenStreetMap**, and distance is measured with the public OSRM routing service. Choosing OpenStreetMap hides the key fields altogether, because it needs none.
 
 :::tip Start on OpenStreetMap
 It needs no keys, no billing and no Google account, and the Setup Guide's Map step completes the moment you select it. Switch to Google later if address search quality becomes a problem.
@@ -67,6 +75,9 @@ The Setup Guide marks the Map step complete only when **both** the Map key and t
    - Routes API
 5. Go to **APIs & Services → Credentials → Create credentials → API key**.
 6. Create **two** keys and name them clearly.
+7. Paste them into the **Maps** tab and press **Test Place API Key** — it calls Places and Geocoding with the key you just entered and reports each one separately, so a key that is missing one API shows up here instead of at a customer's checkout.
+
+Each key field has a show/hide eye, so a saved key can be checked without being left on screen.
 
 Those four are everything SnapBuy needs. It calls Google's **current** endpoints only — `places.googleapis.com/v1` for address search and `routes.googleapis.com` for distance — so the legacy services are **not** required:
 
@@ -154,61 +165,14 @@ Restriction changes can take a few minutes to take effect.
 
 In **Billing → Budgets & alerts**, create a budget with email alerts. It will not stop charges, but you find out about a spike in hours rather than at the end of the month.
 
-## Gemini key — AI content generation (optional)
+## AI content generation
 
-The same page carries a **Gemini Key** field. It has nothing to do with maps and is entirely optional.
+The **AI** tab of this page is where you connect an AI service — OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, OpenRouter and others — and pick the model that writes product descriptions, SEO, blog posts and translations for you.
 
-### What it powers
+It has nothing to do with maps and is entirely optional. See [AI Settings](/docs/admin/ai-settings) for the whole of it.
 
-With a key entered, the panel can generate text for you from a short prompt:
-
-| Feature | Where |
-| --- | --- |
-| Product descriptions | Product add/edit form |
-| Blog content | Blogs |
-| SEO content — meta titles and descriptions | [SEO Settings](/docs/admin/seo-settings) |
-| Automatic translation of fields into your other languages | Any translatable field |
-
-:::info Leaving it blank simply turns the feature off
-The Gemini key is **not required**. With no key, the "Generate with AI" buttons do nothing and every one of those fields is written by hand as normal. Nothing else in SnapBuy depends on it — orders, payments, notifications and delivery are all unaffected.
-
-Add it only if you want the AI writing assistance.
-:::
-
-### Getting a key
-
-1. Open [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey).
-2. Sign in and click **Create API key**.
-3. Select an existing Google Cloud project, or let it create one.
-4. Copy the key into the **Gemini Key** field and save.
-
-### Enable only the Generative Language API
-
-SnapBuy calls a single endpoint — the **Generative Language API**, model `gemini-3.6-flash`.
-
-In **APIs & Services → Library**, enable **Generative Language API** and nothing else. Then open the key under **Credentials** and, under **API restrictions**, choose **Restrict key** and select only that API.
-
-:::warning Do not leave the key unrestricted
-An unrestricted key works against every Google API your project has enabled, and anyone who obtains it can spend against your billing account. Restricting it to one API caps the damage.
-:::
-
-### Restrict by IP address
-
-Like the Place API Key, this key is used **from your server**, not from the browser. Restrict it by **IP addresses** and enter your server's address — the IPv6 address if your VPS uses one, plus IPv4 if it has one.
-
-```
-2400:xxxx:xxxx:xxxx::1
-203.0.113.10
-```
-
-A referrer restriction would break it, because a server-to-server request sends no referrer.
-
-:::tip Costs
-Gemini has a free tier that covers light use. Beyond it you are billed per token by Google, not by us. See [Third-Party Service Costs](/docs/admin/third-party-costs#gemini--ai-content-generation).
-:::
-
-:::info Generated text still needs review
-AI-written product copy can be confidently wrong about specifications, ingredients or compliance claims — and wrong product information is a refund and a complaint, not just a typo. Treat every generated description as a first draft and check it before publishing.
+:::info Where the old Gemini key went
+The single **Gemini Key** field this page used to carry is now Gemini's row on the AI tab, with a model picker beside it. Your existing key is carried over automatically.
 :::
 
 ## Troubleshooting
@@ -224,8 +188,7 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 | "Unable to fetch distance" on OpenStreetMap | Public OSRM routing service rate-limited | Switch to Google Maps, or host your own OSRM |
 | Distance lookups failed after a server migration | Place key still restricted to the old server IP | Update the IP restriction |
 | Unexpected Google bill | Unrestricted key in use elsewhere | Apply the restrictions above and regenerate the key |
-| "Generate with AI" does nothing | Gemini key blank, or Generative Language API not enabled | Add the key; enable the API |
-| AI generation fails only from the server | Gemini key restricted by referrer instead of IP | Switch it to an IP address restriction |
+| AI buttons missing or failing | Set up on the **AI** tab, not here | See [AI Settings](/docs/admin/ai-settings) |
 
 ## Checklist
 
@@ -237,4 +200,4 @@ AI-written product copy can be confidently wrong about specifications, ingredien
 - [ ] Budget alert configured
 - [ ] Zone map draws correctly
 - [ ] Test address returns a sensible delivery charge
-- [ ] If using AI generation: Gemini key added, Generative Language API enabled, key restricted to that API and your server IP
+- [ ] If using AI generation: a provider set up on the **AI** tab — see [AI Settings](/docs/admin/ai-settings)

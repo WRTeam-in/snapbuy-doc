@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>System Health — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>System Health</h1>
+
+    <p>Menu path: <strong>Settings → Advanced → System Health</strong></p>
+
+    <p>One page that answers "is this server set up correctly, and is everything still running?" It checks the application, the background tasks, your third-party services, the server itself, PHP, storage and the database, and marks every result <strong>OK</strong>, <strong>warning</strong> or <strong>problem</strong>.</p>
+
+    <img src="../images/panel/system-health.png" alt="System Health">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">It only reads; it never changes anything</p>
+      <p>Nothing on this page edits a setting, restarts a service or touches a file. It is safe to run at any time, as often as you like.</p>
+    </div>
+
+    <h2 id="reading-the-page">Reading the page</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Summary banner</strong></td><td>A one-line verdict — <em>all checks passed</em>, or how many problems need attention — with pills counting OK, warnings and problems</td></tr>
+        <tr><td><strong>Show only issues</strong></td><td>Hides every passing check, so you see just what needs attention</td></tr>
+        <tr><td><strong>Run checks</strong></td><td>Runs everything again — the figures are live, not cached</td></tr>
+        <tr><td><strong>Copy report</strong></td><td>Copies the whole result as text, ready to paste into a support ticket</td></tr>
+        <tr><td><strong>Checked at</strong></td><td>When the results on screen were produced</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Checks are grouped into cards — Background tasks, Connected services, Application, Server, PHP extensions, Storage, Database — and <strong>the cards with issues are shown first</strong>, each with its own <em>OK</em> or <em>2 issues</em> badge.</p>
+
+    <p>Every failing check carries a <strong>hint</strong> in plain words saying what to do about it. A passing check shows no hint, because there is nothing to do.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Status</th><th>Means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OK</strong></td><td>Nothing to do</td></tr>
+        <tr><td><strong>Warning</strong></td><td>It works, but something is missing, unset or slower than it should be</td></tr>
+        <tr><td><strong>Problem</strong></td><td>Something is broken or unsafe, and customers are probably affected</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="what-is-checked">What is checked</h2>
+
+    <h3 id="application">Application</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Check</th><th>Flagged when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Environment</strong></td><td><code>APP_ENV</code> is neither <code>production</code> nor a local setup</td></tr>
+        <tr><td><strong>Debug mode</strong></td><td><code>APP_DEBUG=true</code> on a live site — a <strong>problem</strong>, because error pages then show file paths and secrets to visitors</td></tr>
+        <tr><td><strong>HTTPS</strong></td><td>The site is not served over HTTPS. Logins and payments need it.</td></tr>
+        <tr><td><strong>App URL</strong></td><td><code>APP_URL</code> does not match the address the panel is actually open on — the usual cause of broken images and wrong links in emails</td></tr>
+        <tr><td><strong>Laravel version, timezone, cache driver, session driver</strong></td><td>Information only</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="background-tasks">Background tasks</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Check</th><th>Flagged when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cron scheduler</strong></td><td>The heartbeat is more than ~2½ minutes old. Means the <a href="../admin/cron-jobs.html">cron job</a> is not running, so nothing scheduled happens — no cart reminders, no unpaid-order cancellation, no scheduled publishing.</td></tr>
+        <tr><td><strong>Queue worker</strong></td><td>Jobs are waiting and the oldest has sat there over 5 minutes, so the <a href="../admin/cron-jobs.html#the-queue-worker">worker</a> is not running. A <code>sync</code> queue driver shows as a warning.</td></tr>
+        <tr><td><strong>Failed jobs</strong></td><td>Anything is in the failed-jobs table. Look in <a href="../admin/system-logs.html">System Logs</a> for why.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">These two are the ones to look at first</p>
+      <p>Most "notifications stopped", "emails never arrive" and "orders stay pending" reports are one of these two lines showing red. Check them before anything else.</p>
+    </div>
+
+    <h3 id="connected-services">Connected services</h3>
+
+    <p>Whether each thing SnapBuy can use is configured at all: <strong>SMTP</strong>, <strong>SMS gateway</strong>, <strong>Firebase push</strong>, <strong>Maps</strong>, and <strong>real-time chat</strong>. Not configured is a warning, not a failure — a store that does not use SMS is fine with that line amber.</p>
+
+    <h3 id="server">Server</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Check</th><th>Wants</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PHP version</strong></td><td>8.3 or newer — below that is a <strong>problem</strong></td></tr>
+        <tr><td><strong>Memory limit</strong></td><td>256 MB or more</td></tr>
+        <tr><td><strong>Max execution time</strong></td><td>60 seconds or more</td></tr>
+        <tr><td><strong>Max upload size</strong></td><td>8 MB or more</td></tr>
+        <tr><td><strong>Max post size</strong></td><td>At least as large as the upload size, or big uploads fail silently</td></tr>
+        <tr><td><strong>OPcache</strong></td><td>On — off is a warning, because pages are much slower without it</td></tr>
+        <tr><td><strong>Web server, OS</strong></td><td>Information only</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>See <a href="../admin/php-ini-settings.html">PHP INI Settings</a> for how to change these.</p>
+
+    <h3 id="php-extensions">PHP extensions</h3>
+
+    <p>The thirteen SnapBuy requires — <code>bcmath</code>, <code>ctype</code>, <code>curl</code>, <code>dom</code>, <code>fileinfo</code>, <code>gd</code>, <code>json</code>, <code>mbstring</code>, <code>openssl</code>, <code>pdo_mysql</code>, <code>tokenizer</code>, <code>xml</code>, <code>zip</code> — each marked installed or <strong>missing</strong>. A missing one is a problem: ask your host to enable it.</p>
+
+    <p>Four more are listed as <strong>optional</strong> — <code>intl</code>, <code>exif</code>, <code>imagick</code>, <code>redis</code>. They are never marked as faults.</p>
+
+    <h3 id="storage">Storage</h3>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Check</th><th>Flagged when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Writable folders</strong></td><td><code>storage</code>, <code>storage/logs</code>, <code>storage/app/public</code>, <code>storage/app/private</code> or <code>bootstrap/cache</code> is not writable — the panel cannot save uploads or write logs</td></tr>
+        <tr><td><strong>Storage link</strong></td><td><code>public/storage</code> is missing, so uploaded images do not load. Run <code>php artisan storage:link</code>.</td></tr>
+        <tr><td><strong>Free disk space</strong></td><td>Under 15% free is a warning, under 5% a problem</td></tr>
+        <tr><td><strong>Log files size / Uploads size / Database backups size</strong></td><td>Information — the three things that quietly fill a disk</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="database">Database</h3>
+
+    <p>Connection, server version, database size and table count, and <strong>pending migrations</strong>. Anything other than <code>0</code> pending is a problem: the code expects tables the database does not have yet. See <a href="../installation/database-migration.html">Database &amp; Migrations</a>.</p>
+
+    <h2 id="when-to-use-it">When to use it</h2>
+
+    <ul>
+      <li><strong>Right after installing</strong>, before you start entering real data</li>
+      <li><strong>After moving to another server</strong>, where paths, permissions and PHP versions all change</li>
+      <li><strong>After a <a href="../admin/system-updater.html">system update</a></strong>, to confirm migrations ran</li>
+      <li><strong>Before contacting support</strong> — <strong>Copy report</strong> and paste it into the ticket; it answers most of the first questions</li>
+    </ul>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What you see</th><th>What it means</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Cron scheduler red</td><td>The cron entry is missing or not firing</td><td><a href="../admin/cron-jobs.html">Cron Job Setup</a></td></tr>
+        <tr><td>Queue worker red</td><td>The worker is not running, jobs are piling up</td><td><a href="../admin/cron-jobs.html#the-queue-worker">The queue worker</a></td></tr>
+        <tr><td>Debug mode red</td><td><code>APP_DEBUG=true</code> on a live site</td><td>Set <code>APP_DEBUG=false</code> in <code>.env</code></td></tr>
+        <tr><td>HTTPS red</td><td>No SSL, or <code>APP_URL</code> still <code>http://</code></td><td><a href="../admin/create-subdomain.html">Domain, DNS &amp; SSL</a></td></tr>
+        <tr><td>App URL amber</td><td><code>APP_URL</code> does not match the real address</td><td>Correct it in <code>.env</code></td></tr>
+        <tr><td>A folder not writable</td><td>Wrong ownership or permissions after a copy or upload</td><td>Give the web-server user write access to that folder</td></tr>
+        <tr><td>Storage link red</td><td>The symlink was lost — common after a zip-based deployment</td><td><code>php artisan storage:link</code></td></tr>
+        <tr><td>Pending migrations red</td><td>The update's database changes have not run</td><td>Run the migrations</td></tr>
+        <tr><td>An extension missing</td><td>Not enabled in your hosting PHP build</td><td>Ask the host to enable it, then re-run the checks</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul class="contains-task-list">
+      <li class="task-item"><input type="checkbox" disabled> No red checks on a live store</li>
+      <li class="task-item"><input type="checkbox" disabled> Cron scheduler and queue worker both green</li>
+      <li class="task-item"><input type="checkbox" disabled> Debug mode off, HTTPS on, App URL correct</li>
+      <li class="task-item"><input type="checkbox" disabled> Every required PHP extension installed</li>
+      <li class="task-item"><input type="checkbox" disabled> Storage folders writable and the storage link present</li>
+      <li class="task-item"><input type="checkbox" disabled> Free disk space comfortably above 15%</li>
+      <li class="task-item"><input type="checkbox" disabled> Pending migrations <code>0</code></li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/system-health.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>

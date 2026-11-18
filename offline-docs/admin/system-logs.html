@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>System Logs — SnapBuy Documentation</title>
+<link rel="icon" href="../images/favicon.png" />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="navbar">
+  <a class="navbar__brand" href="../index.html">
+    <img src="../images/logo.png" alt="SnapBuy" />
+    <span>SnapBuy Docs</span>
+  </a>
+  <div class="navbar__spacer"></div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar-nav"></nav>
+
+  <main class="content">
+    <h1>System Logs</h1>
+
+    <p>Menu path: <strong>Settings → Advanced → System Logs</strong></p>
+
+    <p>The server's own error and event logs — the files in <code>storage/logs</code> — read inside the panel. When something failed and you need the reason rather than the symptom, this is where it is written down.</p>
+
+    <img src="../images/panel/system-logs.png" alt="System Logs">
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Not the same as Activity Logs</p>
+      <p><a href="../admin/activity-logs.html">Activity Logs</a> records <strong>who</strong> did <strong>what</strong> in the panel — a staff audit trail. System Logs records what the <strong>application</strong> hit: failed jobs, rejected webhooks, SMTP errors, exceptions. Different question, different page.</p>
+    </div>
+
+    <h2 id="the-file-list">The file list</h2>
+
+    <p>Files are listed newest first, with their size and date, under a heading that totals how many files there are and how much disk they take. The one being written today is the one you usually want.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Kind</th><th>Files</th><th>Holds</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Application logs</strong></td><td><code>laravel*.log</code></td><td>Errors and exceptions from the panel, the APIs and background jobs</td></tr>
+        <tr><td><strong>Webhook logs</strong></td><td><code>webhooks*.log</code></td><td>What payment and courier providers sent you, and what SnapBuy made of it</td></tr>
+        <tr><td><strong>Other logs</strong></td><td>anything else</td><td>Whatever else your server writes there</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Only plain <code>.log</code> files sitting directly in <code>storage/logs</code> can be opened — nothing outside that folder is reachable from this page.</p>
+
+    <h2 id="reading-a-file">Reading a file</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Level chips</strong></td><td><code>All</code>, then every level present in that file — <code>Error</code>, <code>Warning</code>, <code>Info</code>, <code>Debug</code> and the rest — each with a count. Click one to show only that level.</td></tr>
+        <tr><td><strong>Search</strong></td><td>Matches the message and the full details, not just the first line</td></tr>
+        <tr><td><strong>Details</strong></td><td>Expands one entry to its stack trace or context</td></tr>
+        <tr><td><strong>Copy</strong></td><td>Copies that entry, ready to paste into a support ticket</td></tr>
+        <tr><td><strong>Live</strong></td><td>Re-reads the open file every 10 seconds, so you can watch while reproducing a problem</td></tr>
+        <tr><td><strong>Per page</strong></td><td>Up to 200 entries at a time</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="admonition admonition--tip">
+      <p class="admonition__title">Reproduce it with Live on</p>
+      <p>Open the file, turn <strong>Live</strong> on, then trigger the thing that fails — place the test order, send the test email. The entry appears within ten seconds, with the real reason.</p>
+    </div>
+
+    <div class="admonition admonition--info">
+      <p class="admonition__title">Big files are read from the end</p>
+      <p>Only the newest <strong>4 MB</strong> of a file is parsed, so even a very large log opens quickly. The page says so when that happens, and <strong>Download</strong> always gives you the whole file.</p>
+    </div>
+
+    <h2 id="secrets-are-masked">Secrets are masked</h2>
+
+    <p>Passwords, API keys, tokens, <code>Authorization</code> headers, OTPs, PINs, card numbers and CVVs are replaced with <code>••••</code> before a line ever leaves the server — in the viewer, in a single download and in a bulk ZIP alike. Keys in recognisable provider formats (<code>sk_live_…</code>, <code>rzp_…</code>, <code>whsec_…</code>) are masked too.</p>
+
+    <div class="admonition admonition--warning">
+      <p class="admonition__title">Masking is good, not perfect</p>
+      <p>It catches the usual shapes. Before you post a log into a public forum or ticket, still read what you are pasting — a provider may have written a value in a format nothing can recognise.</p>
+    </div>
+
+    <h2 id="downloading-and-clearing">Downloading and clearing</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Download</strong></td><td>The open file in full, masked</td></tr>
+        <tr><td><strong>Clear logs</strong></td><td>Empties the open file. A past day's dated file is deleted instead, because it will never be written again.</td></tr>
+        <tr><td><strong>Export or delete by date</strong></td><td>Works across many files at once</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="export-or-delete-by-date">Export or delete by date</h3>
+
+    <p>Pick a <strong>date range</strong> — last 7, 30 or 90 days, or your own — and which <strong>log types</strong> to include. The dialog shows how many files and how much disk space that comes to, then:</p>
+
+    <ul>
+      <li><strong>Download ZIP</strong> — every matching file in one archive, each masked</li>
+      <li><strong>Delete</strong> — removes them</li>
+    </ul>
+
+    <div class="admonition admonition--danger">
+      <p class="admonition__title">Clearing cannot be undone</p>
+      <p>There is no copy anywhere else. Download first if there is any chance you will want the file later — especially before clearing a day on which something went wrong.</p>
+    </div>
+
+    <p>Today's files are still being written, so they are <strong>emptied</strong> rather than deleted; everything older is removed.</p>
+
+    <h2 id="what-to-look-for">What to look for</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Where to look</th></tr></thead>
+      <tbody>
+        <tr><td>Payment taken but the order stayed unpaid</td><td><strong>Webhook logs</strong> — whether the gateway called at all, and what was rejected</td></tr>
+        <tr><td>Emails not arriving</td><td><strong>Application logs</strong>, around the time of the send — SMTP errors are recorded in full</td></tr>
+        <tr><td>Notifications not arriving</td><td><strong>Application logs</strong> — Firebase rejects the send with a reason</td></tr>
+        <tr><td>Background work not happening</td><td><strong>Application logs</strong>, plus the failed-jobs count on <a href="../admin/system-health.html">System Health</a></td></tr>
+        <tr><td>A page in the panel erroring</td><td><strong>Application logs</strong> at <code>ERROR</code> level, with the stack trace in <strong>Details</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="housekeeping">Housekeeping</h2>
+
+    <p>Log files grow quietly and are a common cause of a full disk. <a href="../admin/system-health.html">System Health</a> shows their total size under <strong>Storage</strong>; use <strong>Export or delete by date</strong> to clear anything older than a month or two once you have no open issues.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>No log files listed</td><td>Nothing has been logged yet, or <code>storage/logs</code> is not readable</td><td>Check the folder exists and is writable — System Health flags this</td></tr>
+        <tr><td>A file will not clear</td><td>The web-server user cannot write to it</td><td>Fix the file's ownership or permissions</td></tr>
+        <tr><td>Bulk ZIP fails</td><td>The server's PHP has no <code>zip</code> extension</td><td>Enable <code>zip</code>, or download files one at a time</td></tr>
+        <tr><td>Entries look truncated</td><td>The file is larger than 4 MB</td><td>Use <strong>Download</strong> for the whole thing</td></tr>
+        <tr><td>The log is enormous</td><td>Nothing clears it automatically</td><td>Delete by date, and fix whatever is erroring repeatedly</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="checklist">Checklist</h2>
+
+    <ul class="contains-task-list">
+      <li class="task-item"><input type="checkbox" disabled> You know which file is which — application vs webhook</li>
+      <li class="task-item"><input type="checkbox" disabled> Checked the log before escalating a "nothing happens" report</li>
+      <li class="task-item"><input type="checkbox" disabled> Downloaded anything you may need before clearing</li>
+      <li class="task-item"><input type="checkbox" disabled> Log folder size reviewed on System Health</li>
+    </ul>
+  </main>
+</div>
+
+<footer class="site-footer">SnapBuy Documentation — offline copy. &copy; SnapBuy.</footer>
+
+<script>
+  window.SB_BASE = "../";
+  window.SB_PAGE = "admin/system-logs.html";
+</script>
+<script src="../nav.js"></script>
+</body>
+</html>
