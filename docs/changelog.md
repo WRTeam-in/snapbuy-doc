@@ -12,6 +12,7 @@ Track all updates, improvements, and fixes released for SnapBuy.
 
 | Product Version | Flutter Version | Kotlin Version | AGP Version | distributionUrl (Gradle) | JDK Version |
 |---|---|---|---|---|---|
+| 1.6.0 | 3.47.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.5.0 | 3.47.8 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.4.0 | 3.47.7 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
 | 1.3.1 | 3.47.4 | 2.3.20 | 9.5.1 | 9.5.11 | 21 |
@@ -21,6 +22,20 @@ Track all updates, improvements, and fixes released for SnapBuy.
 | 1.0.0 | 3.44.8 | 2.2.20 | 8.11.1 | 8.14 | 21 |
 
 ## Version History
+
+### v1.6.0
+
+- [Added] AI integration with Gemini, OpenAI and OpenAI-compatible providers for content generation, translations and smart suggestions. (Admin)
+- [Added] Category Builder for customizing app and website category screens. (Admin, App, Web)
+- [Added] Product sliders with filters for categories, brands, attributes, price and discounts. (Admin, App, Web)
+- [Added] Customer OTP, Google and Apple login verification. (Admin, App, Web)
+- [Added] Automatic refund synchronization with supported payment gateways. (Admin)
+- [Added] Export functionality to all tables. (Admin)
+- [Added] System Logs settings. (Admin)
+- [Added] System Health Check settings. (Admin)
+- [Added] Transaction and wallet history filters with pending and failed states. (Admin, App, Web)
+- [Improved] Order cancellation, cart stock release and inventory management. (Admin, App, Web)
+- [Improved] Security, authentication, payment handling, permissions and overall system stability. (Admin, App, Web)
 
 ### v1.5.0
 

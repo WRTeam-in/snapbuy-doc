@@ -124,6 +124,14 @@ Cluster choice sets message latency. Serving India from a US cluster adds notice
 
 Pusher's free tier covers a limited number of daily messages and concurrent connections — fine for a small branch, worth watching as you grow.
 
+## Socket URL for the mobile apps
+
+After saving, the **Socket URL** field shows the address the Customer and Delivery Boy apps must use. Copy it into each app's `SOCKET_BASE_URL`.
+
+![Socket URL field](/images/panel/chat-settings-socket-url.png)
+
+See [Customer App — Socket URL Setup](/docs/app-customer/socket-url-setup) and [Delivery Boy App — Socket URL Setup](/docs/app-delivery/socket-url-setup).
+
 ## Verify chat works
 
 1. Save the settings.
